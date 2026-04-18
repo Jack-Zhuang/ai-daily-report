@@ -1017,7 +1017,15 @@
             }
             
             // 添加链接按钮
-            detailHtml += `<a href="${itemLink}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> ${pickType === 'github' ? '访问 GitHub' : (pickType === 'paper' ? '阅读论文' : '阅读原文')}</a>`;
+            if (pickType === 'paper') {
+                // 论文：跳转到解读页面
+                const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
+                const insightUrl = `insights/paper_${paperId}.html`;
+                detailHtml += `<a href="${insightUrl}" class="detail-link"><i class="fas fa-book-reader"></i> 查看论文解读</a>`;
+                detailHtml += `<a href="${itemLink}" target="_blank" class="detail-link" style="background:rgba(102,126,234,0.1);color:#667eea;margin-top:8px;"><i class="fas fa-external-link-alt"></i> arXiv 原文</a>`;
+            } else {
+                detailHtml += `<a href="${itemLink}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> ${pickType === 'github' ? '访问 GitHub' : '阅读原文'}</a>`;
+            }
             
             document.getElementById('detail-modal-title').innerHTML = `${typeIcon} ${cnTitle}`;
             document.getElementById('detail-modal-body').innerHTML = detailHtml;
