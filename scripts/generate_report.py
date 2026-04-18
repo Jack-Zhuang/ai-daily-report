@@ -730,12 +730,13 @@ class ReportGenerator:
     
     <!-- Detail Modal -->
     <div class="modal-overlay" id="detail-modal" onclick="if(event.target === this) closeDetailModal()" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:400;">
-        <div class="modal-content" style="position:absolute; bottom:0; left:0; right:0; background:white; border-radius:20px 20px 0 0; max-height:80vh; overflow:hidden; animation:slideUp 0.3s;">
-            <div style="width:36px; height:4px; background:#e2e8f0; border-radius:2px; margin:12px auto;"></div>
-            <div class="modal-header" style="padding:0 20px 16px; border-bottom:1px solid #e2e8f0;">
+        <div class="modal-content" style="position:absolute; bottom:0; left:0; right:0; background:white; border-radius:20px 20px 0 0; max-height:80vh; overflow:hidden; animation:slideUp 0.3s; display:flex; flex-direction:column;">
+            <div style="width:36px; height:4px; background:#e2e8f0; border-radius:2px; margin:12px auto; flex-shrink:0;"></div>
+            <div class="modal-header" style="padding:0 20px 16px; border-bottom:1px solid #e2e8f0; flex-shrink:0;">
                 <h3 id="detail-modal-title" style="font-size:18px; font-weight:700;"></h3>
             </div>
-            <div id="detail-modal-body" style="padding:20px; overflow-y:auto; max-height:calc(80vh - 80px);"></div>
+            <div id="detail-modal-body" style="padding:20px; overflow-y:auto; flex:1; min-height:0;"></div>
+            <div id="detail-modal-footer" style="padding:16px 20px; border-top:1px solid #e2e8f0; background:white; flex-shrink:0;"></div>
         </div>
     </div>
     <style>
@@ -746,7 +747,8 @@ class ReportGenerator:
         .detail-value {{ font-size: 14px; color: #1e293b; line-height: 1.6; }}
         .detail-tags {{ display: flex; flex-wrap: wrap; gap: 8px; }}
         .detail-tag {{ background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1)); padding: 4px 12px; border-radius: 8px; font-size: 12px; color: #667eea; }}
-        .detail-link {{ display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-size: 14px; font-weight: 600; margin-top: 16px; }}
+        .detail-link {{ display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-size: 14px; font-weight: 600; width: 100%; }}
+        .detail-link:hover {{ opacity: 0.9; }}
     </style>
     
     <!-- Back to Top -->
@@ -1119,18 +1121,20 @@ class ReportGenerator:
                 `;
             }}
             
-            // 添加链接按钮
+            // 生成按钮HTML
+            let footerHtml = '';
             if (pickType === 'paper') {{
                 // 论文：必须先跳转到解读页面，不能直接跳转原文
                 const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
                 const insightUrl = `insights/paper_${{paperId}}.html`;
-                detailHtml += `<a href="${{insightUrl}}" class="detail-link" style="width:100%;"><i class="fas fa-book-reader"></i> 查看论文解读</a>`;
+                footerHtml = `<a href="${{insightUrl}}" class="detail-link"><i class="fas fa-book-reader"></i> 查看论文解读</a>`;
             }} else {{
-                detailHtml += `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> ${{pickType === 'github' ? '访问 GitHub' : '阅读原文'}}</a>`;
+                footerHtml = `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> ${{pickType === 'github' ? '访问 GitHub' : '阅读原文'}}</a>`;
             }}
             
             document.getElementById('detail-modal-title').innerHTML = `${{typeIcon}} ${{cnTitle}}`;
             document.getElementById('detail-modal-body').innerHTML = detailHtml;
+            document.getElementById('detail-modal-footer').innerHTML = footerHtml;
             document.getElementById('detail-modal').classList.add('active');
         }}
         
@@ -1327,10 +1331,11 @@ class ReportGenerator:
                 `;
             }}
             
-            detailHtml += `<a href="${{item.link || '#'}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 阅读原文</a>`;
+            const footerHtml = `<a href="${{item.link || '#'}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 阅读原文</a>`;
             
             document.getElementById('detail-modal-title').innerHTML = `📰 ${{cnTitle}}`;
             document.getElementById('detail-modal-body').innerHTML = detailHtml;
+            document.getElementById('detail-modal-footer').innerHTML = footerHtml;
             document.getElementById('detail-modal').classList.add('active');
         }}
         
@@ -1421,10 +1426,11 @@ class ReportGenerator:
                 `;
             }}
             
-            detailHtml += `<a href="${{item.url || '#'}}" target="_blank" class="detail-link"><i class="fab fa-github"></i> 访问 GitHub</a>`;
+            const footerHtml = `<a href="${{item.url || '#'}}" target="_blank" class="detail-link"><i class="fab fa-github"></i> 访问 GitHub</a>`;
             
             document.getElementById('detail-modal-title').innerHTML = `💻 ${{cnTitle}}`;
             document.getElementById('detail-modal-body').innerHTML = detailHtml;
+            document.getElementById('detail-modal-footer').innerHTML = footerHtml;
             document.getElementById('detail-modal').classList.add('active');
         }}
         
@@ -1524,15 +1530,12 @@ class ReportGenerator:
             const paperId = (item.id || '').replace('/', '_').replace('.', '_');
             const insightUrl = `insights/paper_${{paperId}}.html`;
             
-            detailHtml += `
-                <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                    <a href="${{insightUrl}}" class="detail-link"><i class="fas fa-book-open"></i> 查看解读</a>
-                    <a href="${{item.link || '#'}}" target="_blank" class="detail-link" style="background:linear-gradient(135deg, #f59e0b, #f97316);"><i class="fas fa-external-link-alt"></i> arXiv原文</a>
-                </div>
-            `;
+            // 论文弹窗只显示解读按钮，不显示原文链接
+            const footerHtml = `<a href="${{insightUrl}}" class="detail-link"><i class="fas fa-book-open"></i> 查看论文解读</a>`;
             
             document.getElementById('detail-modal-title').innerHTML = `📄 ${{cnTitle}}`;
             document.getElementById('detail-modal-body').innerHTML = detailHtml;
+            document.getElementById('detail-modal-footer').innerHTML = footerHtml;
             document.getElementById('detail-modal').classList.add('active');
         }}
         
@@ -1592,6 +1595,7 @@ class ReportGenerator:
             
             document.getElementById('detail-modal-title').innerHTML = `🏆 ${{conf.name || confName}}`;
             document.getElementById('detail-modal-body').innerHTML = detailHtml;
+            document.getElementById('detail-modal-footer').innerHTML = '';  // 会议详情无按钮
             document.getElementById('detail-modal').classList.add('active');
         }}
         
