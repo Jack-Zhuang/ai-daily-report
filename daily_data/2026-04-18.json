@@ -18,7 +18,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621691",
       "cn_title": "SAGER：推荐Agent的自演化用户策略技能",
-      "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐，解决了推荐失败时Agent无法从用户反馈中学习的问题。",
+      "cn_summary": "基于大语言模型的推荐Agent通过演化每用户的语义记忆来个性化其所知内容，但其推理方式仍然是所有用户共享的通用静态系统提示。这种不对称性是一个根本性瓶颈：当推荐失败时，Agent无法从用户反馈中学习。本文提出SAGER框架，使Agent能够通过用户策略技能的自演化实现个性化推荐。",
       "pick_type": "paper",
       "rank": 1,
       "cover_image": "covers/paper_1.jpg",
@@ -554,25 +554,6 @@
       "cn_summary": "BugBuster喵 查看知乎原文 说句得罪人的话，如果谁现在还在纠结数理统计 vs 应用统计，已经落后这个时代至少五年了。 我知道这个开头会让很多人不舒服。但请你耐心看完。 我本科统计，博士期间做因果推断，现在在业界做 AI 相关的工作。看到了太多统计专业的学生，花了四年甚至六年时间，学了一堆正确但过时的方向规划经验，毕业后发现自己两头不靠。 学数"
     },
     {
-      "id": "c96ecd83b5fc",
-      "title": "大华股份：2025年营收超327亿元，2026年一季度业绩稳健增长",
-      "summary": "4月17日，大华股份发布2025年年度报告及2026年第一季度财报。2025年，公司实现营收327.44亿元，同比增长1.75%；归母净利润38.58亿元，同比增长32.77%；毛利率为40.62%，同比提升1.78个百分点；经营性现金流净额39.08亿元，同比增长44.19 %。2026年第一季度实现营收69.02亿元，同比增长10.33%，业绩稳健增长。公司将持续推动AI大模型产品技术应用落地",
-      "link": "https://www.36kr.com/newsflashes/3771624413463049",
-      "source": "36氪快讯",
-      "published": "2026-04-18",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "llm",
-      "collected_at": "2026-04-18T09:15:59.670805",
-      "cn_title": "大华股份：2025年营收超327亿元，2026年一季度业绩稳健增长",
-      "cover_image": "covers/article_9.jpg",
-      "cn_summary": "4月17日，大华股份发布2025年年度报告及2026年第一季度财报。2025年，公司实现营收327.44亿元，同比增长1.75%；归母净利润38.58亿元，同比增长32.77%；毛利率为40.62%，同比提升1.78个百分点；经营性现金流净额39.08亿元，同比增长44.19 %。2026年第一季度实现营收69.02亿元，同比增长10.33%，业绩稳健增长。公司将持续推动AI大模型产品技术应用落地",
-      "pick_type": "article",
-      "rank": 1,
-      "recommend_reason": "今日热门文章，来自36氪快讯"
-    },
-    {
       "id": "3435112bb64a",
       "title": "ICLR 2026 | 多轮推理越走越偏，T3让Agent找回主动思考",
       "summary": "为什么Agent越交互越失控？",
@@ -635,52 +616,6 @@
       "cn_title": "AI也有两幅面孔？复旦等最新研究：高压之下大模型集体变脸",
       "cover_image": "covers/article_15.jpg",
       "cn_summary": "关于「AI也有两幅面孔？复旦等最新研究：高压之下大模型集体变脸」的详细内容，点击查看原文了解详情。"
-    },
-    {
-      "id": "2604.14972v1",
-      "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent",
-      "summary": "Large language model (LLM) based recommendation agents personalize what they know through evolving per-user semantic memory, yet how they reason remains a universal, static system prompt shared identically across all users. This asymmetry is a fundamental bottleneck: when a recommendation fails, the",
-      "authors": [
-        "Zhen Tao",
-        "Riwei Lai",
-        "Chenyun Yu"
-      ],
-      "published": "2026-04-16",
-      "link": "http://arxiv.org/abs/2604.14972v1",
-      "category": "agent",
-      "type": "paper",
-      "source": "arXiv",
-      "collected_at": "2026-04-17T21:37:35.621691",
-      "cn_title": "SAGER：推荐Agent的自演化用户策略技能",
-      "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐，解决了推荐失败时Agent无法从用户反馈中学习的问题。",
-      "pick_type": "article",
-      "rank": 2,
-      "cover_image": "covers/paper_1.jpg",
-      "insight_url": "insights/paper_2604_14972v1.html",
-      "recommend_reason": "今日热门文章，来自arXiv"
-    },
-    {
-      "id": "2604.14878v1",
-      "title": "GenRec: A Preference-Oriented Generative Framework for Large-Scale Recommendation",
-      "summary": "Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the paginat",
-      "authors": [
-        "Yanyan Zou",
-        "Junbo Qi",
-        "Lunsong Huang"
-      ],
-      "published": "2026-04-16",
-      "link": "http://arxiv.org/abs/2604.14878v1",
-      "category": "rec",
-      "type": "paper",
-      "source": "arXiv",
-      "collected_at": "2026-04-17T21:37:35.621739",
-      "cn_title": "推荐生成式检索相关研究",
-      "cn_summary": "本文在rec相关领域做出了创新研究，提出了新的方法和见解。",
-      "pick_type": "article",
-      "rank": 3,
-      "cover_image": "covers/paper_2.jpg",
-      "insight_url": "insights/paper_2604_14878v1.html",
-      "recommend_reason": "今日热门文章，来自arXiv"
     },
     {
       "id": "2604.14839v1",
@@ -934,7 +869,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621691",
       "cn_title": "SAGER：推荐Agent的自演化用户策略技能",
-      "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐，解决了推荐失败时Agent无法从用户反馈中学习的问题。",
+      "cn_summary": "基于大语言模型的推荐Agent通过演化每用户的语义记忆来个性化其所知内容，但其推理方式仍然是所有用户共享的通用静态系统提示。这种不对称性是一个根本性瓶颈：当推荐失败时，Agent无法从用户反馈中学习。本文提出SAGER框架，使Agent能够通过用户策略技能的自演化实现个性化推荐。",
       "pick_type": "article",
       "rank": 2,
       "cover_image": "covers/paper_1.jpg",
@@ -980,7 +915,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621691",
       "cn_title": "SAGER：推荐Agent的自演化用户策略技能",
-      "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐，解决了推荐失败时Agent无法从用户反馈中学习的问题。",
+      "cn_summary": "基于大语言模型的推荐Agent通过演化每用户的语义记忆来个性化其所知内容，但其推理方式仍然是所有用户共享的通用静态系统提示。这种不对称性是一个根本性瓶颈：当推荐失败时，Agent无法从用户反馈中学习。本文提出SAGER框架，使Agent能够通过用户策略技能的自演化实现个性化推荐。",
       "pick_type": "paper",
       "rank": 4,
       "cover_image": "covers/paper_1.jpg",
@@ -1026,7 +961,7 @@
   "stats": {
     "total_papers": 20,
     "total_projects": 5,
-    "total_articles": 11,
+    "total_articles": 8,
     "total_pick": 5
   }
 }

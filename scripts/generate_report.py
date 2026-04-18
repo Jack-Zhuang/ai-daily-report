@@ -1026,7 +1026,7 @@ class ReportGenerator:
                     </div>
                     <div class="detail-section">
                         <div class="detail-label">摘要</div>
-                        <div class="detail-value">${{item.summary || '暂无摘要'}}</div>
+                        <div class="detail-value">${{cnSummary}}</div>
                     </div>
                 `;
             }} else if (pickType === 'github') {{
