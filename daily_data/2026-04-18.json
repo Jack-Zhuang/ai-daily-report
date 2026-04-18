@@ -40,7 +40,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621739",
       "cn_title": "推荐生成式检索相关研究",
-      "cn_summary": "本文在rec相关领域做出了创新研究，提出了新的方法和见解。",
+      "cn_summary": "Generative Retrieval (GR) offers a promising paradigm for 推荐 through next-token prediction (NTP). However, scaling it to large-scale industrial 系统 introduces three challenges: (i) within a single request, the identical 模型 输入s may produce inconsistent 输出s due to the paginat",
       "pick_type": "paper",
       "rank": 2,
       "cover_image": "covers/paper_2.jpg",
@@ -62,7 +62,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621770",
       "cn_title": "推荐注意力机制相关研究",
-      "cn_summary": "本文研究多模态推荐系统，提出新的注意力机制来提升推荐准确性。",
+      "cn_summary": "Recent advancements in 多模态 推荐s, which leverage diverse modality information to mitigate 数据稀疏 and improve 推荐 准确率, have gained significant 注意力. However, existing 多模态 推荐s overlook the critical role of 用户 表示 initializati",
       "cover_image": "covers/paper_3.jpg",
       "insight_url": "insights/paper_2604_14839v1.html"
     },
@@ -82,7 +82,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621796",
       "cn_title": "大语言模型推荐大语言模型相关研究",
-      "cn_summary": "本文在llm相关领域做出了创新研究，提出了新的方法和见解。",
+      "cn_summary": "大语言模型s have shown great success in 推荐 系统. However, the limited and sparse nature of 用户 data often restricts the 大语言模型's ability to effectively 模型 行为 patterns. To address this, existing studies have explored cross-domain solutions by conducting Cross-Domain Recom",
       "cover_image": "covers/paper_4.jpg",
       "insight_url": "insights/paper_2604_14833v1.html"
     },
@@ -102,7 +102,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621820",
       "cn_title": "推荐个性化生成式相关研究",
-      "cn_summary": "本文研究个性化学习路径推荐，提出考虑历史交互不确定性的生成式方法。",
+      "cn_summary": "Learning Path Recommendation (LPR) is critical for 个性化 education, yet current 方法 often fail to account for historical 交互 uncertainty (e.g., lucky guesses or accidental slips) and lack adaptability to diverse 学习 goals. We propose U-GLAD (Uncertainty-aware Generative Learn",
       "cover_image": "covers/paper_5.jpg",
       "insight_url": "insights/paper_2604_14613v1.html"
     }
@@ -278,7 +278,7 @@
       "collected_at": "2026-04-18T09:15:46.567299",
       "cn_title": "AI也有两幅面孔？复旦等最新研究：高压之下大模型集体变脸",
       "cover_image": "covers/article_15.jpg",
-      "cn_summary": "关于「AI也有两幅面孔？复旦等最新研究：高压之下大模型集体变脸」的详细内容，点击查看原文了解详情。"
+      "cn_summary": "AI 也会当面一套背后一套？"
     },
     {
       "id": "1136590548",
@@ -311,137 +311,1038 @@
       "category": "agent"
     }
   ],
-  "conference_papers": {
-    "WSDM 2025": {
-      "name": "WSDM 2025",
-      "date": "2025年3月",
+  "conference_papers": [
+    {
+      "name": "WSDM 2026",
+      "date": "2026年3月",
       "location": "德国汉诺威",
+      "total": 10,
       "papers": [
         {
-          "title": "How Do Recommendation Models Amplify Popularity Bias? An Analysis from the Spectral Perspective",
+          "id": "2604.15309",
+          "arxiv_id": "2604.15309",
+          "title": "MM-WebAgent: A Hierarchical Multimodal Web Agent for Webpage Generation",
+          "summary": "The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage generation often leads to style inconsistency and poor global coherence, as elements are generated in isolation. We propose MM-WebAgent, a hierarchical agentic framework for multimodal webpage generat",
+          "link": "http://arxiv.org/abs/2604.15309v1",
+          "published": "2026-04-16",
           "authors": [
-            "浙江大学",
-            "中国科技大学",
-            "蚂蚁集团"
+            "Yan Li",
+            "Zezi Zeng",
+            "Yifan Yang",
+            "Yuqing Yang",
+            "Ning Liao"
           ],
-          "link": "https://arxiv.org/abs/2404.12",
-          "highlight": "最佳论文奖",
-          "category": "rec"
+          "type": "paper",
+          "conference": "WSDM 2026"
         },
         {
-          "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent",
+          "id": "2604.15306",
+          "arxiv_id": "2604.15306",
+          "title": "Generalization in LLM Problem Solving: The Case of the Shortest Path",
+          "summary": "Whether language models can systematically generalize remains actively debated. Yet empirical performance is jointly shaped by multiple factors such as training data, training paradigms, and inference-time strategies, making failures difficult to interpret. We introduce a controlled synthetic environment based on shortest-path planning, a canonical composable sequential optimization problem. The setup enables clean separation of these factors and supports two orthogonal axes of generalization: s",
+          "link": "http://arxiv.org/abs/2604.15306v1",
+          "published": "2026-04-16",
           "authors": [
-            "Zhen Tao",
-            "Riwei Lai"
+            "Yao Tong",
+            "Jiayuan Ye",
+            "Anastasia Borovykh",
+            "Reza Shokri"
           ],
-          "link": "https://arxiv.org/abs/2604.14972",
-          "category": "agent"
+          "type": "paper",
+          "conference": "WSDM 2026"
         },
         {
-          "title": "Urban Traffic Network Layout Optimization with Guided Discrete Diffusion Models",
+          "id": "2604.15291",
+          "arxiv_id": "2604.15291",
+          "title": "AD4AD: Benchmarking Visual Anomaly Detection Models for Safer Autonomous Driving",
+          "summary": "The reliability of a machine vision system for autonomous driving depends heavily on its training data distribution. When a vehicle encounters significantly different conditions, such as atypical obstacles, its perceptual capabilities can degrade substantially. Unlike many domains where errors carry limited consequences, failures in autonomous driving translate directly into physical risk for passengers, pedestrians, and other road users. To address this challenge, we explore Visual Anomaly Dete",
+          "link": "http://arxiv.org/abs/2604.15291v1",
+          "published": "2026-04-16",
           "authors": [
-            "Taeyoung Yun et al."
+            "Fabrizio Genilotti",
+            "Arianna Stropeni",
+            "Gionata Grotto",
+            "Francesco Borsatti",
+            "Manuel Barusco"
           ],
-          "link": "https://dl.acm.org/doi/10.1145/3773966.3777950",
-          "category": "industry"
+          "type": "paper",
+          "conference": "WSDM 2026"
+        },
+        {
+          "id": "2604.15280",
+          "arxiv_id": "2604.15280",
+          "title": "Why Do Vision Language Models Struggle To Recognize Human Emotions?",
+          "summary": "Understanding emotions is a fundamental ability for intelligent systems to be able to interact with humans. Vision-language models (VLMs) have made tremendous progress in the last few years for many visual tasks, potentially offering a promising solution for understanding emotions. However, it is surprising that even the most sophisticated contemporary VLMs struggle to recognize human emotions or to outperform even specialized vision-only classifiers. In this paper we ask the question \"Why do VL",
+          "link": "http://arxiv.org/abs/2604.15280v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Madhav Agarwal",
+            "Sotirios A. Tsaftaris",
+            "Laura Sevilla-Lara",
+            "Steven McDonagh"
+          ],
+          "type": "paper",
+          "conference": "WSDM 2026"
+        },
+        {
+          "id": "2604.15272",
+          "arxiv_id": "2604.15272",
+          "title": "Prism: Symbolic Superoptimization of Tensor Programs",
+          "summary": "This paper presents Prism, the first symbolic superoptimizer for tensor programs. The key idea is sGraph, a symbolic, hierarchical representation that compactly encodes large classes of tensor programs by symbolically representing some execution parameters. Prism organizes optimization as a two-level search: it constructs symbolic graphs that represent families of programs, and then instantiates them into concrete implementations. This formulation enables structured pruning of provably suboptima",
+          "link": "http://arxiv.org/abs/2604.15272v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Mengdi Wu",
+            "Xiaoyu Jiang",
+            "Oded Padon",
+            "Zhihao Jia"
+          ],
+          "type": "paper",
+          "conference": "WSDM 2026"
+        },
+        {
+          "id": "2604.15233",
+          "arxiv_id": "2604.15233",
+          "title": "Blue Data Intelligence Layer: Streaming Data and Agents for Multi-source Multi-modal Data-Centric Applications",
+          "summary": "NL2SQL systems aim to address the growing need for natural language interaction with data. However, real-world information rarely maps to a single SQL query because (1) users express queries iteratively (2) questions often span multiple data sources beyond the closed-world assumption of a single database, and (3) queries frequently rely on commonsense or external knowledge. Consequently, satisfying realistic data needs require integrating heterogeneous sources, modalities, and contextual data. I",
+          "link": "http://arxiv.org/abs/2604.15233v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Moin Aminnaseri",
+            "Farima Fatahi Bayat",
+            "Nikita Bhutani",
+            "Jean-Flavien Bussotti",
+            "Kevin Chan"
+          ],
+          "type": "paper",
+          "conference": "WSDM 2026"
+        },
+        {
+          "id": "2604.15203",
+          "arxiv_id": "2604.15203",
+          "title": "MADE: A Living Benchmark for Multi-Label Text Classification with Uncertainty Quantification of Medical Device Adverse Events",
+          "summary": "Machine learning in high-stakes domains such as healthcare requires not only strong predictive performance but also reliable uncertainty quantification (UQ) to support human oversight. Multi-label text classification (MLTC) is a central task in this domain, yet remains challenging due to label imbalances, dependencies, and combinatorial complexity. Existing MLTC benchmarks are increasingly saturated and may be affected by training data contamination, making it difficult to distinguish genuine re",
+          "link": "http://arxiv.org/abs/2604.15203v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Raunak Agarwal",
+            "Markus Wenzel",
+            "Simon Baur",
+            "Jonas Zimmer",
+            "George Harvey"
+          ],
+          "type": "paper",
+          "conference": "WSDM 2026"
+        },
+        {
+          "id": "2604.15202",
+          "arxiv_id": "2604.15202",
+          "title": "Benchmarking Classical Coverage Path Planning Heuristics on Irregular Hexagonal Grids for Maritime Coverage Scenarios",
+          "summary": "Coverage path planning on irregular hexagonal grids is relevant to maritime surveillance, search and rescue and environmental monitoring, yet classical methods are often compared on small ad hoc examples or on rectangular grids. This paper presents a reproducible benchmark of deterministic single-vehicle coverage path planning heuristics on irregular hexagonal graphs derived from synthetic but maritime-motivated areas of interest. The benchmark contains 10,000 Hamiltonian-feasible instances span",
+          "link": "http://arxiv.org/abs/2604.15202v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Carlos S. Sepúlveda",
+            "Gonzalo A. Ruz"
+          ],
+          "type": "paper",
+          "conference": "WSDM 2026"
+        },
+        {
+          "id": "2604.15190",
+          "arxiv_id": "2604.15190",
+          "title": "Meituan Merchant Business Diagnosis via Policy-Guided Dual-Process User Simulation",
+          "summary": "Simulating group-level user behavior enables scalable counterfactual evaluation of merchant strategies without costly online experiments. However, building a trustworthy simulator faces two structural challenges. First, information incompleteness causes reasoning-based simulators to over-rationalize when unobserved factors such as offline context and implicit habits are missing. Second, mechanism duality requires capturing both interpretable preferences and implicit statistical regularities, whi",
+          "link": "http://arxiv.org/abs/2604.15190v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Ziyang Chen",
+            "Renbing Chen",
+            "Daowei Li",
+            "Jinzhi Liao",
+            "Jiashen Sun"
+          ],
+          "type": "paper",
+          "conference": "WSDM 2026"
+        },
+        {
+          "id": "2604.15188",
+          "arxiv_id": "2604.15188",
+          "title": "VisPCO: Visual Token Pruning Configuration Optimization via Budget-Aware Pareto-Frontier Learning for Vision-Language Models",
+          "summary": "Visual token pruning methods effectively mitigate the quadratic computational growth caused by processing high-resolution images and video frames in vision-language models (VLMs). However, existing approaches rely on predefined pruning configurations without determining whether they achieve computation-performance optimality. In this work, we introduce , a novel framework that formulates visual token pruning as a Pareto configuration optimization problem to automatically identify optimal configu",
+          "link": "http://arxiv.org/abs/2604.15188v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Huawei Ji",
+            "Yuanhao Sun",
+            "Yuan Jin",
+            "Cheng Deng",
+            "Jiaxin Ding"
+          ],
+          "type": "paper",
+          "conference": "WSDM 2026"
         }
-      ],
-      "total": 106,
-      "acceptance_rate": "17.3%"
+      ]
     },
-    "KDD 2025": {
+    {
       "name": "KDD 2025",
       "date": "2025年8月",
       "location": "加拿大多伦多",
+      "total": 10,
       "papers": [
         {
-          "title": "Adaptive Graph Contrastive Learning for Recommendation",
+          "id": "2604.15233",
+          "arxiv_id": "2604.15233",
+          "title": "Blue Data Intelligence Layer: Streaming Data and Agents for Multi-source Multi-modal Data-Centric Applications",
+          "summary": "NL2SQL systems aim to address the growing need for natural language interaction with data. However, real-world information rarely maps to a single SQL query because (1) users express queries iteratively (2) questions often span multiple data sources beyond the closed-world assumption of a single database, and (3) queries frequently rely on commonsense or external knowledge. Consequently, satisfying realistic data needs require integrating heterogeneous sources, modalities, and contextual data. I",
+          "link": "http://arxiv.org/abs/2604.15233v1",
+          "published": "2026-04-16",
           "authors": [
-            "AMiner"
+            "Moin Aminnaseri",
+            "Farima Fatahi Bayat",
+            "Nikita Bhutani",
+            "Jean-Flavien Bussotti",
+            "Kevin Chan"
           ],
-          "link": "https://www.aminer.cn/pub/6466fafbd68f896efaeb7633/",
-          "category": "rec"
+          "type": "paper",
+          "conference": "KDD 2025"
         },
         {
-          "title": "Tree based Progressive Regression Model for Watch-Time Prediction in Short-video Recommendation",
+          "id": "2604.15166",
+          "arxiv_id": "2604.15166",
+          "title": "Class Unlearning via Depth-Aware Removal of Forget-Specific Directions",
+          "summary": "Machine unlearning aims to remove targeted knowledge from a trained model without the cost of retraining from scratch. In class unlearning, however, reducing accuracy on forget classes does not necessarily imply true forgetting: forgotten information can remain encoded in internal representations, and apparent forgetting may arise from classifier-head suppression rather than representational removal. We show that existing class-unlearning methods often exhibit weak or negative selectivity, prese",
+          "link": "http://arxiv.org/abs/2604.15166v1",
+          "published": "2026-04-16",
           "authors": [
-            "KDD Research Track"
+            "Arman Hatami",
+            "Romina Aalishah",
+            "Ilya E. Monosov"
           ],
-          "link": "#",
-          "category": "rec"
+          "type": "paper",
+          "conference": "KDD 2025"
         },
         {
-          "title": "Cross-graph Prompt Enhanced Learning for Personalized Recommendation Reason Generation",
+          "id": "2604.15151",
+          "arxiv_id": "2604.15151",
+          "title": "QuantCode-Bench: A Benchmark for Evaluating the Ability of Large Language Models to Generate Executable Algorithmic Trading Strategies",
+          "summary": "Large language models have demonstrated strong performance on general-purpose programming tasks, yet their ability to generate executable algorithmic trading strategies remains underexplored. Unlike standard code benchmarks, trading-strategy generation requires simultaneous mastery of domain-specific financial logic, knowledge of a specialized API, and the ability to produce code that is not only syntactically correct but also leads to actual trades on historical data. In this work, we present Q",
+          "link": "http://arxiv.org/abs/2604.15151v1",
+          "published": "2026-04-16",
           "authors": [
-            "西安交通大学"
+            "Alexey Khoroshilov",
+            "Alexey Chernysh",
+            "Orkhan Ekhtibarov",
+            "Nini Kamkia",
+            "Dmitry Zmitrovich"
           ],
-          "link": "http://scholar.xjtu.edu.cn/zh/publications/",
-          "category": "llm"
+          "type": "paper",
+          "conference": "KDD 2025"
+        },
+        {
+          "id": "2604.14984",
+          "arxiv_id": "2604.14984",
+          "title": "Agentic Explainability at Scale: Between Corporate Fears and XAI Needs",
+          "summary": "As companies enter the race for agentic AI adoption, fears surface around agentic autonomy and its subsequent risks. These fears compound as companies scale their agentic AI adoption with low-code applications, without a comparable scaling in their governance processes and expertise resulting in a phenomenon known as \"Agent Sprawl\". While shadow AI tools can help with agentic discovery and identification, few observability tools offer insights into the agents' configuration and settings or the d",
+          "link": "http://arxiv.org/abs/2604.14984v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Yomna Elsayed",
+            "Cecily Jones"
+          ],
+          "type": "paper",
+          "conference": "KDD 2025"
+        },
+        {
+          "id": "2604.14972",
+          "arxiv_id": "2604.14972",
+          "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent",
+          "summary": "Large language model (LLM) based recommendation agents personalize what they know through evolving per-user semantic memory, yet how they reason remains a universal, static system prompt shared identically across all users. This asymmetry is a fundamental bottleneck: when a recommendation fails, the agent updates its memory of user preferences but never interrogates the decision logic that produced the failure, leaving its reasoning process structurally unchanged regardless of how many mistakes ",
+          "link": "http://arxiv.org/abs/2604.14972v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Zhen Tao",
+            "Riwei Lai",
+            "Chenyun Yu",
+            "Weixin Chen",
+            "Li Chen"
+          ],
+          "type": "paper",
+          "conference": "KDD 2025"
+        },
+        {
+          "id": "2604.14969",
+          "arxiv_id": "2604.14969",
+          "title": "Discovering Novel LLM Experts via Task-Capability Coevolution",
+          "summary": "Frontier model developers aim to train models continually to possess emergent, diverse capabilities. To extend capabilities, the current pre-training and post-training paradigm requires manually starting training runs with static datasets or reward functions every time. Addressing this limitation, our work pursues the insight that open-endedness (via the coevolution of models and tasks) can discover models with increasingly novel skills in a single run. We introduce a new model development frame",
+          "link": "http://arxiv.org/abs/2604.14969v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Andrew Dai",
+            "Boris Meinardus",
+            "Ciaran Regan",
+            "Yingtao Tian",
+            "Yujin Tang"
+          ],
+          "type": "paper",
+          "conference": "KDD 2025"
+        },
+        {
+          "id": "2604.14967",
+          "arxiv_id": "2604.14967",
+          "title": "UniDoc-RL: Coarse-to-Fine Visual RAG with Hierarchical Actions and Dense Rewards",
+          "summary": "Retrieval-Augmented Generation (RAG) extends Large Vision-Language Models (LVLMs) with external visual knowledge. However, existing visual RAG systems typically rely on generic retrieval signals that overlook the fine-grained visual semantics essential for complex reasoning. To address this limitation, we propose UniDoc-RL, a unified reinforcement learning framework in which an LVLM agent jointly performs retrieval, reranking, active visual perception, and reasoning. UniDoc-RL formulates visual ",
+          "link": "http://arxiv.org/abs/2604.14967v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Jun Wang",
+            "Shuo Tan",
+            "Zelong Sun",
+            "Tiancheng Gu",
+            "Yongle Zhao"
+          ],
+          "type": "paper",
+          "conference": "KDD 2025"
+        },
+        {
+          "id": "2604.14961",
+          "arxiv_id": "2604.14961",
+          "title": "Calibration-Gated LLM Pseudo-Observations for Online Contextual Bandits",
+          "summary": "Contextual bandit algorithms suffer from high regret during cold-start, when the learner has insufficient data to distinguish good arms from bad. We propose augmenting Disjoint LinUCB with LLM pseudo-observations: after each round, a large language model predicts counterfactual rewards for the unplayed arms, and these predictions are injected into the learner as weighted pseudo-observations. The injection weight is controlled by a calibration-gated decay schedule that tracks the LLM's prediction",
+          "link": "http://arxiv.org/abs/2604.14961v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Maksim Pershin",
+            "Ivan Golovanov",
+            "Pavel Baltabaev",
+            "Natalia Trankova"
+          ],
+          "type": "paper",
+          "conference": "KDD 2025"
+        },
+        {
+          "id": "2604.14881",
+          "arxiv_id": "2604.14881",
+          "title": "The Missing Knowledge Layer in AI: A Framework for Stable Human-AI Reasoning",
+          "summary": "Large language models are increasingly integrated into decision-making in areas such as healthcare, law, finance, engineering, and government. Yet they share a critical limitation: they produce fluent outputs even when their internal reasoning has drifted. A confident answer can conceal uncertainty, speculation, or inconsistency, and small changes in phrasing can lead to different conclusions. This makes LLMs useful assistants but unreliable partners in high-stakes contexts.\n  Humans exhibit a s",
+          "link": "http://arxiv.org/abs/2604.14881v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Rikard Rosenbacke",
+            "Carl Rosenbacke",
+            "Victor Rosenbacke",
+            "Martin McKee"
+          ],
+          "type": "paper",
+          "conference": "KDD 2025"
+        },
+        {
+          "id": "2604.14878",
+          "arxiv_id": "2604.14878",
+          "title": "GenRec: A Preference-Oriented Generative Framework for Large-Scale Recommendation",
+          "summary": "Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the pagination request mechanism; (ii) the prohibitive cost of encoding long user behavior sequences with multi-token item representations based on semantic IDs, and (iii) aligning the generative policy with nua",
+          "link": "http://arxiv.org/abs/2604.14878v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Yanyan Zou",
+            "Junbo Qi",
+            "Lunsong Huang",
+            "Yu Li",
+            "Kewei Xu"
+          ],
+          "type": "paper",
+          "conference": "KDD 2025"
         }
-      ],
-      "total": 300,
-      "acceptance_rate": "20%"
+      ]
     },
-    "RecSys 2025": {
+    {
       "name": "RecSys 2025",
       "date": "2025年9月",
       "location": "捷克布拉格",
+      "total": 10,
       "papers": [
         {
-          "title": "IP2: Entity-Guided Interest Probing for Personalized News Recommendation",
+          "id": "2604.14972",
+          "arxiv_id": "2604.14972",
+          "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent",
+          "summary": "Large language model (LLM) based recommendation agents personalize what they know through evolving per-user semantic memory, yet how they reason remains a universal, static system prompt shared identically across all users. This asymmetry is a fundamental bottleneck: when a recommendation fails, the agent updates its memory of user preferences but never interrogates the decision logic that produced the failure, leaving its reasoning process structurally unchanged regardless of how many mistakes ",
+          "link": "http://arxiv.org/abs/2604.14972v1",
+          "published": "2026-04-16",
           "authors": [
-            "大连理工大学"
+            "Zhen Tao",
+            "Riwei Lai",
+            "Chenyun Yu",
+            "Weixin Chen",
+            "Li Chen"
           ],
-          "link": "#",
-          "highlight": "最佳论文候选",
-          "category": "rec"
+          "type": "paper",
+          "conference": "RecSys 2025"
+        },
+        {
+          "id": "2604.14961",
+          "arxiv_id": "2604.14961",
+          "title": "Calibration-Gated LLM Pseudo-Observations for Online Contextual Bandits",
+          "summary": "Contextual bandit algorithms suffer from high regret during cold-start, when the learner has insufficient data to distinguish good arms from bad. We propose augmenting Disjoint LinUCB with LLM pseudo-observations: after each round, a large language model predicts counterfactual rewards for the unplayed arms, and these predictions are injected into the learner as weighted pseudo-observations. The injection weight is controlled by a calibration-gated decay schedule that tracks the LLM's prediction",
+          "link": "http://arxiv.org/abs/2604.14961v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Maksim Pershin",
+            "Ivan Golovanov",
+            "Pavel Baltabaev",
+            "Natalia Trankova"
+          ],
+          "type": "paper",
+          "conference": "RecSys 2025"
+        },
+        {
+          "id": "2604.14878",
+          "arxiv_id": "2604.14878",
+          "title": "GenRec: A Preference-Oriented Generative Framework for Large-Scale Recommendation",
+          "summary": "Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the pagination request mechanism; (ii) the prohibitive cost of encoding long user behavior sequences with multi-token item representations based on semantic IDs, and (iii) aligning the generative policy with nua",
+          "link": "http://arxiv.org/abs/2604.14878v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Yanyan Zou",
+            "Junbo Qi",
+            "Lunsong Huang",
+            "Yu Li",
+            "Kewei Xu"
+          ],
+          "type": "paper",
+          "conference": "RecSys 2025"
+        },
+        {
+          "id": "2604.14839",
+          "arxiv_id": "2604.14839",
+          "title": "Well Begun is Half Done: Training-Free and Model-Agnostic Semantically Guaranteed User Representation Initialization for Multimodal Recommendation",
+          "summary": "Recent advancements in multimodal recommendations, which leverage diverse modality information to mitigate data sparsity and improve recommendation accuracy, have gained significant attention. However, existing multimodal recommendations overlook the critical role of user representation initialization. Unlike items, which are naturally associated with rich modality information, users lack such inherent information. Consequently, item representations initialized based on meaningful modality infor",
+          "link": "http://arxiv.org/abs/2604.14839v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Jinfeng Xu",
+            "Zheyu Chen",
+            "Shuo Yang",
+            "Jinze Li",
+            "Hewei Wang"
+          ],
+          "type": "paper",
+          "conference": "RecSys 2025"
+        },
+        {
+          "id": "2604.14833",
+          "arxiv_id": "2604.14833",
+          "title": "Federated User Behavior Modeling for Privacy-Preserving LLM Recommendation",
+          "summary": "Large Language Models have shown great success in recommender systems. However, the limited and sparse nature of user data often restricts the LLM's ability to effectively model behavior patterns. To address this, existing studies have explored cross-domain solutions by conducting Cross-Domain Recommendation tasks. But previous methods typically assume domains are overlapped and can be accessed readily. None of the LLM methods address the privacy-preserving issues in the CDR settings, that is, P",
+          "link": "http://arxiv.org/abs/2604.14833v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Lei Guo",
+            "Hongyun Yang",
+            "Pengjie Ren",
+            "Tong Chen",
+            "Hui Liu"
+          ],
+          "type": "paper",
+          "conference": "RecSys 2025"
+        },
+        {
+          "id": "2604.14738",
+          "arxiv_id": "2604.14738",
+          "title": "Personalized and Context-Aware Transformer Models for Predicting Post-Intervention Physiological Responses from Wearable Sensor Data",
+          "summary": "Consumer wearables enable continuous measurement of physiological data related to stress and recovery, but turning these streams into actionable, personalized stress-management recommendations remains a challenge. In practice, users often do not know how a given intervention, defined as an activity intended to reduce stress, will affect heart rate (HR), heart rate variability (HRV), or inter-beat intervals (BBI) over the next 15 to 120 minutes. We present a framework that predicts post-intervent",
+          "link": "http://arxiv.org/abs/2604.14738v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Esther Brown",
+            "Victoria Dean",
+            "Finale Doshi-Velez"
+          ],
+          "type": "paper",
+          "conference": "RecSys 2025"
+        },
+        {
+          "id": "2604.14705",
+          "arxiv_id": "2604.14705",
+          "title": "SynHAT: A Two-stage Coarse-to-Fine Diffusion Framework for Synthesizing Human Activity Traces",
+          "summary": "Human activity traces (HATs) are critical for many applications, including human mobility modeling and point-of-interest (POI) recommendation. However, growing privacy concerns have severely limited access to authentic large-scale HAT datasets. Recent advances in generative AI provide new opportunities to synthesize realistic and privacy-preserving HATs for such applications. Yet two major challenges remain: (i) HATs are highly irregular and dynamic, with long and varying time intervals, making ",
+          "link": "http://arxiv.org/abs/2604.14705v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Rongchao Xu",
+            "Lin Jiang",
+            "Dahai Yu",
+            "Ximiao Li",
+            "Guang Wang"
+          ],
+          "type": "paper",
+          "conference": "RecSys 2025"
+        },
+        {
+          "id": "2604.14613",
+          "arxiv_id": "2604.14613",
+          "title": "Uncertainty-aware Generative Learning Path Recommendation with Cognition-Adaptive Diffusion",
+          "summary": "Learning Path Recommendation (LPR) is critical for personalized education, yet current methods often fail to account for historical interaction uncertainty (e.g., lucky guesses or accidental slips) and lack adaptability to diverse learning goals. We propose U-GLAD (Uncertainty-aware Generative Learning Path Recommendation with Cognition-Adaptive Diffusion). To address representation bias, the framework models cognitive states as probability distributions, capturing the learner's underlying true ",
+          "link": "http://arxiv.org/abs/2604.14613v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Xiangrui Xiong",
+            "Hang Liang",
+            "Baiyang Chen",
+            "Zifei Pan",
+            "Yanli Lee"
+          ],
+          "type": "paper",
+          "conference": "RecSys 2025"
+        },
+        {
+          "id": "2604.14598",
+          "arxiv_id": "2604.14598",
+          "title": "Category-based and Popularity-guided Video Game Recommendation: A Balance-oriented Framework",
+          "summary": "In recent years, the video game industry has experienced substantial growth, presenting players with a vast array of game choices. This surge in options has spurred the need for a specialized recommender system tailored for video games. However, current video game recommendation approaches tend to prioritize accuracy over diversity, potentially leading to unvaried game suggestions. In addition, the existing game recommendation methods commonly lack the ability to establish strict connections bet",
+          "link": "http://arxiv.org/abs/2604.14598v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Xiping Li",
+            "Jianghong Ma",
+            "Kangzhe Liu",
+            "Shanshan Feng",
+            "Haijun Zhang"
+          ],
+          "type": "paper",
+          "conference": "RecSys 2025"
+        },
+        {
+          "id": "2604.14595",
+          "arxiv_id": "2604.14595",
+          "title": "NLP needs Diversity outside of 'Diversity'",
+          "summary": "This position paper argues that recent progress with diversity in NLP is disproportionately concentrated on a small number of areas surrounding fairness. We further argue that this is the result of a number of incentives, biases, and barriers which come together to disenfranchise marginalized researchers in non-fairness fields, or to move them into fairness-related fields. We substantiate our claims with an investigation into the demographics of NLP researchers by subfield, using our research to",
+          "link": "http://arxiv.org/abs/2604.14595v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Joshua Tint"
+          ],
+          "type": "paper",
+          "conference": "RecSys 2025"
         }
-      ],
-      "total": 49,
-      "acceptance_rate": "18.8%"
+      ]
     },
-    "WWW 2025": {
+    {
       "name": "WWW 2025",
       "date": "2025年4月",
       "location": "新加坡",
+      "total": 10,
       "papers": [
         {
-          "title": "Large Language Models for Web Search and Recommendation",
+          "id": "2604.15309",
+          "arxiv_id": "2604.15309",
+          "title": "MM-WebAgent: A Hierarchical Multimodal Web Agent for Webpage Generation",
+          "summary": "The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage generation often leads to style inconsistency and poor global coherence, as elements are generated in isolation. We propose MM-WebAgent, a hierarchical agentic framework for multimodal webpage generat",
+          "link": "http://arxiv.org/abs/2604.15309v1",
+          "published": "2026-04-16",
           "authors": [
-            "WWW Research Track"
+            "Yan Li",
+            "Zezi Zeng",
+            "Yifan Yang",
+            "Yuqing Yang",
+            "Ning Liao"
           ],
-          "link": "#",
-          "category": "llm"
+          "type": "paper",
+          "conference": "WWW 2025"
+        },
+        {
+          "id": "2604.15280",
+          "arxiv_id": "2604.15280",
+          "title": "Why Do Vision Language Models Struggle To Recognize Human Emotions?",
+          "summary": "Understanding emotions is a fundamental ability for intelligent systems to be able to interact with humans. Vision-language models (VLMs) have made tremendous progress in the last few years for many visual tasks, potentially offering a promising solution for understanding emotions. However, it is surprising that even the most sophisticated contemporary VLMs struggle to recognize human emotions or to outperform even specialized vision-only classifiers. In this paper we ask the question \"Why do VL",
+          "link": "http://arxiv.org/abs/2604.15280v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Madhav Agarwal",
+            "Sotirios A. Tsaftaris",
+            "Laura Sevilla-Lara",
+            "Steven McDonagh"
+          ],
+          "type": "paper",
+          "conference": "WWW 2025"
+        },
+        {
+          "id": "2604.15233",
+          "arxiv_id": "2604.15233",
+          "title": "Blue Data Intelligence Layer: Streaming Data and Agents for Multi-source Multi-modal Data-Centric Applications",
+          "summary": "NL2SQL systems aim to address the growing need for natural language interaction with data. However, real-world information rarely maps to a single SQL query because (1) users express queries iteratively (2) questions often span multiple data sources beyond the closed-world assumption of a single database, and (3) queries frequently rely on commonsense or external knowledge. Consequently, satisfying realistic data needs require integrating heterogeneous sources, modalities, and contextual data. I",
+          "link": "http://arxiv.org/abs/2604.15233v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Moin Aminnaseri",
+            "Farima Fatahi Bayat",
+            "Nikita Bhutani",
+            "Jean-Flavien Bussotti",
+            "Kevin Chan"
+          ],
+          "type": "paper",
+          "conference": "WWW 2025"
+        },
+        {
+          "id": "2604.15044",
+          "arxiv_id": "2604.15044",
+          "title": "CoGrid & the Multi-User Gymnasium: A Framework for Multi-Agent Experimentation",
+          "summary": "The increasing integration of artificial intelligence (AI) in everyday life brings with it new challenges and questions for regarding how humans interact with autonomous agents. Multi-agent experiments, where humans and AI act together, can offer important opportunities to study social decision making, but there is a lack of accessible tooling available to researchers to run such experiments. We introduce two tools designed to reduce these barriers. The first, CoGrid, is a multi-agent grid-based",
+          "link": "http://arxiv.org/abs/2604.15044v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Chase McDonald",
+            "Cleotilde Gonzalez"
+          ],
+          "type": "paper",
+          "conference": "WWW 2025"
+        },
+        {
+          "id": "2604.14972",
+          "arxiv_id": "2604.14972",
+          "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent",
+          "summary": "Large language model (LLM) based recommendation agents personalize what they know through evolving per-user semantic memory, yet how they reason remains a universal, static system prompt shared identically across all users. This asymmetry is a fundamental bottleneck: when a recommendation fails, the agent updates its memory of user preferences but never interrogates the decision logic that produced the failure, leaving its reasoning process structurally unchanged regardless of how many mistakes ",
+          "link": "http://arxiv.org/abs/2604.14972v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Zhen Tao",
+            "Riwei Lai",
+            "Chenyun Yu",
+            "Weixin Chen",
+            "Li Chen"
+          ],
+          "type": "paper",
+          "conference": "WWW 2025"
+        },
+        {
+          "id": "2604.14961",
+          "arxiv_id": "2604.14961",
+          "title": "Calibration-Gated LLM Pseudo-Observations for Online Contextual Bandits",
+          "summary": "Contextual bandit algorithms suffer from high regret during cold-start, when the learner has insufficient data to distinguish good arms from bad. We propose augmenting Disjoint LinUCB with LLM pseudo-observations: after each round, a large language model predicts counterfactual rewards for the unplayed arms, and these predictions are injected into the learner as weighted pseudo-observations. The injection weight is controlled by a calibration-gated decay schedule that tracks the LLM's prediction",
+          "link": "http://arxiv.org/abs/2604.14961v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Maksim Pershin",
+            "Ivan Golovanov",
+            "Pavel Baltabaev",
+            "Natalia Trankova"
+          ],
+          "type": "paper",
+          "conference": "WWW 2025"
+        },
+        {
+          "id": "2604.14878",
+          "arxiv_id": "2604.14878",
+          "title": "GenRec: A Preference-Oriented Generative Framework for Large-Scale Recommendation",
+          "summary": "Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the pagination request mechanism; (ii) the prohibitive cost of encoding long user behavior sequences with multi-token item representations based on semantic IDs, and (iii) aligning the generative policy with nua",
+          "link": "http://arxiv.org/abs/2604.14878v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Yanyan Zou",
+            "Junbo Qi",
+            "Lunsong Huang",
+            "Yu Li",
+            "Kewei Xu"
+          ],
+          "type": "paper",
+          "conference": "WWW 2025"
+        },
+        {
+          "id": "2604.14866",
+          "arxiv_id": "2604.14866",
+          "title": "MetaDent: Labeling Clinical Images for Vision-Language Models in Dentistry",
+          "summary": "Vision-Language Models (VLMs) have demonstrated significant potential in medical image analysis, yet their application in intraoral photography remains largely underexplored due to the lack of fine-grained, annotated datasets and comprehensive benchmarks. To address this, we present MetaDent, a comprehensive resource that includes (1) a novel and large-scale dentistry image dataset collected from clinical, public, and web sources; (2) a semi-structured annotation framework designed to capture th",
+          "link": "http://arxiv.org/abs/2604.14866v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Meng-Xun Li",
+            "Wen-Hui Deng",
+            "Zhi-Xing Wu",
+            "Chun-Xiao Jin",
+            "Jia-Min Wu"
+          ],
+          "type": "paper",
+          "conference": "WWW 2025"
+        },
+        {
+          "id": "2604.14839",
+          "arxiv_id": "2604.14839",
+          "title": "Well Begun is Half Done: Training-Free and Model-Agnostic Semantically Guaranteed User Representation Initialization for Multimodal Recommendation",
+          "summary": "Recent advancements in multimodal recommendations, which leverage diverse modality information to mitigate data sparsity and improve recommendation accuracy, have gained significant attention. However, existing multimodal recommendations overlook the critical role of user representation initialization. Unlike items, which are naturally associated with rich modality information, users lack such inherent information. Consequently, item representations initialized based on meaningful modality infor",
+          "link": "http://arxiv.org/abs/2604.14839v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Jinfeng Xu",
+            "Zheyu Chen",
+            "Shuo Yang",
+            "Jinze Li",
+            "Hewei Wang"
+          ],
+          "type": "paper",
+          "conference": "WWW 2025"
+        },
+        {
+          "id": "2604.14833",
+          "arxiv_id": "2604.14833",
+          "title": "Federated User Behavior Modeling for Privacy-Preserving LLM Recommendation",
+          "summary": "Large Language Models have shown great success in recommender systems. However, the limited and sparse nature of user data often restricts the LLM's ability to effectively model behavior patterns. To address this, existing studies have explored cross-domain solutions by conducting Cross-Domain Recommendation tasks. But previous methods typically assume domains are overlapped and can be accessed readily. None of the LLM methods address the privacy-preserving issues in the CDR settings, that is, P",
+          "link": "http://arxiv.org/abs/2604.14833v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Lei Guo",
+            "Hongyun Yang",
+            "Pengjie Ren",
+            "Tong Chen",
+            "Hui Liu"
+          ],
+          "type": "paper",
+          "conference": "WWW 2025"
         }
-      ],
-      "total": 200,
-      "acceptance_rate": "18%"
+      ]
     },
-    "CIKM 2025": {
+    {
+      "name": "SIGIR 2025",
+      "date": "2025年7月",
+      "location": "意大利帕多瓦",
+      "total": 10,
+      "papers": [
+        {
+          "id": "2604.15294",
+          "arxiv_id": "2604.15294",
+          "title": "How Do LLMs and VLMs Understand Viewpoint Rotation Without Vision? An Interpretability Study",
+          "summary": "Over the past year, spatial intelligence has drawn increasing attention. Many prior works study it from the perspective of visual-spatial intelligence, where models have access to visuospatial information from visual inputs. However, in the absence of visual information, whether linguistic intelligence alone is sufficient to endow models with spatial intelligence, and how models perform relevant tasks with text-only inputs still remain unexplored. Therefore, in this paper, we focus on a fundamen",
+          "link": "http://arxiv.org/abs/2604.15294v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Zhen Yang",
+            "Ping Jian",
+            "Zhongbin Guo",
+            "Zuming Zhang",
+            "Chengzhi Li"
+          ],
+          "type": "paper",
+          "conference": "SIGIR 2025"
+        },
+        {
+          "id": "2604.15280",
+          "arxiv_id": "2604.15280",
+          "title": "Why Do Vision Language Models Struggle To Recognize Human Emotions?",
+          "summary": "Understanding emotions is a fundamental ability for intelligent systems to be able to interact with humans. Vision-language models (VLMs) have made tremendous progress in the last few years for many visual tasks, potentially offering a promising solution for understanding emotions. However, it is surprising that even the most sophisticated contemporary VLMs struggle to recognize human emotions or to outperform even specialized vision-only classifiers. In this paper we ask the question \"Why do VL",
+          "link": "http://arxiv.org/abs/2604.15280v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Madhav Agarwal",
+            "Sotirios A. Tsaftaris",
+            "Laura Sevilla-Lara",
+            "Steven McDonagh"
+          ],
+          "type": "paper",
+          "conference": "SIGIR 2025"
+        },
+        {
+          "id": "2604.15233",
+          "arxiv_id": "2604.15233",
+          "title": "Blue Data Intelligence Layer: Streaming Data and Agents for Multi-source Multi-modal Data-Centric Applications",
+          "summary": "NL2SQL systems aim to address the growing need for natural language interaction with data. However, real-world information rarely maps to a single SQL query because (1) users express queries iteratively (2) questions often span multiple data sources beyond the closed-world assumption of a single database, and (3) queries frequently rely on commonsense or external knowledge. Consequently, satisfying realistic data needs require integrating heterogeneous sources, modalities, and contextual data. I",
+          "link": "http://arxiv.org/abs/2604.15233v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Moin Aminnaseri",
+            "Farima Fatahi Bayat",
+            "Nikita Bhutani",
+            "Jean-Flavien Bussotti",
+            "Kevin Chan"
+          ],
+          "type": "paper",
+          "conference": "SIGIR 2025"
+        },
+        {
+          "id": "2604.15224",
+          "arxiv_id": "2604.15224",
+          "title": "Context Over Content: Exposing Evaluation Faking in Automated Judges",
+          "summary": "The $\\textit{LLM-as-a-judge}$ paradigm has become the operational backbone of automated AI evaluation pipelines, yet rests on an unverified assumption: that judges evaluate text strictly on its semantic content, impervious to surrounding contextual framing. We investigate $\\textit{stakes signaling}$, a previously unmeasured vulnerability where informing a judge model of the downstream consequences its verdicts will have on the evaluated model's continued operation systematically corrupts its ass",
+          "link": "http://arxiv.org/abs/2604.15224v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Manan Gupta",
+            "Inderjeet Nair",
+            "Lu Wang",
+            "Dhruv Kumar"
+          ],
+          "type": "paper",
+          "conference": "SIGIR 2025"
+        },
+        {
+          "id": "2604.15190",
+          "arxiv_id": "2604.15190",
+          "title": "Meituan Merchant Business Diagnosis via Policy-Guided Dual-Process User Simulation",
+          "summary": "Simulating group-level user behavior enables scalable counterfactual evaluation of merchant strategies without costly online experiments. However, building a trustworthy simulator faces two structural challenges. First, information incompleteness causes reasoning-based simulators to over-rationalize when unobserved factors such as offline context and implicit habits are missing. Second, mechanism duality requires capturing both interpretable preferences and implicit statistical regularities, whi",
+          "link": "http://arxiv.org/abs/2604.15190v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Ziyang Chen",
+            "Renbing Chen",
+            "Daowei Li",
+            "Jinzhi Liao",
+            "Jiashen Sun"
+          ],
+          "type": "paper",
+          "conference": "SIGIR 2025"
+        },
+        {
+          "id": "2604.15166",
+          "arxiv_id": "2604.15166",
+          "title": "Class Unlearning via Depth-Aware Removal of Forget-Specific Directions",
+          "summary": "Machine unlearning aims to remove targeted knowledge from a trained model without the cost of retraining from scratch. In class unlearning, however, reducing accuracy on forget classes does not necessarily imply true forgetting: forgotten information can remain encoded in internal representations, and apparent forgetting may arise from classifier-head suppression rather than representational removal. We show that existing class-unlearning methods often exhibit weak or negative selectivity, prese",
+          "link": "http://arxiv.org/abs/2604.15166v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Arman Hatami",
+            "Romina Aalishah",
+            "Ilya E. Monosov"
+          ],
+          "type": "paper",
+          "conference": "SIGIR 2025"
+        },
+        {
+          "id": "2604.15148",
+          "arxiv_id": "2604.15148",
+          "title": "IG-Search: Step-Level Information Gain Rewards for Search-Augmented Reasoning",
+          "summary": "Reinforcement learning has emerged as an effective paradigm for training large language models to perform search-augmented reasoning. However, existing approaches rely on trajectory-level rewards that cannot distinguish precise search queries from vague or redundant ones within a rollout group, and collapse to a near-zero gradient signal whenever every sampled trajectory fails. In this paper, we propose IG-Search, a reinforcement learning framework that introduces a step-level reward based on In",
+          "link": "http://arxiv.org/abs/2604.15148v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Zihan Liang",
+            "Yufei Ma",
+            "Ben Chen",
+            "Zhipeng Qian",
+            "Huangyu Dai"
+          ],
+          "type": "paper",
+          "conference": "SIGIR 2025"
+        },
+        {
+          "id": "2604.15140",
+          "arxiv_id": "2604.15140",
+          "title": "DiscoTrace: Representing and Comparing Answering Strategies of Humans and LLMs in Information-Seeking Question Answering",
+          "summary": "We introduce DiscoTrace, a method to identify the rhetorical strategies that answerers use when responding to information-seeking questions. DiscoTrace represents answers as a sequence of question-related discourse acts paired with interpretations of the original question, annotated on top of rhetorical structure theory parses. Applying DiscoTrace to answers from nine different human communities reveals that communities have diverse preferences for answer construction. In contrast, LLMs do not e",
+          "link": "http://arxiv.org/abs/2604.15140v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Neha Srikanth",
+            "Jordan Boyd-Graber",
+            "Rachel Rudinger"
+          ],
+          "type": "paper",
+          "conference": "SIGIR 2025"
+        },
+        {
+          "id": "2604.15124",
+          "arxiv_id": "2604.15124",
+          "title": "Blinded Multi-Rater Comparative Evaluation of a Large Language Model and Clinician-Authored Responses in CGM-Informed Diabetes Counseling",
+          "summary": "Continuous glucose monitoring (CGM) is central to diabetes care, but explaining CGM patterns clearly and empathetically remains time-intensive. Evidence for retrieval-grounded large language model (LLM) systems in CGM-informed counseling remains limited. To evaluate whether a retrieval-grounded LLM-based conversational agent (CA) could support patient understanding of CGM data and preparation for routine diabetes consultations. We developed a retrieval-grounded LLM-based CA for CGM interpretatio",
+          "link": "http://arxiv.org/abs/2604.15124v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Zhijun Guo",
+            "Alvina Lai",
+            "Emmanouil Korakas",
+            "Aristeidis Vagenas",
+            "Irshad Ahamed"
+          ],
+          "type": "paper",
+          "conference": "SIGIR 2025"
+        },
+        {
+          "id": "2604.15121",
+          "arxiv_id": "2604.15121",
+          "title": "SRMU: Relevance-Gated Updates for Streaming Hyperdimensional Memories",
+          "summary": "Sequential associative memories (SAMs) are difficult to build and maintain in real-world streaming environments, where observations arrive incrementally over time, have imbalanced sampling, and non-stationary temporal dynamics. Vector Symbolic Architectures (VSAs) provide a biologically-inspired framework for building SAMs. Entities and attributes are encoded as quasi-orthogonal hyperdimensional vectors and processed with well defined algebraic operations. Despite this rich framework, most VSA s",
+          "link": "http://arxiv.org/abs/2604.15121v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Shay Snyder",
+            "Andrew Capodieci",
+            "David Gorsich",
+            "Maryam Parsa"
+          ],
+          "type": "paper",
+          "conference": "SIGIR 2025"
+        }
+      ]
+    },
+    {
       "name": "CIKM 2025",
       "date": "2025年10月",
       "location": "待定",
-      "papers": [],
-      "total": 0,
-      "acceptance_rate": "待公布"
-    },
-    "SIGIR 2025": {
-      "name": "SIGIR 2025",
-      "date": "2025年7月",
-      "location": "待定",
-      "papers": [],
-      "total": 0,
-      "acceptance_rate": "待公布"
-    },
-    "arXiv 2026": {
-      "name": "arXiv 2026",
-      "date": "最新预印本",
-      "location": "在线",
-      "papers": [],
-      "total": 25,
-      "acceptance_rate": "-"
+      "total": 10,
+      "papers": [
+        {
+          "id": "2604.15294",
+          "arxiv_id": "2604.15294",
+          "title": "How Do LLMs and VLMs Understand Viewpoint Rotation Without Vision? An Interpretability Study",
+          "summary": "Over the past year, spatial intelligence has drawn increasing attention. Many prior works study it from the perspective of visual-spatial intelligence, where models have access to visuospatial information from visual inputs. However, in the absence of visual information, whether linguistic intelligence alone is sufficient to endow models with spatial intelligence, and how models perform relevant tasks with text-only inputs still remain unexplored. Therefore, in this paper, we focus on a fundamen",
+          "link": "http://arxiv.org/abs/2604.15294v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Zhen Yang",
+            "Ping Jian",
+            "Zhongbin Guo",
+            "Zuming Zhang",
+            "Chengzhi Li"
+          ],
+          "type": "paper",
+          "conference": "CIKM 2025"
+        },
+        {
+          "id": "2604.15280",
+          "arxiv_id": "2604.15280",
+          "title": "Why Do Vision Language Models Struggle To Recognize Human Emotions?",
+          "summary": "Understanding emotions is a fundamental ability for intelligent systems to be able to interact with humans. Vision-language models (VLMs) have made tremendous progress in the last few years for many visual tasks, potentially offering a promising solution for understanding emotions. However, it is surprising that even the most sophisticated contemporary VLMs struggle to recognize human emotions or to outperform even specialized vision-only classifiers. In this paper we ask the question \"Why do VL",
+          "link": "http://arxiv.org/abs/2604.15280v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Madhav Agarwal",
+            "Sotirios A. Tsaftaris",
+            "Laura Sevilla-Lara",
+            "Steven McDonagh"
+          ],
+          "type": "paper",
+          "conference": "CIKM 2025"
+        },
+        {
+          "id": "2604.15233",
+          "arxiv_id": "2604.15233",
+          "title": "Blue Data Intelligence Layer: Streaming Data and Agents for Multi-source Multi-modal Data-Centric Applications",
+          "summary": "NL2SQL systems aim to address the growing need for natural language interaction with data. However, real-world information rarely maps to a single SQL query because (1) users express queries iteratively (2) questions often span multiple data sources beyond the closed-world assumption of a single database, and (3) queries frequently rely on commonsense or external knowledge. Consequently, satisfying realistic data needs require integrating heterogeneous sources, modalities, and contextual data. I",
+          "link": "http://arxiv.org/abs/2604.15233v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Moin Aminnaseri",
+            "Farima Fatahi Bayat",
+            "Nikita Bhutani",
+            "Jean-Flavien Bussotti",
+            "Kevin Chan"
+          ],
+          "type": "paper",
+          "conference": "CIKM 2025"
+        },
+        {
+          "id": "2604.15224",
+          "arxiv_id": "2604.15224",
+          "title": "Context Over Content: Exposing Evaluation Faking in Automated Judges",
+          "summary": "The $\\textit{LLM-as-a-judge}$ paradigm has become the operational backbone of automated AI evaluation pipelines, yet rests on an unverified assumption: that judges evaluate text strictly on its semantic content, impervious to surrounding contextual framing. We investigate $\\textit{stakes signaling}$, a previously unmeasured vulnerability where informing a judge model of the downstream consequences its verdicts will have on the evaluated model's continued operation systematically corrupts its ass",
+          "link": "http://arxiv.org/abs/2604.15224v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Manan Gupta",
+            "Inderjeet Nair",
+            "Lu Wang",
+            "Dhruv Kumar"
+          ],
+          "type": "paper",
+          "conference": "CIKM 2025"
+        },
+        {
+          "id": "2604.15190",
+          "arxiv_id": "2604.15190",
+          "title": "Meituan Merchant Business Diagnosis via Policy-Guided Dual-Process User Simulation",
+          "summary": "Simulating group-level user behavior enables scalable counterfactual evaluation of merchant strategies without costly online experiments. However, building a trustworthy simulator faces two structural challenges. First, information incompleteness causes reasoning-based simulators to over-rationalize when unobserved factors such as offline context and implicit habits are missing. Second, mechanism duality requires capturing both interpretable preferences and implicit statistical regularities, whi",
+          "link": "http://arxiv.org/abs/2604.15190v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Ziyang Chen",
+            "Renbing Chen",
+            "Daowei Li",
+            "Jinzhi Liao",
+            "Jiashen Sun"
+          ],
+          "type": "paper",
+          "conference": "CIKM 2025"
+        },
+        {
+          "id": "2604.15166",
+          "arxiv_id": "2604.15166",
+          "title": "Class Unlearning via Depth-Aware Removal of Forget-Specific Directions",
+          "summary": "Machine unlearning aims to remove targeted knowledge from a trained model without the cost of retraining from scratch. In class unlearning, however, reducing accuracy on forget classes does not necessarily imply true forgetting: forgotten information can remain encoded in internal representations, and apparent forgetting may arise from classifier-head suppression rather than representational removal. We show that existing class-unlearning methods often exhibit weak or negative selectivity, prese",
+          "link": "http://arxiv.org/abs/2604.15166v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Arman Hatami",
+            "Romina Aalishah",
+            "Ilya E. Monosov"
+          ],
+          "type": "paper",
+          "conference": "CIKM 2025"
+        },
+        {
+          "id": "2604.15151",
+          "arxiv_id": "2604.15151",
+          "title": "QuantCode-Bench: A Benchmark for Evaluating the Ability of Large Language Models to Generate Executable Algorithmic Trading Strategies",
+          "summary": "Large language models have demonstrated strong performance on general-purpose programming tasks, yet their ability to generate executable algorithmic trading strategies remains underexplored. Unlike standard code benchmarks, trading-strategy generation requires simultaneous mastery of domain-specific financial logic, knowledge of a specialized API, and the ability to produce code that is not only syntactically correct but also leads to actual trades on historical data. In this work, we present Q",
+          "link": "http://arxiv.org/abs/2604.15151v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Alexey Khoroshilov",
+            "Alexey Chernysh",
+            "Orkhan Ekhtibarov",
+            "Nini Kamkia",
+            "Dmitry Zmitrovich"
+          ],
+          "type": "paper",
+          "conference": "CIKM 2025"
+        },
+        {
+          "id": "2604.15148",
+          "arxiv_id": "2604.15148",
+          "title": "IG-Search: Step-Level Information Gain Rewards for Search-Augmented Reasoning",
+          "summary": "Reinforcement learning has emerged as an effective paradigm for training large language models to perform search-augmented reasoning. However, existing approaches rely on trajectory-level rewards that cannot distinguish precise search queries from vague or redundant ones within a rollout group, and collapse to a near-zero gradient signal whenever every sampled trajectory fails. In this paper, we propose IG-Search, a reinforcement learning framework that introduces a step-level reward based on In",
+          "link": "http://arxiv.org/abs/2604.15148v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Zihan Liang",
+            "Yufei Ma",
+            "Ben Chen",
+            "Zhipeng Qian",
+            "Huangyu Dai"
+          ],
+          "type": "paper",
+          "conference": "CIKM 2025"
+        },
+        {
+          "id": "2604.15140",
+          "arxiv_id": "2604.15140",
+          "title": "DiscoTrace: Representing and Comparing Answering Strategies of Humans and LLMs in Information-Seeking Question Answering",
+          "summary": "We introduce DiscoTrace, a method to identify the rhetorical strategies that answerers use when responding to information-seeking questions. DiscoTrace represents answers as a sequence of question-related discourse acts paired with interpretations of the original question, annotated on top of rhetorical structure theory parses. Applying DiscoTrace to answers from nine different human communities reveals that communities have diverse preferences for answer construction. In contrast, LLMs do not e",
+          "link": "http://arxiv.org/abs/2604.15140v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Neha Srikanth",
+            "Jordan Boyd-Graber",
+            "Rachel Rudinger"
+          ],
+          "type": "paper",
+          "conference": "CIKM 2025"
+        },
+        {
+          "id": "2604.15124",
+          "arxiv_id": "2604.15124",
+          "title": "Blinded Multi-Rater Comparative Evaluation of a Large Language Model and Clinician-Authored Responses in CGM-Informed Diabetes Counseling",
+          "summary": "Continuous glucose monitoring (CGM) is central to diabetes care, but explaining CGM patterns clearly and empathetically remains time-intensive. Evidence for retrieval-grounded large language model (LLM) systems in CGM-informed counseling remains limited. To evaluate whether a retrieval-grounded LLM-based conversational agent (CA) could support patient understanding of CGM data and preparation for routine diabetes consultations. We developed a retrieval-grounded LLM-based CA for CGM interpretatio",
+          "link": "http://arxiv.org/abs/2604.15124v1",
+          "published": "2026-04-16",
+          "authors": [
+            "Zhijun Guo",
+            "Alvina Lai",
+            "Emmanouil Korakas",
+            "Aristeidis Vagenas",
+            "Irshad Ahamed"
+          ],
+          "type": "paper",
+          "conference": "CIKM 2025"
+        }
+      ]
     }
-  },
+  ],
   "daily_pick": [
     {
       "id": "09e95c23208a",

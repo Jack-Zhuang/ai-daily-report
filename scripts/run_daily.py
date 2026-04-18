@@ -50,6 +50,13 @@ class DailyReportRunner:
             cmd = f"python3 {articles_script}"
             self.run_command(cmd, "采集文章")
         
+        # 采集顶会论文
+        conf_script = self.scripts_dir / "collect_conference_papers.py"
+        if conf_script.exists():
+            print("\n📡 采集顶会论文...")
+            cmd = f"python3 {conf_script}"
+            self.run_command(cmd, "采集顶会论文")
+        
         return True
     
     def step2_process(self):
@@ -74,29 +81,43 @@ class DailyReportRunner:
         
         print(f"加载数据: {data_file.name}")
         
+        # 导入翻译模块
+        import sys
+        sys.path.insert(0, str(self.scripts_dir))
+        from translator import MiniMaxTranslator
+        translator = MiniMaxTranslator()
+        
         # 处理论文（翻译标题和摘要）
         print("\n📝 处理论文...")
         for paper in data.get('arxiv_papers', []):
-            if not paper.get('cn_title'):
-                paper['cn_title'] = paper.get('title', '')
-            if not paper.get('cn_summary'):
-                paper['cn_summary'] = paper.get('summary', '')[:200]
+            if not paper.get('cn_title') or paper.get('cn_title') == paper.get('title'):
+                paper['cn_title'] = translator.translate_title(paper.get('title', ''))
+            if not paper.get('cn_summary') or len(paper.get('cn_summary', '')) < 50:
+                paper['cn_summary'] = translator.translate_abstract(paper.get('summary', ''))
         
         # 处理每日精选
         print("📝 处理每日精选...")
         for item in data.get('daily_pick', []):
             if not item.get('cn_title'):
                 item['cn_title'] = item.get('title', item.get('name', ''))
-            if not item.get('cn_summary'):
-                item['cn_summary'] = item.get('summary', item.get('description', ''))[:200]
+            if not item.get('cn_summary') or len(item.get('cn_summary', '')) < 50:
+                item['cn_summary'] = translator.translate(item.get('summary', item.get('description', '')))
         
         # 处理热门文章
         print("📝 处理热门文章...")
         for item in data.get('hot_articles', []):
             if not item.get('cn_title'):
                 item['cn_title'] = item.get('title', '')
-            if not item.get('cn_summary'):
-                item['cn_summary'] = item.get('summary', '')[:200]
+            if not item.get('cn_summary') or len(item.get('cn_summary', '')) < 50:
+                item['cn_summary'] = translator.translate(item.get('summary', ''))
+        
+        # 合并顶会论文
+        conf_file = self.base_dir / "cache" / "conference_papers.json"
+        if conf_file.exists():
+            print("📝 合并顶会论文...")
+            with open(conf_file, 'r', encoding='utf-8') as f:
+                conf_data = json.load(f)
+            data['conference_papers'] = list(conf_data.values())
         
         # 保存
         with open(data_file, 'w', encoding='utf-8') as f:
