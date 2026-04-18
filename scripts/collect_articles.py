@@ -69,6 +69,14 @@ class ArticleCollector:
                 'category': 'wechat',
                 'priority': 1
             },
+            # ===== 技术博客（通过 RSSHub）=====
+            {
+                'name': '美团技术团队',
+                'rss_url': f'{self.rsshub_base}/meituan/tech',
+                'keywords': ['推荐', '算法', '机器学习', 'AI', '大模型', '搜索', '广告'],
+                'category': 'tech_blog',
+                'priority': 1
+            },
             # ===== 知乎（通过 RSSHub 国内镜像）=====
             {
                 'name': '知乎热榜',

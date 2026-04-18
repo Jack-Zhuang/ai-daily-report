@@ -1,0 +1,100 @@
+{
+  "accounts": [
+    {
+      "name": "DataFunTalk",
+      "description": "数据算法技术分享，推荐系统、机器学习、数据挖掘",
+      "keywords": ["推荐", "算法", "机器学习", "数据挖掘"],
+      "priority": 1,
+      "rss_url": null,
+      "status": "need_search"
+    },
+    {
+      "name": "机器之心",
+      "description": "AI技术媒体，高质量AI资讯",
+      "keywords": ["AI", "机器学习", "深度学习"],
+      "priority": 1,
+      "rss_url": "https://wechat2rss.xlab.app/feed/51e92aad2728acdd1fda7314be32b16639353001.xml",
+      "status": "active"
+    },
+    {
+      "name": "量子位",
+      "description": "AI技术媒体，前沿AI研究",
+      "keywords": ["AI", "量子计算", "前沿研究"],
+      "priority": 1,
+      "rss_url": "https://wechat2rss.xlab.app/feed/7131b577c61365cb47e81000738c10d872685908.xml",
+      "status": "active"
+    },
+    {
+      "name": "新智元",
+      "description": "AI技术媒体，AI产业资讯",
+      "keywords": ["AI", "产业", "资讯"],
+      "priority": 1,
+      "rss_url": "https://wechat2rss.xlab.app/feed/ede30346413ea70dbef5d485ea5cbb95cca446e7.xml",
+      "status": "active"
+    },
+    {
+      "name": "PaperWeekly",
+      "description": "论文分享，AI论文解读",
+      "keywords": ["论文", "AI", "研究"],
+      "priority": 1,
+      "rss_url": "https://wechat2rss.xlab.app/feed/3be891c2f4e526629ab055a297cc2cd6c1f0a563.xml",
+      "status": "active"
+    },
+    {
+      "name": "美团技术团队",
+      "description": "美团技术博客，推荐系统实践",
+      "keywords": ["推荐", "美团", "实践"],
+      "priority": 2,
+      "rss_url": null,
+      "status": "need_search"
+    },
+    {
+      "name": "阿里技术",
+      "description": "阿里技术博客，推荐系统实践",
+      "keywords": ["推荐", "阿里", "实践"],
+      "priority": 2,
+      "rss_url": null,
+      "status": "need_search"
+    },
+    {
+      "name": "腾讯技术工程",
+      "description": "腾讯技术博客，推荐系统实践",
+      "keywords": ["推荐", "腾讯", "实践"],
+      "priority": 2,
+      "rss_url": null,
+      "status": "need_search"
+    },
+    {
+      "name": "字节跳动技术团队",
+      "description": "字节技术博客，推荐系统实践",
+      "keywords": ["推荐", "字节", "TikTok"],
+      "priority": 2,
+      "rss_url": null,
+      "status": "need_search"
+    },
+    {
+      "name": "搜广推算法工程师",
+      "description": "搜索、广告、推荐算法",
+      "keywords": ["搜索", "广告", "推荐"],
+      "priority": 1,
+      "rss_url": null,
+      "status": "need_search"
+    },
+    {
+      "name": "推荐系统算法工程师",
+      "description": "推荐系统技术分享",
+      "keywords": ["推荐系统", "算法"],
+      "priority": 1,
+      "rss_url": null,
+      "status": "need_search"
+    },
+    {
+      "name": "炼数成金",
+      "description": "数据科学、机器学习",
+      "keywords": ["数据科学", "机器学习"],
+      "priority": 2,
+      "rss_url": null,
+      "status": "need_search"
+    }
+  ]
+}

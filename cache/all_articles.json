@@ -92,6 +92,19 @@
       "collected_at": "2026-04-18T09:15:59.670805"
     },
     {
+      "id": "7318e9c4417c",
+      "title": "吴敬平说樊振东德甲21轮对战伯兰特决胜局10:6那分是当今乒乓球技术发展方向，请问怎么理解这一评价？",
+      "summary": "[2 张图片]",
+      "link": "https://www.zhihu.com/question/2028391790328254774",
+      "source": "知乎热榜",
+      "published": "2026-04-17",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "zhihu",
+      "collected_at": "2026-04-19T01:23:11.623459"
+    },
+    {
       "id": "ee5e61a76e5e",
       "title": "单任务狂飙16小时！模型+Harness双轮驱动，金融Agent跑通了",
       "summary": "",
@@ -493,6 +506,19 @@
       "type": "article",
       "category": "tech",
       "collected_at": "2026-04-18T08:52:56.111967"
+    },
+    {
+      "id": "01ee2d53a290",
+      "title": "AI 说的「稳稳地接住你」到底是什么意思？",
+      "summary": "[图片]",
+      "link": "https://www.zhihu.com/question/2028251818384192677",
+      "source": "知乎热榜",
+      "published": "2026-04-16",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "zhihu",
+      "collected_at": "2026-04-19T01:23:11.623504"
     },
     {
       "id": "a2fb6a5ba54c",
@@ -1065,7 +1091,124 @@
       "type": "article",
       "category": "opensource",
       "collected_at": "2026-04-18T09:15:46.567399"
+    },
+    {
+      "id": "e3e884480f6b",
+      "title": "LongCat-Flash-Prover：AI 攻克数学定理证明，不仅要“算得对”，更要“证得严”",
+      "summary": "引言现如今的大语言模型已经能流畅地写文章、写代码，甚至执行复杂的 Agent 工作流，然而，它们在面对严谨的数学定理证明时，却往往显得力不从心。在常规的数学解题中，模型只需要“答对最终数值”即可，但数学定理证明不同，它要求极度严苛的逻辑链条，任何一句自然语言的模棱两可，都可能导致整个证明的崩塌。那么，如何让 AI 从“猜答案”走向“严谨证明”，成为复杂推理具有挑战的课题。为了解答这个问题，我们开源",
+      "link": "https://tech.meituan.com/2026/04/07/longcat-flash-prover.html",
+      "source": "美团技术团队",
+      "published": "2026-04-07",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "tech_blog",
+      "collected_at": "2026-04-19T01:23:08.363701"
+    },
+    {
+      "id": "52b0aa274643",
+      "title": "美团发布原生多模态 LongCat-Next：当视觉和语音成为AI的母语",
+      "summary": "引言物理世界的信息由图像、声音、文字交织而成。今天的大模型，本质上仍然是以语言为中心的建模系统，语言作为人类智慧符号化表述，在”压缩即智能”的范式下表现出强大的能力。但通往真正的物理世界智能，也许语言并不是世界的边界。视觉、语音与文本等多模态信号，实际上是对现实物理对象的不同侧面投影。这就引出一个根本问题：能否让 AI 像处理语言一样，用同一种方式简洁有效地处理物理世界的多种信息？ 如果能，那么物",
+      "link": "https://tech.meituan.com/2026/04/02/longcat-next.html",
+      "source": "美团技术团队",
+      "published": "2026-04-02",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "tech_blog",
+      "collected_at": "2026-04-19T01:23:08.363745"
+    },
+    {
+      "id": "5397820e9ff1",
+      "title": "重塑站外体验：大众点评 M 站基于 Qwik.js 的重构实践",
+      "summary": "一、背景与挑战：流量转化与用户体验的困境什么是 M 站？M 即 Mobile，对大众点评而言，M 站是面向公域的流量引流入口，经近年 M 站与 PC 站形态融合、交互链路剥离后，定位进一步明确为“信息展示 + 点击唤端”的极简触点。我们所维护的大众点评 M 站，也由此聚焦至商户详情页、内容详情页、首页这三大高流量页面。在移动互联网流量进入精细化运营的背景下，主流互联网厂商均将交易、内容生产等高用户",
+      "link": "https://tech.meituan.com/2026/03/13/qwik-practice-in-dianping.html",
+      "source": "美团技术团队",
+      "published": "2026-03-13",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "tech_blog",
+      "collected_at": "2026-04-19T01:23:08.363776"
+    },
+    {
+      "id": "d8b4d0b91709",
+      "title": "LongCat 为 OpenClaw 装上效率引擎：你的自动化任务还能再快 30%",
+      "summary": "OpenClaw 在开发者社区迅速获得 23万+ Stars，因其作为开源、本地优先的个人 AI Agent，能够将大语言模型的推理能力转化为对计算机的实际操作，为构建个人 AI 助手提供了系统级权限与自动化基础。然而，近期部分平台开始收紧对非官方入口的访问。谷歌以“恶意使用”为由，大规模封禁通过 OpenClaw 路由 Gemini token 的用户账号，Anthropic 随后也更新使用条款",
+      "link": "https://tech.meituan.com/2026/03/09/longcat-openclaw.html",
+      "source": "美团技术团队",
+      "published": "2026-03-09",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "tech_blog",
+      "collected_at": "2026-04-19T01:23:08.363794"
+    },
+    {
+      "id": "ccba919b806c",
+      "title": "美团发布基于 N-gram 全新模型：嵌入扩展新范式，实现轻量化 MoE 高效进化",
+      "summary": "传统 MoE 架构通常通过增加专家数量来提升模型能力，但随着专家数量增加，会面临边际收益递减和系统通信开销上升等问题。美团 LongCat 团队通过全面的分析与实验发现：嵌入扩展相比专家扩展能获得更优的帕累托前沿。这意味着嵌入扩展在特定条件下相比专家扩展能实现更优的效能边界。基于这些洞见，我们正式推出&nbsp;LongCat-Flash-Lite —— 一款拥有 685 亿参数，每次推理仅激活2",
+      "link": "https://tech.meituan.com/2026/02/10/longcat-flash-lite.html",
+      "source": "美团技术团队",
+      "published": "2026-02-10",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "tech_blog",
+      "collected_at": "2026-04-19T01:23:08.363815"
+    },
+    {
+      "id": "8c7995e0d39b",
+      "title": "2025美团技术年货，「马」上到来",
+      "summary": "新春将至，美团技术年货如约而来。感谢这一路上，伙伴们的并肩前行与坚定支持！❤️时光荏苒，美团技术博客已经陪伴大家走过了 12 个年头。过去一年，美团技术团队在持续深耕中积累了诸多值得分享的实践案例与开源项目。尤其值得关注的是，美团 LongCat 团队在大模型开源领域取得了不少亮眼的成果，这一年，我们陆续发布了覆盖基座模型、图像、视频、语音等多个方向的开源产品与工具，持续助力 AI 技术共享与生态",
+      "link": "https://tech.meituan.com/2026/02/02/2025-spring-festival-present.html",
+      "source": "美团技术团队",
+      "published": "2026-02-02",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "tech_blog",
+      "collected_at": "2026-04-19T01:23:08.363832"
+    },
+    {
+      "id": "7a09b13975fc",
+      "title": "多维创新打造强泛化智能体模型，LongCat-Flash-Thinking-2601技术报告发布",
+      "summary": "当大模型在数学竞赛、代码编写等领域持续突破，甚至超越顶尖人类专家时，大家难免会好奇：这些在基准测试中拿高分的模型，能否真正落地到复杂多变、充满噪声的真实世界任务中？近期，美团 LongCat 团队交出了一份重磅答卷——开源 LongCat-Flash-Thinking-2601。作为一款拥有 5600 亿参数的 MoE（混合专家） 模型，它不仅在 BrowseComp、VitaBench 等智能体",
+      "link": "https://tech.meituan.com/2026/02/02/longcat-flash-thinking-2601-techreport.html",
+      "source": "美团技术团队",
+      "published": "2026-02-02",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "agent",
+      "collected_at": "2026-04-19T01:23:08.363862"
+    },
+    {
+      "id": "dcef094e110a",
+      "title": "美团 EvoCUA 刷新开源 SOTA，会用电脑还会持续进化的智能体！",
+      "summary": "大模型虽已具备强大的感知与推理能力，但在面对复杂的计算机图形界面操作（Computer Use）任务时，仍受限于高质量数据稀缺与环境交互反馈缺失的双重挑战。美团技术团队推出了 EvoCUA 模型并在 Github、Huggingface 开源，通过构建可验证数据合成引擎与十万级并发的交互沙盒，将训练范式从传统的“静态轨迹模仿”转变为高效的“经验进化学习”。该方案在权威评测基准 OSWorld 上以",
+      "link": "https://tech.meituan.com/2026/01/26/evocua.html",
+      "source": "美团技术团队",
+      "published": "2026-01-26",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "agent",
+      "collected_at": "2026-04-19T01:23:08.363882"
+    },
+    {
+      "id": "e36ce37551f1",
+      "title": "美团 LongCat-Flash-Thinking-2601 发布，工具调用能力登顶开源 SOTA！",
+      "summary": "近日，美团 LongCat 团队正式对外发布并开源 LongCat-Flash-Thinking-2601。作为已发布的 LongCat-Flash-Thinking 模型的升级版，LongCat-Flash-Thinking-2601 在 Agentic Search（智能体搜索）、Agentic Tool Use（智能体工具调用）、TIR（工具交互推理）等核心评测基准上，均达到开源模型 SOT",
+      "link": "https://tech.meituan.com/2026/01/20/longcat-flash-thinking-2601.html",
+      "source": "美团技术团队",
+      "published": "2026-01-20",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "opensource",
+      "collected_at": "2026-04-19T01:23:08.363901"
     }
   ],
-  "last_update": "2026-04-19T01:10:46.687530"
+  "last_update": "2026-04-19T01:23:35.044474"
 }

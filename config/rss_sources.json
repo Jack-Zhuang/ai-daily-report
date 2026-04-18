@@ -1,0 +1,38 @@
+{
+  "推荐系统": [
+    {
+      "name": "Reddit - RecommenderSystems",
+      "url": "https://rsshub.rssforever.com/reddit/subreddit/RecommenderSystems",
+      "description": "Reddit 推荐系统讨论"
+    },
+    {
+      "name": "Hacker News - Recommendation",
+      "url": "https://rsshub.rssforever.com/hackernews/search/recommendation",
+      "description": "Hacker News 推荐相关"
+    }
+  ],
+  "机器学习": [
+    {
+      "name": "Reddit - MachineLearning",
+      "url": "https://rsshub.rssforever.com/reddit/subreddit/MachineLearning",
+      "description": "Reddit 机器学习讨论"
+    },
+    {
+      "name": "Papers With Code",
+      "url": "https://rsshub.rssforever.com/paperswithcode/latest",
+      "description": "最新 ML 论文"
+    }
+  ],
+  "技术博客": [
+    {
+      "name": "美团技术团队",
+      "url": "https://rsshub.rssforever.com/meituan/tech",
+      "description": "美团技术博客"
+    },
+    {
+      "name": "字节跳动技术团队",
+      "url": "https://rsshub.rssforever.com/bytedance/tech",
+      "description": "字节技术博客"
+    }
+  ]
+}
