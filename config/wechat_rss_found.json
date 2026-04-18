@@ -1,0 +1,64 @@
+{
+  "found_accounts": [
+    {
+      "name": "字节跳动技术团队",
+      "rss_url": "https://wechat2rss.xlab.app/feed/4025ea55575daf8bfd8227e68b28d9638b073267.xml",
+      "priority": 1,
+      "keywords": ["推荐", "算法", "AI", "抖音", "TikTok"]
+    },
+    {
+      "name": "美团技术团队",
+      "rss_url": "https://wechat2rss.xlab.app/feed/eb4d04149424a874693a51c6fdda0dba8673f5e4.xml",
+      "priority": 1,
+      "keywords": ["推荐", "算法", "搜索", "广告"]
+    },
+    {
+      "name": "字节跳动安全中心",
+      "rss_url": "https://wechat2rss.xlab.app/feed/f4087ff02b808a1a995e2ba930219ada5b82425d.xml",
+      "priority": 2,
+      "keywords": ["安全", "AI"]
+    },
+    {
+      "name": "机器之心",
+      "rss_url": "https://wechat2rss.xlab.app/feed/51e92aad2728acdd1fda7314be32b16639353001.xml",
+      "priority": 1,
+      "keywords": ["AI", "大模型", "推荐"]
+    },
+    {
+      "name": "新智元",
+      "rss_url": "https://wechat2rss.xlab.app/feed/ede30346413ea70dbef5d485ea5cbb95cca446e7.xml",
+      "priority": 1,
+      "keywords": ["AI", "大模型", "推荐"]
+    },
+    {
+      "name": "量子位",
+      "rss_url": "https://wechat2rss.xlab.app/feed/7131b577c61365cb47e81000738c10d872685908.xml",
+      "priority": 1,
+      "keywords": ["AI", "大模型", "推荐"]
+    },
+    {
+      "name": "PaperWeekly",
+      "rss_url": "https://wechat2rss.xlab.app/feed/3be891c2f4e526629ab055a297cc2cd6c1f0a563.xml",
+      "priority": 1,
+      "keywords": ["论文", "AI", "推荐"]
+    },
+    {
+      "name": "Datawhale",
+      "rss_url": "https://wechat2rss.xlab.app/feed/4d620d988cb21cfeefd2263207221f0dc70df9ff.xml",
+      "priority": 2,
+      "keywords": ["AI", "机器学习", "数据"]
+    },
+    {
+      "name": "我爱计算机视觉",
+      "rss_url": "https://wechat2rss.xlab.app/feed/b81ffcfff1107b5265cd7e39de610dc7ca72caf4.xml",
+      "priority": 2,
+      "keywords": ["CV", "AI", "视觉"]
+    },
+    {
+      "name": "机器学习初学者",
+      "rss_url": "https://wechat2rss.xlab.app/feed/c5f385197ef56f9345db0daf1e46419af8c7d664.xml",
+      "priority": 2,
+      "keywords": ["机器学习", "AI"]
+    }
+  ]
+}
