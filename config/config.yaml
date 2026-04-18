@@ -1,0 +1,103 @@
+# AI推荐日报配置文件
+
+# 采集配置
+collection:
+  # 采集时间（cron格式）
+  schedule: "0 6 * * *"  # 每天早上6点
+  
+  # arXiv配置
+  arxiv:
+    enabled: true
+    categories:
+      - cs.IR    # 信息检索
+      - cs.AI    # 人工智能
+      - cs.LG    # 机器学习
+    keywords:
+      - recommendation
+      - recommender system
+      - AI agent
+      - LLM
+      - large language model
+    max_results: 50
+    
+  # GitHub配置
+  github:
+    enabled: true
+    topics:
+      - recommendation-system
+      - llm
+      - ai-agent
+      - recommender
+      - machine-learning
+    max_results: 30
+    
+  # 顶会论文配置
+  conferences:
+    enabled: true
+    list:
+      - name: WSDM 2025
+        date: 2025-03
+        url: https://www.wsdm-conference.org/2025/
+      - name: KDD 2025
+        date: 2025-08
+        url: https://kdd.org/kdd2025/
+      - name: RecSys 2025
+        date: 2025-09
+        url: https://recsys.acm.org/recsys25/
+      - name: WWW 2025
+        date: 2025-04
+        url: https://www2025.thewebconf.org/
+      - name: CIKM 2025
+        date: 2025-10
+        url: https://cikm2025.org/
+      - name: SIGIR 2025
+        date: 2025-07
+        url: https://sigir.org/
+
+# 生成配置
+generation:
+  # 生成时间
+  schedule: "30 8 * * *"  # 每天早上8:30
+  
+  # 每日精选数量
+  daily_pick_count: 5
+  
+  # 热门文章数量
+  hot_articles_count: 8
+  
+  # GitHub项目数量
+  github_count: 6
+
+# 推送配置
+push:
+  # 推送时间
+  schedule: "0 9 * * *"  # 每天早上9:00
+  
+  # 推送渠道
+  channels:
+    - xiaoyi-channel  # 主渠道
+    
+  # 推送消息模板
+  message_template: |
+    🌅 AI推荐日报 | {date}
+    
+    📰 今日精选
+    {daily_pick_summary}
+    
+    📊 今日统计
+    • 论文: {total_papers} 篇
+    • 项目: {total_projects} 个
+    • 文章: {total_articles} 篇
+
+# 归档配置
+archive:
+  # 归档保留天数
+  retention_days: 90
+  
+  # 归档目录
+  directory: ./archive
+
+# 日志配置
+logging:
+  level: INFO
+  file: ./logs/ai_daily.log

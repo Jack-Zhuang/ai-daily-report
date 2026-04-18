@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>往期日报 | AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --color-text-anchor: #312C51;
+            --color-text-secondary: rgba(49,44,81,0.68);
+            --color-text-muted: rgba(49,44,81,0.40);
+            --color-card: #FFFFFF;
+            --bg: #FAFAFA;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--color-text-anchor); }
+        
+        .header {
+            background: var(--gradient-primary); color: white;
+            padding: 60px 16px 30px; text-align: center;
+        }
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { font-size: 13px; opacity: 0.9; }
+        
+        .main { padding: 20px 12px 60px; max-width: 600px; margin: 0 auto; }
+        
+        .report-card {
+            background: var(--color-card); border-radius: 14px;
+            padding: 16px; margin-bottom: 12px;
+            box-shadow: 0 2px 12px rgba(49,44,81,0.06);
+            display: flex; align-items: center; justify-content: space-between;
+            text-decoration: none; color: inherit;
+        }
+        .report-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(49,44,81,0.1); }
+        
+        .report-date { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .report-stats { font-size: 12px; color: var(--color-text-muted); }
+        .report-stats span { margin-right: 12px; }
+        
+        .report-link {
+            background: var(--gradient-primary); color: white;
+            padding: 8px 16px; border-radius: 10px;
+            font-size: 12px; font-weight: 700; text-decoration: none;
+        }
+        
+        .back-link {
+            display: block; text-align: center;
+            padding: 16px; color: var(--color-text-secondary);
+            text-decoration: none; font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-history"></i> 往期日报</h1>
+        <p>共 1 期日报</p>
+    </div>
+    
+    <div class="main">
+        
+        <a href="../2026-04-17/index.html" class="report-card">
+            <div>
+                <div class="report-date">2026-04-17</div>
+                <div class="report-stats">
+                    <span><i class="fas fa-file-alt"></i> 47篇论文</span>
+                    <span><i class="fab fa-github"></i> 20个项目</span>
+                    <span><i class="fas fa-star"></i> 5篇精选</span>
+                </div>
+            </div>
+            <span class="report-link">查看</span>
+        </a>
+        
+        
+        <a href="../index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> 返回今日日报
+        </a>
+    </div>
+</body>
+</html>

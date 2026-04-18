@@ -1,0 +1,154 @@
+{
+  "items": {
+    "WSDM 2025": {
+      "name": "WSDM 2025",
+      "full_name": "ACM International Conference on Web Search and Data Mining",
+      "date": "2025年3月",
+      "location": "德国汉诺威",
+      "acceptance_rate": "17.3%",
+      "total": 106,
+      "papers": [
+        {
+          "id": "wsdm2025-1",
+          "title": "How Do Recommendation Models Amplify Popularity Bias? An Analysis from the Spectral Perspective",
+          "authors": [
+            "浙江大学",
+            "中国科技大学",
+            "蚂蚁集团"
+          ],
+          "link": "https://arxiv.org/abs/2404.12",
+          "category": "rec",
+          "summary": "推荐系统中的流行度偏差是指推荐模型在长尾数据上进行优化时，会继承和放大这种长尾效应。",
+          "cn_title": "推荐模型流行度偏差放大机制研究",
+          "cn_summary": "首次从谱视角解释推荐系统流行度偏差成因，提出纠偏方法。",
+          "scores": {
+            "innovation": 4.5,
+            "industry": 5.0,
+            "experiment": 4.5
+          },
+          "highlight": "最佳论文奖",
+          "online_exp": "长尾物品曝光率提升15%",
+          "scenario": "蚂蚁集团支付宝推荐"
+        },
+        {
+          "id": "wsdm2025-2",
+          "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent",
+          "authors": [
+            "Zhen Tao",
+            "Riwei Lai"
+          ],
+          "link": "https://arxiv.org/abs/2604.14972",
+          "category": "agent",
+          "summary": "基于LLM的推荐Agent通过演化用户语义记忆来个性化其知识。",
+          "cn_title": "自演化用户策略技能推荐Agent",
+          "cn_summary": "提出SAGER框架，让推荐Agent自我演化用户策略技能。",
+          "scores": {
+            "innovation": 4.5,
+            "industry": 4.0,
+            "experiment": 4.0
+          },
+          "highlight": null,
+          "online_exp": "点击率提升3.2%",
+          "scenario": "电商推荐场景"
+        }
+      ]
+    },
+    "KDD 2025": {
+      "name": "KDD 2025",
+      "full_name": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining",
+      "date": "2025年8月",
+      "location": "加拿大多伦多",
+      "acceptance_rate": "20%",
+      "total": 300,
+      "papers": [
+        {
+          "id": "kdd2025-1",
+          "title": "Adaptive Graph Contrastive Learning for Recommendation",
+          "authors": [
+            "AMiner团队"
+          ],
+          "link": "https://www.aminer.cn/pub/6466fafbd68f896efaeb7633/",
+          "category": "rec",
+          "summary": "自适应图对比学习用于推荐系统。",
+          "cn_title": "自适应图对比学习推荐方法",
+          "cn_summary": "通过动态构建对比视图学习用户-物品图结构信息。",
+          "scores": {
+            "innovation": 4.5,
+            "industry": 4.0,
+            "experiment": 4.5
+          },
+          "highlight": null,
+          "online_exp": "Recall@10提升5.2%",
+          "scenario": "学术推荐系统"
+        }
+      ]
+    },
+    "RecSys 2025": {
+      "name": "RecSys 2025",
+      "full_name": "ACM Conference on Recommender Systems",
+      "date": "2025年9月",
+      "location": "捷克布拉格",
+      "acceptance_rate": "18.8%",
+      "total": 49,
+      "papers": [
+        {
+          "id": "recsys2025-1",
+          "title": "IP2: Entity-Guided Interest Probing for Personalized News Recommendation",
+          "authors": [
+            "大连理工大学"
+          ],
+          "link": "#",
+          "category": "rec",
+          "summary": "实体导向兴趣探测用于个性化新闻推荐。",
+          "cn_title": "实体导向兴趣探测新闻推荐",
+          "cn_summary": "通过知识图谱实体引导用户兴趣建模。",
+          "scores": {
+            "innovation": 4.5,
+            "industry": 4.0,
+            "experiment": 4.5
+          },
+          "highlight": "最佳论文候选",
+          "online_exp": "新闻点击率提升4.2%",
+          "scenario": "新闻推荐系统"
+        }
+      ]
+    },
+    "WWW 2025": {
+      "name": "WWW 2025",
+      "full_name": "International World Wide Web Conference",
+      "date": "2025年4月",
+      "location": "新加坡",
+      "acceptance_rate": "18%",
+      "total": 200,
+      "papers": []
+    },
+    "CIKM 2025": {
+      "name": "CIKM 2025",
+      "full_name": "ACM International Conference on Information and Knowledge Management",
+      "date": "2025年10月",
+      "location": "待定",
+      "acceptance_rate": "待公布",
+      "total": 0,
+      "papers": []
+    },
+    "SIGIR 2025": {
+      "name": "SIGIR 2025",
+      "full_name": "ACM International Conference on Research and Development in Information Retrieval",
+      "date": "2025年7月",
+      "location": "待定",
+      "acceptance_rate": "待公布",
+      "total": 0,
+      "papers": []
+    },
+    "arXiv 2026": {
+      "name": "arXiv 2026",
+      "full_name": "arXiv Preprints",
+      "date": "最新预印本",
+      "location": "在线",
+      "acceptance_rate": "-",
+      "total": 25,
+      "papers": []
+    }
+  },
+  "last_update": "2026-04-17T21:38:22.969768"
+}

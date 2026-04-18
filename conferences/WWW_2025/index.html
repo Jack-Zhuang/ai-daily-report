@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WWW 2025 论文列表 | AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --color-text-anchor: #312C51;
+            --color-text-secondary: rgba(49,44,81,0.68);
+            --color-text-muted: rgba(49,44,81,0.40);
+            --color-card: #FFFFFF;
+            --bg: #FAFAFA;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --safe-area-top: env(safe-area-inset-top, 0px);
+            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: var(--bg); color: var(--color-text-anchor); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        
+        /* Header */
+        .header {
+            background: var(--gradient-primary); color: white;
+            padding: 60px 16px 30px; padding-top: calc(60px + var(--safe-area-top));
+        }
+        .header-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: rgba(255,255,255,0.8); text-decoration: none;
+            font-size: 13px; margin-bottom: 16px;
+        }
+        .header-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+        .header-meta { font-size: 13px; opacity: 0.9; display: flex; flex-wrap: wrap; gap: 12px; }
+        .header-meta span { display: flex; align-items: center; gap: 4px; }
+        
+        /* Stats Bar */
+        .stats-bar {
+            display: flex; gap: 16px; padding: 16px;
+            background: white; margin: -20px 12px 0; border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(49,44,81,0.1);
+        }
+        .stat-item { flex: 1; text-align: center; }
+        .stat-value { font-size: 20px; font-weight: 700; color: #667eea; }
+        .stat-label { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
+        
+        /* Main */
+        .main { padding: 20px 12px 60px; padding-bottom: calc(60px + var(--safe-area-bottom)); }
+        
+        /* Section */
+        .section-title {
+            font-size: 16px; font-weight: 700; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .section-title i { color: #667eea; }
+        
+        /* Paper Card */
+        .paper-card {
+            background: var(--color-card); border-radius: 16px;
+            margin-bottom: 12px; overflow: hidden;
+            box-shadow: 0 2px 12px rgba(49,44,81,0.05);
+        }
+        .paper-header {
+            background: var(--gradient-primary); color: white;
+            padding: 16px; position: relative;
+        }
+        .paper-tags {
+            display: flex; gap: 8px; margin-bottom: 10px;
+        }
+        .paper-tag {
+            background: rgba(255,255,255,0.2); padding: 3px 10px;
+            border-radius: 6px; font-size: 10px; font-weight: 700;
+        }
+        .paper-highlight {
+            position: absolute; top: 12px; right: 12px;
+            background: linear-gradient(135deg, #ffd700, #ffb700);
+            color: #333; padding: 4px 10px; border-radius: 8px;
+            font-size: 10px; font-weight: 700;
+        }
+        .paper-title { font-size: 15px; font-weight: 700; line-height: 1.4; }
+        .paper-authors { font-size: 12px; opacity: 0.9; margin-top: 8px; display: flex; align-items: center; gap: 6px; }
+        
+        .paper-body { padding: 16px; }
+        .paper-summary { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 16px; }
+        
+        /* Scores */
+        .scores-section { margin-bottom: 16px; }
+        .scores-title { font-size: 12px; font-weight: 700; color: var(--color-text-anchor); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+        .scores-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .score-item { text-align: center; background: rgba(49,44,81,0.02); padding: 10px; border-radius: 10px; }
+        .score-label { font-size: 10px; color: var(--color-text-muted); margin-bottom: 4px; }
+        .score-value { font-size: 18px; font-weight: 700; color: #667eea; }
+        .score-stars { font-size: 10px; color: #fbbf24; }
+        
+        .overall-score {
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--gradient-primary); color: white;
+            padding: 12px 16px; border-radius: 10px; margin-top: 10px;
+        }
+        .overall-label { font-size: 12px; }
+        .overall-value { font-size: 20px; font-weight: 700; }
+        
+        /* Experiment & Scenario */
+        .exp-section { margin-bottom: 16px; }
+        .exp-item {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 12px; background: rgba(49,44,81,0.02);
+            border-radius: 10px; margin-bottom: 8px;
+        }
+        .exp-icon {
+            width: 28px; height: 28px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; flex-shrink: 0;
+        }
+        .exp-icon.test { background: rgba(16,185,129,0.1); color: #10b981; }
+        .exp-icon.scenario { background: rgba(102,126,234,0.1); color: #667eea; }
+        .exp-content { flex: 1; }
+        .exp-label { font-size: 10px; color: var(--color-text-muted); margin-bottom: 2px; }
+        .exp-value { font-size: 12px; font-weight: 600; }
+        
+        /* Action Button */
+        .paper-action {
+            display: block; width: 100%; padding: 14px;
+            background: var(--gradient-primary); color: white;
+            border: none; border-radius: 10px;
+            font-size: 13px; font-weight: 700; text-align: center;
+            text-decoration: none;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center; padding: 60px 20px;
+            color: var(--color-text-muted);
+        }
+        .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+        .empty-text { font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html" class="header-back">
+            <i class="fas fa-arrow-left"></i> 返回日报
+        </a>
+        <h1 class="header-title">WWW 2025</h1>
+        <div class="header-meta">
+            <span><i class="fas fa-calendar"></i> 2025年4月</span>
+            <span><i class="fas fa-map-marker-alt"></i> 新加坡</span>
+            <span><i class="fas fa-percentage"></i> 录用率 18%</span>
+        </div>
+    </div>
+    
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-value">200</div>
+            <div class="stat-label">收录论文</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">1</div>
+            <div class="stat-label">精选论文</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">18%</div>
+            <div class="stat-label">录用率</div>
+        </div>
+    </div>
+    
+    <div class="main">
+        <div class="section-title">
+            <i class="fas fa-list-ol"></i> 论文列表（按综合评分排序）
+        </div>
+        <div id="papers-list"></div>
+    </div>
+    
+    <script>
+        const papers = [{"id": "www2025-1", "title": "Large Language Models for Web Search and Recommendation", "authors": ["Google"], "link": "#", "category": "llm", "summary": "大语言模型在Web搜索和推荐中的应用，探索LLM如何增强传统搜索和推荐系统。", "scores": {"innovation": 4.5, "industry": 5.0, "experiment": 4.5}, "highlight": null, "online_exp": "搜索相关性提升3.5%", "scenario": "Google搜索", "overall_score": 4.7}];
+        const categoryLabels = { rec: '推荐系统', agent: 'AI Agent', llm: 'LLM', industry: '工业应用' };
+        const categoryEmoji = { rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭' };
+        
+        function renderStars(score) {
+            const fullStars = Math.floor(score);
+            const hasHalf = score % 1 >= 0.5;
+            let html = '';
+            for (let i = 0; i < fullStars; i++) html += '★';
+            if (hasHalf) html += '☆';
+            return html;
+        }
+        
+        function renderPapers() {
+            const container = document.getElementById('papers-list');
+            
+            if (papers.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📄</div>
+                        <div class="empty-text">论文列表待更新...<br>会议尚未召开或论文列表未发布</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = papers.map((paper, i) => `
+                <div class="paper-card">
+                    <div class="paper-header">
+                        <div class="paper-tags">
+                            <span class="paper-tag">${categoryEmoji[paper.category] || '📄'} ${categoryLabels[paper.category] || '论文'}</span>
+                            <span class="paper-tag">#${i + 1}</span>
+                        </div>
+                        ${paper.highlight ? `<span class="paper-highlight">${paper.highlight}</span>` : ''}
+                        <h2 class="paper-title">${paper.title}</h2>
+                        <div class="paper-authors">
+                            <i class="fas fa-users"></i> ${paper.authors ? paper.authors.join(', ') : 'Unknown'}
+                        </div>
+                    </div>
+                    <div class="paper-body">
+                        <p class="paper-summary">${paper.summary}</p>
+                        
+                        <div class="scores-section">
+                            <div class="scores-title"><i class="fas fa-star"></i> 文章评分</div>
+                            <div class="scores-grid">
+                                <div class="score-item">
+                                    <div class="score-label">创新性</div>
+                                    <div class="score-value">${paper.scores?.innovation || 0}</div>
+                                    <div class="score-stars">${renderStars(paper.scores?.innovation || 0)}</div>
+                                </div>
+                                <div class="score-item">
+                                    <div class="score-label">工业价值</div>
+                                    <div class="score-value">${paper.scores?.industry || 0}</div>
+                                    <div class="score-stars">${renderStars(paper.scores?.industry || 0)}</div>
+                                </div>
+                                <div class="score-item">
+                                    <div class="score-label">实验充分</div>
+                                    <div class="score-value">${paper.scores?.experiment || 0}</div>
+                                    <div class="score-stars">${renderStars(paper.scores?.experiment || 0)}</div>
+                                </div>
+                            </div>
+                            <div class="overall-score">
+                                <span class="overall-label">综合评分</span>
+                                <span class="overall-value">${paper.overall_score} · ${paper.overall_score >= 4.5 ? '强烈推荐' : (paper.overall_score >= 4.0 ? '推荐' : '值得关注')}</span>
+                            </div>
+                        </div>
+                        
+                        ${paper.online_exp || paper.scenario ? `
+                        <div class="exp-section">
+                            ${paper.online_exp ? `
+                            <div class="exp-item">
+                                <div class="exp-icon test"><i class="fas fa-chart-line"></i></div>
+                                <div class="exp-content">
+                                    <div class="exp-label">在线实验效果</div>
+                                    <div class="exp-value">${paper.online_exp}</div>
+                                </div>
+                            </div>
+                            ` : ''}
+                            ${paper.scenario ? `
+                            <div class="exp-item">
+                                <div class="exp-icon scenario"><i class="fas fa-building"></i></div>
+                                <div class="exp-content">
+                                    <div class="exp-label">落地场景</div>
+                                    <div class="exp-value">${paper.scenario}</div>
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                        ` : ''}
+                        
+                        <a href="${paper.link}" target="_blank" class="paper-action">
+                            查看论文 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        renderPapers();
+    </script>
+</body>
+</html>

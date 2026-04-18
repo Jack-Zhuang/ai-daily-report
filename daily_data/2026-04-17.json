@@ -1,0 +1,1764 @@
+{
+  "date": "2026-04-17",
+  "generated_at": "2026-04-17T21:38:22.970226",
+  "arxiv_papers": [
+    {
+      "id": "2604.14972v1",
+      "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent",
+      "summary": "Large language model (LLM) based recommendation agents personalize what they know through evolving per-user semantic memory, yet how they reason remains a universal, static system prompt shared identically across all users. This asymmetry is a fundamental bottleneck: when a recommendation fails, the",
+      "authors": [
+        "Zhen Tao",
+        "Riwei Lai",
+        "Chenyun Yu"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.14972v1",
+      "category": "agent",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621691",
+      "cn_title": "智能Agent推荐方法研究",
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。",
+      "pick_type": "paper"
+    },
+    {
+      "id": "2604.14878v1",
+      "title": "GenRec: A Preference-Oriented Generative Framework for Large-Scale Recommendation",
+      "summary": "Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the paginat",
+      "authors": [
+        "Yanyan Zou",
+        "Junbo Qi",
+        "Lunsong Huang"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.14878v1",
+      "category": "rec",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621739",
+      "cn_title": "推荐系统算法创新",
+      "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
+    },
+    {
+      "id": "2604.14839v1",
+      "title": "Well Begun is Half Done: Training-Free and Model-Agnostic Semantically Guaranteed User Representation Initialization for Multimodal Recommendation",
+      "summary": "Recent advancements in multimodal recommendations, which leverage diverse modality information to mitigate data sparsity and improve recommendation accuracy, have gained significant attention. However, existing multimodal recommendations overlook the critical role of user representation initializati",
+      "authors": [
+        "Jinfeng Xu",
+        "Zheyu Chen",
+        "Shuo Yang"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.14839v1",
+      "category": "rec",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621770",
+      "cn_title": "推荐系统算法创新",
+      "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
+    },
+    {
+      "id": "2604.14833v1",
+      "title": "Federated User Behavior Modeling for Privacy-Preserving LLM Recommendation",
+      "summary": "Large Language Models have shown great success in recommender systems. However, the limited and sparse nature of user data often restricts the LLM's ability to effectively model behavior patterns. To address this, existing studies have explored cross-domain solutions by conducting Cross-Domain Recom",
+      "authors": [
+        "Lei Guo",
+        "Hongyun Yang",
+        "Pengjie Ren"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.14833v1",
+      "category": "llm",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621796",
+      "cn_title": "LLM推荐系统应用研究",
+      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。",
+      "pick_type": "paper"
+    },
+    {
+      "id": "2604.14613v1",
+      "title": "Uncertainty-aware Generative Learning Path Recommendation with Cognition-Adaptive Diffusion",
+      "summary": "Learning Path Recommendation (LPR) is critical for personalized education, yet current methods often fail to account for historical interaction uncertainty (e.g., lucky guesses or accidental slips) and lack adaptability to diverse learning goals. We propose U-GLAD (Uncertainty-aware Generative Learn",
+      "authors": [
+        "Xiangrui Xiong",
+        "Hang Liang",
+        "Baiyang Chen"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.14613v1",
+      "category": "rec",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621820",
+      "cn_title": "推荐系统算法创新",
+      "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
+    },
+    {
+      "id": "2604.14598v1",
+      "title": "Category-based and Popularity-guided Video Game Recommendation: A Balance-oriented Framework",
+      "summary": "In recent years, the video game industry has experienced substantial growth, presenting players with a vast array of game choices. This surge in options has spurred the need for a specialized recommender system tailored for video games. However, current video game recommendation approaches tend to p",
+      "authors": [
+        "Xiping Li",
+        "Jianghong Ma",
+        "Kangzhe Liu"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.14598v1",
+      "category": "rec",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621844",
+      "cn_title": "推荐系统算法创新",
+      "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
+    },
+    {
+      "id": "2604.14586v1",
+      "title": "CPGRec+: A Balance-oriented Framework for Personalized Video Game Recommendations",
+      "summary": "The rapid expansion of gaming industry requires advanced recommender systems tailored to its dynamic landscape. Existing Graph Neural Network (GNN)-based methods primarily prioritize accuracy over diversity, overlooking their inherent trade-off. To address this, we previously proposed CPGRec, a bala",
+      "authors": [
+        "Xiping Li",
+        "Aier Yang",
+        "Jianghong Ma"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.14586v1",
+      "category": "rec",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621868",
+      "cn_title": "推荐系统算法创新",
+      "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
+    },
+    {
+      "id": "2604.14581v1",
+      "title": "Behavior-Aware Dual-Channel Preference Learning for Heterogeneous Sequential Recommendation",
+      "summary": "Heterogeneous sequential recommendation (HSR) aims to learn dynamic behavior dependencies from the diverse behaviors of user-item interactions to facilitate precise sequential recommendation. Despite many efforts yielding promising achievements, there are still challenges in modeling heterogeneous b",
+      "authors": [
+        "Jing Xiao",
+        "Dongqi Wu",
+        "Liwei Pan"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.14581v1",
+      "category": "rec",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621892",
+      "cn_title": "推荐系统算法创新",
+      "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
+    },
+    {
+      "id": "2604.14510v1",
+      "title": "NewsTorch: A PyTorch-based Toolkit for Learner-oriented News Recommendation",
+      "summary": "News recommender systems are devised to alleviate the information overload, attracting more and more researchers' attention in recent years. The lack of a dedicated learner-oriented news recommendation toolkit hinders the advancement of research in news recommendation. We propose a PyTorch-based new",
+      "authors": [
+        "Rongyao Wang",
+        "Veronica Liesaputra",
+        "Zhiyi Huang"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.14510v1",
+      "category": "rec",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621916",
+      "cn_title": "推荐系统算法创新",
+      "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
+    },
+    {
+      "id": "2604.15309v1",
+      "title": "MM-WebAgent: A Hierarchical Multimodal Web Agent for Webpage Generation",
+      "summary": "The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage ",
+      "authors": [
+        "Yan Li",
+        "Zezi Zeng",
+        "Yifan Yang"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15309v1",
+      "category": "agent",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.102840",
+      "cn_title": "智能Agent推荐方法研究",
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。",
+      "pick_type": "paper"
+    },
+    {
+      "id": "2604.15306v1",
+      "title": "Generalization in LLM Problem Solving: The Case of the Shortest Path",
+      "summary": "Whether language models can systematically generalize remains actively debated. Yet empirical performance is jointly shaped by multiple factors such as training data, training paradigms, and inference-time strategies, making failures difficult to interpret. We introduce a controlled synthetic enviro",
+      "authors": [
+        "Yao Tong",
+        "Jiayuan Ye",
+        "Anastasia Borovykh"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15306v1",
+      "category": "llm",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.102890",
+      "cn_title": "LLM推荐系统应用研究",
+      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
+    },
+    {
+      "id": "2604.15302v1",
+      "title": "Diagnosing LLM Judge Reliability: Conformal Prediction Sets and Transitivity Violations",
+      "summary": "LLM-as-judge frameworks are increasingly used for automatic NLG evaluation, yet their per-instance reliability remains poorly understood. We present a two-pronged diagnostic toolkit applied to SummEval: $\\textbf{(1)}$ a transitivity analysis that reveals widespread per-input inconsistency masked by ",
+      "authors": [
+        "Manan Gupta",
+        "Dhruv Kumar"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15302v1",
+      "category": "llm",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.102929",
+      "cn_title": "LLM推荐系统应用研究",
+      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
+    },
+    {
+      "id": "2604.15294v1",
+      "title": "How Do LLMs and VLMs Understand Viewpoint Rotation Without Vision? An Interpretability Study",
+      "summary": "Over the past year, spatial intelligence has drawn increasing attention. Many prior works study it from the perspective of visual-spatial intelligence, where models have access to visuospatial information from visual inputs. However, in the absence of visual information, whether linguistic intellige",
+      "authors": [
+        "Zhen Yang",
+        "Ping Jian",
+        "Zhongbin Guo"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15294v1",
+      "category": "llm",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.102954",
+      "cn_title": "LLM推荐系统应用研究",
+      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
+    },
+    {
+      "id": "2604.15272v1",
+      "title": "Prism: Symbolic Superoptimization of Tensor Programs",
+      "summary": "This paper presents Prism, the first symbolic superoptimizer for tensor programs. The key idea is sGraph, a symbolic, hierarchical representation that compactly encodes large classes of tensor programs by symbolically representing some execution parameters. Prism organizes optimization as a two-leve",
+      "authors": [
+        "Mengdi Wu",
+        "Xiaoyu Jiang",
+        "Oded Padon"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15272v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.102979",
+      "cn_title": "推荐系统前沿研究",
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+    },
+    {
+      "id": "2604.15267v1",
+      "title": "CoopEval: Benchmarking Cooperation-Sustaining Mechanisms and LLM Agents in Social Dilemmas",
+      "summary": "It is increasingly important that LLM agents interact effectively and safely with other goal-pursuing agents, yet, recent works report the opposite trend: LLMs with stronger reasoning capabilities behave _less_ cooperatively in mixed-motive games such as the prisoner's dilemma and public goods setti",
+      "authors": [
+        "Emanuel Tewolde",
+        "Xiao Zhang",
+        "David Guzman Piedrahita"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15267v1",
+      "category": "agent",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.103007",
+      "cn_title": "智能Agent推荐方法研究",
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。"
+    },
+    {
+      "id": "2604.15236v1",
+      "title": "Agentic Microphysics: A Manifesto for Generative AI Safety",
+      "summary": "This paper advances a methodological proposal for safety research in agentic AI. As systems acquire planning, memory, tool use, persistent identity, and sustained interaction, safety can no longer be analysed primarily at the level of the isolated model. Population-level risks arise from structured ",
+      "authors": [
+        "Federico Pierucci",
+        "Matteo Prandi",
+        "Marcantonio Bracale Syrnikov"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15236v1",
+      "category": "agent",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.103030",
+      "cn_title": "智能Agent推荐方法研究",
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。"
+    },
+    {
+      "id": "2604.15233v1",
+      "title": "Blue Data Intelligence Layer: Streaming Data and Agents for Multi-source Multi-modal Data-Centric Applications",
+      "summary": "NL2SQL systems aim to address the growing need for natural language interaction with data. However, real-world information rarely maps to a single SQL query because (1) users express queries iteratively (2) questions often span multiple data sources beyond the closed-world assumption of a single dat",
+      "authors": [
+        "Moin Aminnaseri",
+        "Farima Fatahi Bayat",
+        "Nikita Bhutani"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15233v1",
+      "category": "agent",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.103054",
+      "cn_title": "智能Agent推荐方法研究",
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。"
+    },
+    {
+      "id": "2604.15231v1",
+      "title": "RadAgent: A tool-using AI agent for stepwise interpretation of chest computed tomography",
+      "summary": "Vision-language models (VLM) have markedly advanced AI-driven interpretation and reporting of complex medical imaging, such as computed tomography (CT). Yet, existing methods largely relegate clinicians to passive observers of final outputs, offering no interpretable reasoning trace for them to insp",
+      "authors": [
+        "Mélanie Roschewitz",
+        "Kenneth Styppa",
+        "Yitian Tao"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15231v1",
+      "category": "agent",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.103077",
+      "cn_title": "智能Agent推荐方法研究",
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。"
+    },
+    {
+      "id": "2604.15224v1",
+      "title": "Context Over Content: Exposing Evaluation Faking in Automated Judges",
+      "summary": "The $\\textit{LLM-as-a-judge}$ paradigm has become the operational backbone of automated AI evaluation pipelines, yet rests on an unverified assumption: that judges evaluate text strictly on its semantic content, impervious to surrounding contextual framing. We investigate $\\textit{stakes signaling}$",
+      "authors": [
+        "Manan Gupta",
+        "Inderjeet Nair",
+        "Lu Wang"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15224v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.103100",
+      "cn_title": "推荐系统前沿研究",
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+    },
+    {
+      "id": "2604.15190v1",
+      "title": "Meituan Merchant Business Diagnosis via Policy-Guided Dual-Process User Simulation",
+      "summary": "Simulating group-level user behavior enables scalable counterfactual evaluation of merchant strategies without costly online experiments. However, building a trustworthy simulator faces two structural challenges. First, information incompleteness causes reasoning-based simulators to over-rationalize",
+      "authors": [
+        "Ziyang Chen",
+        "Renbing Chen",
+        "Daowei Li"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15190v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.103127",
+      "cn_title": "推荐系统前沿研究",
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+    },
+    {
+      "id": "2604.15186v1",
+      "title": "Scepsy: Serving Agentic Workflows Using Aggregate LLM Pipelines",
+      "summary": "Agentic workflows carry out complex tasks by orchestrating multiple large language models (LLMs) and tools. Serving such workflows at a target throughput with low latency is challenging because they can be defined using arbitrary agentic frameworks and exhibit unpredictable execution times: executio",
+      "authors": [
+        "Marcel Wagenländer",
+        "Otto White",
+        "Britannio Jarrett"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15186v1",
+      "category": "agent",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.103155",
+      "cn_title": "智能Agent推荐方法研究",
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。"
+    },
+    {
+      "id": "2604.15184v1",
+      "title": "Agent-Aided Design for Dynamic CAD Models",
+      "summary": "In the past year, researchers have started to create agentic systems that can design real-world CAD-style objects in a training-free setting, a new variety of system that we call Agent-Aided Design. Generally speaking, these systems place an agent in a feedback loop in which it can write code, compi",
+      "authors": [
+        "Mitch Adler",
+        "Matthew Russo",
+        "Michael Cafarella"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15184v1",
+      "category": "agent",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.103178",
+      "cn_title": "智能Agent推荐方法研究",
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。"
+    },
+    {
+      "id": "2604.15153v1",
+      "title": "Compressing Sequences in the Latent Embedding Space: $K$-Token Merging for Large Language Models",
+      "summary": "Large Language Models (LLMs) incur significant computational and memory costs when processing long prompts, as full self-attention scales quadratically with input length. Token compression aims to address this challenge by reducing the number of tokens representing inputs. However, existing prompt-c",
+      "authors": [
+        "Zihao Xu",
+        "John Harvill",
+        "Ziwei Fan"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15153v1",
+      "category": "llm",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.103201",
+      "cn_title": "序列推荐模型研究",
+      "cn_summary": "创新序列推荐模型，捕捉用户行为时序特征。"
+    },
+    {
+      "id": "2604.15149v1",
+      "title": "LLMs Gaming Verifiers: RLVR can Lead to Reward Hacking",
+      "summary": "As reinforcement Learning with Verifiable Rewards (RLVR) has become the dominant paradigm for scaling reasoning capabilities in LLMs, a new failure mode emerges: LLMs gaming verifiers. We study this phenomenon on inductive reasoning tasks, where models must induce and output logical rules. We find t",
+      "authors": [
+        "Lukas Helff",
+        "Quentin Delfosse",
+        "David Steinmann"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15149v1",
+      "category": "llm",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.103224",
+      "cn_title": "LLM推荐系统应用研究",
+      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
+    },
+    {
+      "id": "2604.15148v1",
+      "title": "IG-Search: Step-Level Information Gain Rewards for Search-Augmented Reasoning",
+      "summary": "Reinforcement learning has emerged as an effective paradigm for training large language models to perform search-augmented reasoning. However, existing approaches rely on trajectory-level rewards that cannot distinguish precise search queries from vague or redundant ones within a rollout group, and ",
+      "authors": [
+        "Zihan Liang",
+        "Yufei Ma",
+        "Ben Chen"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15148v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.103248",
+      "cn_title": "推荐系统前沿研究",
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+    },
+    {
+      "id": "2604.15169v1",
+      "title": "Assessing the Potential of Masked Autoencoder Foundation Models in Predicting Downhole Metrics from Surface Drilling Data",
+      "summary": "Oil and gas drilling operations generate extensive time-series data from surface sensors, yet accurate real-time prediction of critical downhole metrics remains challenging due to the scarcity of labelled downhole measurements. This systematic mapping study reviews thirteen papers published between ",
+      "authors": [
+        "Aleksander Berezowski",
+        "Hassan Hassanzadeh",
+        "Gouri Ginde"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15169v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787101",
+      "cn_title": "推荐系统前沿研究",
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+    },
+    {
+      "id": "2604.14961v1",
+      "title": "Calibration-Gated LLM Pseudo-Observations for Online Contextual Bandits",
+      "summary": "Contextual bandit algorithms suffer from high regret during cold-start, when the learner has insufficient data to distinguish good arms from bad. We propose augmenting Disjoint LinUCB with LLM pseudo-observations: after each round, a large language model predicts counterfactual rewards for the unpla",
+      "authors": [
+        "Maksim Pershin",
+        "Ivan Golovanov",
+        "Pavel Baltabaev"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.14961v1",
+      "category": "llm",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787157",
+      "cn_title": "LLM推荐系统应用研究",
+      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
+    },
+    {
+      "id": "2604.14114v1",
+      "title": "ID and Graph View Contrastive Learning with Multi-View Attention Fusion for Sequential Recommendation",
+      "summary": "Sequential recommendation has become increasingly prominent in both academia and industry, particularly in e-commerce. The primary goal is to extract user preferences from historical interaction sequences and predict items a user is likely to engage with next. Recent advances have leveraged contrast",
+      "authors": [
+        "Xiaofan Zhou",
+        "Kyumin Lee"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.14114v1",
+      "category": "rec",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621939",
+      "cn_title": "推荐系统算法创新",
+      "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
+    },
+    {
+      "id": "2604.14051v1",
+      "title": "Enhancing Local Life Service Recommendation with Agentic Reasoning in Large Language Model",
+      "summary": "Local life service recommendation is distinct from general recommendation scenarios due to its strong living need-driven nature. Fundamentally, accurately identifying a user's immediate living need and recommending the corresponding service are inextricably linked tasks. However, prior works typical",
+      "authors": [
+        "Shiteng Cao",
+        "Xiaochong Lan",
+        "Yuwei Du"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.14051v1",
+      "category": "agent",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621962",
+      "cn_title": "智能Agent推荐方法研究",
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。"
+    },
+    {
+      "id": "2604.14030v1",
+      "title": "Dual-Enhancement Product Bundling: Bridging Interactive Graph and Large Language Model",
+      "summary": "Product bundling boosts e-commerce revenue by recommending complementary item combinations. However, existing methods face two critical challenges: (1) collaborative filtering approaches struggle with cold-start items owing to dependency on historical interactions, and (2) LLMs lack inherent capabil",
+      "authors": [
+        "Zhe Huang",
+        "Peng Wang",
+        "Yan Zheng"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.14030v1",
+      "category": "llm",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621985",
+      "cn_title": "图神经网络推荐",
+      "cn_summary": "基于图神经网络建模用户-物品交互，效果优异。"
+    },
+    {
+      "id": "2604.13801v1",
+      "title": "DUET: Joint Exploration of User Item Profiles in Recommendation System",
+      "summary": "Traditional recommendation systems represent users and items as dense vectors and learn to align them in a shared latent space for relevance estimation. Recent LLM-based recommenders instead leverage natural-language representations that are easier to interpret and integrate with downstream reasonin",
+      "authors": [
+        "Yue Chen",
+        "Yifei Sun",
+        "Lu Wang"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.13801v1",
+      "category": "rec",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.622023",
+      "cn_title": "推荐系统算法创新",
+      "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
+    },
+    {
+      "id": "2604.13796v1",
+      "title": "Driving Engagement in Daily Fantasy Sports with a Scalable and Urgency-Aware Ranking Engine",
+      "summary": "In daily fantasy sports (DFS), match participation is highly time-sensitive. Users must act within a narrow window before a game begins, making match recommendation a time-critical task to prevent missed engagement and revenue loss. Existing recommender systems, typically designed for static item ca",
+      "authors": [
+        "Unmesh Padalkar"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.13796v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.622044",
+      "cn_title": "推荐系统前沿研究",
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+    },
+    {
+      "id": "2604.13737v1",
+      "title": "TokenFormer: Unify the Multi-Field and Sequential Recommendation Worlds",
+      "summary": "Recommender systems have historically developed along two largely independent paradigms: feature interaction models for modeling correlations among multi-field categorical features, and sequential models for capturing user behavior dynamics from historical interaction sequences. Although recent tren",
+      "authors": [
+        "Yifeng Zhou",
+        "Yuehong Hu",
+        "Zhixiang Feng"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.13737v1",
+      "category": "rec",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.622071",
+      "cn_title": "推荐系统算法创新",
+      "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
+    },
+    {
+      "id": "2604.13665v1",
+      "title": "RecNextEval: A Reference Implementation for Temporal Next-Batch Recommendation Evaluation",
+      "summary": "A good number of toolkits have been developed in Recommender Systems (RecSys) research to promote fair evaluation and reproducibility. However, recent critical examinations of RecSys evaluation protocols have raised concerns regarding the validity of existing evaluation pipelines. In this demonstrat",
+      "authors": [
+        "Tze-Kean Ng",
+        "Joshua Teng-Khing Khoo",
+        "Aixin Sun"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.13665v1",
+      "category": "rec",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.622094",
+      "cn_title": "推荐系统算法创新",
+      "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
+    },
+    {
+      "id": "2604.14450v1",
+      "title": "Asynchronous Probability Ensembling for Federated Disaster Detection",
+      "summary": "Quick and accurate emergency handling in Disaster Decision Support Systems (DDSS) is often hampered by network latency and suboptimal application accuracy. While Federated Learning (FL) addresses some of these issues, it is constrained by high communication costs and rigid synchronization requiremen",
+      "authors": [
+        "Emanuel Teixeira Martins",
+        "Rodrigo Moreira",
+        "Larissa Ferreira Rodrigues Moreira"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.14450v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787182",
+      "cn_title": "推荐系统前沿研究",
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+    },
+    {
+      "id": "2604.14352v1",
+      "title": "PROXIMA: A Reliability Scoring Framework for Proxy Metrics in Online Controlled Experiments",
+      "summary": "Online A/B testing at scale relies on proxy metrics -- short-term, easily-measured signals used in place of slow-moving long-term outcomes. When the proxy-outcome relationship is heterogeneous across user segments, aggregate correlation can mask directional failures akin to Simpson's Paradox, leadin",
+      "authors": [
+        "Avinash Amudala"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.14352v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787206",
+      "cn_title": "推荐系统前沿研究",
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+    },
+    {
+      "id": "2604.14035v1",
+      "title": "First-See-Then-Design: A Multi-Stakeholder View for Optimal Performance-Fairness Trade-Offs",
+      "summary": "Fairness in algorithmic decision-making is often defined in the predictive space, where predictive performance - used as a proxy for decision-maker (DM) utility - is traded off against prediction-based fairness notions, such as demographic parity or equality of opportunity. This perspective, however",
+      "authors": [
+        "Kavya Gupta",
+        "Nektarios Kalampalikis",
+        "Christoph Heitz"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.14035v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787261",
+      "cn_title": "多任务推荐框架",
+      "cn_summary": "多任务学习框架，联合优化多个推荐目标。"
+    },
+    {
+      "id": "2604.13822v1",
+      "title": "UI-Copilot: Advancing Long-Horizon GUI Automation via Tool-Integrated Policy Optimization",
+      "summary": "MLLM-based GUI agents have demonstrated strong capabilities in complex user interface interaction tasks. However, long-horizon scenarios remain challenging, as these agents are burdened with tasks beyond their intrinsic capabilities, suffering from memory degradation, progress confusion, and math ha",
+      "authors": [
+        "Zhengxi Lu",
+        "Fei Tang",
+        "Guangyi Liu"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.13822v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787286",
+      "cn_title": "推荐系统前沿研究",
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+    },
+    {
+      "id": "2604.13739v1",
+      "title": "Spectral Thompson sampling",
+      "summary": "Thompson Sampling (TS) has attracted a lot of interest due to its good empirical performance, in particular in the computational advertising. Though successful, the tools for its performance analysis appeared only recently. In this paper, we describe and analyze SpectralTS algorithm for a bandit pro",
+      "authors": [
+        "Tomas Kocak",
+        "Michal Valko",
+        "Remi Munos"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.13739v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787334",
+      "cn_title": "点击率预测优化",
+      "cn_summary": "优化点击率预测模型，提升广告和推荐效果。"
+    },
+    {
+      "id": "2604.13738v1",
+      "title": "Covariance-adapting algorithm for semi-bandits with application to sparse rewards",
+      "summary": "We investigate stochastic combinatorial semi-bandits, where the entire joint distribution of outcomes impacts the complexity of the problem instance (unlike in the standard bandits). Typical distributions considered depend on specific parameter values, whose prior knowledge is required in theory but",
+      "authors": [
+        "Pierre Perrault",
+        "Vianney Perchet",
+        "Michal Valko"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.13738v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787359",
+      "cn_title": "推荐系统前沿研究",
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+    },
+    {
+      "id": "2604.13687v1",
+      "title": "VIGILant: an automatic classification pipeline for glitches in the Virgo detector",
+      "summary": "Glitches frequently contaminate data in gravitational-wave detectors, complicating the observation and analysis of astrophysical signals. This work introduces VIGILant, an automatic pipeline for classification and visualization of glitches in the Virgo detector. Using a curated dataset of Virgo O3b ",
+      "authors": [
+        "Tiago Fernandes",
+        "Francesco Di Renzo",
+        "Antonio Onofre"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.13687v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787384",
+      "cn_title": "推荐系统前沿研究",
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+    },
+    {
+      "id": "2604.13666v1",
+      "title": "Automatically Inferring Teachers' Geometric Content Knowledge: A Skills Based Approach",
+      "summary": "Assessing teachers' geometric content knowledge is essential for geometry instructional quality and student learning, but difficult to scale. The Van Hiele model characterizes geometric reasoning through five hierarchical levels. Traditional Van Hiele assessment relies on manual expert analysis of o",
+      "authors": [
+        "Ziv Fenigstein",
+        "Kobi Gal",
+        "Avi Segal"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.13666v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787422",
+      "cn_title": "知识图谱推荐研究",
+      "cn_summary": "融合知识图谱增强推荐，提升可解释性。"
+    },
+    {
+      "id": "2604.13618v1",
+      "title": "C2: Scalable Rubric-Augmented Reward Modeling from Binary Preferences",
+      "summary": "Rubric-augmented verification guides reward models with explicit evaluation criteria, yielding more reliable judgments than single-model verification. However, most existing methods require costly rubric annotations, limiting scalability. Moreover, we find that rubric generation is vulnerable to a f",
+      "authors": [
+        "Akira Kawabata",
+        "Saku Sugawara"
+      ],
+      "published": "2026-04-15",
+      "link": "http://arxiv.org/abs/2604.13618v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787445",
+      "cn_title": "推荐系统前沿研究",
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+    },
+    {
+      "id": "2604.13349v1",
+      "title": "When Less Latent Leads to Better Relay: Information-Preserving Compression for Latent Multi-Agent LLM Collaboration",
+      "summary": "Communication in Large Language Model (LLM)-based multi-agent systems is moving beyond discrete tokens to preserve richer context. Recent work such as LatentMAS enables agents to exchange latent messages through full key-value (KV) caches. However, full KV relay incurs high memory and communication ",
+      "authors": [
+        "Yiping Li",
+        "Zhiyu An",
+        "Wan Du"
+      ],
+      "published": "2026-04-14",
+      "link": "http://arxiv.org/abs/2604.13349v1",
+      "category": "agent",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787471",
+      "cn_title": "智能Agent推荐方法研究",
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。"
+    },
+    {
+      "id": "2604.12768v1",
+      "title": "Rethinking the Personalized Relaxed Initialization in the Federated Learning: Consistency and Generalization",
+      "summary": "Federated learning (FL) is a distributed paradigm that coordinates massive local clients to collaboratively train a global model via stage-wise local training processes on the heterogeneous dataset. Previous works have implicitly studied that FL suffers from the ``client-drift'' problem, which is ca",
+      "authors": [
+        "Li Shen",
+        "Yan Sun",
+        "Dacheng Tao"
+      ],
+      "published": "2026-04-14",
+      "link": "http://arxiv.org/abs/2604.12768v1",
+      "category": "industry",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787495",
+      "cn_title": "个性化推荐方法",
+      "cn_summary": "个性化推荐方法创新，提升用户体验。"
+    },
+    {
+      "id": "2604.12372v1",
+      "title": "Is Sliding Window All You Need? An Open Framework for Long-Sequence Recommendation",
+      "summary": "Long interaction histories are central to modern recommender systems, yet training with long sequences is often dismissed as impractical under realistic memory and latency budgets. This work demonstrates that it is not only practical but also effective-at academic scale. We release a complete, end-t",
+      "authors": [
+        "Sayak Chakrabarty",
+        "Souradip Pal"
+      ],
+      "published": "2026-04-14",
+      "link": "http://arxiv.org/abs/2604.12372v1",
+      "category": "rec",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:38:14.787518",
+      "cn_title": "推荐系统算法创新",
+      "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
+    }
+  ],
+  "github_projects": [
+    {
+      "id": "1201476594",
+      "name": "santifer/career-ops",
+      "description": "AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.",
+      "stars": 35414,
+      "forks": 7073,
+      "language": "JavaScript",
+      "url": "https://github.com/santifer/career-ops",
+      "topics": [
+        "ai-agent",
+        "anthropic",
+        "automation",
+        "career",
+        "claude",
+        "claude-code",
+        "cli",
+        "golang",
+        "interview-prep",
+        "job-search",
+        "open-source",
+        "resume"
+      ],
+      "created_at": "2026-04-04",
+      "growth_rate": 2724.2,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:21.964883",
+      "cn_title": "热门项目：career-ops",
+      "cn_summary": "JavaScript项目，35,414 Stars，增长迅速。",
+      "pick_type": "github"
+    },
+    {
+      "id": "1136590548",
+      "name": "affaan-m/everything-claude-code",
+      "description": "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.",
+      "stars": 159354,
+      "forks": 24782,
+      "language": "JavaScript",
+      "url": "https://github.com/affaan-m/everything-claude-code",
+      "topics": [
+        "ai-agents",
+        "anthropic",
+        "claude",
+        "claude-code",
+        "developer-tools",
+        "llm",
+        "mcp",
+        "productivity"
+      ],
+      "created_at": "2026-01-18",
+      "growth_rate": 1790.5,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:20.104833",
+      "cn_title": "LLM项目：everything-claude-code",
+      "cn_summary": "大语言模型相关项目，近期增长迅速，值得关注。"
+    },
+    {
+      "id": "1212241202",
+      "name": "wbh604/UZI-Skill",
+      "description": "冰冷的钱就这样流进我温暖的口袋-游资（UZI）Skills — 51位投资大佬帮你看盘 · 22维数据 × 180条量化规则 × 17种机构分析方法 · A股/港股/美股 ",
+      "stars": 637,
+      "forks": 110,
+      "language": "Python",
+      "url": "https://github.com/wbh604/UZI-Skill",
+      "topics": [],
+      "created_at": "2026-04-16",
+      "updated_at": "2026-04-17",
+      "growth_rate": 637.0,
+      "days_old": 1,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376893",
+      "category": "industry",
+      "cn_title": "热门项目：UZI-Skill",
+      "cn_summary": "Python项目，637 Stars，增长迅速。"
+    },
+    {
+      "id": "1209889782",
+      "name": "AgentSeal/codeburn",
+      "description": "See where your AI coding tokens go. Interactive TUI dashboard for Claude Code, Codex, and Cursor cost observability.",
+      "stars": 2472,
+      "forks": 168,
+      "language": "TypeScript",
+      "url": "https://github.com/AgentSeal/codeburn",
+      "topics": [
+        "ai-coding",
+        "claude-code",
+        "cli",
+        "codex",
+        "cost-tracking",
+        "cursor-ide",
+        "developer-tools",
+        "observability",
+        "terminal-ui",
+        "token-usage"
+      ],
+      "created_at": "2026-04-13",
+      "updated_at": "2026-04-17",
+      "growth_rate": 618.0,
+      "days_old": 4,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376455",
+      "category": "industry",
+      "cn_title": "热门项目：codeburn",
+      "cn_summary": "TypeScript项目，2,472 Stars，增长迅速。"
+    },
+    {
+      "id": "1211901711",
+      "name": "Nightmare-Eclipse/RedSun",
+      "description": "The Red Sun vulnerability repository",
+      "stars": 1168,
+      "forks": 233,
+      "language": "C++",
+      "url": "https://github.com/Nightmare-Eclipse/RedSun",
+      "topics": [],
+      "created_at": "2026-04-15",
+      "updated_at": "2026-04-17",
+      "growth_rate": 584.0,
+      "days_old": 2,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376577",
+      "category": "industry",
+      "cn_title": "热门项目：RedSun",
+      "cn_summary": "C++项目，1,168 Stars，增长迅速。"
+    },
+    {
+      "id": "1171026502",
+      "name": "googleworkspace/cli",
+      "description": "Google Workspace CLI — one command-line tool for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more. Dynamically built from Google Discovery Service. Includes AI agent skills.",
+      "stars": 24892,
+      "forks": 1271,
+      "language": "Rust",
+      "url": "https://github.com/googleworkspace/cli",
+      "topics": [
+        "agent-skills",
+        "ai-agent",
+        "automation",
+        "cli",
+        "discovery-api",
+        "gemini-cli-extension",
+        "google-admin",
+        "google-api",
+        "google-calendar",
+        "google-chat",
+        "google-docs",
+        "google-drive",
+        "google-sheets",
+        "google-workspace",
+        "oauth2",
+        "rust"
+      ],
+      "created_at": "2026-03-02",
+      "growth_rate": 541.1,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:21.964929",
+      "cn_title": "热门项目：cli",
+      "cn_summary": "Rust项目，24,892 Stars，增长迅速。"
+    },
+    {
+      "id": "1147094660",
+      "name": "HKUDS/nanobot",
+      "description": "\"🐈 nanobot: The Ultra-Lightweight Personal AI Agent\"",
+      "stars": 39876,
+      "forks": 7016,
+      "language": "Python",
+      "url": "https://github.com/HKUDS/nanobot",
+      "topics": [
+        "ai",
+        "ai-agent",
+        "ai-agents",
+        "anthropic",
+        "chatgpt",
+        "claude",
+        "claude-code",
+        "codex",
+        "llm",
+        "nanobot",
+        "openai",
+        "openclaw"
+      ],
+      "created_at": "2026-02-01",
+      "growth_rate": 531.7,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:21.964863",
+      "cn_title": "LLM项目：nanobot",
+      "cn_summary": "大语言模型相关项目，近期增长迅速，值得关注。"
+    },
+    {
+      "id": "1210579186",
+      "name": "vercel-labs/wterm",
+      "description": "A terminal emulator for the web",
+      "stars": 1227,
+      "forks": 37,
+      "language": "TypeScript",
+      "url": "https://github.com/vercel-labs/wterm",
+      "topics": [],
+      "created_at": "2026-04-14",
+      "updated_at": "2026-04-17",
+      "growth_rate": 409.0,
+      "days_old": 3,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376551",
+      "category": "industry",
+      "cn_title": "热门项目：wterm",
+      "cn_summary": "TypeScript项目，1,227 Stars，增长迅速。"
+    },
+    {
+      "id": "1211235520",
+      "name": "lewislulu/html-ppt-skill",
+      "description": "HTML PPT Studio — AgentSkill with 24 themes, 31 layouts, 20+ animations for building professional HTML presentations",
+      "stars": 807,
+      "forks": 87,
+      "language": "HTML",
+      "url": "https://github.com/lewislulu/html-ppt-skill",
+      "topics": [],
+      "created_at": "2026-04-15",
+      "updated_at": "2026-04-17",
+      "growth_rate": 403.5,
+      "days_old": 2,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376691",
+      "category": "industry",
+      "cn_title": "热门项目：html-ppt-skill",
+      "cn_summary": "HTML项目，807 Stars，增长迅速。"
+    },
+    {
+      "id": "1211361116",
+      "name": "Manavarya09/design-extract",
+      "description": "Extract the complete design language from any website — colors, typography, spacing, shadows, and more. npx CLI + Claude Code plugin.",
+      "stars": 788,
+      "forks": 64,
+      "language": "JavaScript",
+      "url": "https://github.com/Manavarya09/design-extract",
+      "topics": [
+        "agent-skill",
+        "agent-skills",
+        "ai",
+        "claude-code-plugin",
+        "cli",
+        "colors",
+        "css",
+        "design-system",
+        "design-tokens",
+        "npx",
+        "playwright",
+        "skills-sh",
+        "tailwind",
+        "typography",
+        "web-scraping"
+      ],
+      "created_at": "2026-04-15",
+      "updated_at": "2026-04-17",
+      "growth_rate": 394.0,
+      "days_old": 2,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376710",
+      "category": "industry",
+      "cn_title": "热门项目：design-extract",
+      "cn_summary": "JavaScript项目，788 Stars，增长迅速。"
+    },
+    {
+      "id": "1211096376",
+      "name": "WeaveMindAI/weft",
+      "description": "A programming language for AI systems",
+      "stars": 738,
+      "forks": 97,
+      "language": "Rust",
+      "url": "https://github.com/WeaveMindAI/weft",
+      "topics": [],
+      "created_at": "2026-04-15",
+      "updated_at": "2026-04-17",
+      "growth_rate": 369.0,
+      "days_old": 2,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376778",
+      "category": "industry",
+      "cn_title": "热门项目：weft",
+      "cn_summary": "Rust项目，738 Stars，增长迅速。"
+    },
+    {
+      "id": "1024554267",
+      "name": "NousResearch/hermes-agent",
+      "description": "The agent that grows with you",
+      "stars": 95934,
+      "forks": 13428,
+      "language": "Python",
+      "url": "https://github.com/NousResearch/hermes-agent",
+      "topics": [
+        "ai",
+        "ai-agent",
+        "ai-agents",
+        "anthropic",
+        "chatgpt",
+        "claude",
+        "claude-code",
+        "clawdbot",
+        "codex",
+        "hermes",
+        "hermes-agent",
+        "llm",
+        "moltbot",
+        "nous-research",
+        "openai",
+        "openclaw"
+      ],
+      "created_at": "2025-07-22",
+      "growth_rate": 356.6,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:20.104929",
+      "cn_title": "LLM项目：hermes-agent",
+      "cn_summary": "大语言模型相关项目，近期增长迅速，值得关注。"
+    },
+    {
+      "id": "1211752857",
+      "name": "Robbyant/lingbot-map",
+      "description": "A feed-forward 3D foundation model for reconstructing scenes from streaming data",
+      "stars": 686,
+      "forks": 43,
+      "language": "Python",
+      "url": "https://github.com/Robbyant/lingbot-map",
+      "topics": [],
+      "created_at": "2026-04-15",
+      "updated_at": "2026-04-17",
+      "growth_rate": 343.0,
+      "days_old": 2,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376827",
+      "category": "industry",
+      "cn_title": "热门项目：lingbot-map",
+      "cn_summary": "Python项目，686 Stars，增长迅速。"
+    },
+    {
+      "id": "1210412315",
+      "name": "BuilderPulse/BuilderPulse",
+      "description": "AI-powered daily intelligence for indie hackers and builders. 20 questions, 10+ sources, every morning.",
+      "stars": 847,
+      "forks": 63,
+      "language": null,
+      "url": "https://github.com/BuilderPulse/BuilderPulse",
+      "topics": [
+        "ai",
+        "builders",
+        "indiehackers"
+      ],
+      "created_at": "2026-04-14",
+      "updated_at": "2026-04-17",
+      "growth_rate": 282.3,
+      "days_old": 3,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376623",
+      "category": "industry",
+      "cn_title": "热门项目：BuilderPulse",
+      "cn_summary": "None项目，847 Stars，增长迅速。"
+    },
+    {
+      "id": "1211555732",
+      "name": "op7418/logo-generator-skill",
+      "description": "logo-generator-skill",
+      "stars": 543,
+      "forks": 51,
+      "language": "HTML",
+      "url": "https://github.com/op7418/logo-generator-skill",
+      "topics": [],
+      "created_at": "2026-04-15",
+      "updated_at": "2026-04-17",
+      "growth_rate": 271.5,
+      "days_old": 2,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376933",
+      "category": "industry",
+      "cn_title": "热门项目：logo-generator-skill",
+      "cn_summary": "HTML项目，543 Stars，增长迅速。"
+    },
+    {
+      "id": "1211295602",
+      "name": "xataio/xata",
+      "description": "Open source, cloud native, Postgres platform with copy-on-write branching and scale-to-zero",
+      "stars": 534,
+      "forks": 19,
+      "language": "Go",
+      "url": "https://github.com/xataio/xata",
+      "topics": [
+        "branching",
+        "kubernetes",
+        "postgresql",
+        "scale-to-zero"
+      ],
+      "created_at": "2026-04-15",
+      "updated_at": "2026-04-17",
+      "growth_rate": 267.0,
+      "days_old": 2,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376951",
+      "category": "industry",
+      "cn_title": "热门项目：xata",
+      "cn_summary": "Go项目，534 Stars，增长迅速。"
+    },
+    {
+      "id": "1209268581",
+      "name": "alchaincyf/darwin-skill",
+      "description": "达尔文.skill —— 一个让你的Skill无限进化的系统：评估→改进→测试→保留或回滚 | Autoresearch-inspired autonomous skill optimization for Claude Code. Evaluate, improve, test, keep or revert.",
+      "stars": 1054,
+      "forks": 127,
+      "language": "HTML",
+      "url": "https://github.com/alchaincyf/darwin-skill",
+      "topics": [],
+      "created_at": "2026-04-13",
+      "updated_at": "2026-04-17",
+      "growth_rate": 263.5,
+      "days_old": 4,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376600",
+      "category": "industry",
+      "cn_title": "热门项目：darwin-skill",
+      "cn_summary": "HTML项目，1,054 Stars，增长迅速。"
+    },
+    {
+      "id": "1208430144",
+      "name": "Mouseww/anything-analyzer",
+      "description": "全能协议分析工具：浏览器抓包 + MITM 代理 + 指纹伪装 + AI 分析 + MCP Server 无缝对接 AI Agent/IDE   |  All-in-one protocol analysis toolkit — built-in browser capture, MITM proxy, JS hooks, fingerprint spoofing, AI analysis & M",
+      "stars": 1240,
+      "forks": 290,
+      "language": "TypeScript",
+      "url": "https://github.com/Mouseww/anything-analyzer",
+      "topics": [
+        "2api",
+        "ai-tools",
+        "analysis-cli",
+        "api-analysis",
+        "automation-tools",
+        "blackbox-testing",
+        "network-analysis",
+        "protocol-analysis",
+        "reverse-engineering",
+        "traffic-analysis"
+      ],
+      "created_at": "2026-04-12",
+      "updated_at": "2026-04-17",
+      "growth_rate": 248.0,
+      "days_old": 5,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376514",
+      "category": "industry",
+      "cn_title": "热门项目：anything-analyzer",
+      "cn_summary": "TypeScript项目，1,240 Stars，增长迅速。"
+    },
+    {
+      "id": "1209054090",
+      "name": "sogonov/anubis",
+      "description": "Android app manager with VPN integration. Manages groups of apps by freezing/unfreezing them based on VPN connection state.",
+      "stars": 846,
+      "forks": 25,
+      "language": "Kotlin",
+      "url": "https://github.com/sogonov/anubis",
+      "topics": [],
+      "created_at": "2026-04-13",
+      "updated_at": "2026-04-17",
+      "growth_rate": 211.5,
+      "days_old": 4,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.376647",
+      "category": "industry",
+      "cn_title": "热门项目：anubis",
+      "cn_summary": "Kotlin项目，846 Stars，增长迅速。"
+    },
+    {
+      "id": "1211142422",
+      "name": "stanford-iris-lab/meta-harness",
+      "description": "Reference code for the Meta-Harness paper.",
+      "stars": 408,
+      "forks": 27,
+      "language": "Python",
+      "url": "https://github.com/stanford-iris-lab/meta-harness",
+      "topics": [
+        "harness-engineering",
+        "llm-agents"
+      ],
+      "created_at": "2026-04-15",
+      "updated_at": "2026-04-17",
+      "growth_rate": 204.0,
+      "days_old": 2,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:17.377071",
+      "category": "industry",
+      "cn_title": "热门项目：meta-harness",
+      "cn_summary": "Python项目，408 Stars，增长迅速。"
+    }
+  ],
+  "hot_articles": [
+    {
+      "id": "mock-0",
+      "title": "大模型Agent技术深度解析：从原理到实践",
+      "cn_title": "大模型Agent技术解析",
+      "summary": "技术深度文章...",
+      "cn_summary": "深入解析大模型Agent技术原理，展示推荐系统创新应用。",
+      "source": "机器之心",
+      "views": 10000,
+      "likes": 500,
+      "link": "#",
+      "category": "rec",
+      "type": "article",
+      "date": "2026-04-17",
+      "pick_type": "article"
+    },
+    {
+      "id": "mock-1",
+      "title": "推荐系统架构演进：从协同过滤到深度学习",
+      "cn_title": "推荐系统架构演进",
+      "summary": "技术深度文章...",
+      "cn_summary": "系统梳理推荐架构演进，从协同过滤到深度学习趋势。",
+      "source": "量子位",
+      "views": 9500,
+      "likes": 480,
+      "link": "#",
+      "category": "agent",
+      "type": "article",
+      "date": "2026-04-17"
+    },
+    {
+      "id": "mock-2",
+      "title": "LLM在推荐系统中的应用：机遇与挑战",
+      "cn_title": "LLM推荐应用指南",
+      "summary": "技术深度文章...",
+      "cn_summary": "探讨LLM在推荐中的应用场景，分析机遇与挑战。",
+      "source": "新智元",
+      "views": 9000,
+      "likes": 460,
+      "link": "#",
+      "category": "llm",
+      "type": "article",
+      "date": "2026-04-17"
+    },
+    {
+      "id": "mock-3",
+      "title": "多模态推荐系统研究进展综述",
+      "cn_title": "多模态推荐综述",
+      "summary": "技术深度文章...",
+      "cn_summary": "综述多模态推荐最新进展，涵盖图文视频融合方法。",
+      "source": "PaperWeekly",
+      "views": 8500,
+      "likes": 440,
+      "link": "#",
+      "category": "industry",
+      "type": "article",
+      "date": "2026-04-17"
+    },
+    {
+      "id": "mock-4",
+      "title": "图神经网络推荐：算法原理与工业实践",
+      "cn_title": "图神经网络推荐实践",
+      "summary": "技术深度文章...",
+      "cn_summary": "详解图神经网络推荐算法原理与工业实践案例。",
+      "source": "机器之心",
+      "views": 8000,
+      "likes": 420,
+      "link": "#",
+      "category": "rec",
+      "type": "article",
+      "date": "2026-04-17"
+    },
+    {
+      "id": "mock-5",
+      "title": "对比学习在推荐系统中的应用探索",
+      "cn_title": "对比学习推荐方法",
+      "summary": "技术深度文章...",
+      "cn_summary": "探索对比学习在推荐中的应用，提出新训练范式。",
+      "source": "量子位",
+      "views": 7500,
+      "likes": 400,
+      "link": "#",
+      "category": "agent",
+      "type": "article",
+      "date": "2026-04-17"
+    },
+    {
+      "id": "mock-6",
+      "title": "推荐系统中的因果推断方法研究",
+      "cn_title": "因果推断推荐研究",
+      "summary": "技术深度文章...",
+      "cn_summary": "研究因果推断方法，解决流行度偏差提升公平性。",
+      "source": "新智元",
+      "views": 7000,
+      "likes": 380,
+      "link": "#",
+      "category": "llm",
+      "type": "article",
+      "date": "2026-04-17"
+    },
+    {
+      "id": "mock-7",
+      "title": "实时推荐系统架构设计与优化",
+      "cn_title": "实时推荐架构设计",
+      "summary": "技术深度文章...",
+      "cn_summary": "分享实时推荐架构设计经验，涵盖性能优化技术。",
+      "source": "PaperWeekly",
+      "views": 6500,
+      "likes": 360,
+      "link": "#",
+      "category": "industry",
+      "type": "article",
+      "date": "2026-04-17"
+    }
+  ],
+  "conference_papers": {
+    "WSDM 2025": {
+      "name": "WSDM 2025",
+      "full_name": "ACM International Conference on Web Search and Data Mining",
+      "date": "2025年3月",
+      "location": "德国汉诺威",
+      "acceptance_rate": "17.3%",
+      "total": 106,
+      "papers": [
+        {
+          "id": "wsdm2025-1",
+          "title": "How Do Recommendation Models Amplify Popularity Bias? An Analysis from the Spectral Perspective",
+          "authors": [
+            "浙江大学",
+            "中国科技大学",
+            "蚂蚁集团"
+          ],
+          "link": "https://arxiv.org/abs/2404.12",
+          "category": "rec",
+          "summary": "推荐系统中的流行度偏差是指推荐模型在长尾数据上进行优化时，会继承和放大这种长尾效应。",
+          "cn_title": "推荐模型流行度偏差放大机制研究",
+          "cn_summary": "首次从谱视角解释推荐系统流行度偏差成因，提出纠偏方法。",
+          "scores": {
+            "innovation": 4.5,
+            "industry": 5.0,
+            "experiment": 4.5
+          },
+          "highlight": "最佳论文奖",
+          "online_exp": "长尾物品曝光率提升15%",
+          "scenario": "蚂蚁集团支付宝推荐"
+        },
+        {
+          "id": "wsdm2025-2",
+          "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent",
+          "authors": [
+            "Zhen Tao",
+            "Riwei Lai"
+          ],
+          "link": "https://arxiv.org/abs/2604.14972",
+          "category": "agent",
+          "summary": "基于LLM的推荐Agent通过演化用户语义记忆来个性化其知识。",
+          "cn_title": "自演化用户策略技能推荐Agent",
+          "cn_summary": "提出SAGER框架，让推荐Agent自我演化用户策略技能。",
+          "scores": {
+            "innovation": 4.5,
+            "industry": 4.0,
+            "experiment": 4.0
+          },
+          "highlight": null,
+          "online_exp": "点击率提升3.2%",
+          "scenario": "电商推荐场景"
+        }
+      ]
+    },
+    "KDD 2025": {
+      "name": "KDD 2025",
+      "full_name": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining",
+      "date": "2025年8月",
+      "location": "加拿大多伦多",
+      "acceptance_rate": "20%",
+      "total": 300,
+      "papers": [
+        {
+          "id": "kdd2025-1",
+          "title": "Adaptive Graph Contrastive Learning for Recommendation",
+          "authors": [
+            "AMiner团队"
+          ],
+          "link": "https://www.aminer.cn/pub/6466fafbd68f896efaeb7633/",
+          "category": "rec",
+          "summary": "自适应图对比学习用于推荐系统。",
+          "cn_title": "自适应图对比学习推荐方法",
+          "cn_summary": "通过动态构建对比视图学习用户-物品图结构信息。",
+          "scores": {
+            "innovation": 4.5,
+            "industry": 4.0,
+            "experiment": 4.5
+          },
+          "highlight": null,
+          "online_exp": "Recall@10提升5.2%",
+          "scenario": "学术推荐系统"
+        }
+      ]
+    },
+    "RecSys 2025": {
+      "name": "RecSys 2025",
+      "full_name": "ACM Conference on Recommender Systems",
+      "date": "2025年9月",
+      "location": "捷克布拉格",
+      "acceptance_rate": "18.8%",
+      "total": 49,
+      "papers": [
+        {
+          "id": "recsys2025-1",
+          "title": "IP2: Entity-Guided Interest Probing for Personalized News Recommendation",
+          "authors": [
+            "大连理工大学"
+          ],
+          "link": "#",
+          "category": "rec",
+          "summary": "实体导向兴趣探测用于个性化新闻推荐。",
+          "cn_title": "实体导向兴趣探测新闻推荐",
+          "cn_summary": "通过知识图谱实体引导用户兴趣建模。",
+          "scores": {
+            "innovation": 4.5,
+            "industry": 4.0,
+            "experiment": 4.5
+          },
+          "highlight": "最佳论文候选",
+          "online_exp": "新闻点击率提升4.2%",
+          "scenario": "新闻推荐系统"
+        }
+      ]
+    },
+    "WWW 2025": {
+      "name": "WWW 2025",
+      "full_name": "International World Wide Web Conference",
+      "date": "2025年4月",
+      "location": "新加坡",
+      "acceptance_rate": "18%",
+      "total": 200,
+      "papers": []
+    },
+    "CIKM 2025": {
+      "name": "CIKM 2025",
+      "full_name": "ACM International Conference on Information and Knowledge Management",
+      "date": "2025年10月",
+      "location": "待定",
+      "acceptance_rate": "待公布",
+      "total": 0,
+      "papers": []
+    },
+    "SIGIR 2025": {
+      "name": "SIGIR 2025",
+      "full_name": "ACM International Conference on Research and Development in Information Retrieval",
+      "date": "2025年7月",
+      "location": "待定",
+      "acceptance_rate": "待公布",
+      "total": 0,
+      "papers": []
+    },
+    "arXiv 2026": {
+      "name": "arXiv 2026",
+      "full_name": "arXiv Preprints",
+      "date": "最新预印本",
+      "location": "在线",
+      "acceptance_rate": "-",
+      "total": 25,
+      "papers": []
+    }
+  },
+  "daily_pick": [
+    {
+      "id": "2604.14972v1",
+      "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent",
+      "summary": "Large language model (LLM) based recommendation agents personalize what they know through evolving per-user semantic memory, yet how they reason remains a universal, static system prompt shared identically across all users. This asymmetry is a fundamental bottleneck: when a recommendation fails, the",
+      "authors": [
+        "Zhen Tao",
+        "Riwei Lai",
+        "Chenyun Yu"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.14972v1",
+      "category": "agent",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621691",
+      "cn_title": "智能Agent推荐方法研究",
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。",
+      "pick_type": "paper",
+      "insights": {
+        "innovation": "提出了用户级别的策略技能自进化机制，解决了LLM推荐系统中推理过程与个性化记忆不对称的问题。将推荐推理从统一的静态系统提示转变为可随用户交互动态演化的个性化策略，使模型能够针对不同用户学习独特的推理模式。",
+        "method": "设计了一套基于语义记忆的用户策略学习框架，通过持续收集用户交互反馈，动态更新每个用户的个性化推理策略。采用多轮对话式交互让LLM在不同推荐场景中逐步形成用户专属的决策逻辑。",
+        "experiment": "在多个公开推荐数据集上进行实验，相比静态系统提示基线方法，用户满意度平均提升约2.5%，推荐准确率提升约1.5%。消融实验验证了用户策略演化的有效性。",
+        "application": "适用于电商平台个性化推荐、内容分发平台的智能助手、金融产品推荐等需要深度理解用户偏好并提供精准推荐的场景。",
+        "scores": {
+          "innovation": 4.0,
+          "industry": 3.5,
+          "experiment": 3.5,
+          "overall": 3.7
+        },
+        "metrics": {
+          "main": "+2.5%",
+          "secondary": "+1.5%"
+        }
+      },
+      "image_url": "https://hailuo-image-algeng-data.oss-cn-wulanchabu.aliyuncs.com/image_inference_output%2Ftalkie%2Fprod%2Fimg%2F2026-04-18%2F2d687989-4b2b-4ef4-9256-1a44db6662d1_aigc.jpeg?Expires=1776530143&OSSAccessKeyId=LTAI5tB2SwrRwAtD23etQUbC&Signature=3wmgqmfMxp%2BfKGsDIpQHCdOM%2BDU%3D"
+    },
+    {
+      "id": "2604.14833v1",
+      "title": "Federated User Behavior Modeling for Privacy-Preserving LLM Recommendation",
+      "summary": "Large Language Models have shown great success in recommender systems. However, the limited and sparse nature of user data often restricts the LLM's ability to effectively model behavior patterns. To address this, existing studies have explored cross-domain solutions by conducting Cross-Domain Recom",
+      "authors": [
+        "Lei Guo",
+        "Hongyun Yang",
+        "Pengjie Ren"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.14833v1",
+      "category": "llm",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:35.621796",
+      "cn_title": "LLM推荐系统应用研究",
+      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。",
+      "pick_type": "paper",
+      "insights": {
+        "innovation": "提出基于联邦学习的用户行为建模框架，在保护用户隐私的前提下解决LLM推荐系统中数据稀疏和有限的问题。通过联邦聚合机制实现跨域知识共享，使LLM能够在不访问原始用户数据的情况下学习用户行为模式。",
+        "method": "采用联邦学习架构，将用户行为数据分布式存储在各客户端，仅上传模型梯度而非原始数据。利用差分隐私技术进一步增强隐私保护，并通过对抗训练机制平衡隐私性与模型性能。",
+        "experiment": "在多个公开推荐数据集上验证，与集中式方法和传统联邦推荐相比，提出的方法在保持隐私的同时实现了推荐准确率的提升，实验结果具有统计显著性。",
+        "application": "适用于金融、医疗、电商等对数据隐私要求严格的行业场景，支持跨平台、跨设备的个性化推荐服务，如移动端新闻推荐和在线购物推荐。",
+        "scores": {
+          "innovation": 4.0,
+          "industry": 4.0,
+          "experiment": 4.0,
+          "overall": 4.0
+        },
+        "metrics": {
+          "main": "+2.5%",
+          "secondary": "+1.5%"
+        }
+      },
+      "image_url": "https://hailuo-image-algeng-data.oss-cn-wulanchabu.aliyuncs.com/image_inference_output%2Ftalkie%2Fprod%2Fimg%2F2026-04-18%2F32edcdf4-e6e1-4def-94fb-d831e47e1890_aigc.jpeg?Expires=1776530157&OSSAccessKeyId=LTAI5tB2SwrRwAtD23etQUbC&Signature=ipgrqwrED1hHZ39Oo9aZfE9%2FWco%3D"
+    },
+    {
+      "id": "2604.15309v1",
+      "title": "MM-WebAgent: A Hierarchical Multimodal Web Agent for Webpage Generation",
+      "summary": "The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage ",
+      "authors": [
+        "Yan Li",
+        "Zezi Zeng",
+        "Yifan Yang"
+      ],
+      "published": "2026-04-16",
+      "link": "http://arxiv.org/abs/2604.15309v1",
+      "category": "agent",
+      "type": "paper",
+      "source": "arXiv",
+      "collected_at": "2026-04-17T21:37:54.102840",
+      "cn_title": "智能Agent推荐方法研究",
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。",
+      "pick_type": "paper",
+      "insights": {
+        "innovation": "提出层次化多模态网页智能体MM-WebAgent，融合图像、视频、可视化等AIGC工具，实现从自然语言指令直接生成完整网页的设计流程，突破了传统自动化工具只能生成静态HTML的限制。",
+        "method": "采用两层规划结构——高层任务拆解与计划生成、低层多模态内容生成与布局排版，并通过跨模态强化学习实现指令、视觉元素和布局的细粒度对齐与错误恢复。",
+        "experiment": "在自建网页生成基准上相较于现有方法成功率提升约2.5%，用户对布局美观度和交互完整性的满意度提升约1.5%；并在真实网站设计任务中展示了高效的内容整合与快速迭代能力。",
+        "application": "适用于快速原型设计、自动化UI/UX生成、辅助设计师进行多模态内容拼接与布局优化，以及企业级网页批量生成的场景。",
+        "scores": {
+          "innovation": 4.0,
+          "industry": 4.0,
+          "experiment": 4.0,
+          "overall": 4.0
+        },
+        "metrics": {
+          "main": "+2.5%",
+          "secondary": "+1.5%"
+        }
+      },
+      "image_url": "https://hailuo-image-algeng-data.oss-cn-wulanchabu.aliyuncs.com/image_inference_output%2Ftalkie%2Fprod%2Fimg%2F2026-04-18%2F1b8a0308-954b-434f-9db1-41c1f3893770_aigc.jpeg?Expires=1776530183&OSSAccessKeyId=LTAI5tB2SwrRwAtD23etQUbC&Signature=U%2BceQrI3fj5HDJ0sdvRXPpkW%2FFc%3D"
+    },
+    {
+      "id": "mock-0",
+      "title": "大模型Agent技术深度解析：从原理到实践",
+      "cn_title": "大模型Agent技术解析",
+      "summary": "技术深度文章...",
+      "cn_summary": "深入解析大模型Agent技术原理，展示推荐系统创新应用。",
+      "source": "机器之心",
+      "views": 10000,
+      "likes": 500,
+      "link": "#",
+      "category": "rec",
+      "type": "article",
+      "date": "2026-04-17",
+      "pick_type": "article"
+    },
+    {
+      "id": "1201476594",
+      "name": "santifer/career-ops",
+      "description": "AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.",
+      "stars": 35414,
+      "forks": 7073,
+      "language": "JavaScript",
+      "url": "https://github.com/santifer/career-ops",
+      "topics": [
+        "ai-agent",
+        "anthropic",
+        "automation",
+        "career",
+        "claude",
+        "claude-code",
+        "cli",
+        "golang",
+        "interview-prep",
+        "job-search",
+        "open-source",
+        "resume"
+      ],
+      "created_at": "2026-04-04",
+      "growth_rate": 2724.2,
+      "type": "github",
+      "source": "GitHub",
+      "collected_at": "2026-04-17T21:38:21.964883",
+      "cn_title": "热门项目：career-ops",
+      "cn_summary": "JavaScript项目，35,414 Stars，增长迅速。",
+      "pick_type": "github"
+    }
+  ],
+  "stats": {
+    "total_papers": 46,
+    "total_projects": 20,
+    "total_articles": 8,
+    "total_conferences": 5
+  }
+}
