@@ -2,6 +2,7 @@
 """
 AI推荐日报 - 顶会论文采集脚本
 从 DBLP 和 arXiv 采集顶会论文
+集成历史记录去重，确保不同天推送的内容不重复
 """
 
 import json
@@ -11,6 +12,11 @@ import xml.etree.ElementTree as ET
 import re
 from pathlib import Path
 from datetime import datetime
+import sys
+
+# 添加脚本目录到路径
+sys.path.insert(0, str(Path(__file__).parent))
+from history_manager import HistoryManager
 
 class ConferencePaperCollector:
     def __init__(self, base_dir: str = None):
@@ -19,6 +25,7 @@ class ConferencePaperCollector:
         self.base_dir = Path(base_dir)
         self.cache_dir = self.base_dir / "cache"
         self.cache_dir.mkdir(exist_ok=True)
+        self.history_manager = HistoryManager(str(self.base_dir))
         
         # 顶会配置
         self.conferences = {
@@ -73,7 +80,7 @@ class ConferencePaperCollector:
         }
     
     def search_arxiv_for_conference(self, conf_name: str, keywords: list, max_results: int = 20) -> list:
-        """从 arXiv 搜索会议相关论文"""
+        """从 arXiv 搜索会议相关论文（已去重）"""
         papers = []
         
         # 构建查询
@@ -114,7 +121,7 @@ class ConferencePaperCollector:
                     if name is not None:
                         authors.append(name.text)
                 
-                papers.append({
+                paper = {
                     'id': arxiv_id,
                     'arxiv_id': arxiv_id,
                     'title': title,
@@ -124,9 +131,13 @@ class ConferencePaperCollector:
                     'authors': authors[:5],
                     'type': 'paper',
                     'conference': conf_name
-                })
+                }
+                
+                # 检查是否已发布
+                if not self.history_manager.is_published(paper, 'conference_papers', days=30):
+                    papers.append(paper)
             
-            print(f"    找到 {len(papers)} 篇")
+            print(f"    找到 {len(papers)} 篇（已去重）")
         
         except Exception as e:
             print(f"    搜索失败: {e}")
@@ -136,7 +147,7 @@ class ConferencePaperCollector:
     def collect_all(self) -> dict:
         """采集所有顶会论文"""
         print("="*50)
-        print("📚 顶会论文采集")
+        print("📚 顶会论文采集（已去重）")
         print("="*50)
         
         result = {}
@@ -149,6 +160,10 @@ class ConferencePaperCollector:
                 conf_info['keywords'],
                 max_results=10
             )
+            
+            # 标记为已发布
+            for paper in papers:
+                self.history_manager.mark_published(paper, 'conference_papers')
             
             result[conf_key] = {
                 'name': conf_info['name'],
@@ -174,6 +189,11 @@ class ConferencePaperCollector:
         for conf_key, conf in result.items():
             print(f"  {conf['name']}: {len(conf['papers'])}篇")
         print(f"  总计: {total}篇")
+        
+        # 显示历史记录统计
+        stats = self.history_manager.get_stats()
+        print(f"\n历史记录统计:")
+        print(f"   顶会论文: {stats['conference_papers']}条")
         
         return result
 

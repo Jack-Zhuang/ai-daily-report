@@ -3,11 +3,17 @@
 AI推荐日报 - 每日精选构建脚本
 严格按照规则构建每日精选：3篇文章 + 1篇论文 + 1个GitHub项目
 顺序：[article, article, article, paper, github]
+集成历史记录去重，确保不同天推送的内容不重复
 """
 
 import json
 from pathlib import Path
 from datetime import datetime, timedelta
+import sys
+
+# 添加脚本目录到路径
+sys.path.insert(0, str(Path(__file__).parent))
+from history_manager import HistoryManager
 
 class DailyPickBuilder:
     def __init__(self, base_dir: str = None):
@@ -16,6 +22,7 @@ class DailyPickBuilder:
         self.base_dir = Path(base_dir)
         self.today = datetime.now().strftime("%Y-%m-%d")
         self.yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+        self.history_manager = HistoryManager(str(self.base_dir))
     
     def is_recent(self, published: str, max_days: int = 3) -> bool:
         """检查内容是否足够新"""
@@ -43,12 +50,14 @@ class DailyPickBuilder:
         构建每日精选
         规则：3篇文章 + 1篇论文 + 1个GitHub项目
         顺序：[article, article, article, paper, github]
+        去重：确保不同天推送的内容不重复
         """
         print("="*50)
         print("📌 构建每日精选")
         print("="*50)
         print("规则: 3篇文章 + 1篇论文 + 1个GitHub项目")
         print("顺序: [article, article, article, paper, github]")
+        print("去重: 排除最近30天内已发布的内容")
         print()
         
         # 收集所有可用内容
@@ -67,6 +76,10 @@ class DailyPickBuilder:
             if not self.is_relevant(title, summary):
                 continue
             if not self.is_recent(published, max_days=3):
+                continue
+            
+            # 检查是否已发布
+            if self.history_manager.is_published(item, 'hot_articles', days=30):
                 continue
             
             if 'arxiv.org' in link:
@@ -90,6 +103,10 @@ class DailyPickBuilder:
             if not self.is_recent(published, max_days=3):
                 continue
             
+            # 检查是否已发布
+            if self.history_manager.is_published(item, 'arxiv_papers', days=30):
+                continue
+            
             item['pick_type'] = 'paper'
             papers.append(item)
         
@@ -101,10 +118,14 @@ class DailyPickBuilder:
             if not self.is_relevant(title, summary):
                 continue
             
+            # 检查是否已发布
+            if self.history_manager.is_published(item, 'github_projects', days=30):
+                continue
+            
             item['pick_type'] = 'github'
             githubs.append(item)
         
-        print(f"可用内容:")
+        print(f"可用内容（已去重）:")
         print(f"  文章: {len(articles)}篇")
         print(f"  论文: {len(papers)}篇")
         print(f"  GitHub: {len(githubs)}个")
@@ -134,6 +155,10 @@ class DailyPickBuilder:
             githubs[0]['pick_type'] = 'github'
             daily_pick.append(githubs[0])
         
+        # 标记为已发布
+        for item in daily_pick:
+            self.history_manager.mark_published(item, 'daily_pick')
+        
         # 验证
         print(f"\n{'='*50}")
         print(f"✅ 每日精选构建完成: {len(daily_pick)}项")
@@ -145,6 +170,14 @@ class DailyPickBuilder:
             print(f"   顺序: ✅ {types}")
         else:
             print(f"   顺序: ⚠️ {types} (期望: {expected})")
+        
+        # 显示历史记录统计
+        stats = self.history_manager.get_stats()
+        print(f"\n历史记录统计:")
+        print(f"   每日精选: {stats['daily_pick']}条")
+        print(f"   热门文章: {stats['hot_articles']}条")
+        print(f"   arXiv论文: {stats['arxiv_papers']}条")
+        print(f"   GitHub项目: {stats['github_projects']}条")
         
         print(f"{'='*50}")
         

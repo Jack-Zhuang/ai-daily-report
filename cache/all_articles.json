@@ -1,6 +1,58 @@
 {
   "items": [
     {
+      "id": "846da3bfafe2",
+      "title": "亚洲开发银行行长：货币和财政纪律是抵御重大外部冲击的最佳缓冲",
+      "summary": "亚洲开发银行行长神田真人表示，中东冲突加剧地区经济不确定性之际，稳健的宏观经济政策，包括货币政策正常化和财政整顿，是抵御重大外部冲击的最佳缓冲。他在华盛顿参加一系列全球财长会议时表示，能源冲击将通过更高的运输和投入成本蔓延开来，加剧更广泛的通货膨胀。总体而言，大范围的能源补贴效率低下，因为它们会扭曲市场信号；应将更多精力投入到提高能源效率、能源结构多元化以及储备建设上。中东局势给亚洲国家造成了重大",
+      "link": "https://www.36kr.com/newsflashes/3772027429519880",
+      "source": "36氪快讯",
+      "published": "2026-04-18",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "industry",
+      "collected_at": "2026-04-19T01:10:35.230404"
+    },
+    {
+      "id": "b2ffdd051544",
+      "title": "🔥Java 最好用的基于 mybatis 的 ORM 框架，1.10.0 正式发布，绝对不能错过！！！",
+      "summary": "",
+      "link": "https://www.oschina.net/news/431533",
+      "source": "开源中国资讯",
+      "published": "2026-04-18",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "opensource",
+      "collected_at": "2026-04-19T01:10:42.504913"
+    },
+    {
+      "id": "8dbb47b871a0",
+      "title": "这可能是近十年最重要的 C++ 版本更新，反射、契约、并发模型全面进化",
+      "summary": "长期从事 C++ 的专家、前 ISO C++ 标准委员会主席 Herb Sutter 表示，C++26 标准草案现已完成\"。最终版本的草案引入了反射，在无需重写代码的情况下增强了内存安全性，新增了包含前置条件和后置条件的契约以及一种新的断言语句，并建立了一个统一的并发与并行框架。反射是一种机制，正如 Sutter 所解释的，它赋予开发者访问 C++ 内部机制的能力\"，使语言能够描述自身并生成代码，",
+      "link": "https://www.infoq.cn/article/mTR5V1FNI2HdcxOxB8fW",
+      "source": "InfoQ技术文章",
+      "published": "2026-04-18",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "tech",
+      "collected_at": "2026-04-19T01:10:46.185660"
+    },
+    {
+      "id": "b73c6bf5f641",
+      "title": "谷歌基于Apache 2.0协议开源Gemma 4，搭载多模态与智能体能力",
+      "summary": "谷歌近期发布\"了 Gemma 4\" 系列开源权重模型，其中包含高效的 2B 和 4B 边缘端版本、一个 26B 混合专家（MoE）模型，以及一个 31B 稠密模型，所有模型均基于 Apache 2.0\" 许可开源。本次更新为全系列模型加入了原生视频与图像处理能力，小型模型还支持音频输入，上下文窗口最高可扩展至 256K 词元。基准测试结果显示，31B 稠密版本的性能已达到通常需要其三至五倍参数量级",
+      "link": "https://www.infoq.cn/article/ry64GrNLAEEf1qdZABb0",
+      "source": "InfoQ技术文章",
+      "published": "2026-04-18",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "agent",
+      "collected_at": "2026-04-19T01:10:46.185707"
+    },
+    {
       "id": "e6a254569da4",
       "title": "技术日报｜superpowers 突破 15.7 万星重夺榜首，Google AI 文件检测工具magika强势入榜",
       "summary": "\n🌟 TrendForge 每日精选 - 发现最具潜力的开源项目 📊 今日共收录 15 个热门项目\n\n\n\n🌐 智能中文翻译版 - 项目描述已自动翻译，便于理解\n\n\n🏆 今日最热项目 Top 10\n\n🥇 obra/superpowers\n\n项目简介: Claude Code 超级能力：核心技能库\n\n今日新增: 1713 * 总星数: 157744 * 语言: Shell\n\nhttps://githu",
@@ -38,6 +90,19 @@
       "type": "article",
       "category": "industry",
       "collected_at": "2026-04-18T09:15:59.670805"
+    },
+    {
+      "id": "ee5e61a76e5e",
+      "title": "单任务狂飙16小时！模型+Harness双轮驱动，金融Agent跑通了",
+      "summary": "",
+      "link": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652693051&idx=2&sn=3ebf8768d8ef1aafd0e497f667097d72",
+      "source": "新智元",
+      "published": "2026-04-17",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "agent",
+      "collected_at": "2026-04-19T01:09:34.425446"
     },
     {
       "id": "0b4abc1ba561",
@@ -1002,5 +1067,5 @@
       "collected_at": "2026-04-18T09:15:46.567399"
     }
   ],
-  "last_update": "2026-04-18T09:40:07.572708"
+  "last_update": "2026-04-19T01:10:46.687530"
 }
