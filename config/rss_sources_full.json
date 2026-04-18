@@ -1,0 +1,121 @@
+{
+  "sources": {
+    "wechat": [
+      {
+        "name": "机器之心",
+        "url": "https://wechat2rss.xlab.app/feed/51e92aad2728acdd1fda7314be32b16639353001.xml",
+        "priority": 1,
+        "keywords": ["AI", "大模型", "推荐", "算法"]
+      },
+      {
+        "name": "量子位",
+        "url": "https://wechat2rss.xlab.app/feed/7131b577c61365cb47e81000738c10d872685908.xml",
+        "priority": 1,
+        "keywords": ["AI", "大模型", "推荐"]
+      },
+      {
+        "name": "新智元",
+        "url": "https://wechat2rss.xlab.app/feed/ede30346413ea70dbef5d485ea5cbb95cca446e7.xml",
+        "priority": 1,
+        "keywords": ["AI", "大模型", "推荐"]
+      },
+      {
+        "name": "PaperWeekly",
+        "url": "https://wechat2rss.xlab.app/feed/3be891c2f4e526629ab055a297cc2cd6c1f0a563.xml",
+        "priority": 1,
+        "keywords": ["论文", "AI", "推荐"]
+      }
+    ],
+    "tech_blogs": [
+      {
+        "name": "美团技术团队",
+        "url": "https://rsshub.rssforever.com/meituan/tech",
+        "priority": 1,
+        "keywords": ["推荐", "算法", "搜索", "广告"]
+      },
+      {
+        "name": "阿里技术",
+        "url": "https://rsshub.rssforever.com/alibaba/tech",
+        "priority": 2,
+        "keywords": ["推荐", "算法", "搜索"]
+      },
+      {
+        "name": "腾讯技术",
+        "url": "https://rsshub.rssforever.com/tencent/tech",
+        "priority": 2,
+        "keywords": ["推荐", "算法", "AI"]
+      }
+    ],
+    "tech_media": [
+      {
+        "name": "36氪快讯",
+        "url": "https://rsshub.rssforever.com/36kr/newsflashes",
+        "priority": 2,
+        "keywords": ["AI", "大模型"]
+      },
+      {
+        "name": "IT之家热榜",
+        "url": "https://rsshub.rssforever.com/ithome/ranking/7days",
+        "priority": 2,
+        "keywords": ["AI", "大模型"]
+      },
+      {
+        "name": "开源中国资讯",
+        "url": "https://rsshub.rssforever.com/oschina/news",
+        "priority": 2,
+        "keywords": ["AI", "开源"]
+      },
+      {
+        "name": "InfoQ技术文章",
+        "url": "https://rsshub.rssforever.com/infoq/recommend",
+        "priority": 1,
+        "keywords": ["AI", "架构", "推荐"]
+      }
+    ],
+    "academic": [
+      {
+        "name": "arXiv - cs.IR",
+        "url": "http://export.arxiv.org/api/query?search_query=cat:cs.IR&max_results=20",
+        "priority": 1,
+        "keywords": ["recommendation", "information retrieval"]
+      },
+      {
+        "name": "arXiv - cs.AI",
+        "url": "http://export.arxiv.org/api/query?search_query=cat:cs.AI&max_results=20",
+        "priority": 1,
+        "keywords": ["agent", "AI"]
+      },
+      {
+        "name": "arXiv - cs.CL",
+        "url": "http://export.arxiv.org/api/query?search_query=cat:cs.CL&max_results=20",
+        "priority": 1,
+        "keywords": ["LLM", "NLP"]
+      }
+    ],
+    "github": [
+      {
+        "name": "GitHub Trending",
+        "url": "https://api.github.com/repos",
+        "priority": 1,
+        "keywords": ["AI", "ML", "recommendation"]
+      }
+    ],
+    "zhihu": [
+      {
+        "name": "知乎日报",
+        "url": "https://rsshub.rssforever.com/zhihu/daily",
+        "priority": 2,
+        "keywords": ["AI", "推荐"]
+      }
+    ]
+  },
+  "notes": {
+    "byteDance": "字节跳动技术博客 RSS 暂时不可用，可尝试：1. 官网直接抓取 2. 掘金搜索 3. 微信公众号",
+    "dataFunTalk": "DataFunTalk 公众号需在 wechat2rss.xlab.app 手动搜索添加",
+    "alternative_sources": [
+      "https://juejin.cn/tag/推荐算法",
+      "https://www.csdn.net/tags/MtTaMg5sMjY2MDYtYmxvZwO0O0OO0O0O.html",
+      "https://zhuanlan.zhihu.com/p/推荐系统"
+    ]
+  }
+}
