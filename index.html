@@ -1269,8 +1269,11 @@
             container.innerHTML = arxivPapers.slice(0, 5).map((item, i) => {
                 const cnTitle = item.cn_title || (item.title ? item.title.slice(0, 40) + '...' : '论文');
                 const cnSummary = item.cn_summary || '本文在推荐系统相关领域做出了创新研究，提出了新的方法和见解。';
+                // 论文解读页面链接
+                const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
+                const insightUrl = `insights/paper_${paperId}.html`;
                 return `
-                    <div class="card" onclick="showPaperDetail(${i})">
+                    <div class="card" onclick="window.location.href='${insightUrl}'">
                         <div class="card-image ${item.cover_image ? '' : (categoryImages[item.category] || 'card-image-paper')}" style="${item.cover_image ? `background-image: url('${item.cover_image}')` : ''}">
                             <div class="card-image-icon">${item.cover_image ? '' : '📄'}</div>
                             <div class="card-image-badge">arXiv</div>
@@ -1289,7 +1292,7 @@
                                 <div class="card-stats">
                                     <span class="card-stat"><i class="fas fa-calendar" style="color:#10b981"></i> ${item.published}</span>
                                 </div>
-                                <span class="card-link">阅读论文 <i class="fas fa-external-link-alt"></i></span>
+                                <span class="card-link">查看解读 <i class="fas fa-chevron-right"></i></span>
                             </div>
                         </div>
                     </div>
