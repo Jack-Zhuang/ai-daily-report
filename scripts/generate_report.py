@@ -876,11 +876,31 @@ class ReportGenerator:
     
     <div class="footer">
         <div class="footer-links">
-            <a href="#" class="footer-link">订阅</a>
-            <a href="#" class="footer-link">分享</a>
-            <a href="#" class="footer-link">反馈</a>
+            <a href="javascript:void(0)" class="footer-link" onclick="showSubscribeModal()">订阅</a>
+            <a href="javascript:void(0)" class="footer-link" onclick="shareReport()">分享</a>
+            <a href="https://github.com/Jack-Zhuang/ai-daily-report/issues" target="_blank" class="footer-link">反馈</a>
         </div>
         <p>AI推荐日报 © 2026 | 数据来源：顶会论文、arXiv、公众号、知乎、GitHub、Medium</p>
+    </div>
+
+    <!-- 订阅弹窗 -->
+    <div id="subscribeModal" class="modal" style="display:none;">
+        <div class="modal-overlay" onclick="closeSubscribeModal()"></div>
+        <div class="modal-content" style="max-width:400px;padding:24px;">
+            <h3 style="margin-bottom:16px;font-size:18px;">📬 订阅 AI 推荐日报</h3>
+            <p style="color:var(--color-text-secondary);margin-bottom:16px;font-size:14px;">
+                每日推送最新 AI 论文、开源项目和热门文章
+            </p>
+            <div style="background:rgba(102,126,234,0.1);padding:16px;border-radius:12px;margin-bottom:16px;">
+                <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:8px;">订阅方式</p>
+                <p style="font-size:14px;font-weight:600;">• 微信公众号：AI推荐日报</p>
+                <p style="font-size:14px;font-weight:600;">• RSS：https://jack-zhuang.github.io/ai-daily-report/feed.xml</p>
+                <p style="font-size:14px;font-weight:600;">• GitHub Watch：关注仓库获取更新</p>
+            </div>
+            <button onclick="closeSubscribeModal()" style="width:100%;padding:12px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;">
+                知道了
+            </button>
+        </div>
     </div>
 
     <script>
@@ -1730,6 +1750,37 @@ class ReportGenerator:
                 }}
             }});
         }});
+        
+        // 订阅弹窗
+        function showSubscribeModal() {{
+            document.getElementById('subscribeModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }}
+        
+        function closeSubscribeModal() {{
+            document.getElementById('subscribeModal').style.display = 'none';
+            document.body.style.overflow = '';
+        }}
+        
+        // 分享功能
+        function shareReport() {{
+            const shareData = {{
+                title: 'AI推荐日报',
+                text: '推荐算法 × AI Agent × LLM 前沿追踪，每日精选最值得阅读的内容',
+                url: window.location.href
+            }};
+            
+            if (navigator.share) {{
+                navigator.share(shareData).catch(() => {{}});
+            }} else {{
+                // 复制链接
+                navigator.clipboard.writeText(window.location.href).then(() => {{
+                    alert('链接已复制到剪贴板！');
+                }}).catch(() => {{
+                    alert('分享链接：' + window.location.href);
+                }});
+            }}
+        }}
         
         // 往期日报
         function showArchive() {{
