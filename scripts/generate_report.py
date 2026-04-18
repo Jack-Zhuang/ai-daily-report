@@ -584,6 +584,17 @@ class ReportGenerator:
             text-align: center; margin-top: 20px; cursor: pointer;
         }}
         
+        /* View More Button */
+        .view-more-btn {{
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 14px; margin-top: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; border: none; border-radius: 12px;
+            font-size: 14px; font-weight: 600; cursor: pointer;
+            transition: transform 0.2s;
+        }}
+        .view-more-btn:active {{ transform: scale(0.98); }}
+        
         /* Modal */
         .modal-overlay {{
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -1270,7 +1281,7 @@ class ReportGenerator:
             const container = document.getElementById('github-list');
             const langColors = {{ Python: '#3572A5', JavaScript: '#f1e05a', TypeScript: '#2b7489', Java: '#b07219', Go: '#00ADD8', Rust: '#dea584', 'C++': '#f34b7d' }};
             
-            container.innerHTML = githubProjects.slice(0, 6).map((item, i) => {{
+            container.innerHTML = githubProjects.slice(0, 5).map((item, i) => {{
                 const cnTitle = item.cn_title || item.name;
                 const cnSummary = item.cn_summary || item.description;
                 return `
@@ -1365,6 +1376,7 @@ class ReportGenerator:
             const categoryEmoji = {{ rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭' }};
             const categoryImages = {{ rec: 'card-image-rec', agent: 'card-image-agent', llm: 'card-image-llm', industry: 'card-image-paper' }};
             
+            // 展示前5篇
             container.innerHTML = arxivPapers.slice(0, 5).map((item, i) => {{
                 const cnTitle = item.cn_title || (item.title ? item.title.slice(0, 40) + '...' : '论文');
                 const cnSummary = item.cn_summary || '本文在推荐系统相关领域做出了创新研究，提出了新的方法和见解。';
@@ -1397,6 +1409,15 @@ class ReportGenerator:
                     </div>
                 `;
             }}).join('');
+            
+            // 添加"查看更多"按钮（如果有超过5篇）
+            if (arxivPapers.length > 5) {{
+                const moreBtn = document.createElement('button');
+                moreBtn.className = 'view-more-btn';
+                moreBtn.innerHTML = `<i class="fas fa-book-open"></i> 查看剩余 ${{arxivPapers.length - 5}} 篇论文 <i class="fas fa-chevron-right"></i>`;
+                moreBtn.onclick = () => window.location.href = 'papers.html';
+                container.appendChild(moreBtn);
+            }}
         }}
         
         // 显示论文详情弹窗
