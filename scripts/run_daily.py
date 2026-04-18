@@ -123,6 +123,11 @@ class DailyReportRunner:
         with open(data_file, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
         
+        # 构建每日精选（严格按照规则）
+        print("\n📝 构建每日精选...")
+        cmd = f"python3 {self.scripts_dir / 'build_daily_pick.py'} {data_file}"
+        self.run_command(cmd, "构建每日精选")
+        
         print(f"✅ 数据处理完成")
         return True
     
