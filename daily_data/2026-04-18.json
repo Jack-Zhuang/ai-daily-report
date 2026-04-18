@@ -536,63 +536,6 @@
   ],
   "hot_articles": [
     {
-      "id": "d747dc8e56f0",
-      "title": "阿里 HappyOyster 正式开放内测",
-      "summary": "阿里巴巴-ATH 创新事业部旗下 HappyOyster 正式宣布开放内测。\n\n根据介绍，Happy Oyster 是一款用于实时世界生成与交互的开放式世界模型产品。基于原生多模态架构构建，Happy Oyster 支持多模态理解以及音视频联合生成。\n\n与遵循“编写提示词、等待渲染、接收成品片段”这种一次性工作流的传统 AI 视频工具不同，Happy Oyster 在整个生成过程中持续聆听并作出响",
-      "link": "https://www.oschina.net/news/430631",
-      "source": "开源中国资讯",
-      "published": "2026-04-17",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "opensource",
-      "collected_at": "2026-04-18T09:37:04.896755",
-      "cn_title": "阿里 HappyOyster 正式开放内测",
-      "cover_image": "covers/article_1.jpg",
-      "cn_summary": "阿里巴巴-ATH 创新事业部旗下 HappyOyster 正式宣布开放内测。 根据介绍，Happy Oyster 是一款用于实时世界生成与交互的开放式世界模型产品。基于原生多模态架构构建，Happy Oyster 支持多模态理解以及音视频联合生成。 与遵循“编写提示词、等待渲染、接收成品片段”这种一次性工作流的传统 AI 视频工具不同，Happy Oyster 在整个生成过程中持续聆听并作出响",
-      "pick_type": "article",
-      "rank": 1,
-      "recommend_reason": "今日热门文章，来自开源中国资讯"
-    },
-    {
-      "id": "75b95461ba06",
-      "title": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台",
-      "summary": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台\n\n此版本更新内容包括：\n\n标题发布版本 0.9.0\n\n\n功能(UI)：新增专用的 Agent 子代理渲染，以层级卡片形式展示父 Agent 提示词与子工具调用的嵌套关系；\n功能(解析器)：将 Codex CLI 的 spawn_agent 和 OpenCode 的 task 渲染为 Agent 卡片并嵌套子工具调用，统",
-      "link": "https://www.oschina.net/news/430726",
-      "source": "开源中国资讯",
-      "published": "2026-04-17",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "rec",
-      "collected_at": "2026-04-18T09:37:04.896639",
-      "cn_title": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台",
-      "cover_image": "covers/article_2.jpg",
-      "cn_summary": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台 此版本更新内容包括： 标题发布版本 0.9.0 功能(UI)：新增专用的 Agent 子代理渲染，以层级卡片形式展示父 Agent 提示词与子工具调用的嵌套关系； 功能(解析器)：将 Codex CLI 的 spawn_agent 和 OpenCode 的 task 渲染为 Agent 卡片并嵌套子工具调用，统",
-      "pick_type": "article",
-      "rank": 2,
-      "recommend_reason": "今日热门文章，来自开源中国资讯"
-    },
-    {
-      "id": "e6a254569da4",
-      "title": "技术日报｜superpowers 突破 15.7 万星重夺榜首，Google AI 文件检测工具magika强势入榜",
-      "summary": "\n🌟 TrendForge 每日精选 - 发现最具潜力的开源项目 📊 今日共收录 15 个热门项目\n\n\n\n🌐 智能中文翻译版 - 项目描述已自动翻译，便于理解\n\n\n🏆 今日最热项目 Top 10\n\n🥇 obra/superpowers\n\n项目简介: Claude Code 超级能力：核心技能库\n\n今日新增: 1713 * 总星数: 157744 * 语言: Shell\n\nhttps://githu",
-      "link": "https://www.oschina.net/news/431421",
-      "source": "开源中国资讯",
-      "published": "2026-04-18",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "opensource",
-      "collected_at": "2026-04-18T09:37:04.896524",
-      "cn_title": "技术日报｜superpowers 突破 15.7 万星重夺榜首，Google AI 文件检测工具magika强势入榜",
-      "cover_image": "covers/article_3.jpg",
-      "cn_summary": "🌟 TrendForge 每日精选 - 发现最具潜力的开源项目 📊 今日共收录 15 个热门项目 🌐 智能中文翻译版 - 项目描述已自动翻译，便于理解 🏆 今日最热项目 Top 10 🥇 obra/superpowers 项目简介: Claude Code 超级能力：核心技能库 今日新增: 1713 * 总星数: 157744 * 语言: Shell https://githu",
-      "pick_type": "article",
-      "rank": 3,
-      "recommend_reason": "今日热门文章，来自开源中国资讯"
-    },
-    {
       "id": "73d04e7838b4",
       "title": "追光动画电影《三国第一部：争洛阳》定档 7 月 10 日暑期上映并发布预告，对此你有哪些期待？",
       "summary": "《长安三万里》原班人马打造，追光动画“三国”系列首作《三国第一部：争洛阳》官宣定档7月10日，并发布“洛阳风云”版定档预告。东汉末年，三国鼎立大幕未启，黄巾军起，外戚弄权，宦官乱政。天下动荡之际，曹操、袁绍欲借大将军何进之力制衡宦官，匡扶汉室。不料董卓趁乱进京，图谋废立。乱世棋局渐开，袁术、吕布、孙坚及刘关张等各路群雄相继登场，洛阳风云起，大汉的命运走向十字路口…影片由谢君伟执导，宋依依担任制片人",
@@ -1035,7 +978,7 @@
   "stats": {
     "total_papers": 20,
     "total_projects": 5,
-    "total_articles": 15,
+    "total_articles": 12,
     "total_pick": 5
   }
 }
