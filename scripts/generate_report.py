@@ -346,10 +346,11 @@ class ReportGenerator:
         
         /* Card Image */
         .card-image {{
-            width: 100%; height: 140px;
+            width: 100%; height: 160px;
             background-color: #667eea;
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             display: flex; align-items: center; justify-content: center;
             position: relative; overflow: hidden;
         }}
@@ -357,16 +358,16 @@ class ReportGenerator:
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.5) 100%);
             z-index: 1;
         }}
-        .card-image-paper {{ background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }}
-        .card-image-article {{ background-image: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }}
-        .card-image-github {{ background-image: linear-gradient(135deg, #24292e 0%, #4a5568 100%); }}
-        .card-image-rec {{ background-image: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }}
-        .card-image-agent {{ background-image: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }}
-        .card-image-llm {{ background-image: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }}
-        .card-image-icon {{ font-size: 48px; color: rgba(255,255,255,0.9); position: relative; z-index: 2; }}
+        .card-image-paper {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }}
+        .card-image-article {{ background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }}
+        .card-image-github {{ background: linear-gradient(135deg, #24292e 0%, #4a5568 100%); }}
+        .card-image-rec {{ background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }}
+        .card-image-agent {{ background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }}
+        .card-image-llm {{ background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }}
+        .card-image-icon {{ font-size: 48px; color: rgba(255,255,255,0.9); position: relative; z-index: 2; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }}
         .card-image-badge {{
             position: absolute; top: 10px; right: 10px; z-index: 3;
             background: rgba(255,255,255,0.95); color: #1e293b;
@@ -932,7 +933,7 @@ class ReportGenerator:
                             onclick="event.stopPropagation(); handleFavoriteClick(this)">
                             <i class="${{isFav ? 'fas' : 'far'}} fa-bookmark"></i>
                         </button>
-                        <div class="card-image ${{imageClass}}" style="${{item.cover_image ? `background-image: url('${{item.cover_image}}')` : ''}}">
+                        <div class="card-image ${{item.cover_image ? '' : imageClass}}" style="${{item.cover_image ? `background-image: url('${{item.cover_image}}')` : ''}}">
                             <div class="card-image-icon">${{item.cover_image ? '' : typeIcon}}</div>
                             <div class="card-image-badge">TOP ${{i + 1}}</div>
                         </div>
@@ -1160,8 +1161,8 @@ class ReportGenerator:
                 const cnSummary = item.cn_summary || item.summary || '';
                 return `
                     <div class="card" onclick="showArticleDetail(${{i}}, '${{filter}}')">
-                        <div class="card-image ${{categoryImages[item.category] || 'card-image-article'}}">
-                            <div class="card-image-icon">${{categoryEmoji[item.category] || '🔥'}}</div>
+                        <div class="card-image ${{item.cover_image ? '' : (categoryImages[item.category] || 'card-image-article')}}" style="${{item.cover_image ? `background-image: url('${{item.cover_image}}')` : ''}}">
+                            <div class="card-image-icon">${{item.cover_image ? '' : (categoryEmoji[item.category] || '🔥')}}</div>
                             <div class="card-image-badge">HOT</div>
                         </div>
                         <div class="card-body">
@@ -1241,8 +1242,8 @@ class ReportGenerator:
                 const cnSummary = item.cn_summary || item.description;
                 return `
                     <div class="card" onclick="showGithubDetail(${{i}})">
-                        <div class="card-image card-image-github">
-                            <div class="card-image-icon"><i class="fab fa-github"></i></div>
+                        <div class="card-image ${{item.cover_image ? '' : 'card-image-github'}}" style="${{item.cover_image ? `background-image: url('${{item.cover_image}}')` : ''}}">
+                            <div class="card-image-icon">${{item.cover_image ? '' : '<i class="fab fa-github"></i>'}}</div>
                             <div class="card-image-badge">${{item.language || 'Code'}}</div>
                             ${{item.growth_rate ? `<div class="card-image-trending"><i class="fas fa-chart-line"></i> +${{item.growth_rate.toFixed(1)}}% 增长</div>` : ''}}
                         </div>
@@ -1336,8 +1337,8 @@ class ReportGenerator:
                 const cnSummary = item.cn_summary || '本文在推荐系统相关领域做出了创新研究，提出了新的方法和见解。';
                 return `
                     <div class="card" onclick="showPaperDetail(${{i}})">
-                        <div class="card-image ${{categoryImages[item.category] || 'card-image-paper'}}">
-                            <div class="card-image-icon">📄</div>
+                        <div class="card-image ${{item.cover_image ? '' : (categoryImages[item.category] || 'card-image-paper')}}" style="${{item.cover_image ? `background-image: url('${{item.cover_image}}')` : ''}}">
+                            <div class="card-image-icon">${{item.cover_image ? '' : '📄'}}</div>
                             <div class="card-image-badge">arXiv</div>
                         </div>
                         <div class="card-body">

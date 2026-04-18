@@ -20,7 +20,8 @@
       "cn_title": "智能Agent推荐方法研究",
       "cn_summary": "【agent领域】Large language model (LLM) based recommendation agents personalize what they know through evolving per-user semantic memory, yet how they reason remains a universal, static system prompt shared identically across all users. This asymmetry is a fundamental bottleneck: when a recommendation fails, the",
       "pick_type": "paper",
-      "rank": 1
+      "rank": 1,
+      "cover_image": "covers/paper_1.jpg"
     },
     {
       "id": "2604.14878v1",
@@ -40,7 +41,8 @@
       "cn_title": "推荐生成式检索相关研究",
       "cn_summary": "【rec领域】Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the paginat",
       "pick_type": "paper",
-      "rank": 2
+      "rank": 2,
+      "cover_image": "covers/paper_2.jpg"
     },
     {
       "id": "2604.14839v1",
@@ -58,7 +60,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621770",
       "cn_title": "推荐注意力机制相关研究",
-      "cn_summary": "【rec领域】Recent advancements in multimodal recommendations, which leverage diverse modality information to mitigate data sparsity and improve recommendation accuracy, have gained significant attention. However, existing multimodal recommendations overlook the critical role of user representation initializati"
+      "cn_summary": "【rec领域】Recent advancements in multimodal recommendations, which leverage diverse modality information to mitigate data sparsity and improve recommendation accuracy, have gained significant attention. However, existing multimodal recommendations overlook the critical role of user representation initializati",
+      "cover_image": "covers/paper_3.jpg"
     },
     {
       "id": "2604.14833v1",
@@ -76,7 +79,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621796",
       "cn_title": "大语言模型推荐大语言模型相关研究",
-      "cn_summary": "【llm领域】Large Language Models have shown great success in recommender systems. However, the limited and sparse nature of user data often restricts the LLM's ability to effectively model behavior patterns. To address this, existing studies have explored cross-domain solutions by conducting Cross-Domain Recom"
+      "cn_summary": "【llm领域】Large Language Models have shown great success in recommender systems. However, the limited and sparse nature of user data often restricts the LLM's ability to effectively model behavior patterns. To address this, existing studies have explored cross-domain solutions by conducting Cross-Domain Recom",
+      "cover_image": "covers/paper_4.jpg"
     },
     {
       "id": "2604.14613v1",
@@ -94,7 +98,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621820",
       "cn_title": "推荐个性化生成式相关研究",
-      "cn_summary": "【rec领域】Learning Path Recommendation (LPR) is critical for personalized education, yet current methods often fail to account for historical interaction uncertainty (e.g., lucky guesses or accidental slips) and lack adaptability to diverse learning goals. We propose U-GLAD (Uncertainty-aware Generative Learn"
+      "cn_summary": "【rec领域】Learning Path Recommendation (LPR) is critical for personalized education, yet current methods often fail to account for historical interaction uncertainty (e.g., lucky guesses or accidental slips) and lack adaptability to diverse learning goals. We propose U-GLAD (Uncertainty-aware Generative Learn",
+      "cover_image": "covers/paper_5.jpg"
     },
     {
       "id": "2604.14598v1",
@@ -112,7 +117,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621844",
       "cn_title": "推荐推荐相关研究",
-      "cn_summary": "【rec领域】In recent years, the video game industry has experienced substantial growth, presenting players with a vast array of game choices. This surge in options has spurred the need for a specialized recommender system tailored for video games. However, current video game recommendation approaches tend to p"
+      "cn_summary": "【rec领域】In recent years, the video game industry has experienced substantial growth, presenting players with a vast array of game choices. This surge in options has spurred the need for a specialized recommender system tailored for video games. However, current video game recommendation approaches tend to p",
+      "cover_image": "covers/paper_6.jpg"
     },
     {
       "id": "2604.14586v1",
@@ -130,7 +136,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621868",
       "cn_title": "图神经网络神经网络推荐相关研究",
-      "cn_summary": "【rec领域】The rapid expansion of gaming industry requires advanced recommender systems tailored to its dynamic landscape. Existing Graph Neural Network (GNN)-based methods primarily prioritize accuracy over diversity, overlooking their inherent trade-off. To address this, we previously proposed CPGRec, a bala"
+      "cn_summary": "【rec领域】The rapid expansion of gaming industry requires advanced recommender systems tailored to its dynamic landscape. Existing Graph Neural Network (GNN)-based methods primarily prioritize accuracy over diversity, overlooking their inherent trade-off. To address this, we previously proposed CPGRec, a bala",
+      "cover_image": "covers/paper_7.jpg"
     },
     {
       "id": "2604.14581v1",
@@ -148,7 +155,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621892",
       "cn_title": "推荐相关研究",
-      "cn_summary": "【rec领域】Heterogeneous sequential recommendation (HSR) aims to learn dynamic behavior dependencies from the diverse behaviors of user-item interactions to facilitate precise sequential recommendation. Despite many efforts yielding promising achievements, there are still challenges in modeling heterogeneous b"
+      "cn_summary": "【rec领域】Heterogeneous sequential recommendation (HSR) aims to learn dynamic behavior dependencies from the diverse behaviors of user-item interactions to facilitate precise sequential recommendation. Despite many efforts yielding promising achievements, there are still challenges in modeling heterogeneous b",
+      "cover_image": "covers/paper_8.jpg"
     },
     {
       "id": "2604.14510v1",
@@ -166,7 +174,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621916",
       "cn_title": "推荐推荐注意力机制相关研究",
-      "cn_summary": "【rec领域】News recommender systems are devised to alleviate the information overload, attracting more and more researchers' attention in recent years. The lack of a dedicated learner-oriented news recommendation toolkit hinders the advancement of research in news recommendation. We propose a PyTorch-based new"
+      "cn_summary": "【rec领域】News recommender systems are devised to alleviate the information overload, attracting more and more researchers' attention in recent years. The lack of a dedicated learner-oriented news recommendation toolkit hinders the advancement of research in news recommendation. We propose a PyTorch-based new",
+      "cover_image": "covers/paper_9.jpg"
     },
     {
       "id": "2604.15309v1",
@@ -184,7 +193,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102840",
       "cn_title": "智能Agent推荐方法研究",
-      "cn_summary": "【agent领域】The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage "
+      "cn_summary": "【agent领域】The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage ",
+      "cover_image": "covers/paper_10.jpg"
     },
     {
       "id": "2604.15306v1",
@@ -202,7 +212,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102890",
       "cn_title": "Generalization in LLM Problem Solving: The Case of...",
-      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
+      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。",
+      "cover_image": "covers/paper_11.jpg"
     },
     {
       "id": "2604.15302v1",
@@ -219,7 +230,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102929",
       "cn_title": "大语言模型相关研究",
-      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
+      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。",
+      "cover_image": "covers/paper_12.jpg"
     },
     {
       "id": "2604.15294v1",
@@ -237,7 +249,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102954",
       "cn_title": "注意力机制相关研究",
-      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
+      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。",
+      "cover_image": "covers/paper_13.jpg"
     },
     {
       "id": "2604.15272v1",
@@ -255,7 +268,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102979",
       "cn_title": "推荐系统前沿研究",
-      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+      "cn_summary": "在相关领域做出创新研究，具有参考价值。",
+      "cover_image": "covers/paper_14.jpg"
     },
     {
       "id": "2604.15267v1",
@@ -273,7 +287,8 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.103007",
       "cn_title": "智能Agent推荐方法研究",
-      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。"
+      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。",
+      "cover_image": "covers/paper_15.jpg"
     },
     {
       "id": "2604.15236v1",
@@ -858,7 +873,8 @@
       "cn_title": "热门项目：career-ops",
       "cn_summary": "【JavaScript项目】AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing. 该项目已获得 35,414 Stars，社区活跃度高。 涉及技术领域：ai-agent, anthropic, automation。",
       "pick_type": "github",
-      "rank": 3
+      "rank": 3,
+      "cover_image": "covers/github_1.jpg"
     },
     {
       "id": "1136590548",
@@ -886,7 +902,8 @@
       "cn_title": "LLM项目：everything-claude-code",
       "cn_summary": "【JavaScript项目】The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond. 该项目已获得 159,354 Stars，社区活跃度高。 涉及技术领域：ai-agents, anthropic, claude。",
       "pick_type": "github",
-      "rank": 4
+      "rank": 4,
+      "cover_image": "covers/github_2.jpg"
     },
     {
       "id": "1212241202",
@@ -906,7 +923,8 @@
       "collected_at": "2026-04-17T21:38:17.376893",
       "category": "industry",
       "cn_title": "热门项目：UZI-Skill",
-      "cn_summary": "【Python项目】冰冷的钱就这样流进我温暖的口袋-游资（UZI）Skills — 51位投资大佬帮你看盘 · 22维数据 × 180条量化规则 × 17种机构分析方法 · A股/港股/美股 "
+      "cn_summary": "【Python项目】冰冷的钱就这样流进我温暖的口袋-游资（UZI）Skills — 51位投资大佬帮你看盘 · 22维数据 × 180条量化规则 × 17种机构分析方法 · A股/港股/美股 ",
+      "cover_image": "covers/github_3.jpg"
     },
     {
       "id": "1209889782",
@@ -937,7 +955,8 @@
       "collected_at": "2026-04-17T21:38:17.376455",
       "category": "industry",
       "cn_title": "热门项目：codeburn",
-      "cn_summary": "【TypeScript项目】See where your AI coding tokens go. Interactive TUI dashboard for Claude Code, Codex, and Cursor cost observability. 该项目已获得 2,472 Stars，社区活跃度高。 涉及技术领域：ai-coding, claude-code, cli。"
+      "cn_summary": "【TypeScript项目】See where your AI coding tokens go. Interactive TUI dashboard for Claude Code, Codex, and Cursor cost observability. 该项目已获得 2,472 Stars，社区活跃度高。 涉及技术领域：ai-coding, claude-code, cli。",
+      "cover_image": "covers/github_4.jpg"
     },
     {
       "id": "1211901711",
@@ -957,7 +976,8 @@
       "collected_at": "2026-04-17T21:38:17.376577",
       "category": "industry",
       "cn_title": "热门项目：RedSun",
-      "cn_summary": "【C++项目】The Red Sun vulnerability repository 该项目已获得 1,168 Stars，社区活跃度高。"
+      "cn_summary": "【C++项目】The Red Sun vulnerability repository 该项目已获得 1,168 Stars，社区活跃度高。",
+      "cover_image": "covers/github_5.jpg"
     },
     {
       "id": "1171026502",
@@ -991,7 +1011,8 @@
       "source": "GitHub",
       "collected_at": "2026-04-17T21:38:21.964929",
       "cn_title": "热门项目：cli",
-      "cn_summary": "【Rust项目】Google Workspace CLI — one command-line tool for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more. Dynamically built from Google Discovery Service. Includes AI agent skills. 该项目已获得 24,892 Stars，社区活跃度高。 涉及技术领域：agent-skills, ai-agent, automation。"
+      "cn_summary": "【Rust项目】Google Workspace CLI — one command-line tool for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more. Dynamically built from Google Discovery Service. Includes AI agent skills. 该项目已获得 24,892 Stars，社区活跃度高。 涉及技术领域：agent-skills, ai-agent, automation。",
+      "cover_image": "covers/github_6.jpg"
     },
     {
       "id": "1147094660",
@@ -1021,7 +1042,8 @@
       "source": "GitHub",
       "collected_at": "2026-04-17T21:38:21.964863",
       "cn_title": "LLM项目：nanobot",
-      "cn_summary": "【Python项目】\"🐈 nanobot: The Ultra-Lightweight Personal AI Agent\" 该项目已获得 39,876 Stars，社区活跃度高。 涉及技术领域：ai, ai-agent, ai-agents。"
+      "cn_summary": "【Python项目】\"🐈 nanobot: The Ultra-Lightweight Personal AI Agent\" 该项目已获得 39,876 Stars，社区活跃度高。 涉及技术领域：ai, ai-agent, ai-agents。",
+      "cover_image": "covers/github_7.jpg"
     },
     {
       "id": "1210579186",
@@ -1041,7 +1063,8 @@
       "collected_at": "2026-04-17T21:38:17.376551",
       "category": "industry",
       "cn_title": "热门项目：wterm",
-      "cn_summary": "【TypeScript项目】A terminal emulator for the web 该项目已获得 1,227 Stars，社区活跃度高。"
+      "cn_summary": "【TypeScript项目】A terminal emulator for the web 该项目已获得 1,227 Stars，社区活跃度高。",
+      "cover_image": "covers/github_8.jpg"
     },
     {
       "id": "1211235520",
@@ -1061,7 +1084,8 @@
       "collected_at": "2026-04-17T21:38:17.376691",
       "category": "industry",
       "cn_title": "热门项目：html-ppt-skill",
-      "cn_summary": "【HTML项目】HTML PPT Studio — AgentSkill with 24 themes, 31 layouts, 20+ animations for building professional HTML presentations"
+      "cn_summary": "【HTML项目】HTML PPT Studio — AgentSkill with 24 themes, 31 layouts, 20+ animations for building professional HTML presentations",
+      "cover_image": "covers/github_9.jpg"
     },
     {
       "id": "1211361116",
@@ -1097,7 +1121,8 @@
       "collected_at": "2026-04-17T21:38:17.376710",
       "category": "industry",
       "cn_title": "热门项目：design-extract",
-      "cn_summary": "【JavaScript项目】Extract the complete design language from any website — colors, typography, spacing, shadows, and more. npx CLI + Claude Code plugin. 涉及技术领域：agent-skill, agent-skills, ai。"
+      "cn_summary": "【JavaScript项目】Extract the complete design language from any website — colors, typography, spacing, shadows, and more. npx CLI + Claude Code plugin. 涉及技术领域：agent-skill, agent-skills, ai。",
+      "cover_image": "covers/github_10.jpg"
     },
     {
       "id": "1211096376",
