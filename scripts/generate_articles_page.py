@@ -17,7 +17,10 @@ class ArticlesPageGenerator:
         articles = data.get('hot_articles', [])
         today = data.get('date', datetime.now().strftime("%Y-%m-%d"))
         
-        articles_json = json.dumps(articles, ensure_ascii=False)
+        # 只显示第6篇及以后的文章（跳过前5篇）
+        articles_to_show = articles[5:] if len(articles) > 5 else []
+        
+        articles_json = json.dumps(articles_to_show, ensure_ascii=False)
         
         html = f'''<!DOCTYPE html>
 <html lang="zh-CN">
@@ -142,12 +145,12 @@ class ArticlesPageGenerator:
             <span>日报</span>
         </a>
         <div class="nav-title">热门文章</div>
-        <div class="nav-count">共 {len(articles)} 篇</div>
+        <div class="nav-count">剩余 {len(articles_to_show)} 篇</div>
     </nav>
     
     <div class="hero">
-        <h1 class="hero-title">🔥 热门文章列表</h1>
-        <p class="hero-subtitle">{today} · 推荐算法 × AI Agent × LLM</p>
+        <h1 class="hero-title">🔥 更多热门文章</h1>
+        <p class="hero-subtitle">{today} · 第6-{len(articles)}篇</p>
     </div>
     
     <main class="main" id="articles-list"></main>

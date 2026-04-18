@@ -18,7 +18,10 @@ class PapersPageGenerator:
         papers = data.get('arxiv_papers', [])
         today = data.get('date', datetime.now().strftime("%Y-%m-%d"))
         
-        papers_json = json.dumps(papers, ensure_ascii=False)
+        # 只显示第6篇及以后的论文（跳过前5篇）
+        papers_to_show = papers[5:] if len(papers) > 5 else []
+        
+        papers_json = json.dumps(papers_to_show, ensure_ascii=False)
         
         html = f'''<!DOCTYPE html>
 <html lang="zh-CN">
@@ -147,12 +150,12 @@ class PapersPageGenerator:
             <span>日报</span>
         </a>
         <div class="nav-title">arXiv 论文</div>
-        <div class="nav-count">共 {len(papers)} 篇</div>
+        <div class="nav-count">剩余 {len(papers_to_show)} 篇</div>
     </nav>
     
     <div class="hero">
-        <h1 class="hero-title">📄 arXiv 论文列表</h1>
-        <p class="hero-subtitle">{today} · 推荐算法 × AI Agent × LLM</p>
+        <h1 class="hero-title">📄 更多 arXiv 论文</h1>
+        <p class="hero-subtitle">{today} · 第6-{len(papers)}篇</p>
     </div>
     
     <main class="main" id="papers-list"></main>
