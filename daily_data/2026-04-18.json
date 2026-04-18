@@ -2488,7 +2488,8 @@
       "type": "article",
       "category": "opensource",
       "collected_at": "2026-04-18T09:37:04.896755",
-      "cn_title": "阿里 HappyOyster 正式开放内测"
+      "cn_title": "阿里 HappyOyster 正式开放内测",
+      "cover_image": "covers/article_1.jpg"
     },
     {
       "id": "75b95461ba06",
@@ -2502,7 +2503,8 @@
       "type": "article",
       "category": "agent",
       "collected_at": "2026-04-18T09:37:04.896639",
-      "cn_title": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台"
+      "cn_title": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台",
+      "cover_image": "covers/article_2.jpg"
     },
     {
       "id": "e6a254569da4",
@@ -2516,7 +2518,8 @@
       "type": "article",
       "category": "opensource",
       "collected_at": "2026-04-18T09:37:04.896524",
-      "cn_title": "技术日报｜superpowers 突破 15.7 万星重夺榜首，Google AI 文件检测工具magika强势入榜"
+      "cn_title": "技术日报｜superpowers 突破 15.7 万星重夺榜首，Google AI 文件检测工具magika强势入榜",
+      "cover_image": "covers/article_3.jpg"
     },
     {
       "id": "73d04e7838b4",
@@ -2530,7 +2533,8 @@
       "type": "article",
       "category": "zhihu",
       "collected_at": "2026-04-18T09:36:51.172283",
-      "cn_title": "追光动画电影《三国第一部：争洛阳》定档 7 月 10 日暑期上映并发布预告，对此你有哪些期待？"
+      "cn_title": "追光动画电影《三国第一部：争洛阳》定档 7 月 10 日暑期上映并发布预告，对此你有哪些期待？",
+      "cover_image": "covers/article_4.jpg"
     },
     {
       "id": "7d176f81c331",
@@ -2544,7 +2548,8 @@
       "type": "article",
       "category": "zhihu",
       "collected_at": "2026-04-18T09:36:51.172221",
-      "cn_title": "《杀戮尖塔2》4月17日正式版更新，测试版本都做了哪些平衡调整？"
+      "cn_title": "《杀戮尖塔2》4月17日正式版更新，测试版本都做了哪些平衡调整？",
+      "cover_image": "covers/article_5.jpg"
     },
     {
       "id": "0b4abc1ba561",
@@ -2558,7 +2563,8 @@
       "type": "article",
       "category": "zhihu",
       "collected_at": "2026-04-18T09:36:51.172183",
-      "cn_title": "如何看待橘子海乐队向华为终端发布侵权声明，要求在7日之内赔偿道歉？"
+      "cn_title": "如何看待橘子海乐队向华为终端发布侵权声明，要求在7日之内赔偿道歉？",
+      "cover_image": "covers/article_6.jpg"
     },
     {
       "id": "09e95c23208a",
@@ -2572,7 +2578,8 @@
       "type": "article",
       "category": "zhihu",
       "collected_at": "2026-04-18T09:25:33.863383",
-      "cn_title": "如何对于统计专业来说，哪个方向是核心?"
+      "cn_title": "如何对于统计专业来说，哪个方向是核心?",
+      "cover_image": "covers/article_7.jpg"
     },
     {
       "id": "ab72277dc057",
@@ -2586,7 +2593,8 @@
       "type": "article",
       "category": "zhihu",
       "collected_at": "2026-04-18T09:25:33.863302",
-      "cn_title": "都说生物的基因像屎山代码，那在演化史上有没有屎山被推倒重构的案例？"
+      "cn_title": "都说生物的基因像屎山代码，那在演化史上有没有屎山被推倒重构的案例？",
+      "cover_image": "covers/article_8.jpg"
     },
     {
       "id": "c96ecd83b5fc",
@@ -2600,7 +2608,8 @@
       "type": "article",
       "category": "industry",
       "collected_at": "2026-04-18T09:15:59.670805",
-      "cn_title": "大华股份：2025年营收超327亿元，2026年一季度业绩稳健增长"
+      "cn_title": "大华股份：2025年营收超327亿元，2026年一季度业绩稳健增长",
+      "cover_image": "covers/article_9.jpg"
     },
     {
       "id": "98257d903f69",
@@ -2614,7 +2623,8 @@
       "type": "article",
       "category": "opensource",
       "collected_at": "2026-04-18T09:15:46.567399",
-      "cn_title": "复旦大学 × StepFun开源PixelSmile：让人脸表情迈向连续可控"
+      "cn_title": "复旦大学 × StepFun开源PixelSmile：让人脸表情迈向连续可控",
+      "cover_image": "covers/article_10.jpg"
     },
     {
       "id": "3435112bb64a",
@@ -2628,7 +2638,8 @@
       "type": "article",
       "category": "agent",
       "collected_at": "2026-04-18T09:15:46.567377",
-      "cn_title": "ICLR 2026 | 多轮推理越走越偏，T3让Agent找回主动思考"
+      "cn_title": "ICLR 2026 | 多轮推理越走越偏，T3让Agent找回主动思考",
+      "cover_image": "covers/article_11.jpg"
     },
     {
       "id": "ecb193676604",
@@ -2642,7 +2653,8 @@
       "type": "article",
       "category": "agent",
       "collected_at": "2026-04-18T09:15:46.567361",
-      "cn_title": "1/3 Token↓，3×性能↑：通义 × 清华用强化学习重做Agent Memory"
+      "cn_title": "1/3 Token↓，3×性能↑：通义 × 清华用强化学习重做Agent Memory",
+      "cover_image": "covers/article_12.jpg"
     },
     {
       "id": "d3d648f44037",
@@ -2656,7 +2668,8 @@
       "type": "article",
       "category": "llm",
       "collected_at": "2026-04-18T09:15:46.567334",
-      "cn_title": "长推理不一定更强：北航 × 字节提出SAGE-RL，挖出大模型隐藏天赋"
+      "cn_title": "长推理不一定更强：北航 × 字节提出SAGE-RL，挖出大模型隐藏天赋",
+      "cover_image": "covers/article_13.jpg"
     },
     {
       "id": "b4d312bea426",
@@ -2670,7 +2683,8 @@
       "type": "article",
       "category": "wechat",
       "collected_at": "2026-04-18T09:15:46.567317",
-      "cn_title": "OpenClaw也要装“杀毒软件”？ClawKeeper盯住「龙虾」每一步"
+      "cn_title": "OpenClaw也要装“杀毒软件”？ClawKeeper盯住「龙虾」每一步",
+      "cover_image": "covers/article_14.jpg"
     },
     {
       "id": "45bd94123fe1",
@@ -2684,7 +2698,8 @@
       "type": "article",
       "category": "llm",
       "collected_at": "2026-04-18T09:15:46.567299",
-      "cn_title": "AI也有两幅面孔？复旦等最新研究：高压之下大模型集体变脸"
+      "cn_title": "AI也有两幅面孔？复旦等最新研究：高压之下大模型集体变脸",
+      "cover_image": "covers/article_15.jpg"
     },
     {
       "id": "83e30bf9bbd7",
@@ -2976,7 +2991,8 @@
       "cn_title": "LLM项目：everything-claude-code",
       "cn_summary": "大语言模型相关项目，近期增长迅速，值得关注。",
       "pick_type": "github",
-      "rank": 4
+      "rank": 4,
+      "cover_image": "covers/pick_4.jpg"
     },
     {
       "id": "053a2f8a6e5d",
@@ -2992,7 +3008,8 @@
       "collected_at": "2026-04-18T09:15:39.698627",
       "pick_type": "article",
       "rank": 5,
-      "cn_title": "一天仅需5毛钱，开源框架替你半夜跑实验！7*24小时待命"
+      "cn_title": "一天仅需5毛钱，开源框架替你半夜跑实验！7*24小时待命",
+      "cover_image": "covers/pick_5.jpg"
     }
   ],
   "stats": {
