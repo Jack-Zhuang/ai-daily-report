@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>热门项目：maeil-mail-contents | 项目解读</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #667eea;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+        
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 60px 16px 40px;
+        }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: rgba(255,255,255,0.8); text-decoration: none;
+            font-size: 13px; margin-bottom: 16px;
+        }
+        .project-tag {
+            display: inline-block; background: rgba(255,255,255,0.2);
+            padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .project-title { font-size: 22px; font-weight: 700; line-height: 1.4; margin-bottom: 16px; }
+        .project-meta { font-size: 13px; opacity: 0.9; }
+        .project-meta span { margin-right: 16px; }
+        
+        .main { padding: 20px 16px 60px; max-width: 680px; margin: 0 auto; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+        .stat-item { text-align: center; padding: 16px; background: var(--card); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .stat-value { font-size: 24px; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 12px; color: var(--text-secondary); }
+        
+        .section { margin-bottom: 24px; }
+        .section-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .section-title i { color: var(--primary); }
+        .section-content { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+        
+        .card { background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag { background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1)); padding: 4px 12px; border-radius: 8px; font-size: 12px; color: #667eea; }
+        
+        .action-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2); color: white;
+            padding: 12px 24px; border-radius: 10px; text-decoration: none;
+            font-size: 14px; font-weight: 600; margin-top: 16px;
+        }
+        .action-btn.secondary {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回日报</a>
+        <div class="project-tag"><i class="fab fa-github"></i> GitHub 项目解读</div>
+        <h1 class="project-title">maeil-mail/maeil-mail-contents</h1>
+        <div class="project-meta">
+            <span><i class="fas fa-code"></i> None</span>
+            <span><i class="fas fa-star" style="color: #fbbf24;"></i> 403</span>
+            <span><i class="fas fa-code-branch"></i> 36</span>
+        </div>
+    </div>
+    
+    <div class="main">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-value">403</div>
+                <div class="stat-label">Stars</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">36</div>
+                <div class="stat-label">Forks</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">+80.6%</div>
+                <div class="stat-label">增长率</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-info-circle"></i> 项目简介</h2>
+            <div class="section-content">None项目，403 Stars，增长迅速。</div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-file-alt"></i> 详细描述</h2>
+            <div class="section-content">📮 매일메일 기술 면접 컨텐츠 아카이브 (FE, BE)</div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-tags"></i> 技术标签</h2>
+            <div class="card">
+                <div class="tags">
+                    <span class="tag">开源项目</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title"><i class="fab fa-github"></i> 相关链接</h2>
+            <a href="https://github.com/maeil-mail/maeil-mail-contents" target="_blank" class="action-btn">
+                <i class="fab fa-github"></i> 访问 GitHub 仓库
+            </a>
+            <a href="../index.html" class="action-btn secondary">
+                <i class="fas fa-newspaper"></i> 返回日报首页
+            </a>
+        </div>
+    </div>
+</body>
+</html>

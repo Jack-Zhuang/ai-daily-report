@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI推荐日报 | 2026-04-18</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --color-text-anchor: #312C51;
+            --color-text-secondary: rgba(49,44,81,0.68);
+            --color-text-muted: rgba(49,44,81,0.40);
+            --color-card: #FFFFFF;
+            --bg: #FAFAFA;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hot: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --safe-area-top: env(safe-area-inset-top, 0px);
+            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text-anchor);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        .number { font-family: 'SF Mono', monospace; }
+        
+        /* Glow Background */
+        .glow-container {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            overflow: hidden; pointer-events: none; z-index: 0;
+        }
+        .glow {
+            position: absolute; border-radius: 50%;
+            background: radial-gradient(ellipse, rgba(200,190,240,0.3) 0%, transparent 70%);
+            filter: blur(60px);
+        }
+        .glow-1 { width: 350px; height: 300px; top: 100px; left: -80px; }
+        .glow-2 { width: 300px; height: 280px; top: 250px; right: -60px; background: radial-gradient(ellipse, rgba(160,200,245,0.25) 0%, transparent 70%); }
+        .glow-3 { width: 280px; height: 260px; top: 550px; left: 5%; background: radial-gradient(ellipse, rgba(160,225,210,0.2) 0%, transparent 70%); }
+        
+        /* Navigation */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 10px 12px; padding-top: calc(10px + var(--safe-area-top));
+            background: transparent; transition: background 0.3s;
+        }
+        .nav.solid { background: rgba(250,250,250,0.95); backdrop-filter: blur(12px); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+        .nav-brand { display: flex; align-items: center; gap: 10px; }
+        .nav-icon {
+            width: 36px; height: 36px; background: var(--gradient-primary);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 16px;
+        }
+        .nav-title { font-size: 15px; font-weight: 700; }
+        .nav-date { font-size: 12px; color: var(--color-text-muted); }
+        
+        /* Search Button */
+        .nav-actions { display: flex; align-items: center; gap: 8px; }
+        .nav-btn {
+            width: 36px; height: 36px; border: none; background: rgba(49,44,81,0.06);
+            border-radius: 10px; color: var(--color-text-secondary);
+            font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .nav-btn:active { background: rgba(49,44,81,0.12); }
+        
+        /* Search Modal */
+        .search-modal {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(250,250,250,0.98); z-index: 300;
+            display: none; flex-direction: column;
+        }
+        .search-modal.active { display: flex; }
+        .search-header {
+            padding: 12px 16px; padding-top: calc(12px + var(--safe-area-top));
+            background: white; box-shadow: 0 2px 12px rgba(49,44,81,0.06);
+        }
+        .search-input-wrap { display: flex; align-items: center; gap: 10px; }
+        .search-input {
+            flex: 1; height: 40px; border: none; background: rgba(49,44,81,0.04);
+            border-radius: 10px; padding: 0 14px; font-size: 14px;
+            outline: none;
+        }
+        .search-input:focus { background: rgba(49,44,81,0.08); }
+        .search-cancel {
+            background: none; border: none; color: var(--color-text-secondary);
+            font-size: 14px; cursor: pointer;
+        }
+        .search-filters {
+            display: flex; gap: 8px; padding: 12px 16px; overflow-x: auto;
+        }
+        .search-filter {
+            padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 600;
+            background: rgba(49,44,81,0.04); color: var(--color-text-secondary);
+            border: none; cursor: pointer; white-space: nowrap;
+        }
+        .search-filter.active { background: var(--gradient-primary); color: white; }
+        .search-results { flex: 1; overflow-y: auto; padding: 12px 16px; }
+        .search-empty { text-align: center; padding: 60px 20px; color: var(--color-text-muted); }
+        .search-empty i { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+        
+        /* Module Navigation */
+        .module-nav {
+            position: fixed; top: 56px; left: 0; right: 0; z-index: 99;
+            padding: 8px 12px; padding-top: calc(8px + var(--safe-area-top));
+            background: transparent; transition: all 0.3s;
+            opacity: 0; transform: translateY(-10px);
+        }
+        .module-nav.visible {
+            opacity: 1; transform: translateY(0);
+            background: rgba(250,250,250,0.95); backdrop-filter: blur(12px);
+            box-shadow: 0 2px 12px rgba(49,44,81,0.06);
+        }
+        .module-nav-scroll {
+            display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+            padding-bottom: 4px;
+        }
+        .module-nav-scroll::-webkit-scrollbar { display: none; }
+        .module-nav-item {
+            display: flex; align-items: center; gap: 6px;
+            padding: 8px 14px; border-radius: 10px;
+            background: rgba(255,255,255,0.9); color: var(--color-text-secondary);
+            font-size: 12px; font-weight: 700; white-space: nowrap;
+            text-decoration: none; box-shadow: 0 2px 8px rgba(49,44,81,0.05);
+            transition: all 0.2s;
+        }
+        .module-nav-item:active, .module-nav-item.active {
+            background: var(--gradient-primary); color: white;
+            transform: scale(0.96);
+        }
+        .module-nav-item i { font-size: 13px; }
+        
+        /* Hero */
+        .hero {
+            position: relative; z-index: 1;
+            padding: 80px 16px 40px; text-align: center;
+            padding-top: calc(80px + var(--safe-area-top));
+            background: linear-gradient(135deg, rgba(102,126,234,0.95) 0%, rgba(118,75,162,0.95) 50%, rgba(240,147,251,0.95) 100%), url('cover.jpg') center/cover;
+            margin: -60px -12px 0;
+            padding-left: 12px;
+            padding-right: 12px;
+            margin-bottom: 20px;
+            min-height: 280px;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.25); padding: 6px 14px;
+            border-radius: 16px; margin-bottom: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        .hero-badge-dot { width: 6px; height: 6px; background: #fbbf24; border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .hero-badge-text { font-size: 11px; font-weight: 700; color: white; }
+        .hero-title { font-size: 32px; font-weight: 800; margin-bottom: 12px; color: white; text-shadow: 0 2px 20px rgba(0,0,0,0.2); letter-spacing: 2px; }
+        .hero-subtitle { font-size: 14px; color: rgba(255,255,255,0.95); margin-bottom: 24px; max-width: 280px; margin-left: auto; margin-right: auto; }
+        .hero-date {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.2); padding: 8px 16px;
+            border-radius: 12px; font-size: 13px; color: white;
+            margin-bottom: 20px;
+        }
+        .hero-cover {
+            margin: 20px 0;
+        }
+        .cover-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .cover-title {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        .cover-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .cover-item {
+            text-align: center;
+        }
+        .cover-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        .cover-num {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+        .cover-label {
+            font-size: 10px;
+            color: rgba(255,255,255,0.8);
+        }
+        .cover-sources {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
+        }
+        .source-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            color: white;
+        }
+        
+        /* Stats */
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 4px; }
+        .stat {
+            background: rgba(255,255,255,0.95); border-radius: 14px;
+            padding: 14px 8px; text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .stat-link {
+            text-decoration: none; color: inherit;
+            display: block;
+        }
+        .stat-link:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .stat-icon { font-size: 20px; margin-bottom: 4px; }
+        .stat-value { font-size: 22px; font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
+        
+        /* Main */
+        .main { position: relative; z-index: 1; padding: 0 12px 60px; padding-bottom: calc(60px + var(--safe-area-bottom)); }
+        
+        /* Section */
+        .section { margin-bottom: 32px; }
+        .section-header { margin-bottom: 16px; scroll-margin-top: 112px; }
+        .section-title { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .section-title i { font-size: 16px; color: #667eea; }
+        .section-subtitle { font-size: 12px; color: var(--color-text-muted); margin-top: 4px; }
+        
+        /* Cards */
+        .card {
+            background: var(--color-card); border-radius: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 12px rgba(49,44,81,0.05);
+            position: relative; overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .card:active {
+            transform: scale(0.98);
+            box-shadow: 0 1px 6px rgba(49,44,81,0.08);
+        }
+        
+        /* Card Click Overlay */
+        .card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0); transition: background 0.15s;
+            pointer-events: none; z-index: 5;
+        }
+        .card:active::after { background: rgba(0,0,0,0.04); }
+        
+        /* Card Image */
+        .card-image {
+            width: 100%; height: 140px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .card-image-paper { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-image-article { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .card-image-github { background: linear-gradient(135deg, #24292e 0%, #4a5568 100%); }
+        .card-image-rec { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .card-image-agent { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .card-image-llm { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .card-image-icon { font-size: 48px; color: rgba(255,255,255,0.9); }
+        .card-image-badge {
+            position: absolute; top: 10px; right: 10px;
+            background: rgba(0,0,0,0.3); color: white;
+            padding: 4px 10px; border-radius: 8px;
+            font-size: 11px; font-weight: 700;
+        }
+        .card-image-trending {
+            position: absolute; bottom: 10px; left: 10px;
+            background: rgba(16,185,129,0.9); color: white;
+            padding: 4px 10px; border-radius: 8px;
+            font-size: 10px; font-weight: 700;
+            display: flex; align-items: center; gap: 4px;
+        }
+        
+        .card-body { padding: 16px; }
+        .card-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+        .card-rank {
+            width: 32px; height: 32px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700; flex-shrink: 0;
+        }
+        .card-rank.gold { background: linear-gradient(135deg, #ffd700, #ffb700); color: white; box-shadow: 0 2px 8px rgba(255,215,0,0.3); }
+        .card-rank.silver { background: linear-gradient(135deg, #c0c0c0, #a8a8a8); color: white; box-shadow: 0 2px 8px rgba(192,192,192,0.3); }
+        .card-rank.bronze { background: linear-gradient(135deg, #cd7f32, #b8722d); color: white; box-shadow: 0 2px 8px rgba(205,127,50,0.3); }
+        .card-rank.normal { background: rgba(49,44,81,0.08); color: var(--color-text-secondary); }
+        .card-meta { flex: 1; min-width: 0; }
+        .card-category {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 3px 10px; border-radius: 6px;
+            font-size: 10px; font-weight: 700; margin-bottom: 6px;
+        }
+        .card-category.rec { background: rgba(102,126,234,0.12); color: #667eea; }
+        .card-category.agent { background: rgba(67,233,123,0.12); color: #10b981; }
+        .card-category.llm { background: rgba(240,147,251,0.12); color: #d946ef; }
+        .card-category.github { background: rgba(36,41,46,0.12); color: #24292e; }
+        .card-category.conference { background: rgba(250,112,154,0.12); color: #fa709a; }
+        .card-title { font-size: 14px; font-weight: 700; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-source { font-size: 11px; color: var(--color-text-muted); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+        .card-source i { font-size: 10px; }
+        .card-summary { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+        .card-tag { background: rgba(49,44,81,0.04); padding: 3px 10px; border-radius: 6px; font-size: 10px; color: var(--color-text-secondary); }
+        .card-footer { display: flex; align-items: center; justify-content: space-between; }
+        .card-stats { display: flex; gap: 14px; }
+        .card-stat { font-size: 11px; color: var(--color-text-muted); display: flex; align-items: center; gap: 4px; }
+        .card-stat i { font-size: 12px; }
+        .card-link {
+            background: var(--gradient-primary); color: white;
+            padding: 7px 14px; border-radius: 8px;
+            font-size: 11px; font-weight: 700;
+            display: flex; align-items: center; gap: 4px;
+            pointer-events: none;
+        }
+        
+        /* Favorite Button */
+        .card-favorite {
+            position: absolute; top: 12px; left: 12px;
+            width: 32px; height: 32px; border: none; background: rgba(255,255,255,0.9);
+            border-radius: 8px; font-size: 14px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 8px rgba(49,44,81,0.1);
+            z-index: 10;
+            transition: transform 0.15s;
+        }
+        .card-favorite:active { transform: scale(0.9); }
+        .card-favorite.active { color: #f87171; }
+        .card-favorite:not(.active) { color: var(--color-text-muted); }
+        
+        /* Sort Dropdown */
+        .sort-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 12px; padding: 0 4px;
+        }
+        .sort-label { font-size: 12px; color: var(--color-text-muted); }
+        .sort-select {
+            background: rgba(49,44,81,0.04); border: none;
+            padding: 6px 12px; border-radius: 8px;
+            font-size: 12px; font-weight: 600; color: var(--color-text-anchor);
+            cursor: pointer;
+        }
+        
+        /* Back to Top */
+        .back-to-top {
+            position: fixed; bottom: 20px; right: 16px;
+            width: 44px; height: 44px; border: none;
+            background: var(--gradient-primary); color: white;
+            border-radius: 12px; font-size: 16px;
+            box-shadow: 0 4px 16px rgba(102,126,234,0.3);
+            cursor: pointer; opacity: 0; transform: translateY(20px);
+            transition: all 0.3s; z-index: 50;
+        }
+        .back-to-top.visible { opacity: 1; transform: translateY(0); }
+        
+        /* Loading Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, rgba(49,44,81,0.04) 25%, rgba(49,44,81,0.08) 50%, rgba(49,44,81,0.04) 75%);
+            background-size: 200% 100%; animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .skeleton-card { height: 180px; margin-bottom: 12px; border-radius: 16px; }
+        
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: rgba(49,44,81,0.9); color: white;
+            padding: 12px 24px; border-radius: 10px;
+            font-size: 13px; font-weight: 600;
+            opacity: 0; transition: all 0.3s; z-index: 400;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        
+        /* Tabs */
+        .tabs { display: flex; gap: 8px; margin-bottom: 14px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .tabs::-webkit-scrollbar { display: none; }
+        .tab {
+            padding: 8px 14px; border: none; border-radius: 10px;
+            background: var(--color-card); color: var(--color-text-secondary);
+            font-size: 12px; font-weight: 700; white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(49,44,81,0.05);
+        }
+        .tab.active { background: var(--gradient-hot); color: white; }
+        
+        /* Conference Grid */
+        .conf-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+        
+        /* Conference Section */
+        .conf-section { background: var(--color-card); border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(49,44,81,0.05); }
+        .conf-header-new { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: rgba(49,44,81,0.02); }
+        .conf-info { flex: 1; }
+        .conf-name-new { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+        .conf-meta { font-size: 11px; color: var(--color-text-muted); }
+        .conf-total { text-align: right; }
+        .conf-count-new { font-size: 24px; font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .conf-label-new { font-size: 11px; color: var(--color-text-muted); }
+        
+        .conf-papers { padding: 8px 0; }
+        .conf-paper-item { display: flex; align-items: flex-start; padding: 12px 16px; text-decoration: none; color: inherit; border-bottom: 1px solid rgba(49,44,81,0.04); }
+        .conf-paper-item:last-child { border-bottom: none; }
+        .conf-paper-item:active { background: rgba(49,44,81,0.04); }
+        .conf-paper-rank { width: 24px; height: 24px; background: rgba(49,44,81,0.06); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--color-text-secondary); margin-right: 12px; flex-shrink: 0; }
+        .conf-paper-content { flex: 1; min-width: 0; }
+        .conf-paper-title { font-size: 13px; font-weight: 600; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 4px; }
+        .conf-paper-authors { font-size: 11px; color: var(--color-text-muted); }
+        .conf-paper-highlight { background: linear-gradient(135deg, #ffd700, #ffb700); color: white; padding: 1px 6px; border-radius: 4px; font-size: 10px; margin-left: 6px; }
+        .conf-paper-emoji { font-size: 18px; margin-left: 8px; }
+        .conf-papers-empty { padding: 20px; text-align: center; font-size: 12px; color: var(--color-text-muted); }
+        
+        .conf-view-all {
+            display: flex; align-items: center; justify-content: center;
+            gap: 6px; padding: 12px; margin: 8px 12px 12px;
+            background: var(--gradient-primary); color: white;
+            border-radius: 10px; text-decoration: none;
+            font-size: 13px; font-weight: 700;
+        }
+        .conf-view-all:active { transform: scale(0.98); }
+        .conf-card {
+            background: var(--color-card); border-radius: 14px;
+            padding: 14px; box-shadow: 0 2px 12px rgba(49,44,81,0.05);
+        }
+        .conf-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .conf-icon {
+            width: 36px; height: 36px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 14px;
+        }
+        .conf-icon.wsdm { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .conf-icon.kdd { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .conf-icon.rec { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .conf-icon.www { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .conf-icon.cikm { background: linear-gradient(135deg, #fa709a, #fee140); }
+        .conf-icon.sigir { background: linear-gradient(135deg, #a8edea, #fed6e3); }
+        .conf-icon.arxiv { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .conf-name { font-size: 13px; font-weight: 700; }
+        .conf-date { font-size: 10px; color: var(--color-text-muted); }
+        .conf-count { font-size: 18px; font-weight: 700; color: #667eea; }
+        .conf-label { font-size: 10px; color: var(--color-text-muted); }
+        
+        /* Source Grid */
+        .source-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .source-card {
+            background: var(--color-card); border-radius: 12px;
+            padding: 12px; text-align: center;
+            box-shadow: 0 2px 8px rgba(49,44,81,0.05);
+        }
+        .source-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 8px; font-size: 18px; color: white;
+        }
+        .source-icon.wechat { background: linear-gradient(135deg, #07c160, #00a854); }
+        .source-icon.zhihu { background: linear-gradient(135deg, #0084ff, #0066cc); }
+        .source-icon.github { background: linear-gradient(135deg, #24292e, #1a1e22); }
+        .source-icon.medium { background: linear-gradient(135deg, #000, #333); }
+        .source-icon.arxiv { background: linear-gradient(135deg, #b31b1b, #8b1515); }
+        .source-icon.conf { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .source-name { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+        .source-count { font-size: 11px; color: var(--color-text-muted); }
+        
+        /* Footer */
+        .footer {
+            text-align: center; padding: 30px 16px;
+            color: var(--color-text-muted); font-size: 11px;
+            border-top: 1px solid rgba(49,44,81,0.06);
+        }
+        .footer-links { display: flex; justify-content: center; gap: 16px; margin-bottom: 10px; }
+        .footer-link { color: var(--color-text-secondary); text-decoration: none; font-size: 12px; }
+        
+        /* Archive Button */
+        .archive-btn {
+            display: block; width: 100%; padding: 14px;
+            background: rgba(49,44,81,0.04); border: none; border-radius: 12px;
+            font-size: 13px; font-weight: 700; color: var(--color-text-anchor);
+            text-align: center; margin-top: 20px; cursor: pointer;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4); z-index: 200;
+            animation: fadeIn 0.2s;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .modal-content {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: white; border-radius: 20px 20px 0 0;
+            max-height: 70vh; overflow: hidden;
+            z-index: 201; animation: slideUp 0.3s;
+        }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        
+        .modal-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 16px 16px; border-bottom: 1px solid rgba(49,44,81,0.06);
+        }
+        .modal-header h3 { font-size: 16px; display: flex; align-items: center; gap: 8px; }
+        .modal-header h3 i { color: #667eea; }
+        .modal-close {
+            width: 32px; height: 32px; border: none; background: rgba(49,44,81,0.06);
+            border-radius: 8px; font-size: 14px; color: var(--color-text-secondary);
+            cursor: pointer;
+        }
+        
+        .modal-body { padding: 12px 16px 30px; max-height: 50vh; overflow-y: auto; }
+        
+        .archive-loading, .archive-empty, .archive-error {
+            text-align: center; padding: 40px 20px;
+            color: var(--color-text-muted); font-size: 13px;
+        }
+        
+        .archive-item {
+            display: flex; align-items: center;
+            padding: 14px; margin-bottom: 8px;
+            background: rgba(49,44,81,0.02); border-radius: 12px;
+            text-decoration: none; color: inherit;
+        }
+        .archive-item:active { background: rgba(49,44,81,0.06); }
+        .archive-date { font-size: 15px; font-weight: 700; flex: 1; }
+        .archive-stats { font-size: 11px; color: var(--color-text-muted); margin-right: 12px; }
+        .archive-stats span { margin-left: 10px; }
+        .archive-item i { color: var(--color-text-muted); }
+    </style>
+</head>
+<body>
+    <div class="glow-container">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="glow glow-3"></div>
+    </div>
+    
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <div class="nav-brand">
+                <div class="nav-icon"><i class="fas fa-robot"></i></div>
+                <div>
+                    <div class="nav-title">AI推荐日报</div>
+                    <div class="nav-date">2026-04-18</div>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <button class="nav-btn" onclick="openSearch()"><i class="fas fa-search"></i></button>
+                <button class="nav-btn" onclick="showFavorites()"><i class="fas fa-bookmark"></i></button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-header">
+            <div class="search-input-wrap">
+                <i class="fas fa-search" style="color: var(--color-text-muted)"></i>
+                <input type="text" class="search-input" id="searchInput" placeholder="搜索论文、项目、文章..." oninput="doSearch()">
+                <button class="search-cancel" onclick="closeSearch()">取消</button>
+            </div>
+            <div class="search-filters">
+                <button class="search-filter active" data-filter="all" onclick="setSearchFilter('all')">全部</button>
+                <button class="search-filter" data-filter="paper" onclick="setSearchFilter('paper')">论文</button>
+                <button class="search-filter" data-filter="project" onclick="setSearchFilter('project')">项目</button>
+                <button class="search-filter" data-filter="article" onclick="setSearchFilter('article')">文章</button>
+            </div>
+        </div>
+        <div class="search-results" id="searchResults">
+            <div class="search-empty">
+                <i class="fas fa-search"></i>
+                <div>输入关键词开始搜索</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Detail Modal -->
+    <div class="modal-overlay" id="detail-modal" onclick="if(event.target === this) closeDetailModal()" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:400;">
+        <div class="modal-content" style="position:absolute; bottom:0; left:0; right:0; background:white; border-radius:20px 20px 0 0; max-height:80vh; overflow:hidden; animation:slideUp 0.3s;">
+            <div style="width:36px; height:4px; background:#e2e8f0; border-radius:2px; margin:12px auto;"></div>
+            <div class="modal-header" style="padding:0 20px 16px; border-bottom:1px solid #e2e8f0;">
+                <h3 id="detail-modal-title" style="font-size:18px; font-weight:700;"></h3>
+            </div>
+            <div id="detail-modal-body" style="padding:20px; overflow-y:auto; max-height:calc(80vh - 80px);"></div>
+        </div>
+    </div>
+    <style>
+        #detail-modal.active { display: flex !important; flex-direction: column; justify-content: flex-end; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .detail-section { margin-bottom: 20px; }
+        .detail-label { font-size: 12px; color: #94a3b8; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .detail-value { font-size: 14px; color: #1e293b; line-height: 1.6; }
+        .detail-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .detail-tag { background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1)); padding: 4px 12px; border-radius: 8px; font-size: 12px; color: #667eea; }
+        .detail-link { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-size: 14px; font-weight: 600; margin-top: 16px; }
+    </style>
+    
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+    
+    <!-- Module Navigation -->
+    <div class="module-nav" id="moduleNav">
+        <div class="module-nav-scroll">
+            <a href="#daily-pick" class="module-nav-item"><i class="fas fa-star"></i> 精选</a>
+            <a href="#hot" class="module-nav-item"><i class="fas fa-fire"></i> 热门</a>
+            <a href="#github" class="module-nav-item"><i class="fas fa-chart-line"></i> Trending</a>
+            <a href="#papers" class="module-nav-item"><i class="fas fa-file-alt"></i> arXiv</a>
+            <a href="#conferences" class="module-nav-item"><i class="fas fa-trophy"></i> 顶会</a>
+            <a href="#sources" class="module-nav-item"><i class="fas fa-globe"></i> 来源</a>
+        </div>
+    </div>
+    
+    <div class="hero">
+        <div class="hero-badge">
+            <div class="hero-badge-dot"></div>
+            <span class="hero-badge-text">每日更新</span>
+        </div>
+        <h1 class="hero-title">AI 推荐日报</h1>
+        <p class="hero-subtitle">推荐算法 × AI Agent × LLM 前沿追踪，每日精选最值得阅读的内容</p>
+        <div class="hero-date">
+            <i class="far fa-calendar"></i>
+            <span>2026-04-18</span>
+        </div>
+        <!-- 题图：今日数据概览 -->
+        <div class="hero-cover">
+            <div class="cover-card">
+                <div class="cover-title">📊 今日数据概览</div>
+                <div class="cover-grid">
+                    <div class="cover-item">
+                        <div class="cover-icon">📄</div>
+                        <div class="cover-num">46</div>
+                        <div class="cover-label">arXiv论文</div>
+                    </div>
+                    <div class="cover-item">
+                        <div class="cover-icon">💻</div>
+                        <div class="cover-num">59</div>
+                        <div class="cover-label">GitHub项目</div>
+                    </div>
+                    <div class="cover-item">
+                        <div class="cover-icon">📰</div>
+                        <div class="cover-num">19</div>
+                        <div class="cover-label">热门文章</div>
+                    </div>
+                    <div class="cover-item">
+                        <div class="cover-icon">⭐</div>
+                        <div class="cover-num">5</div>
+                        <div class="cover-label">精选推荐</div>
+                    </div>
+                </div>
+                <div class="cover-sources">
+                    <span>数据来源：</span>
+                    <span class="source-badge">机器之心</span>
+                    <span class="source-badge">量子位</span>
+                    <span class="source-badge">知乎</span>
+                    <span class="source-badge">GitHub</span>
+                    <span class="source-badge">arXiv</span>
+                </div>
+            </div>
+        </div>
+        <div class="stats">
+            <a href="#daily-pick" class="stat stat-link"><div class="stat-icon">⭐</div><div class="stat-value number">5</div><div class="stat-label">精选内容</div></a>
+            <a href="#conferences" class="stat stat-link"><div class="stat-icon">🏆</div><div class="stat-value number">680+</div><div class="stat-label">顶会论文</div></a>
+            <a href="#papers" class="stat stat-link"><div class="stat-icon">📄</div><div class="stat-value number">46</div><div class="stat-label">arXiv论文</div></a>
+            <a href="#github" class="stat stat-link"><div class="stat-icon">💻</div><div class="stat-value number">59</div><div class="stat-label">GitHub项目</div></a>
+            <a href="#hot" class="stat stat-link"><div class="stat-icon">🔥</div><div class="stat-value number">19</div><div class="stat-label">热门文章</div></a>
+            <a href="#sources" class="stat stat-link"><div class="stat-icon">🌐</div><div class="stat-value number">6</div><div class="stat-label">数据来源</div></a>
+        </div>
+    </div>
+    
+    <div class="main">
+        <!-- 每日精选 -->
+        <section class="section">
+            <div class="section-header" id="daily-pick">
+                <h2 class="section-title"><i class="fas fa-star"></i> 每日精选</h2>
+                <p class="section-subtitle">编辑精选 · 今日最值得阅读</p>
+            </div>
+            <div id="daily-pick-list"></div>
+        </section>
+        
+        <!-- 热门文章 -->
+        <section class="section">
+            <div class="section-header" id="hot">
+                <h2 class="section-title"><i class="fas fa-fire"></i> 热门文章</h2>
+                <p class="section-subtitle">基于热度综合排序</p>
+            </div>
+            <div class="tabs">
+                <button class="tab active" data-tab="all">全部</button>
+                <button class="tab" data-tab="rec">推荐</button>
+                <button class="tab" data-tab="agent">Agent</button>
+                <button class="tab" data-tab="llm">LLM</button>
+            </div>
+            <div id="hot-list"></div>
+        </section>
+        
+        <!-- GitHub热点 -->
+        <section class="section">
+            <div class="section-header" id="github">
+                <h2 class="section-title"><i class="fas fa-chart-line"></i> GitHub Trending</h2>
+                <p class="section-subtitle">高增速项目 · 按增长趋势排序</p>
+            </div>
+            <div id="github-list"></div>
+        </section>
+        
+        <!-- arXiv最新 -->
+        <section class="section">
+            <div class="section-header" id="papers">
+                <h2 class="section-title"><i class="fas fa-file-alt"></i> arXiv最新</h2>
+                <p class="section-subtitle">最新预印本论文</p>
+            </div>
+            <div id="papers-list"></div>
+        </section>
+        
+        <!-- 顶会论文 -->
+        <section class="section">
+            <div class="section-header" id="conferences">
+                <h2 class="section-title"><i class="fas fa-trophy"></i> 顶会论文</h2>
+                <p class="section-subtitle">WSDM · KDD · RecSys · WWW · CIKM · SIGIR</p>
+            </div>
+            <div class="conf-grid" id="conf-list"></div>
+        </section>
+        
+        <!-- 内容来源 -->
+        <section class="section">
+            <div class="section-header" id="sources">
+                <h2 class="section-title"><i class="fas fa-globe"></i> 内容来源</h2>
+                <p class="section-subtitle">多渠道聚合 · 自动追踪</p>
+            </div>
+            <div class="source-grid">
+                <div class="source-card">
+                    <div class="source-icon wechat"><i class="fab fa-weixin"></i></div>
+                    <div class="source-name">公众号</div>
+                    <div class="source-count">机器之心等</div>
+                </div>
+                <div class="source-card">
+                    <div class="source-icon zhihu"><i class="fab fa-zhihu"></i></div>
+                    <div class="source-name">知乎</div>
+                    <div class="source-count">技术专栏</div>
+                </div>
+                <div class="source-card">
+                    <div class="source-icon github"><i class="fab fa-github"></i></div>
+                    <div class="source-name">GitHub</div>
+                    <div class="source-count">59个项目</div>
+                </div>
+                <div class="source-card">
+                    <div class="source-icon medium"><i class="fab fa-medium"></i></div>
+                    <div class="source-name">Medium</div>
+                    <div class="source-count">海外博客</div>
+                </div>
+                <div class="source-card">
+                    <div class="source-icon arxiv"><i class="fas fa-file-alt"></i></div>
+                    <div class="source-name">arXiv</div>
+                    <div class="source-count">46篇论文</div>
+                </div>
+                <div class="source-card">
+                    <div class="source-icon conf"><i class="fas fa-trophy"></i></div>
+                    <div class="source-name">顶会</div>
+                    <div class="source-count">680+篇</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 往期日报 -->
+        <button class="archive-btn" onclick="showArchive()">
+            <i class="fas fa-history"></i> 查看往期日报
+        </button>
+    </div>
+    
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#" class="footer-link">订阅</a>
+            <a href="#" class="footer-link">分享</a>
+            <a href="#" class="footer-link">反馈</a>
+        </div>
+        <p>AI推荐日报 © 2026 | 数据来源：顶会论文、arXiv、公众号、知乎、GitHub、Medium</p>
+    </div>
+
+    <script>
+        // 数据
+        const dailyPick = [{"id": "2604.14972v1", "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent", "summary": "Large language model (LLM) based recommendation agents personalize what they know through evolving per-user semantic memory, yet how they reason remains a universal, static system prompt shared identically across all users. This asymmetry is a fundamental bottleneck: when a recommendation fails, the", "authors": ["Zhen Tao", "Riwei Lai", "Chenyun Yu"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14972v1", "category": "agent", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621691", "cn_title": "智能Agent推荐方法研究", "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。", "pick_type": "paper", "rank": 1}, {"id": "2604.14878v1", "title": "GenRec: A Preference-Oriented Generative Framework for Large-Scale Recommendation", "summary": "Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the paginat", "authors": ["Yanyan Zou", "Junbo Qi", "Lunsong Huang"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14878v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621739", "cn_title": "推荐系统算法创新", "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。", "pick_type": "paper", "rank": 2}, {"id": "1201476594", "name": "santifer/career-ops", "description": "AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.", "stars": 35414, "forks": 7073, "language": "JavaScript", "url": "https://github.com/santifer/career-ops", "topics": ["ai-agent", "anthropic", "automation", "career", "claude", "claude-code", "cli", "golang", "interview-prep", "job-search", "open-source", "resume"], "created_at": "2026-04-04", "growth_rate": 2724.2, "type": "github", "source": "GitHub", "collected_at": "2026-04-17T21:38:21.964883", "cn_title": "热门项目：career-ops", "cn_summary": "JavaScript项目，35,414 Stars，增长迅速。", "pick_type": "github", "rank": 3}, {"id": "1136590548", "name": "affaan-m/everything-claude-code", "description": "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.", "stars": 159354, "forks": 24782, "language": "JavaScript", "url": "https://github.com/affaan-m/everything-claude-code", "topics": ["ai-agents", "anthropic", "claude", "claude-code", "developer-tools", "llm", "mcp", "productivity"], "created_at": "2026-01-18", "growth_rate": 1790.5, "type": "github", "source": "GitHub", "collected_at": "2026-04-17T21:38:20.104833", "cn_title": "LLM项目：everything-claude-code", "cn_summary": "大语言模型相关项目，近期增长迅速，值得关注。", "pick_type": "github", "rank": 4}, {"id": "053a2f8a6e5d", "title": "一天仅需5毛钱，开源框架替你半夜跑实验！7*24小时待命", "summary": "", "link": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652691298&idx=3&sn=dd20417ba12cc23e7ba7ff74a9778c91", "source": "新智元", "published": "2026-04-12", "views": 0, "likes": 0, "type": "article", "category": "opensource", "collected_at": "2026-04-18T09:15:39.698627", "pick_type": "article", "rank": 5}];
+        const hotArticles = [{"id": "d747dc8e56f0", "title": "阿里 HappyOyster 正式开放内测", "summary": "阿里巴巴-ATH 创新事业部旗下 HappyOyster 正式宣布开放内测。\n\n根据介绍，Happy Oyster 是一款用于实时世界生成与交互的开放式世界模型产品。基于原生多模态架构构建，Happy Oyster 支持多模态理解以及音视频联合生成。\n\n与遵循“编写提示词、等待渲染、接收成品片段”这种一次性工作流的传统 AI 视频工具不同，Happy Oyster 在整个生成过程中持续聆听并作出响", "link": "https://www.oschina.net/news/430631", "source": "开源中国资讯", "published": "2026-04-17", "views": 0, "likes": 0, "type": "article", "category": "opensource", "collected_at": "2026-04-18T09:37:04.896755"}, {"id": "75b95461ba06", "title": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台", "summary": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台\n\n此版本更新内容包括：\n\n标题发布版本 0.9.0\n\n\n功能(UI)：新增专用的 Agent 子代理渲染，以层级卡片形式展示父 Agent 提示词与子工具调用的嵌套关系；\n功能(解析器)：将 Codex CLI 的 spawn_agent 和 OpenCode 的 task 渲染为 Agent 卡片并嵌套子工具调用，统", "link": "https://www.oschina.net/news/430726", "source": "开源中国资讯", "published": "2026-04-17", "views": 0, "likes": 0, "type": "article", "category": "agent", "collected_at": "2026-04-18T09:37:04.896639"}, {"id": "e6a254569da4", "title": "技术日报｜superpowers 突破 15.7 万星重夺榜首，Google AI 文件检测工具magika强势入榜", "summary": "\n🌟 TrendForge 每日精选 - 发现最具潜力的开源项目 📊 今日共收录 15 个热门项目\n\n\n\n🌐 智能中文翻译版 - 项目描述已自动翻译，便于理解\n\n\n🏆 今日最热项目 Top 10\n\n🥇 obra/superpowers\n\n项目简介: Claude Code 超级能力：核心技能库\n\n今日新增: 1713 * 总星数: 157744 * 语言: Shell\n\nhttps://githu", "link": "https://www.oschina.net/news/431421", "source": "开源中国资讯", "published": "2026-04-18", "views": 0, "likes": 0, "type": "article", "category": "opensource", "collected_at": "2026-04-18T09:37:04.896524"}, {"id": "73d04e7838b4", "title": "追光动画电影《三国第一部：争洛阳》定档 7 月 10 日暑期上映并发布预告，对此你有哪些期待？", "summary": "《长安三万里》原班人马打造，追光动画“三国”系列首作《三国第一部：争洛阳》官宣定档7月10日，并发布“洛阳风云”版定档预告。东汉末年，三国鼎立大幕未启，黄巾军起，外戚弄权，宦官乱政。天下动荡之际，曹操、袁绍欲借大将军何进之力制衡宦官，匡扶汉室。不料董卓趁乱进京，图谋废立。乱世棋局渐开，袁术、吕布、孙坚及刘关张等各路群雄相继登场，洛阳风云起，大汉的命运走向十字路口…影片由谢君伟执导，宋依依担任制片人", "link": "https://www.zhihu.com/question/2027691839071806233", "source": "知乎热榜", "published": "2026-04-15", "views": 0, "likes": 0, "type": "article", "category": "zhihu", "collected_at": "2026-04-18T09:36:51.172283"}, {"id": "7d176f81c331", "title": "《杀戮尖塔2》4月17日正式版更新，测试版本都做了哪些平衡调整？", "summary": "", "link": "https://www.zhihu.com/question/2028440740292739334", "source": "知乎热榜", "published": "2026-04-17", "views": 0, "likes": 0, "type": "article", "category": "zhihu", "collected_at": "2026-04-18T09:36:51.172221"}, {"id": "0b4abc1ba561", "title": "如何看待橘子海乐队向华为终端发布侵权声明，要求在7日之内赔偿道歉？", "summary": "[4 张图片]", "link": "https://www.zhihu.com/question/2028483142109996288", "source": "知乎热榜", "published": "2026-04-17", "views": 0, "likes": 0, "type": "article", "category": "zhihu", "collected_at": "2026-04-18T09:36:51.172183"}, {"id": "09e95c23208a", "title": "如何对于统计专业来说，哪个方向是核心?", "summary": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBugBuster喵\n查看知乎原文\n\n\n\n说句得罪人的话，如果谁现在还在纠结数理统计 vs 应用统计，已经落后这个时代至少五年了。\n我知道这个开头会让很多人不舒服。但请你耐心看完。\n我本科统计，博士期间做因果推断，现在在业界做 AI 相关的工作。看到了太多统计专业的学生，花了四年甚至六年时间，学了一堆正确但过时的方向规划经验，毕业后发现自己两头不靠。\n学数", "link": "https://daily.zhihu.com/story/9788987", "source": "知乎日报", "published": "2026-04-14", "views": 0, "likes": 0, "type": "article", "category": "zhihu", "collected_at": "2026-04-18T09:25:33.863383"}, {"id": "ab72277dc057", "title": "都说生物的基因像屎山代码，那在演化史上有没有屎山被推倒重构的案例？", "summary": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmekdull，chem is try！永远记得对化学和生物的热爱！\n查看知乎原文\n\n\n\n有倒是有，但所谓重构也不过是从一座屎山，奔向另一座更大的屎山。不过，对于本文的主角，真核生物中最权威的屎山拥有者——甲藻（Dinophytes）来说，那是它生存的最终秘技。\n先来直观地感受一下甲藻的基因组有多恐怖。现在正在看这篇文章的你，作为智人（Homo sapie", "link": "https://daily.zhihu.com/story/9789023", "source": "知乎日报", "published": "2026-04-18", "views": 0, "likes": 0, "type": "article", "category": "zhihu", "collected_at": "2026-04-18T09:25:33.863302"}, {"id": "c96ecd83b5fc", "title": "大华股份：2025年营收超327亿元，2026年一季度业绩稳健增长", "summary": "4月17日，大华股份发布2025年年度报告及2026年第一季度财报。2025年，公司实现营收327.44亿元，同比增长1.75%；归母净利润38.58亿元，同比增长32.77%；毛利率为40.62%，同比提升1.78个百分点；经营性现金流净额39.08亿元，同比增长44.19 %。2026年第一季度实现营收69.02亿元，同比增长10.33%，业绩稳健增长。公司将持续推动AI大模型产品技术应用落地", "link": "https://www.36kr.com/newsflashes/3771624413463049", "source": "36氪快讯", "published": "2026-04-18", "views": 0, "likes": 0, "type": "article", "category": "industry", "collected_at": "2026-04-18T09:15:59.670805"}, {"id": "98257d903f69", "title": "复旦大学 × StepFun开源PixelSmile：让人脸表情迈向连续可控", "summary": "从“能改表情”到“可控表情”", "link": "https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719459&idx=2&sn=15473200a8f7abf627d87682b159009c", "source": "PaperWeekly", "published": "2026-04-10", "views": 0, "likes": 0, "type": "article", "category": "opensource", "collected_at": "2026-04-18T09:15:46.567399"}, {"id": "3435112bb64a", "title": "ICLR 2026 | 多轮推理越走越偏，T3让Agent找回主动思考", "summary": "为什么Agent越交互越失控？", "link": "https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719474&idx=2&sn=be225fb932a6dfac03b021ea389476c5", "source": "PaperWeekly", "published": "2026-04-11", "views": 0, "likes": 0, "type": "article", "category": "agent", "collected_at": "2026-04-18T09:15:46.567377"}, {"id": "ecb193676604", "title": "1/3 Token↓，3×性能↑：通义 × 清华用强化学习重做Agent Memory", "summary": "让记忆成为内生能力", "link": "https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719474&idx=1&sn=aa5a0f9eb40a223969f250fbe52e1554", "source": "PaperWeekly", "published": "2026-04-11", "views": 0, "likes": 0, "type": "article", "category": "agent", "collected_at": "2026-04-18T09:15:46.567361"}, {"id": "d3d648f44037", "title": "长推理不一定更强：北航 × 字节提出SAGE-RL，挖出大模型隐藏天赋", "summary": "大模型其实会自己踩刹车", "link": "https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719552&idx=2&sn=e414a3299500b622cc0a8175271890d1", "source": "PaperWeekly", "published": "2026-04-14", "views": 0, "likes": 0, "type": "article", "category": "llm", "collected_at": "2026-04-18T09:15:46.567334"}, {"id": "b4d312bea426", "title": "OpenClaw也要装“杀毒软件”？ClawKeeper盯住「龙虾」每一步", "summary": "Agent也要安全底座", "link": "https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719552&idx=1&sn=a88bf66c21ab36eb8ad60266acbfeae9", "source": "PaperWeekly", "published": "2026-04-14", "views": 0, "likes": 0, "type": "article", "category": "wechat", "collected_at": "2026-04-18T09:15:46.567317"}, {"id": "45bd94123fe1", "title": "AI也有两幅面孔？复旦等最新研究：高压之下大模型集体变脸", "summary": "AI 也会当面一套背后一套？", "link": "https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719570&idx=2&sn=0b23d25e528914d797e269bb8b926121", "source": "PaperWeekly", "published": "2026-04-15", "views": 0, "likes": 0, "type": "article", "category": "llm", "collected_at": "2026-04-18T09:15:46.567299"}, {"id": "83e30bf9bbd7", "title": "ACL 2026 | 微软提出RepoGenesis：AI能从README生成完整仓库吗？", "summary": "代码生成进入下一关", "link": "https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719646&idx=2&sn=293e6ff2514d6589a071c8aa93fab633", "source": "PaperWeekly", "published": "2026-04-16", "views": 0, "likes": 0, "type": "article", "category": "wechat", "collected_at": "2026-04-18T09:15:46.567269"}, {"id": "e6c6cfaad335", "title": "ACL 2026 | 通义首提R-EMID框架：形式化揭示角色扮演性能退化机制", "summary": "揭秘角色扮演训练真相", "link": "https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719654&idx=2&sn=354ecfd8e8b08d4277c17cc78609dc48", "source": "PaperWeekly", "published": "2026-04-17", "views": 0, "likes": 0, "type": "article", "category": "wechat", "collected_at": "2026-04-18T09:15:46.567207"}, {"id": "6441b7456f03", "title": "统一VLA范式！港科大开源StarVLA乐高式架构，复现成本大幅降低", "summary": "", "link": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652691532&idx=3&sn=9d169ed394b15f7e6167e421515477f2", "source": "新智元", "published": "2026-04-13", "views": 0, "likes": 0, "type": "article", "category": "opensource", "collected_at": "2026-04-18T09:15:39.698602"}, {"id": "9b7b23ea080f", "title": "全错！谷歌实锤AI越乖洗脑越深，现行安全指标沦为废纸", "summary": "", "link": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652691532&idx=2&sn=f433dffe80e08fcc00ca259552fdbf2d", "source": "新智元", "published": "2026-04-13", "views": 0, "likes": 0, "type": "article", "category": "wechat", "collected_at": "2026-04-18T09:15:39.698584"}];
+        const githubProjects = [{"id": "1201476594", "name": "santifer/career-ops", "description": "AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.", "stars": 35414, "forks": 7073, "language": "JavaScript", "url": "https://github.com/santifer/career-ops", "topics": ["ai-agent", "anthropic", "automation", "career", "claude", "claude-code", "cli", "golang", "interview-prep", "job-search", "open-source", "resume"], "created_at": "2026-04-04", "growth_rate": 2724.2, "type": "github", "source": "GitHub", "collected_at": "2026-04-17T21:38:21.964883", "cn_title": "热门项目：career-ops", "cn_summary": "【JavaScript项目】AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing. 该项目已获得 35,414 Stars，社区活跃度高。 涉及技术领域：ai-agent, anthropic, automation。", "pick_type": "github", "rank": 3}, {"id": "1136590548", "name": "affaan-m/everything-claude-code", "description": "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.", "stars": 159354, "forks": 24782, "language": "JavaScript", "url": "https://github.com/affaan-m/everything-claude-code", "topics": ["ai-agents", "anthropic", "claude", "claude-code", "developer-tools", "llm", "mcp", "productivity"], "created_at": "2026-01-18", "growth_rate": 1790.5, "type": "github", "source": "GitHub", "collected_at": "2026-04-17T21:38:20.104833", "cn_title": "LLM项目：everything-claude-code", "cn_summary": "【JavaScript项目】The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond. 该项目已获得 159,354 Stars，社区活跃度高。 涉及技术领域：ai-agents, anthropic, claude。", "pick_type": "github", "rank": 4}, {"id": "1212241202", "name": "wbh604/UZI-Skill", "description": "冰冷的钱就这样流进我温暖的口袋-游资（UZI）Skills — 51位投资大佬帮你看盘 · 22维数据 × 180条量化规则 × 17种机构分析方法 · A股/港股/美股 ", "stars": 637, "forks": 110, "language": "Python", "url": "https://github.com/wbh604/UZI-Skill", "topics": [], "created_at": "2026-04-16", "updated_at": "2026-04-17", "growth_rate": 637.0, "days_old": 1, "type": "github", "source": "GitHub", "collected_at": "2026-04-17T21:38:17.376893", "category": "industry", "cn_title": "热门项目：UZI-Skill", "cn_summary": "【Python项目】冰冷的钱就这样流进我温暖的口袋-游资（UZI）Skills — 51位投资大佬帮你看盘 · 22维数据 × 180条量化规则 × 17种机构分析方法 · A股/港股/美股 "}, {"id": "1209889782", "name": "AgentSeal/codeburn", "description": "See where your AI coding tokens go. Interactive TUI dashboard for Claude Code, Codex, and Cursor cost observability.", "stars": 2472, "forks": 168, "language": "TypeScript", "url": "https://github.com/AgentSeal/codeburn", "topics": ["ai-coding", "claude-code", "cli", "codex", "cost-tracking", "cursor-ide", "developer-tools", "observability", "terminal-ui", "token-usage"], "created_at": "2026-04-13", "updated_at": "2026-04-17", "growth_rate": 618.0, "days_old": 4, "type": "github", "source": "GitHub", "collected_at": "2026-04-17T21:38:17.376455", "category": "industry", "cn_title": "热门项目：codeburn", "cn_summary": "【TypeScript项目】See where your AI coding tokens go. Interactive TUI dashboard for Claude Code, Codex, and Cursor cost observability. 该项目已获得 2,472 Stars，社区活跃度高。 涉及技术领域：ai-coding, claude-code, cli。"}, {"id": "1211901711", "name": "Nightmare-Eclipse/RedSun", "description": "The Red Sun vulnerability repository", "stars": 1168, "forks": 233, "language": "C++", "url": "https://github.com/Nightmare-Eclipse/RedSun", "topics": [], "created_at": "2026-04-15", "updated_at": "2026-04-17", "growth_rate": 584.0, "days_old": 2, "type": "github", "source": "GitHub", "collected_at": "2026-04-17T21:38:17.376577", "category": "industry", "cn_title": "热门项目：RedSun", "cn_summary": "【C++项目】The Red Sun vulnerability repository 该项目已获得 1,168 Stars，社区活跃度高。"}, {"id": "1171026502", "name": "googleworkspace/cli", "description": "Google Workspace CLI — one command-line tool for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more. Dynamically built from Google Discovery Service. Includes AI agent skills.", "stars": 24892, "forks": 1271, "language": "Rust", "url": "https://github.com/googleworkspace/cli", "topics": ["agent-skills", "ai-agent", "automation", "cli", "discovery-api", "gemini-cli-extension", "google-admin", "google-api", "google-calendar", "google-chat", "google-docs", "google-drive", "google-sheets", "google-workspace", "oauth2", "rust"], "created_at": "2026-03-02", "growth_rate": 541.1, "type": "github", "source": "GitHub", "collected_at": "2026-04-17T21:38:21.964929", "cn_title": "热门项目：cli", "cn_summary": "【Rust项目】Google Workspace CLI — one command-line tool for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more. Dynamically built from Google Discovery Service. Includes AI agent skills. 该项目已获得 24,892 Stars，社区活跃度高。 涉及技术领域：agent-skills, ai-agent, automation。"}];
+        const arxivPapers = [{"id": "2604.14972v1", "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent", "summary": "Large language model (LLM) based recommendation agents personalize what they know through evolving per-user semantic memory, yet how they reason remains a universal, static system prompt shared identically across all users. This asymmetry is a fundamental bottleneck: when a recommendation fails, the", "authors": ["Zhen Tao", "Riwei Lai", "Chenyun Yu"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14972v1", "category": "agent", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621691", "cn_title": "智能Agent推荐方法研究", "cn_summary": "【agent领域】Large language model (LLM) based recommendation agents personalize what they know through evolving per-user semantic memory, yet how they reason remains a universal, static system prompt shared identically across all users. This asymmetry is a fundamental bottleneck: when a recommendation fails, the", "pick_type": "paper", "rank": 1}, {"id": "2604.14878v1", "title": "GenRec: A Preference-Oriented Generative Framework for Large-Scale Recommendation", "summary": "Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the paginat", "authors": ["Yanyan Zou", "Junbo Qi", "Lunsong Huang"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14878v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621739", "cn_title": "推荐系统算法创新", "cn_summary": "【rec领域】Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the paginat", "pick_type": "paper", "rank": 2}, {"id": "2604.14839v1", "title": "Well Begun is Half Done: Training-Free and Model-Agnostic Semantically Guaranteed User Representation Initialization for Multimodal Recommendation", "summary": "Recent advancements in multimodal recommendations, which leverage diverse modality information to mitigate data sparsity and improve recommendation accuracy, have gained significant attention. However, existing multimodal recommendations overlook the critical role of user representation initializati", "authors": ["Jinfeng Xu", "Zheyu Chen", "Shuo Yang"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14839v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621770", "cn_title": "推荐系统算法创新", "cn_summary": "【rec领域】Recent advancements in multimodal recommendations, which leverage diverse modality information to mitigate data sparsity and improve recommendation accuracy, have gained significant attention. However, existing multimodal recommendations overlook the critical role of user representation initializati"}, {"id": "2604.14833v1", "title": "Federated User Behavior Modeling for Privacy-Preserving LLM Recommendation", "summary": "Large Language Models have shown great success in recommender systems. However, the limited and sparse nature of user data often restricts the LLM's ability to effectively model behavior patterns. To address this, existing studies have explored cross-domain solutions by conducting Cross-Domain Recom", "authors": ["Lei Guo", "Hongyun Yang", "Pengjie Ren"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14833v1", "category": "llm", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621796", "cn_title": "LLM推荐系统应用研究", "cn_summary": "【llm领域】Large Language Models have shown great success in recommender systems. However, the limited and sparse nature of user data often restricts the LLM's ability to effectively model behavior patterns. To address this, existing studies have explored cross-domain solutions by conducting Cross-Domain Recom"}, {"id": "2604.14613v1", "title": "Uncertainty-aware Generative Learning Path Recommendation with Cognition-Adaptive Diffusion", "summary": "Learning Path Recommendation (LPR) is critical for personalized education, yet current methods often fail to account for historical interaction uncertainty (e.g., lucky guesses or accidental slips) and lack adaptability to diverse learning goals. We propose U-GLAD (Uncertainty-aware Generative Learn", "authors": ["Xiangrui Xiong", "Hang Liang", "Baiyang Chen"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14613v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621820", "cn_title": "推荐系统算法创新", "cn_summary": "【rec领域】Learning Path Recommendation (LPR) is critical for personalized education, yet current methods often fail to account for historical interaction uncertainty (e.g., lucky guesses or accidental slips) and lack adaptability to diverse learning goals. We propose U-GLAD (Uncertainty-aware Generative Learn"}, {"id": "2604.14598v1", "title": "Category-based and Popularity-guided Video Game Recommendation: A Balance-oriented Framework", "summary": "In recent years, the video game industry has experienced substantial growth, presenting players with a vast array of game choices. This surge in options has spurred the need for a specialized recommender system tailored for video games. However, current video game recommendation approaches tend to p", "authors": ["Xiping Li", "Jianghong Ma", "Kangzhe Liu"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14598v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621844", "cn_title": "推荐系统算法创新", "cn_summary": "【rec领域】In recent years, the video game industry has experienced substantial growth, presenting players with a vast array of game choices. This surge in options has spurred the need for a specialized recommender system tailored for video games. However, current video game recommendation approaches tend to p"}, {"id": "2604.14586v1", "title": "CPGRec+: A Balance-oriented Framework for Personalized Video Game Recommendations", "summary": "The rapid expansion of gaming industry requires advanced recommender systems tailored to its dynamic landscape. Existing Graph Neural Network (GNN)-based methods primarily prioritize accuracy over diversity, overlooking their inherent trade-off. To address this, we previously proposed CPGRec, a bala", "authors": ["Xiping Li", "Aier Yang", "Jianghong Ma"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14586v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621868", "cn_title": "推荐系统算法创新", "cn_summary": "【rec领域】The rapid expansion of gaming industry requires advanced recommender systems tailored to its dynamic landscape. Existing Graph Neural Network (GNN)-based methods primarily prioritize accuracy over diversity, overlooking their inherent trade-off. To address this, we previously proposed CPGRec, a bala"}, {"id": "2604.14581v1", "title": "Behavior-Aware Dual-Channel Preference Learning for Heterogeneous Sequential Recommendation", "summary": "Heterogeneous sequential recommendation (HSR) aims to learn dynamic behavior dependencies from the diverse behaviors of user-item interactions to facilitate precise sequential recommendation. Despite many efforts yielding promising achievements, there are still challenges in modeling heterogeneous b", "authors": ["Jing Xiao", "Dongqi Wu", "Liwei Pan"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14581v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621892", "cn_title": "推荐系统算法创新", "cn_summary": "【rec领域】Heterogeneous sequential recommendation (HSR) aims to learn dynamic behavior dependencies from the diverse behaviors of user-item interactions to facilitate precise sequential recommendation. Despite many efforts yielding promising achievements, there are still challenges in modeling heterogeneous b"}, {"id": "2604.14510v1", "title": "NewsTorch: A PyTorch-based Toolkit for Learner-oriented News Recommendation", "summary": "News recommender systems are devised to alleviate the information overload, attracting more and more researchers' attention in recent years. The lack of a dedicated learner-oriented news recommendation toolkit hinders the advancement of research in news recommendation. We propose a PyTorch-based new", "authors": ["Rongyao Wang", "Veronica Liesaputra", "Zhiyi Huang"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14510v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621916", "cn_title": "推荐系统算法创新", "cn_summary": "【rec领域】News recommender systems are devised to alleviate the information overload, attracting more and more researchers' attention in recent years. The lack of a dedicated learner-oriented news recommendation toolkit hinders the advancement of research in news recommendation. We propose a PyTorch-based new"}, {"id": "2604.15309v1", "title": "MM-WebAgent: A Hierarchical Multimodal Web Agent for Webpage Generation", "summary": "The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage ", "authors": ["Yan Li", "Zezi Zeng", "Yifan Yang"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.15309v1", "category": "agent", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:54.102840", "cn_title": "智能Agent推荐方法研究", "cn_summary": "【agent领域】The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage "}];
+        const conferenceData = {"WSDM 2025": {"name": "WSDM 2025", "date": "2025年3月", "location": "德国汉诺威", "papers": [{"title": "How Do Recommendation Models Amplify Popularity Bias? An Analysis from the Spectral Perspective", "authors": ["浙江大学", "中国科技大学", "蚂蚁集团"], "link": "https://arxiv.org/abs/2404.12", "highlight": "最佳论文奖", "category": "rec"}, {"title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent", "authors": ["Zhen Tao", "Riwei Lai"], "link": "https://arxiv.org/abs/2604.14972", "category": "agent"}, {"title": "Urban Traffic Network Layout Optimization with Guided Discrete Diffusion Models", "authors": ["Taeyoung Yun et al."], "link": "https://dl.acm.org/doi/10.1145/3773966.3777950", "category": "industry"}], "total": 106, "acceptance_rate": "17.3%"}, "KDD 2025": {"name": "KDD 2025", "date": "2025年8月", "location": "加拿大多伦多", "papers": [{"title": "Adaptive Graph Contrastive Learning for Recommendation", "authors": ["AMiner"], "link": "https://www.aminer.cn/pub/6466fafbd68f896efaeb7633/", "category": "rec"}, {"title": "Tree based Progressive Regression Model for Watch-Time Prediction in Short-video Recommendation", "authors": ["KDD Research Track"], "link": "#", "category": "rec"}, {"title": "Cross-graph Prompt Enhanced Learning for Personalized Recommendation Reason Generation", "authors": ["西安交通大学"], "link": "http://scholar.xjtu.edu.cn/zh/publications/", "category": "llm"}], "total": 300, "acceptance_rate": "20%"}, "RecSys 2025": {"name": "RecSys 2025", "date": "2025年9月", "location": "捷克布拉格", "papers": [{"title": "IP2: Entity-Guided Interest Probing for Personalized News Recommendation", "authors": ["大连理工大学"], "link": "#", "highlight": "最佳论文候选", "category": "rec"}], "total": 49, "acceptance_rate": "18.8%"}, "WWW 2025": {"name": "WWW 2025", "date": "2025年4月", "location": "新加坡", "papers": [{"title": "Large Language Models for Web Search and Recommendation", "authors": ["WWW Research Track"], "link": "#", "category": "llm"}], "total": 200, "acceptance_rate": "18%"}, "CIKM 2025": {"name": "CIKM 2025", "date": "2025年10月", "location": "待定", "papers": [], "total": 0, "acceptance_rate": "待公布"}, "SIGIR 2025": {"name": "SIGIR 2025", "date": "2025年7月", "location": "待定", "papers": [], "total": 0, "acceptance_rate": "待公布"}, "arXiv 2026": {"name": "arXiv 2026", "date": "最新预印本", "location": "在线", "papers": [], "total": 25, "acceptance_rate": "-"}};
+        
+        // 分类标签
+        const categoryLabels = {
+            rec: '推荐算法',
+            agent: 'AI Agent',
+            llm: 'LLM应用',
+            industry: '工业实践',
+            github: 'GitHub',
+            conference: '顶会论文'
+        };
+        
+        // 渲染每日精选
+        function renderDailyPick() {
+            const container = document.getElementById('daily-pick-list');
+            const typeIcons = { paper: '📄', article: '📰', github: '💻' };
+            const categoryImages = { rec: 'card-image-rec', agent: 'card-image-agent', llm: 'card-image-llm' };
+            
+            container.innerHTML = dailyPick.map((item, i) => {
+                const rankClass = i < 3 ? ['gold', 'silver', 'bronze'][i] : 'normal';
+                const category = item.type === 'github' ? 'github' : item.category;
+                const pickType = item.pick_type || 'paper';
+                const typeIcon = typeIcons[pickType] || '📄';
+                const imageClass = item.type === 'github' ? 'card-image-github' : (categoryImages[category] || 'card-image-paper');
+                const itemId = item.id || item.name || 'pick-' + i;
+                const itemType = item.type || 'paper';
+                const itemTitle = (item.title || item.name || '').replace(/'/g, "\\'").replace(/"/g, '\"');
+                const itemLink = item.link || item.url || '#';
+                const isFav = isFavorite(itemId, itemType);
+                
+                // 中文标题和简介
+                const cnTitle = item.cn_title || (item.title || item.name);
+                const cnSummary = item.cn_summary || (item.summary || item.description || '');
+                
+                // 存储完整数据到 data 属性
+                const itemData = encodeURIComponent(JSON.stringify(item));
+                
+                return `
+                    <div class="card" data-index="${i}" onclick="showPickDetail(${i})">
+                        <button class="card-favorite ${isFav ? 'active' : ''}" 
+                            data-id="${itemId}" data-type="${itemType}" data-title="${itemTitle}" data-link="${itemLink}"
+                            onclick="event.stopPropagation(); handleFavoriteClick(this)">
+                            <i class="${isFav ? 'fas' : 'far'} fa-bookmark"></i>
+                        </button>
+                        <div class="card-image ${imageClass}">
+                            <div class="card-image-icon">${typeIcon}</div>
+                            <div class="card-image-badge">TOP ${i + 1}</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-header">
+                                <div class="card-rank ${rankClass}">${i + 1}</div>
+                                <div class="card-meta">
+                                    <span class="card-category ${category}">${typeIcon} ${categoryLabels[category] || category}</span>
+                                    <h3 class="card-title">${cnTitle}</h3>
+                                    <div class="card-source"><i class="fas fa-user-edit"></i> ${item.source || 'arXiv'} ${item.authors ? ' · ' + item.authors.slice(0,2).join(',') : ''}</div>
+                                </div>
+                            </div>
+                            <p class="card-summary">${cnSummary}</p>
+                            <div class="card-footer">
+                                <div class="card-stats">
+                                    ${item.stars ? `<span class="card-stat"><i class="fas fa-star" style="color:#fbbf24"></i> ${item.stars.toLocaleString()}</span>` : ''}
+                                    ${item.views ? `<span class="card-stat"><i class="fas fa-eye" style="color:#60a5fa"></i> ${item.views}</span>` : ''}
+                                    ${item.likes ? `<span class="card-stat"><i class="fas fa-heart" style="color:#f87171"></i> ${item.likes}</span>` : ''}
+                                </div>
+                                <span class="card-link">查看详情 <i class="fas fa-chevron-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // 显示每日精选详情弹窗
+        function showPickDetail(index) {
+            const item = dailyPick[index];
+            if (!item) return;
+            
+            const pickType = item.pick_type || 'paper';
+            const typeIcon = { paper: '📄', article: '📰', github: '💻' }[pickType] || '📄';
+            const cnTitle = item.cn_title || item.title || item.name || '未知标题';
+            const cnSummary = item.cn_summary || item.summary || item.description || '暂无简介';
+            const itemLink = item.link || item.url || '#';
+            
+            let detailHtml = `
+                <div class="detail-section">
+                    <div class="detail-label">标题</div>
+                    <div class="detail-value">${item.title || item.name || '未知标题'}</div>
+                </div>
+            `;
+            
+            if (pickType === 'paper') {
+                detailHtml += `
+                    <div class="detail-section">
+                        <div class="detail-label">作者</div>
+                        <div class="detail-value">${(item.authors || []).join(', ') || '未知'}</div>
+                    </div>
+                    <div class="detail-section">
+                        <div class="detail-label">发布时间</div>
+                        <div class="detail-value">${item.published || '未知'}</div>
+                    </div>
+                    <div class="detail-section">
+                        <div class="detail-label">摘要</div>
+                        <div class="detail-value">${item.summary || '暂无摘要'}</div>
+                    </div>
+                `;
+            } else if (pickType === 'github') {
+                detailHtml += `
+                    <div class="detail-section">
+                        <div class="detail-label">语言</div>
+                        <div class="detail-value">${item.language || '未知'}</div>
+                    </div>
+                    <div class="detail-section">
+                        <div class="detail-label">统计</div>
+                        <div class="detail-value">
+                            ⭐ ${(item.stars || 0).toLocaleString()} Stars · 
+                            🍴 ${item.forks || 0} Forks · 
+                            📈 +${(item.growth_rate || 0).toFixed(1)}% 增长
+                        </div>
+                    </div>
+                    <div class="detail-section">
+                        <div class="detail-label">描述</div>
+                        <div class="detail-value">${item.description || '暂无描述'}</div>
+                    </div>
+                `;
+            } else {
+                detailHtml += `
+                    <div class="detail-section">
+                        <div class="detail-label">来源</div>
+                        <div class="detail-value">${item.source || '未知来源'}</div>
+                    </div>
+                    <div class="detail-section">
+                        <div class="detail-label">发布时间</div>
+                        <div class="detail-value">${item.published || '未知'}</div>
+                    </div>
+                    <div class="detail-section">
+                        <div class="detail-label">摘要</div>
+                        <div class="detail-value">${item.summary || '暂无摘要'}</div>
+                    </div>
+                `;
+            }
+            
+            // 添加标签
+            if (item.topics && item.topics.length > 0) {
+                detailHtml += `
+                    <div class="detail-section">
+                        <div class="detail-label">标签</div>
+                        <div class="detail-tags">${item.topics.slice(0, 5).map(t => `<span class="detail-tag">${t}</span>`).join('')}</div>
+                    </div>
+                `;
+            } else if (item.category) {
+                detailHtml += `
+                    <div class="detail-section">
+                        <div class="detail-label">分类</div>
+                        <div class="detail-tags"><span class="detail-tag">${item.category}</span></div>
+                    </div>
+                `;
+            }
+            
+            // 添加链接按钮
+            detailHtml += `<a href="${itemLink}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> ${pickType === 'github' ? '访问 GitHub' : (pickType === 'paper' ? '阅读论文' : '阅读原文')}</a>`;
+            
+            document.getElementById('detail-modal-title').innerHTML = `${typeIcon} ${cnTitle}`;
+            document.getElementById('detail-modal-body').innerHTML = detailHtml;
+            document.getElementById('detail-modal').classList.add('active');
+        }
+        
+        // 关闭详情弹窗
+        function closeDetailModal() {
+            document.getElementById('detail-modal').classList.remove('active');
+        }
+        
+        // 收藏按钮点击处理
+        function handleFavoriteClick(btn) {
+            event.stopPropagation();
+            const id = btn.dataset.id;
+            const type = btn.dataset.type;
+            const title = btn.dataset.title;
+            const link = btn.dataset.link;
+            toggleFavorite(id, type, title, link);
+            
+            // 更新按钮状态
+            const isFav = isFavorite(id, type);
+            btn.classList.toggle('active', isFav);
+            btn.innerHTML = `<i class="${isFav ? 'fas' : 'far'} fa-bookmark"></i>`;
+        }
+        
+        // 渲染顶会论文
+        function renderConferences() {
+            const container = document.getElementById('conf-list');
+            const confColors = {
+                'WSDM 2025': '#667eea',
+                'KDD 2025': '#f093fb',
+                'RecSys 2025': '#43e97b',
+                'WWW 2025': '#4facfe',
+                'CIKM 2025': '#fa709a',
+                'SIGIR 2025': '#fee140',
+                'arXiv 2026': '#764ba2'
+            };
+            
+            let html = '';
+            
+            // 遍历每个会议
+            Object.keys(conferenceData).forEach(confName => {
+                const conf = conferenceData[confName];
+                const color = confColors[confName] || '#667eea';
+                const confUrl = 'conferences/' + confName.replace(/ /g, '_').replace(/\//g, '_') + '/index.html';
+                
+                html += `
+                    <div class="conf-section">
+                        <div class="conf-header-new" style="border-left: 4px solid ${color};">
+                            <div class="conf-info">
+                                <div class="conf-name-new">${conf.name}</div>
+                                <div class="conf-meta">${conf.date} · ${conf.location || ''} ${conf.acceptance_rate ? '· 录用率 ' + conf.acceptance_rate : ''}</div>
+                            </div>
+                            <div class="conf-total">
+                                <span class="conf-count-new">${conf.total || 0}</span>
+                                <span class="conf-label-new">篇</span>
+                            </div>
+                        </div>
+                `;
+                
+                // 显示论文列表
+                if (conf.papers && conf.papers.length > 0) {
+                    html += `<div class="conf-papers">`;
+                    conf.papers.slice(0, 3).forEach((paper, i) => {
+                        const categoryEmoji = { rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭' };
+                        const emoji = categoryEmoji[paper.category] || '📄';
+                        html += `
+                            <a href="${paper.link || '#'}" target="_blank" class="conf-paper-item">
+                                <div class="conf-paper-rank">${i + 1}</div>
+                                <div class="conf-paper-content">
+                                    <div class="conf-paper-title">${paper.title}</div>
+                                    <div class="conf-paper-authors">${paper.authors ? paper.authors.join(', ') : ''} ${paper.highlight ? '<span class="conf-paper-highlight">' + paper.highlight + '</span>' : ''}</div>
+                                </div>
+                                <div class="conf-paper-emoji">${emoji}</div>
+                            </a>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (conf.total > 0) {
+                    html += `<div class="conf-papers-empty">论文列表待更新...</div>`;
+                } else {
+                    html += `<div class="conf-papers-empty">会议尚未召开或论文列表未发布</div>`;
+                }
+                
+                // 添加"查看全部论文"按钮 - 跳转到会议页面
+                const confPageUrl = 'conferences/' + confName.replace(/ /g, '_') + '.html';
+                html += `
+                    <a href="${confPageUrl}" class="conf-view-all">
+                        <span>查看全部论文</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                `;
+                
+                html += `</div>`;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // 渲染热门文章
+        function renderHotArticles(filter = 'all') {
+            const container = document.getElementById('hot-list');
+            const filtered = filter === 'all' ? hotArticles : hotArticles.filter(a => a.category === filter);
+            const categoryEmoji = { rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭', wechat: '📱', zhihu: '💬', opensource: '💻', tech: '🔧' };
+            const categoryImages = { rec: 'card-image-rec', agent: 'card-image-agent', llm: 'card-image-llm', industry: 'card-image-paper' };
+            
+            container.innerHTML = filtered.map((item, i) => {
+                const cnTitle = item.cn_title || item.title;
+                const cnSummary = item.cn_summary || item.summary || '';
+                return `
+                    <div class="card" onclick="showArticleDetail(${i}, '${filter}')">
+                        <div class="card-image ${categoryImages[item.category] || 'card-image-article'}">
+                            <div class="card-image-icon">${categoryEmoji[item.category] || '🔥'}</div>
+                            <div class="card-image-badge">HOT</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-header">
+                                <div class="card-rank ${i < 3 ? ['gold', 'silver', 'bronze'][i] : 'normal'}">${i + 1}</div>
+                                <div class="card-meta">
+                                    <span class="card-category ${item.category}">${categoryEmoji[item.category] || '🔥'} ${categoryLabels[item.category] || item.category}</span>
+                                    <h3 class="card-title">${cnTitle}</h3>
+                                    <div class="card-source"><i class="fas fa-external-link-alt"></i> ${item.source}</div>
+                                </div>
+                            </div>
+                            <p class="card-summary">${cnSummary}</p>
+                            <div class="card-footer">
+                                <div class="card-stats">
+                                    <span class="card-stat"><i class="fas fa-eye" style="color:#60a5fa"></i> ${item.views || 0}</span>
+                                    <span class="card-stat"><i class="fas fa-heart" style="color:#f87171"></i> ${item.likes || 0}</span>
+                                </div>
+                                <span class="card-link">查看详情 <i class="fas fa-chevron-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // 显示文章详情弹窗
+        function showArticleDetail(index, filter) {
+            const filtered = filter === 'all' ? hotArticles : hotArticles.filter(a => a.category === filter);
+            const item = filtered[index];
+            if (!item) return;
+            
+            const cnTitle = item.cn_title || item.title || '未知标题';
+            const cnSummary = item.cn_summary || item.summary || '暂无摘要';
+            
+            let detailHtml = `
+                <div class="detail-section">
+                    <div class="detail-label">标题</div>
+                    <div class="detail-value">${item.title || '未知标题'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">来源</div>
+                    <div class="detail-value">${item.source || '未知来源'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">发布时间</div>
+                    <div class="detail-value">${item.published || '未知'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">摘要</div>
+                    <div class="detail-value">${cnSummary}</div>
+                </div>
+            `;
+            
+            if (item.category) {
+                detailHtml += `
+                    <div class="detail-section">
+                        <div class="detail-label">分类</div>
+                        <div class="detail-tags"><span class="detail-tag">${item.category}</span></div>
+                    </div>
+                `;
+            }
+            
+            detailHtml += `<a href="${item.link || '#'}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 阅读原文</a>`;
+            
+            document.getElementById('detail-modal-title').innerHTML = `📰 ${cnTitle}`;
+            document.getElementById('detail-modal-body').innerHTML = detailHtml;
+            document.getElementById('detail-modal').classList.add('active');
+        }
+        
+        // 渲染GitHub项目
+        function renderGithub() {
+            const container = document.getElementById('github-list');
+            const langColors = { Python: '#3572A5', JavaScript: '#f1e05a', TypeScript: '#2b7489', Java: '#b07219', Go: '#00ADD8', Rust: '#dea584', 'C++': '#f34b7d' };
+            
+            container.innerHTML = githubProjects.slice(0, 6).map((item, i) => {
+                const cnTitle = item.cn_title || item.name;
+                const cnSummary = item.cn_summary || item.description;
+                return `
+                    <div class="card" onclick="showGithubDetail(${i})">
+                        <div class="card-image card-image-github">
+                            <div class="card-image-icon"><i class="fab fa-github"></i></div>
+                            <div class="card-image-badge">${item.language || 'Code'}</div>
+                            ${item.growth_rate ? `<div class="card-image-trending"><i class="fas fa-chart-line"></i> +${item.growth_rate.toFixed(1)}% 增长</div>` : ''}
+                        </div>
+                        <div class="card-body">
+                            <div class="card-header">
+                                <div class="card-rank ${i < 3 ? ['gold', 'silver', 'bronze'][i] : 'normal'}">${i + 1}</div>
+                                <div class="card-meta">
+                                    <span class="card-category github"><i class="fas fa-fire"></i> Trending</span>
+                                    <h3 class="card-title">${cnTitle}</h3>
+                                    <div class="card-source">
+                                        <span style="color:${langColors[item.language] || '#6b7280'}">●</span> ${item.language || 'Code'}
+                                        ${item.topics && item.topics.length ? ' · ' + item.topics.slice(0,2).join(', ') : ''}
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-summary">${cnSummary}</p>
+                            <div class="card-footer">
+                                <div class="card-stats">
+                                    <span class="card-stat"><i class="fas fa-star" style="color:#fbbf24"></i> ${(item.stars || 0).toLocaleString()}</span>
+                                    <span class="card-stat"><i class="fas fa-code-branch" style="color:#60a5fa"></i> ${(item.forks || 0).toLocaleString()}</span>
+                                </div>
+                                <span class="card-link">查看详情 <i class="fas fa-chevron-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // 显示 GitHub 项目详情弹窗
+        function showGithubDetail(index) {
+            const item = githubProjects[index];
+            if (!item) return;
+            
+            const cnTitle = item.cn_title || item.name || item.full_name || '未知项目';
+            // 优先使用中文摘要，确保完整显示
+            const cnSummary = item.cn_summary || item.description || '暂无描述';
+            const fullDesc = item.description || cnSummary;
+            
+            let detailHtml = `
+                <div class="detail-section">
+                    <div class="detail-label">项目名称</div>
+                    <div class="detail-value">${item.full_name || item.name || '未知项目'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">语言</div>
+                    <div class="detail-value">${item.language || '未知'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">统计</div>
+                    <div class="detail-value">
+                        ⭐ ${(item.stars || 0).toLocaleString()} Stars · 
+                        🍴 ${item.forks || 0} Forks · 
+                        📈 +${(item.growth_rate || 0).toFixed(1)}% 增长
+                    </div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">中文简介</div>
+                    <div class="detail-value">${cnSummary}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">英文描述</div>
+                    <div class="detail-value" style="font-size:12px; color:#64748b;">${fullDesc}</div>
+                </div>
+            `;
+            
+            if (item.topics && item.topics.length > 0) {
+                detailHtml += `
+                    <div class="detail-section">
+                        <div class="detail-label">标签</div>
+                        <div class="detail-tags">${item.topics.slice(0, 6).map(t => `<span class="detail-tag">${t}</span>`).join('')}</div>
+                    </div>
+                `;
+            }
+            
+            detailHtml += `<a href="${item.url || '#'}" target="_blank" class="detail-link"><i class="fab fa-github"></i> 访问 GitHub</a>`;
+            
+            document.getElementById('detail-modal-title').innerHTML = `💻 ${cnTitle}`;
+            document.getElementById('detail-modal-body').innerHTML = detailHtml;
+            document.getElementById('detail-modal').classList.add('active');
+        }
+        
+        // 渲染论文
+        function renderPapers() {
+            const container = document.getElementById('papers-list');
+            const categoryEmoji = { rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭' };
+            const categoryImages = { rec: 'card-image-rec', agent: 'card-image-agent', llm: 'card-image-llm', industry: 'card-image-paper' };
+            
+            container.innerHTML = arxivPapers.slice(0, 5).map((item, i) => {
+                const cnTitle = item.cn_title || (item.title ? item.title.slice(0, 40) + '...' : '论文');
+                const cnSummary = item.cn_summary || '本文在推荐系统相关领域做出了创新研究，提出了新的方法和见解。';
+                return `
+                    <div class="card" onclick="showPaperDetail(${i})">
+                        <div class="card-image ${categoryImages[item.category] || 'card-image-paper'}">
+                            <div class="card-image-icon">📄</div>
+                            <div class="card-image-badge">arXiv</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-header">
+                                <div class="card-rank ${i < 3 ? ['gold', 'silver', 'bronze'][i] : 'normal'}">${i + 1}</div>
+                                <div class="card-meta">
+                                    <span class="card-category ${item.category}">${categoryEmoji[item.category] || '📄'} ${categoryLabels[item.category] || '论文'}</span>
+                                    <h3 class="card-title">${cnTitle}</h3>
+                                    <div class="card-source"><i class="fas fa-users"></i> ${item.authors ? item.authors.slice(0,2).join(', ') : 'Unknown'}</div>
+                                </div>
+                            </div>
+                            <p class="card-summary">${cnSummary}</p>
+                            <div class="card-footer">
+                                <div class="card-stats">
+                                    <span class="card-stat"><i class="fas fa-calendar" style="color:#10b981"></i> ${item.published}</span>
+                                </div>
+                                <span class="card-link">阅读论文 <i class="fas fa-external-link-alt"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // 显示论文详情弹窗
+        function showPaperDetail(index) {
+            const item = arxivPapers[index];
+            if (!item) return;
+            
+            const cnTitle = item.cn_title || item.title || '未知标题';
+            // 优先使用中文摘要，确保完整显示
+            const cnSummary = item.cn_summary || '暂无中文摘要';
+            const fullSummary = item.summary || '';
+            
+            let detailHtml = `
+                <div class="detail-section">
+                    <div class="detail-label">标题</div>
+                    <div class="detail-value">${item.title || '未知标题'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">作者</div>
+                    <div class="detail-value">${(item.authors || []).join(', ') || '未知'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">发布时间</div>
+                    <div class="detail-value">${item.published || '未知'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">中文解读</div>
+                    <div class="detail-value">${cnSummary}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">英文摘要</div>
+                    <div class="detail-value" style="font-size:12px; color:#64748b;">${fullSummary}</div>
+                </div>
+            `;
+            
+            if (item.category) {
+                detailHtml += `
+                    <div class="detail-section">
+                        <div class="detail-label">分类</div>
+                        <div class="detail-tags"><span class="detail-tag">${item.category}</span></div>
+                    </div>
+                `;
+            }
+            
+            // 论文解读页面链接
+            const paperId = (item.id || '').replace('/', '_').replace('.', '_');
+            const insightUrl = `insights/paper_${paperId}.html`;
+            
+            detailHtml += `
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <a href="${insightUrl}" class="detail-link"><i class="fas fa-book-open"></i> 查看解读</a>
+                    <a href="${item.link || '#'}" target="_blank" class="detail-link" style="background:linear-gradient(135deg, #f59e0b, #f97316);"><i class="fas fa-external-link-alt"></i> arXiv原文</a>
+                </div>
+            `;
+            
+            document.getElementById('detail-modal-title').innerHTML = `📄 ${cnTitle}`;
+            document.getElementById('detail-modal-body').innerHTML = detailHtml;
+            document.getElementById('detail-modal').classList.add('active');
+        }
+        
+        // 显示会议详情弹窗
+        function showConfDetail(confName) {
+            const conf = conferenceData[confName];
+            if (!conf) return;
+            
+            let detailHtml = `
+                <div class="detail-section">
+                    <div class="detail-label">会议名称</div>
+                    <div class="detail-value">${conf.name || confName}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">举办时间</div>
+                    <div class="detail-value">${conf.date || '待定'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">举办地点</div>
+                    <div class="detail-value">${conf.location || '待定'}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">论文数量</div>
+                    <div class="detail-value">${conf.total || 0} 篇</div>
+                </div>
+            `;
+            
+            if (conf.acceptance_rate) {
+                detailHtml += `
+                    <div class="detail-section">
+                        <div class="detail-label">录用率</div>
+                        <div class="detail-value">${conf.acceptance_rate}</div>
+                    </div>
+                `;
+            }
+            
+            // 显示论文列表
+            if (conf.papers && conf.papers.length > 0) {
+                detailHtml += `
+                    <div class="detail-section">
+                        <div class="detail-label">论文列表</div>
+                        <div style="max-height: 200px; overflow-y: auto;">
+                `;
+                conf.papers.slice(0, 10).forEach((paper, i) => {
+                    detailHtml += `
+                        <div style="padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-size: 13px;">
+                            <div style="font-weight: 500;">${i + 1}. ${paper.title || '未知标题'}</div>
+                            <div style="color: #64748b; font-size: 11px;">${paper.authors ? paper.authors.slice(0,2).join(', ') : ''}</div>
+                        </div>
+                    `;
+                });
+                if (conf.papers.length > 10) {
+                    detailHtml += `<div style="padding: 8px 0; color: #64748b; font-size: 12px;">还有 ${conf.papers.length - 10} 篇论文...</div>`;
+                }
+                detailHtml += `</div></div>`;
+            }
+            
+            document.getElementById('detail-modal-title').innerHTML = `🏆 ${conf.name || confName}`;
+            document.getElementById('detail-modal-body').innerHTML = detailHtml;
+            document.getElementById('detail-modal').classList.add('active');
+        }
+        
+        // Tab切换
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                renderHotArticles(tab.dataset.tab);
+            });
+        });
+        
+        // ========== 搜索功能 ==========
+        let searchFilter = 'all';
+        const allItems = [
+            ...arxivPapers.map(p => ({...p, type: 'paper', searchType: 'paper'})),
+            ...githubProjects.map(p => ({...p, type: 'project', searchType: 'project', title: p.name, summary: p.description})),
+            ...hotArticles.map(a => ({...a, type: 'article', searchType: 'article'}))
+        ];
+        
+        function openSearch() {
+            document.getElementById('searchModal').classList.add('active');
+            document.getElementById('searchInput').focus();
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeSearch() {
+            document.getElementById('searchModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function setSearchFilter(filter) {
+            searchFilter = filter;
+            document.querySelectorAll('.search-filter').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === filter);
+            });
+            doSearch();
+        }
+        
+        function doSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const results = document.getElementById('searchResults');
+            
+            if (!query) {
+                results.innerHTML = '<div class="search-empty"><i class="fas fa-search"></i><div>输入关键词开始搜索</div></div>';
+                return;
+            }
+            
+            let filtered = allItems.filter(item => {
+                const matchFilter = searchFilter === 'all' || item.searchType === searchFilter;
+                const matchQuery = (item.title || '').toLowerCase().includes(query) ||
+                    (item.summary || '').toLowerCase().includes(query) ||
+                    (item.authors && item.authors.join(' ').toLowerCase().includes(query));
+                return matchFilter && matchQuery;
+            });
+            
+            if (filtered.length === 0) {
+                results.innerHTML = '<div class="search-empty"><i class="fas fa-inbox"></i><div>未找到相关内容</div></div>';
+                return;
+            }
+            
+            const typeEmoji = { paper: '📄', project: '💻', article: '📰' };
+            const typeLabels = { paper: '论文', project: '项目', article: '文章' };
+            
+            results.innerHTML = filtered.slice(0, 20).map(item => `
+                <div class="card" onclick="closeSearch()">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="card-meta">
+                                <span class="card-category ${item.category || 'rec'}">${typeEmoji[item.searchType]} ${typeLabels[item.searchType]}</span>
+                                <h3 class="card-title">${item.title || item.name}</h3>
+                                <div class="card-source">${item.authors ? item.authors.slice(0,2).join(', ') : (item.source || '')}</div>
+                            </div>
+                        </div>
+                        <p class="card-summary">${(item.summary || item.description || '').slice(0, 100)}...</p>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                ${item.stars ? `<span class="card-stat"><i class="fas fa-star" style="color:#fbbf24"></i> ${item.stars.toLocaleString()}</span>` : ''}
+                                ${item.views ? `<span class="card-stat"><i class="fas fa-eye" style="color:#60a5fa"></i> ${item.views}</span>` : ''}
+                            </div>
+                            <a href="${item.link || item.url}" target="_blank" class="card-link">查看详情 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // ========== 收藏功能 ==========
+        let favorites = JSON.parse(localStorage.getItem('ai_daily_favorites') || '[]');
+        
+        function toggleFavorite(id, type, title, link) {
+            const key = `${type}_${id}`;
+            const index = favorites.findIndex(f => f.key === key);
+            
+            if (index > -1) {
+                favorites.splice(index, 1);
+                showToast('已取消收藏');
+            } else {
+                favorites.push({ key, id, type, title, link, time: Date.now() });
+                showToast('已添加收藏');
+            }
+            
+            localStorage.setItem('ai_daily_favorites', JSON.stringify(favorites));
+            updateFavoriteButtons();
+        }
+        
+        function isFavorite(id, type) {
+            return favorites.some(f => f.key === `${type}_${id}`);
+        }
+        
+        function updateFavoriteButtons() {
+            document.querySelectorAll('.card-favorite').forEach(btn => {
+                const id = btn.dataset.id;
+                const type = btn.dataset.type;
+                btn.classList.toggle('active', isFavorite(id, type));
+                btn.innerHTML = isFavorite(id, type) ? '<i class="fas fa-bookmark"></i>' : '<i class="far fa-bookmark"></i>';
+            });
+        }
+        
+        function showFavorites() {
+            if (favorites.length === 0) {
+                showToast('暂无收藏内容');
+                return;
+            }
+            
+            const modal = document.createElement('div');
+            modal.id = 'favorites-modal';
+            modal.innerHTML = `
+                <div class="modal-overlay" onclick="closeFavorites()"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-bookmark"></i> 我的收藏</h3>
+                        <button class="modal-close" onclick="closeFavorites()"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        ${favorites.map(f => `
+                            <a href="${f.link}" target="_blank" class="archive-item">
+                                <div class="archive-date">${f.title.slice(0, 30)}${f.title.length > 30 ? '...' : ''}</div>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeFavorites() {
+            const modal = document.getElementById('favorites-modal');
+            if (modal) {
+                modal.remove();
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // ========== 排序功能 ==========
+        let currentSort = 'default';
+        
+        function sortItems(items, sortBy) {
+            const sorted = [...items];
+            switch(sortBy) {
+                case 'score':
+                    sorted.sort((a, b) => (b.overall_score || 0) - (a.overall_score || 0));
+                    break;
+                case 'stars':
+                    sorted.sort((a, b) => (b.stars || 0) - (a.stars || 0));
+                    break;
+                case 'date':
+                    sorted.sort((a, b) => new Date(b.published || b.updated_at || 0) - new Date(a.published || a.updated_at || 0));
+                    break;
+                case 'growth':
+                    sorted.sort((a, b) => (b.growth_rate || 0) - (a.growth_rate || 0));
+                    break;
+                default:
+                    break;
+            }
+            return sorted;
+        }
+        
+        // ========== 返回顶部 ==========
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // ========== Toast提示 ==========
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+        
+        // ========== 滚动效果 ==========
+        const nav = document.getElementById('nav');
+        const moduleNav = document.getElementById('moduleNav');
+        const backToTop = document.getElementById('backToTop');
+        const sections = ['daily-pick', 'hot', 'github', 'papers', 'conferences', 'sources'];
+        
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            
+            // 主导航变实色
+            nav.classList.toggle('solid', scrollY > 50);
+            
+            // 模块导航显示/隐藏
+            moduleNav.classList.toggle('visible', scrollY > 150);
+            
+            // 返回顶部按钮
+            backToTop.classList.toggle('visible', scrollY > 400);
+            
+            // 高亮当前模块
+            let currentSection = 'daily-pick';
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section && section.offsetTop - 120 <= scrollY) {
+                    currentSection = id;
+                }
+            });
+            
+            document.querySelectorAll('.module-nav-item').forEach(item => {
+                item.classList.toggle('active', item.getAttribute('href') === '#' + currentSection);
+            });
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('.module-nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = item.getAttribute('href').slice(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    // 使用scrollIntoView配合CSS的scroll-margin-top
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        
+        // 往期日报
+        function showArchive() {
+            // 创建弹窗
+            const modal = document.createElement('div');
+            modal.id = 'archive-modal';
+            modal.innerHTML = `
+                <div class="modal-overlay" onclick="closeArchive()"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-history"></i> 往期日报</h3>
+                        <button class="modal-close" onclick="closeArchive()"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="modal-body" id="archive-list">
+                        <div class="archive-loading"><i class="fas fa-spinner fa-spin"></i> 加载中...</div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+            
+            // 加载归档列表
+            fetch('archive/index.json')
+                .then(r => r.json())
+                .then(data => {
+                    const list = document.getElementById('archive-list');
+                    if (data.archives && data.archives.length > 0) {
+                        list.innerHTML = data.archives.map(item => `
+                            <a href="archive/${item.date}/index.html" class="archive-item">
+                                <div class="archive-date">${item.date}</div>
+                                <div class="archive-stats">
+                                    <span><i class="fas fa-file-alt"></i> ${item.papers}篇</span>
+                                    <span><i class="fab fa-github"></i> ${item.projects}个</span>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        `).join('');
+                    } else {
+                        list.innerHTML = '<div class="archive-empty">暂无往期日报</div>';
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('archive-list').innerHTML = '<div class="archive-error">加载失败，请稍后重试</div>';
+                });
+        }
+        
+        function closeArchive() {
+            const modal = document.getElementById('archive-modal');
+            if (modal) {
+                modal.remove();
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // 初始化
+        renderDailyPick();
+        renderConferences();
+        renderHotArticles();
+        renderGithub();
+        renderPapers();
+    </script>
+</body>
+</html>

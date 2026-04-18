@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RecSys 2025 | AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #43e97b;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --safe-area-top: env(safe-area-inset-top, 0px);
+            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: var(--bg); color: var(--text); }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary), #764ba2);
+            color: white;
+            padding: 60px 16px 30px;
+            padding-top: calc(60px + var(--safe-area-top));
+        }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: rgba(255,255,255,0.8); text-decoration: none;
+            font-size: 13px; margin-bottom: 16px;
+        }
+        .conf-title { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        .conf-meta { font-size: 13px; opacity: 0.9; margin-bottom: 20px; }
+        .conf-meta span { margin-right: 16px; }
+        
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 12px; margin-top: 20px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        .stat-value { font-size: 24px; font-weight: 700; }
+        .stat-label { font-size: 11px; opacity: 0.8; }
+        
+        .main { padding: 20px 16px 80px; padding-bottom: calc(80px + var(--safe-area-bottom)); }
+        
+        .section-title {
+            font-size: 16px; font-weight: 700;
+            margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .section-title i { color: var(--primary); }
+        
+        .paper-card {
+            background: var(--card);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+        .paper-header {
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .paper-rank {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px; height: 28px;
+            background: linear-gradient(135deg, var(--primary), #764ba2);
+            color: white;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-right: 12px;
+        }
+        .paper-badge {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .paper-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+        .paper-authors {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+        
+        .paper-body { padding: 16px; }
+        .paper-summary {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .paper-scores {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .score-item {
+            text-align: center;
+        }
+        .score-label { font-size: 10px; color: #94a3b8; }
+        .score-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .score-stars { color: #fbbf24; }
+        
+        .paper-footer {
+            padding: 12px 16px;
+            background: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .paper-link {
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回日报</a>
+        <h1 class="conf-title">RecSys 2025</h1>
+        <div class="conf-meta">
+            <span><i class="far fa-calendar"></i> 2025年9月</span>
+            <span><i class="fas fa-map-marker-alt"></i> 捷克布拉格</span>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">49</div>
+                <div class="stat-label">收录论文</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">10</div>
+                <div class="stat-label">精选论文</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">23%</div>
+                <div class="stat-label">录用率</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main">
+        <h2 class="section-title"><i class="fas fa-list"></i> 论文列表（按综合评分排序）</h2>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <span class="paper-rank">1</span> <span class="paper-badge">🏆 最佳论文</span>
+                <div class="paper-title">智能Agent推荐方法研究</div>
+                <div class="paper-authors"><i class="fas fa-users"></i> Zhen Tao, Riwei Lai, Chenyun Yu</div>
+            </div>
+            <div class="paper-body">
+                <div class="paper-summary">【agent领域】Large language model (LLM) based recommendation agents personalize what they know through evolving per-user semantic memory, yet how they reason remains a universal, static system prompt shared identically across all users. This asymmetry is a fundamental bottleneck: when a recommendation fails, the</div>
+                <div class="paper-scores">
+                    <div class="score-item">
+                        <div class="score-label">创新性</div>
+                        <div class="score-value">3.6 <span class="score-stars">⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">工业价值</div>
+                        <div class="score-value">4.0 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">实验充分</div>
+                        <div class="score-value">4.4 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="paper-footer">
+                <span style="font-size:12px; color:#64748b;">综合评分: 4.0 · 推荐</span>
+                <a href="../insights/paper_2604_14972v1.html" class="paper-link">查看论文 <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <span class="paper-rank">2</span>
+                <div class="paper-title">推荐系统算法创新</div>
+                <div class="paper-authors"><i class="fas fa-users"></i> Yanyan Zou, Junbo Qi, Lunsong Huang</div>
+            </div>
+            <div class="paper-body">
+                <div class="paper-summary">【rec领域】Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the paginat</div>
+                <div class="paper-scores">
+                    <div class="score-item">
+                        <div class="score-label">创新性</div>
+                        <div class="score-value">4.4 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">工业价值</div>
+                        <div class="score-value">4.7 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">实验充分</div>
+                        <div class="score-value">4.8 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="paper-footer">
+                <span style="font-size:12px; color:#64748b;">综合评分: 4.6 · 强烈推荐</span>
+                <a href="../insights/paper_2604_14878v1.html" class="paper-link">查看论文 <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <span class="paper-rank">3</span>
+                <div class="paper-title">推荐系统算法创新</div>
+                <div class="paper-authors"><i class="fas fa-users"></i> Jinfeng Xu, Zheyu Chen, Shuo Yang</div>
+            </div>
+            <div class="paper-body">
+                <div class="paper-summary">【rec领域】Recent advancements in multimodal recommendations, which leverage diverse modality information to mitigate data sparsity and improve recommendation accuracy, have gained significant attention. However, existing multimodal recommendations overlook the critical role of user representation initializati</div>
+                <div class="paper-scores">
+                    <div class="score-item">
+                        <div class="score-label">创新性</div>
+                        <div class="score-value">3.8 <span class="score-stars">⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">工业价值</div>
+                        <div class="score-value">4.9 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">实验充分</div>
+                        <div class="score-value">3.9 <span class="score-stars">⭐⭐⭐</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="paper-footer">
+                <span style="font-size:12px; color:#64748b;">综合评分: 4.2 · 推荐</span>
+                <a href="../insights/paper_2604_14839v1.html" class="paper-link">查看论文 <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <span class="paper-rank">4</span>
+                <div class="paper-title">LLM推荐系统应用研究</div>
+                <div class="paper-authors"><i class="fas fa-users"></i> Lei Guo, Hongyun Yang, Pengjie Ren</div>
+            </div>
+            <div class="paper-body">
+                <div class="paper-summary">【llm领域】Large Language Models have shown great success in recommender systems. However, the limited and sparse nature of user data often restricts the LLM's ability to effectively model behavior patterns. To address this, existing studies have explored cross-domain solutions by conducting Cross-Domain Recom</div>
+                <div class="paper-scores">
+                    <div class="score-item">
+                        <div class="score-label">创新性</div>
+                        <div class="score-value">4.9 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">工业价值</div>
+                        <div class="score-value">4.6 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">实验充分</div>
+                        <div class="score-value">3.8 <span class="score-stars">⭐⭐⭐</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="paper-footer">
+                <span style="font-size:12px; color:#64748b;">综合评分: 4.4 · 推荐</span>
+                <a href="../insights/paper_2604_14833v1.html" class="paper-link">查看论文 <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <span class="paper-rank">5</span>
+                <div class="paper-title">推荐系统算法创新</div>
+                <div class="paper-authors"><i class="fas fa-users"></i> Xiangrui Xiong, Hang Liang, Baiyang Chen</div>
+            </div>
+            <div class="paper-body">
+                <div class="paper-summary">【rec领域】Learning Path Recommendation (LPR) is critical for personalized education, yet current methods often fail to account for historical interaction uncertainty (e.g., lucky guesses or accidental slips) and lack adaptability to diverse learning goals. We propose U-GLAD (Uncertainty-aware Generative Learn</div>
+                <div class="paper-scores">
+                    <div class="score-item">
+                        <div class="score-label">创新性</div>
+                        <div class="score-value">3.8 <span class="score-stars">⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">工业价值</div>
+                        <div class="score-value">4.8 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">实验充分</div>
+                        <div class="score-value">4.7 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="paper-footer">
+                <span style="font-size:12px; color:#64748b;">综合评分: 4.4 · 推荐</span>
+                <a href="../insights/paper_2604_14613v1.html" class="paper-link">查看论文 <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <span class="paper-rank">6</span>
+                <div class="paper-title">推荐系统算法创新</div>
+                <div class="paper-authors"><i class="fas fa-users"></i> Xiping Li, Jianghong Ma, Kangzhe Liu</div>
+            </div>
+            <div class="paper-body">
+                <div class="paper-summary">【rec领域】In recent years, the video game industry has experienced substantial growth, presenting players with a vast array of game choices. This surge in options has spurred the need for a specialized recommender system tailored for video games. However, current video game recommendation approaches tend to p</div>
+                <div class="paper-scores">
+                    <div class="score-item">
+                        <div class="score-label">创新性</div>
+                        <div class="score-value">3.7 <span class="score-stars">⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">工业价值</div>
+                        <div class="score-value">4.8 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">实验充分</div>
+                        <div class="score-value">3.7 <span class="score-stars">⭐⭐⭐</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="paper-footer">
+                <span style="font-size:12px; color:#64748b;">综合评分: 4.1 · 推荐</span>
+                <a href="../insights/paper_2604_14598v1.html" class="paper-link">查看论文 <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <span class="paper-rank">7</span>
+                <div class="paper-title">推荐系统算法创新</div>
+                <div class="paper-authors"><i class="fas fa-users"></i> Xiping Li, Aier Yang, Jianghong Ma</div>
+            </div>
+            <div class="paper-body">
+                <div class="paper-summary">【rec领域】The rapid expansion of gaming industry requires advanced recommender systems tailored to its dynamic landscape. Existing Graph Neural Network (GNN)-based methods primarily prioritize accuracy over diversity, overlooking their inherent trade-off. To address this, we previously proposed CPGRec, a bala</div>
+                <div class="paper-scores">
+                    <div class="score-item">
+                        <div class="score-label">创新性</div>
+                        <div class="score-value">4.2 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">工业价值</div>
+                        <div class="score-value">4.5 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">实验充分</div>
+                        <div class="score-value">4.0 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="paper-footer">
+                <span style="font-size:12px; color:#64748b;">综合评分: 4.2 · 推荐</span>
+                <a href="../insights/paper_2604_14586v1.html" class="paper-link">查看论文 <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <span class="paper-rank">8</span>
+                <div class="paper-title">推荐系统算法创新</div>
+                <div class="paper-authors"><i class="fas fa-users"></i> Jing Xiao, Dongqi Wu, Liwei Pan</div>
+            </div>
+            <div class="paper-body">
+                <div class="paper-summary">【rec领域】Heterogeneous sequential recommendation (HSR) aims to learn dynamic behavior dependencies from the diverse behaviors of user-item interactions to facilitate precise sequential recommendation. Despite many efforts yielding promising achievements, there are still challenges in modeling heterogeneous b</div>
+                <div class="paper-scores">
+                    <div class="score-item">
+                        <div class="score-label">创新性</div>
+                        <div class="score-value">4.6 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">工业价值</div>
+                        <div class="score-value">4.6 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">实验充分</div>
+                        <div class="score-value">3.8 <span class="score-stars">⭐⭐⭐</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="paper-footer">
+                <span style="font-size:12px; color:#64748b;">综合评分: 4.3 · 推荐</span>
+                <a href="../insights/paper_2604_14581v1.html" class="paper-link">查看论文 <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <span class="paper-rank">9</span>
+                <div class="paper-title">推荐系统算法创新</div>
+                <div class="paper-authors"><i class="fas fa-users"></i> Rongyao Wang, Veronica Liesaputra, Zhiyi Huang</div>
+            </div>
+            <div class="paper-body">
+                <div class="paper-summary">【rec领域】News recommender systems are devised to alleviate the information overload, attracting more and more researchers' attention in recent years. The lack of a dedicated learner-oriented news recommendation toolkit hinders the advancement of research in news recommendation. We propose a PyTorch-based new</div>
+                <div class="paper-scores">
+                    <div class="score-item">
+                        <div class="score-label">创新性</div>
+                        <div class="score-value">4.1 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">工业价值</div>
+                        <div class="score-value">4.1 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">实验充分</div>
+                        <div class="score-value">4.4 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="paper-footer">
+                <span style="font-size:12px; color:#64748b;">综合评分: 4.2 · 推荐</span>
+                <a href="../insights/paper_2604_14510v1.html" class="paper-link">查看论文 <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+
+        <div class="paper-card">
+            <div class="paper-header">
+                <span class="paper-rank">10</span>
+                <div class="paper-title">智能Agent推荐方法研究</div>
+                <div class="paper-authors"><i class="fas fa-users"></i> Yan Li, Zezi Zeng, Yifan Yang</div>
+            </div>
+            <div class="paper-body">
+                <div class="paper-summary">【agent领域】The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage </div>
+                <div class="paper-scores">
+                    <div class="score-item">
+                        <div class="score-label">创新性</div>
+                        <div class="score-value">3.9 <span class="score-stars">⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">工业价值</div>
+                        <div class="score-value">4.9 <span class="score-stars">⭐⭐⭐⭐</span></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">实验充分</div>
+                        <div class="score-value">3.9 <span class="score-stars">⭐⭐⭐</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="paper-footer">
+                <span style="font-size:12px; color:#64748b;">综合评分: 4.2 · 推荐</span>
+                <a href="../insights/paper_2604_15309v1.html" class="paper-link">查看论文 <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

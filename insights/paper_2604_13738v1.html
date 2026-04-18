@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>推荐系统前沿研究 | 论文解读</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #667eea;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 16px 40px;
+        }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: rgba(255,255,255,0.8); text-decoration: none;
+            font-size: 13px; margin-bottom: 16px;
+        }
+        .paper-tag {
+            display: inline-block; background: rgba(255,255,255,0.2);
+            padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .paper-title { font-size: 22px; font-weight: 700; line-height: 1.4; margin-bottom: 16px; }
+        .paper-meta { font-size: 13px; opacity: 0.9; }
+        .paper-meta span { margin-right: 16px; }
+        
+        .main { padding: 20px 16px 60px; max-width: 680px; margin: 0 auto; }
+        
+        .section { margin-bottom: 24px; }
+        .section-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .section-title i { color: var(--primary); }
+        .section-content { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+        
+        .card { background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1));
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            border-radius: 0 12px 12px 0;
+            margin: 16px 0;
+        }
+        
+        .action-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2); color: white;
+            padding: 12px 24px; border-radius: 10px; text-decoration: none;
+            font-size: 14px; font-weight: 600; margin-top: 16px;
+        }
+        .action-btn.secondary {
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回日报</a>
+        <div class="paper-tag">📄 arXiv 论文解读</div>
+        <h1 class="paper-title">推荐系统前沿研究</h1>
+        <div class="paper-meta">
+            <span><i class="far fa-calendar"></i> 2026-04-15</span>
+            <span><i class="fas fa-users"></i> Pierre Perrault, Vianney Perchet, Michal Valko</span>
+        </div>
+    </div>
+    
+    <div class="main">
+        <div class="highlight-box">
+            <div class="section-title"><i class="fas fa-lightbulb"></i> 核心观点</div>
+            <div class="section-content">在相关领域做出创新研究，具有参考价值。</div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-info-circle"></i> 论文简介</h2>
+            <div class="section-content">
+                We investigate stochastic combinatorial semi-bandits, where the entire joint distribution of outcomes impacts the complexity of the problem instance (unlike in the standard bandits). Typical distributions considered depend on specific parameter values, whose prior knowledge is required in theory but
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-tags"></i> 分类标签</h2>
+            <div class="card">
+                <span style="background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1)); padding: 4px 12px; border-radius: 6px; font-size: 12px; color: #667eea;">
+                    industry
+                </span>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-link"></i> 相关链接</h2>
+            <a href="http://arxiv.org/abs/2604.13738v1" target="_blank" class="action-btn">
+                <i class="fas fa-external-link-alt"></i> 阅读 arXiv 原文
+            </a>
+            <a href="../index.html" class="action-btn secondary">
+                <i class="fas fa-newspaper"></i> 返回日报首页
+            </a>
+        </div>
+    </div>
+</body>
+</html>
