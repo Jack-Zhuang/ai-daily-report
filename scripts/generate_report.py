@@ -1116,8 +1116,11 @@ class ReportGenerator:
                     conf.papers.slice(0, 3).forEach((paper, i) => {{
                         const categoryEmoji = {{ rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭' }};
                         const emoji = categoryEmoji[paper.category] || '📄';
+                        // 论文解读页面链接
+                        const paperId = (paper.id || paper.arxiv_id || '').replace('/', '_').replace('.', '_');
+                        const insightUrl = `insights/paper_${{paperId}}.html`;
                         html += `
-                            <a href="${{paper.link || '#'}}" target="_blank" class="conf-paper-item">
+                            <a href="${{insightUrl}}" class="conf-paper-item">
                                 <div class="conf-paper-rank">${{i + 1}}</div>
                                 <div class="conf-paper-content">
                                     <div class="conf-paper-title">${{paper.title}}</div>
