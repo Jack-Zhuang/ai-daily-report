@@ -1204,7 +1204,8 @@ class ReportGenerator:
             const categoryEmoji = {{ rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭', wechat: '📱', zhihu: '💬', opensource: '💻', tech: '🔧' }};
             const categoryImages = {{ rec: 'card-image-rec', agent: 'card-image-agent', llm: 'card-image-llm', industry: 'card-image-paper' }};
             
-            container.innerHTML = filtered.map((item, i) => {{
+            // 只显示前5篇
+            container.innerHTML = filtered.slice(0, 5).map((item, i) => {{
                 const cnTitle = item.cn_title || item.title;
                 const cnSummary = item.cn_summary || item.summary || '';
                 return `
@@ -1234,6 +1235,15 @@ class ReportGenerator:
                     </div>
                 `;
             }}).join('');
+            
+            // 添加"查看更多"按钮（如果有超过5篇）
+            if (filtered.length > 5) {{
+                const moreBtn = document.createElement('button');
+                moreBtn.className = 'view-more-btn';
+                moreBtn.innerHTML = `<i class="fas fa-book-open"></i> 查看剩余 ${{filtered.length - 5}} 篇文章 <i class="fas fa-chevron-right"></i>`;
+                moreBtn.onclick = () => window.location.href = 'articles.html';
+                container.appendChild(moreBtn);
+            }}
         }}
         
         // 显示文章详情弹窗
