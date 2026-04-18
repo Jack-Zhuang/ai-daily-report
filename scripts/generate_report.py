@@ -923,8 +923,8 @@ class ReportGenerator:
                             onclick="event.stopPropagation(); handleFavoriteClick(this)">
                             <i class="${{isFav ? 'fas' : 'far'}} fa-bookmark"></i>
                         </button>
-                        <div class="card-image ${{imageClass}}">
-                            <div class="card-image-icon">${{typeIcon}}</div>
+                        <div class="card-image ${{imageClass}}" style="${{item.cover_image ? `background-image: url('${{item.cover_image}}')` : ''}}">
+                            <div class="card-image-icon">${{item.cover_image ? '' : typeIcon}}</div>
                             <div class="card-image-badge">TOP ${{i + 1}}</div>
                         </div>
                         <div class="card-body">

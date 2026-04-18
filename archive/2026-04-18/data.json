@@ -37,7 +37,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621739",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "推荐生成式检索相关研究",
       "cn_summary": "【rec领域】Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the paginat",
       "pick_type": "paper",
       "rank": 2
@@ -57,7 +57,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621770",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "推荐注意力机制相关研究",
       "cn_summary": "【rec领域】Recent advancements in multimodal recommendations, which leverage diverse modality information to mitigate data sparsity and improve recommendation accuracy, have gained significant attention. However, existing multimodal recommendations overlook the critical role of user representation initializati"
     },
     {
@@ -75,7 +75,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621796",
-      "cn_title": "LLM推荐系统应用研究",
+      "cn_title": "大语言模型推荐大语言模型相关研究",
       "cn_summary": "【llm领域】Large Language Models have shown great success in recommender systems. However, the limited and sparse nature of user data often restricts the LLM's ability to effectively model behavior patterns. To address this, existing studies have explored cross-domain solutions by conducting Cross-Domain Recom"
     },
     {
@@ -93,7 +93,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621820",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "推荐个性化生成式相关研究",
       "cn_summary": "【rec领域】Learning Path Recommendation (LPR) is critical for personalized education, yet current methods often fail to account for historical interaction uncertainty (e.g., lucky guesses or accidental slips) and lack adaptability to diverse learning goals. We propose U-GLAD (Uncertainty-aware Generative Learn"
     },
     {
@@ -111,7 +111,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621844",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "推荐推荐相关研究",
       "cn_summary": "【rec领域】In recent years, the video game industry has experienced substantial growth, presenting players with a vast array of game choices. This surge in options has spurred the need for a specialized recommender system tailored for video games. However, current video game recommendation approaches tend to p"
     },
     {
@@ -129,7 +129,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621868",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "图神经网络神经网络推荐相关研究",
       "cn_summary": "【rec领域】The rapid expansion of gaming industry requires advanced recommender systems tailored to its dynamic landscape. Existing Graph Neural Network (GNN)-based methods primarily prioritize accuracy over diversity, overlooking their inherent trade-off. To address this, we previously proposed CPGRec, a bala"
     },
     {
@@ -147,7 +147,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621892",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "推荐相关研究",
       "cn_summary": "【rec领域】Heterogeneous sequential recommendation (HSR) aims to learn dynamic behavior dependencies from the diverse behaviors of user-item interactions to facilitate precise sequential recommendation. Despite many efforts yielding promising achievements, there are still challenges in modeling heterogeneous b"
     },
     {
@@ -165,7 +165,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621916",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "推荐推荐注意力机制相关研究",
       "cn_summary": "【rec领域】News recommender systems are devised to alleviate the information overload, attracting more and more researchers' attention in recent years. The lack of a dedicated learner-oriented news recommendation toolkit hinders the advancement of research in news recommendation. We propose a PyTorch-based new"
     },
     {
@@ -201,7 +201,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102890",
-      "cn_title": "LLM推荐系统应用研究",
+      "cn_title": "Generalization in LLM Problem Solving: The Case of...",
       "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
     },
     {
@@ -218,7 +218,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102929",
-      "cn_title": "LLM推荐系统应用研究",
+      "cn_title": "大语言模型相关研究",
       "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
     },
     {
@@ -236,7 +236,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102954",
-      "cn_title": "LLM推荐系统应用研究",
+      "cn_title": "注意力机制相关研究",
       "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
     },
     {
@@ -434,7 +434,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.103224",
-      "cn_title": "LLM推荐系统应用研究",
+      "cn_title": "强化学习大语言模型相关研究",
       "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
     },
     {
@@ -488,7 +488,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:38:14.787157",
-      "cn_title": "LLM推荐系统应用研究",
+      "cn_title": "大语言模型大语言模型相关研究",
       "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。"
     },
     {
@@ -505,7 +505,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621939",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "推荐相关研究",
       "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
     },
     {
@@ -559,7 +559,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.622023",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "推荐推荐大语言模型相关研究",
       "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
     },
     {
@@ -593,7 +593,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.622071",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "用户行为推荐相关研究",
       "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
     },
     {
@@ -611,7 +611,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.622094",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "推荐相关研究",
       "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
     },
     {
@@ -823,7 +823,7 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:38:14.787518",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "推荐相关研究",
       "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。"
     }
   ],
@@ -2487,7 +2487,8 @@
       "likes": 0,
       "type": "article",
       "category": "opensource",
-      "collected_at": "2026-04-18T09:37:04.896755"
+      "collected_at": "2026-04-18T09:37:04.896755",
+      "cn_title": "阿里 HappyOyster 正式开放内测"
     },
     {
       "id": "75b95461ba06",
@@ -2500,7 +2501,8 @@
       "likes": 0,
       "type": "article",
       "category": "agent",
-      "collected_at": "2026-04-18T09:37:04.896639"
+      "collected_at": "2026-04-18T09:37:04.896639",
+      "cn_title": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台"
     },
     {
       "id": "e6a254569da4",
@@ -2513,7 +2515,8 @@
       "likes": 0,
       "type": "article",
       "category": "opensource",
-      "collected_at": "2026-04-18T09:37:04.896524"
+      "collected_at": "2026-04-18T09:37:04.896524",
+      "cn_title": "技术日报｜superpowers 突破 15.7 万星重夺榜首，Google AI 文件检测工具magika强势入榜"
     },
     {
       "id": "73d04e7838b4",
@@ -2526,7 +2529,8 @@
       "likes": 0,
       "type": "article",
       "category": "zhihu",
-      "collected_at": "2026-04-18T09:36:51.172283"
+      "collected_at": "2026-04-18T09:36:51.172283",
+      "cn_title": "追光动画电影《三国第一部：争洛阳》定档 7 月 10 日暑期上映并发布预告，对此你有哪些期待？"
     },
     {
       "id": "7d176f81c331",
@@ -2539,7 +2543,8 @@
       "likes": 0,
       "type": "article",
       "category": "zhihu",
-      "collected_at": "2026-04-18T09:36:51.172221"
+      "collected_at": "2026-04-18T09:36:51.172221",
+      "cn_title": "《杀戮尖塔2》4月17日正式版更新，测试版本都做了哪些平衡调整？"
     },
     {
       "id": "0b4abc1ba561",
@@ -2552,7 +2557,8 @@
       "likes": 0,
       "type": "article",
       "category": "zhihu",
-      "collected_at": "2026-04-18T09:36:51.172183"
+      "collected_at": "2026-04-18T09:36:51.172183",
+      "cn_title": "如何看待橘子海乐队向华为终端发布侵权声明，要求在7日之内赔偿道歉？"
     },
     {
       "id": "09e95c23208a",
@@ -2565,7 +2571,8 @@
       "likes": 0,
       "type": "article",
       "category": "zhihu",
-      "collected_at": "2026-04-18T09:25:33.863383"
+      "collected_at": "2026-04-18T09:25:33.863383",
+      "cn_title": "如何对于统计专业来说，哪个方向是核心?"
     },
     {
       "id": "ab72277dc057",
@@ -2578,7 +2585,8 @@
       "likes": 0,
       "type": "article",
       "category": "zhihu",
-      "collected_at": "2026-04-18T09:25:33.863302"
+      "collected_at": "2026-04-18T09:25:33.863302",
+      "cn_title": "都说生物的基因像屎山代码，那在演化史上有没有屎山被推倒重构的案例？"
     },
     {
       "id": "c96ecd83b5fc",
@@ -2591,7 +2599,8 @@
       "likes": 0,
       "type": "article",
       "category": "industry",
-      "collected_at": "2026-04-18T09:15:59.670805"
+      "collected_at": "2026-04-18T09:15:59.670805",
+      "cn_title": "大华股份：2025年营收超327亿元，2026年一季度业绩稳健增长"
     },
     {
       "id": "98257d903f69",
@@ -2604,7 +2613,8 @@
       "likes": 0,
       "type": "article",
       "category": "opensource",
-      "collected_at": "2026-04-18T09:15:46.567399"
+      "collected_at": "2026-04-18T09:15:46.567399",
+      "cn_title": "复旦大学 × StepFun开源PixelSmile：让人脸表情迈向连续可控"
     },
     {
       "id": "3435112bb64a",
@@ -2617,7 +2627,8 @@
       "likes": 0,
       "type": "article",
       "category": "agent",
-      "collected_at": "2026-04-18T09:15:46.567377"
+      "collected_at": "2026-04-18T09:15:46.567377",
+      "cn_title": "ICLR 2026 | 多轮推理越走越偏，T3让Agent找回主动思考"
     },
     {
       "id": "ecb193676604",
@@ -2630,7 +2641,8 @@
       "likes": 0,
       "type": "article",
       "category": "agent",
-      "collected_at": "2026-04-18T09:15:46.567361"
+      "collected_at": "2026-04-18T09:15:46.567361",
+      "cn_title": "1/3 Token↓，3×性能↑：通义 × 清华用强化学习重做Agent Memory"
     },
     {
       "id": "d3d648f44037",
@@ -2643,7 +2655,8 @@
       "likes": 0,
       "type": "article",
       "category": "llm",
-      "collected_at": "2026-04-18T09:15:46.567334"
+      "collected_at": "2026-04-18T09:15:46.567334",
+      "cn_title": "长推理不一定更强：北航 × 字节提出SAGE-RL，挖出大模型隐藏天赋"
     },
     {
       "id": "b4d312bea426",
@@ -2656,7 +2669,8 @@
       "likes": 0,
       "type": "article",
       "category": "wechat",
-      "collected_at": "2026-04-18T09:15:46.567317"
+      "collected_at": "2026-04-18T09:15:46.567317",
+      "cn_title": "OpenClaw也要装“杀毒软件”？ClawKeeper盯住「龙虾」每一步"
     },
     {
       "id": "45bd94123fe1",
@@ -2669,7 +2683,8 @@
       "likes": 0,
       "type": "article",
       "category": "llm",
-      "collected_at": "2026-04-18T09:15:46.567299"
+      "collected_at": "2026-04-18T09:15:46.567299",
+      "cn_title": "AI也有两幅面孔？复旦等最新研究：高压之下大模型集体变脸"
     },
     {
       "id": "83e30bf9bbd7",
@@ -2682,7 +2697,8 @@
       "likes": 0,
       "type": "article",
       "category": "wechat",
-      "collected_at": "2026-04-18T09:15:46.567269"
+      "collected_at": "2026-04-18T09:15:46.567269",
+      "cn_title": "ACL 2026 | 微软提出RepoGenesis：AI能从README生成完整仓库吗？"
     },
     {
       "id": "e6c6cfaad335",
@@ -2695,7 +2711,8 @@
       "likes": 0,
       "type": "article",
       "category": "wechat",
-      "collected_at": "2026-04-18T09:15:46.567207"
+      "collected_at": "2026-04-18T09:15:46.567207",
+      "cn_title": "ACL 2026 | 通义首提R-EMID框架：形式化揭示角色扮演性能退化机制"
     },
     {
       "id": "6441b7456f03",
@@ -2708,7 +2725,8 @@
       "likes": 0,
       "type": "article",
       "category": "opensource",
-      "collected_at": "2026-04-18T09:15:39.698602"
+      "collected_at": "2026-04-18T09:15:39.698602",
+      "cn_title": "统一VLA范式！港科大开源StarVLA乐高式架构，复现成本大幅降低"
     },
     {
       "id": "9b7b23ea080f",
@@ -2721,7 +2739,8 @@
       "likes": 0,
       "type": "article",
       "category": "wechat",
-      "collected_at": "2026-04-18T09:15:39.698584"
+      "collected_at": "2026-04-18T09:15:39.698584",
+      "cn_title": "全错！谷歌实锤AI越乖洗脑越深，现行安全指标沦为废纸"
     }
   ],
   "conference_papers": {
@@ -2871,10 +2890,11 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621691",
-      "cn_title": "智能Agent推荐方法研究",
+      "cn_title": "大语言模型推荐智能体相关研究",
       "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。",
       "pick_type": "paper",
-      "rank": 1
+      "rank": 1,
+      "cover_image": "/home/sandbox/.openclaw/workspace/generated-images/20260418_164132_046_Tr_generated.jpg"
     },
     {
       "id": "2604.14878v1",
@@ -2891,10 +2911,11 @@
       "type": "paper",
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621739",
-      "cn_title": "推荐系统算法创新",
+      "cn_title": "推荐生成式检索相关研究",
       "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。",
       "pick_type": "paper",
-      "rank": 2
+      "rank": 2,
+      "cover_image": "/home/sandbox/.openclaw/workspace/generated-images/20260418_164158_893_xn_generated.jpg"
     },
     {
       "id": "1201476594",
@@ -2926,7 +2947,8 @@
       "cn_title": "热门项目：career-ops",
       "cn_summary": "JavaScript项目，35,414 Stars，增长迅速。",
       "pick_type": "github",
-      "rank": 3
+      "rank": 3,
+      "cover_image": "/home/sandbox/.openclaw/workspace/generated-images/20260418_164222_817_33_generated.jpg"
     },
     {
       "id": "1136590548",
@@ -2969,7 +2991,8 @@
       "category": "opensource",
       "collected_at": "2026-04-18T09:15:39.698627",
       "pick_type": "article",
-      "rank": 5
+      "rank": 5,
+      "cn_title": "一天仅需5毛钱，开源框架替你半夜跑实验！7*24小时待命"
     }
   ],
   "stats": {
