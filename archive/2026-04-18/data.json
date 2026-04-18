@@ -2894,7 +2894,7 @@
       "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。",
       "pick_type": "paper",
       "rank": 1,
-      "cover_image": "/home/sandbox/.openclaw/workspace/generated-images/20260418_164132_046_Tr_generated.jpg"
+      "cover_image": "covers/pick_1.jpg"
     },
     {
       "id": "2604.14878v1",
@@ -2915,7 +2915,7 @@
       "cn_summary": "针对推荐核心问题提出创新方案，多指标显著提升。",
       "pick_type": "paper",
       "rank": 2,
-      "cover_image": "/home/sandbox/.openclaw/workspace/generated-images/20260418_164158_893_xn_generated.jpg"
+      "cover_image": "covers/pick_2.jpg"
     },
     {
       "id": "1201476594",
@@ -2948,7 +2948,7 @@
       "cn_summary": "JavaScript项目，35,414 Stars，增长迅速。",
       "pick_type": "github",
       "rank": 3,
-      "cover_image": "/home/sandbox/.openclaw/workspace/generated-images/20260418_164222_817_33_generated.jpg"
+      "cover_image": "covers/pick_3.jpg"
     },
     {
       "id": "1136590548",

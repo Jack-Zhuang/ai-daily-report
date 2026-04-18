@@ -347,20 +347,29 @@ class ReportGenerator:
         /* Card Image */
         .card-image {{
             width: 100%; height: 140px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #667eea;
+            background-size: cover;
+            background-position: center;
             display: flex; align-items: center; justify-content: center;
             position: relative; overflow: hidden;
         }}
-        .card-image-paper {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }}
-        .card-image-article {{ background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }}
-        .card-image-github {{ background: linear-gradient(135deg, #24292e 0%, #4a5568 100%); }}
-        .card-image-rec {{ background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }}
-        .card-image-agent {{ background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }}
-        .card-image-llm {{ background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }}
-        .card-image-icon {{ font-size: 48px; color: rgba(255,255,255,0.9); }}
+        .card-image::before {{
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
+            z-index: 1;
+        }}
+        .card-image-paper {{ background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }}
+        .card-image-article {{ background-image: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }}
+        .card-image-github {{ background-image: linear-gradient(135deg, #24292e 0%, #4a5568 100%); }}
+        .card-image-rec {{ background-image: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }}
+        .card-image-agent {{ background-image: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }}
+        .card-image-llm {{ background-image: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }}
+        .card-image-icon {{ font-size: 48px; color: rgba(255,255,255,0.9); position: relative; z-index: 2; }}
         .card-image-badge {{
-            position: absolute; top: 10px; right: 10px;
-            background: rgba(0,0,0,0.3); color: white;
+            position: absolute; top: 10px; right: 10px; z-index: 3;
+            background: rgba(255,255,255,0.95); color: #1e293b;
             padding: 4px 10px; border-radius: 8px;
             font-size: 11px; font-weight: 700;
         }}

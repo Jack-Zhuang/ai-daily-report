@@ -50,6 +50,12 @@
     },
     {
       "date": "2026-04-18",
+      "total_papers": 46,
+      "total_projects": 59,
+      "total_articles": 20
+    },
+    {
+      "date": "2026-04-18",
       "total_papers": 47,
       "total_projects": 20,
       "total_articles": 8
