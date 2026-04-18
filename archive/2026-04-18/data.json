@@ -18,7 +18,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621691",
       "cn_title": "智能Agent推荐方法研究",
-      "cn_summary": "本文研究基于大语言模型的智能推荐Agent，探索如何通过意图理解和策略优化实现精准推荐。",
+      "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐。",
       "pick_type": "paper",
       "rank": 1,
       "cover_image": "covers/paper_1.jpg",
@@ -40,7 +40,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621739",
       "cn_title": "推荐生成式检索相关研究",
-      "cn_summary": "本文针对推荐系统核心问题提出创新方案，在多个评估指标上取得显著提升。",
+      "cn_summary": "本文在rec相关领域做出了创新研究，提出了新的方法和见解。",
       "pick_type": "paper",
       "rank": 2,
       "cover_image": "covers/paper_2.jpg",
@@ -62,7 +62,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621770",
       "cn_title": "推荐注意力机制相关研究",
-      "cn_summary": "本文针对推荐系统核心问题提出创新方案，在多个评估指标上取得显著提升。",
+      "cn_summary": "本文研究多模态推荐系统，提出新的注意力机制来提升推荐准确性。",
       "cover_image": "covers/paper_3.jpg",
       "insight_url": "insights/paper_2604_14839v1.html"
     },
@@ -82,7 +82,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621796",
       "cn_title": "大语言模型推荐大语言模型相关研究",
-      "cn_summary": "本文针对推荐系统核心问题提出创新方案，在多个评估指标上取得显著提升。",
+      "cn_summary": "本文在llm相关领域做出了创新研究，提出了新的方法和见解。",
       "cover_image": "covers/paper_4.jpg",
       "insight_url": "insights/paper_2604_14833v1.html"
     },
@@ -102,7 +102,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621820",
       "cn_title": "推荐个性化生成式相关研究",
-      "cn_summary": "本文针对推荐系统核心问题提出创新方案，在多个评估指标上取得显著提升。",
+      "cn_summary": "本文研究个性化学习路径推荐，提出考虑历史交互不确定性的生成式方法。",
       "cover_image": "covers/paper_5.jpg",
       "insight_url": "insights/paper_2604_14613v1.html"
     },
@@ -122,7 +122,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621844",
       "cn_title": "推荐推荐相关研究",
-      "cn_summary": "本文针对推荐系统核心问题提出创新方案，在多个评估指标上取得显著提升。",
+      "cn_summary": "本文在rec相关领域做出了创新研究，提出了新的方法和见解。",
       "cover_image": "covers/paper_6.jpg",
       "insight_url": "insights/paper_2604_14598v1.html"
     },
@@ -142,7 +142,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621868",
       "cn_title": "图神经网络神经网络推荐相关研究",
-      "cn_summary": "本文针对推荐系统核心问题提出创新方案，在多个评估指标上取得显著提升。",
+      "cn_summary": "本文研究生成式检索在推荐系统中的应用，提出解决大规模工业系统中的三大挑战的方案。",
       "cover_image": "covers/paper_7.jpg",
       "insight_url": "insights/paper_2604_14586v1.html"
     },
@@ -162,7 +162,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621892",
       "cn_title": "推荐相关研究",
-      "cn_summary": "本文针对推荐系统核心问题提出创新方案，在多个评估指标上取得显著提升。",
+      "cn_summary": "本文在rec相关领域做出了创新研究，提出了新的方法和见解。",
       "cover_image": "covers/paper_8.jpg",
       "insight_url": "insights/paper_2604_14581v1.html"
     },
@@ -182,7 +182,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621916",
       "cn_title": "推荐推荐注意力机制相关研究",
-      "cn_summary": "本文针对推荐系统核心问题提出创新方案，在多个评估指标上取得显著提升。",
+      "cn_summary": "本文在rec相关领域做出了创新研究，提出了新的方法和见解。",
       "cover_image": "covers/paper_9.jpg",
       "insight_url": "insights/paper_2604_14510v1.html"
     },
@@ -202,7 +202,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102840",
       "cn_title": "智能Agent推荐方法研究",
-      "cn_summary": "本文研究基于大语言模型的智能推荐Agent，探索如何通过意图理解和策略优化实现精准推荐。",
+      "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐。",
       "cover_image": "covers/paper_10.jpg",
       "insight_url": "insights/paper_2604_15309v1.html"
     },
@@ -222,7 +222,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102890",
       "cn_title": "Generalization in LLM Problem Solving: The Case of...",
-      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。",
+      "cn_summary": "本文在llm相关领域做出了创新研究，提出了新的方法和见解。",
       "cover_image": "covers/paper_11.jpg",
       "insight_url": "insights/paper_2604_15306v1.html"
     },
@@ -241,7 +241,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102929",
       "cn_title": "大语言模型相关研究",
-      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。",
+      "cn_summary": "本文在llm相关领域做出了创新研究，提出了新的方法和见解。",
       "cover_image": "covers/paper_12.jpg",
       "insight_url": "insights/paper_2604_15302v1.html"
     },
@@ -261,7 +261,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102954",
       "cn_title": "注意力机制相关研究",
-      "cn_summary": "探索LLM在推荐中的应用，利用语义理解增强用户建模。",
+      "cn_summary": "本文在llm相关领域做出了创新研究，提出了新的方法和见解。",
       "cover_image": "covers/paper_13.jpg",
       "insight_url": "insights/paper_2604_15294v1.html"
     },
@@ -281,7 +281,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.102979",
       "cn_title": "推荐系统前沿研究",
-      "cn_summary": "在相关领域做出创新研究，具有参考价值。",
+      "cn_summary": "本文在industry相关领域做出了创新研究，提出了新的方法和见解。",
       "cover_image": "covers/paper_14.jpg",
       "insight_url": "insights/paper_2604_15272v1.html"
     },
@@ -301,7 +301,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.103007",
       "cn_title": "智能Agent推荐方法研究",
-      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。",
+      "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐。",
       "cover_image": "covers/paper_15.jpg",
       "insight_url": "insights/paper_2604_15267v1.html"
     },
@@ -321,7 +321,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.103030",
       "cn_title": "智能Agent推荐方法研究",
-      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。"
+      "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐。"
     },
     {
       "id": "2604.15233v1",
@@ -339,7 +339,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.103054",
       "cn_title": "智能Agent推荐方法研究",
-      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。"
+      "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐。"
     },
     {
       "id": "2604.15231v1",
@@ -357,7 +357,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.103077",
       "cn_title": "智能Agent推荐方法研究",
-      "cn_summary": "提出基于智能Agent的推荐框架，通过意图理解实现精准推荐。"
+      "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐。"
     },
     {
       "id": "2604.15224v1",
@@ -375,7 +375,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.103100",
       "cn_title": "推荐系统前沿研究",
-      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+      "cn_summary": "本文在industry相关领域做出了创新研究，提出了新的方法和见解。"
     },
     {
       "id": "2604.15190v1",
@@ -393,7 +393,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:54.103127",
       "cn_title": "推荐系统前沿研究",
-      "cn_summary": "在相关领域做出创新研究，具有参考价值。"
+      "cn_summary": "本文在industry相关领域做出了创新研究，提出了新的方法和见解。"
     }
   ],
   "github_projects": [
@@ -425,7 +425,7 @@
       "source": "GitHub",
       "collected_at": "2026-04-17T21:38:21.964883",
       "cn_title": "热门项目：career-ops",
-      "cn_summary": "基于 Claude Code 的智能开发工具，提供代码生成、自动化工作流等功能，大幅提升开发效率。",
+      "cn_summary": "【JavaScript项目】AI驱动的求职系统，基于Claude Code构建，支持14种技能模式、Go仪表盘、PDF生成和批量处理。今日增长2724.2%，已获得35,414 Stars。",
       "pick_type": "github",
       "rank": 3,
       "cover_image": "covers/github_1.jpg"
@@ -454,7 +454,7 @@
       "source": "GitHub",
       "collected_at": "2026-04-17T21:38:20.104833",
       "cn_title": "LLM项目：everything-claude-code",
-      "cn_summary": "基于 Claude Code 的智能开发工具，提供代码生成、自动化工作流等功能，大幅提升开发效率。",
+      "cn_summary": "【JavaScript项目】Claude Code性能优化系统，提供技能、本能、记忆、安全和研究优先开发功能。今日增长1790.5%，已获得159,354 Stars。",
       "pick_type": "github",
       "rank": 4,
       "cover_image": "covers/github_2.jpg"
@@ -477,7 +477,7 @@
       "collected_at": "2026-04-17T21:38:17.376893",
       "category": "industry",
       "cn_title": "热门项目：UZI-Skill",
-      "cn_summary": "【Python项目】冰冷的钱就这样流进我温暖的口袋-游资（UZI）Skills — 51位投资大佬帮你看盘 · 22维数据 × 180条量化规则 × 17种机构分析方法 · A股/港股/美股 ",
+      "cn_summary": "【Python项目】游资Skills工具，51位投资大佬帮你看盘，22维数据×180条量化规则×17种机构分析方法，支持A股/港股/美股。",
       "cover_image": "covers/github_3.jpg"
     },
     {
@@ -509,7 +509,7 @@
       "collected_at": "2026-04-17T21:38:17.376455",
       "category": "industry",
       "cn_title": "热门项目：codeburn",
-      "cn_summary": "基于 Claude Code 的智能开发工具，提供代码生成、自动化工作流等功能，大幅提升开发效率。",
+      "cn_summary": "【TypeScript项目】AI编程Token消耗追踪工具，为Claude Code、Codex和Cursor提供交互式TUI仪表盘。今日增长618.0%，已获得2,472 Stars。",
       "cover_image": "covers/github_4.jpg"
     },
     {
@@ -530,7 +530,7 @@
       "collected_at": "2026-04-17T21:38:17.376577",
       "category": "industry",
       "cn_title": "热门项目：RedSun",
-      "cn_summary": "优质开源项目，代码质量高，社区活跃，值得学习和使用。",
+      "cn_summary": "【C++项目】漏洞仓库，收集和整理各类安全漏洞信息。今日增长584.0%，已获得1,168 Stars。",
       "cover_image": "covers/github_5.jpg"
     }
   ],
@@ -874,7 +874,7 @@
       "collected_at": "2026-04-18T09:37:04.896755",
       "cn_title": "阿里 HappyOyster 正式开放内测",
       "cover_image": "covers/article_1.jpg",
-      "cn_summary": "阿里巴巴-ATH 创新事业部旗下 HappyOyster 正式宣布开放内测。 根据介绍，Happy Oyster 是一款用于实时世界生成与交互的开放式世界模型产品。基于原生多模态架构构建，Happy Oyster 支持多模态理解以及音视频联合生成。 与遵循“编写提示词、等待渲染、接收成品片段”这种一次性工作流的传统 AI 视频工具不同，Happy Oyster 在整个生成过程中持续聆听并作出响",
+      "cn_summary": "阿里巴巴-ATH 创新事业部旗下 HappyOyster 正式宣布开放内测。",
       "pick_type": "article",
       "rank": 1,
       "recommend_reason": "今日热门文章，来自开源中国资讯"
@@ -893,7 +893,7 @@
       "collected_at": "2026-04-18T09:37:04.896639",
       "cn_title": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台",
       "cover_image": "covers/article_2.jpg",
-      "cn_summary": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台 此版本更新内容包括： 标题发布版本 0.9.0 功能(UI)：新增专用的 Agent 子代理渲染，以层级卡片形式展示父 Agent 提示词与子工具调用的嵌套关系； 功能(解析器)：将 Codex CLI 的 spawn_agent 和 OpenCode 的 task 渲染为 Agent 卡片并嵌套子工具调用，统",
+      "cn_summary": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台...",
       "pick_type": "article",
       "rank": 2,
       "recommend_reason": "今日热门文章，来自开源中国资讯"
@@ -912,7 +912,7 @@
       "collected_at": "2026-04-18T09:37:04.896524",
       "cn_title": "技术日报｜superpowers 突破 15.7 万星重夺榜首，Google AI 文件检测工具magika强势入榜",
       "cover_image": "covers/article_3.jpg",
-      "cn_summary": "🌟 TrendForge 每日精选 - 发现最具潜力的开源项目 📊 今日共收录 15 个热门项目 🌐 智能中文翻译版 - 项目描述已自动翻译，便于理解 🏆 今日最热项目 Top 10 🥇 obra/superpowers 项目简介: Claude Code 超级能力：核心技能库 今日新增: 1713 * 总星数: 157744 * 语言: Shell https://githu",
+      "cn_summary": "...",
       "pick_type": "article",
       "rank": 3,
       "recommend_reason": "今日热门文章，来自开源中国资讯"
@@ -933,7 +933,7 @@
       "source": "arXiv",
       "collected_at": "2026-04-17T21:37:35.621691",
       "cn_title": "智能Agent推荐方法研究",
-      "cn_summary": "本文研究基于大语言模型的智能推荐Agent，探索如何通过意图理解和策略优化实现精准推荐。",
+      "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐。",
       "pick_type": "paper",
       "rank": 4,
       "cover_image": "covers/paper_1.jpg",
@@ -968,7 +968,7 @@
       "source": "GitHub",
       "collected_at": "2026-04-17T21:38:21.964883",
       "cn_title": "热门项目：career-ops",
-      "cn_summary": "基于 Claude Code 的智能开发工具，提供代码生成、自动化工作流等功能，大幅提升开发效率。",
+      "cn_summary": "AI驱动的求职系统，基于Claude Code构建，支持14种技能模式、Go仪表盘、PDF生成和批量处理。已获得35,414 Stars。",
       "pick_type": "github",
       "rank": 5,
       "cover_image": "covers/github_1.jpg",
