@@ -2529,7 +2529,8 @@
       "category": "opensource",
       "collected_at": "2026-04-18T09:37:04.896755",
       "cn_title": "阿里 HappyOyster 正式开放内测",
-      "cover_image": "covers/article_1.jpg"
+      "cover_image": "covers/article_1.jpg",
+      "cn_summary": "阿里巴巴-ATH 创新事业部旗下 HappyOyster 正式宣布开放内测。 根据介绍，Happy Oyster 是一款用于实时世界生成与交互的开放式世界模型产品。基于原生多模态架构构建，Happy Oyster 支持多模态理解以及音视频联合生成。 与遵循“编写提示词、等待渲染、接收成品片段”这种一次性工作流的传统 AI 视频工具不同，Happy Oyster 在整个生成过程中持续聆听并作出响"
     },
     {
       "id": "75b95461ba06",
@@ -2544,7 +2545,8 @@
       "category": "agent",
       "collected_at": "2026-04-18T09:37:04.896639",
       "cn_title": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台",
-      "cover_image": "covers/article_2.jpg"
+      "cover_image": "covers/article_2.jpg",
+      "cn_summary": "codeg v0.9.0 已经发布，面向多 Agent 的企业级代码生成工作台 此版本更新内容包括： 标题发布版本 0.9.0 功能(UI)：新增专用的 Agent 子代理渲染，以层级卡片形式展示父 Agent 提示词与子工具调用的嵌套关系； 功能(解析器)：将 Codex CLI 的 spawn_agent 和 OpenCode 的 task 渲染为 Agent 卡片并嵌套子工具调用，统"
     },
     {
       "id": "e6a254569da4",
@@ -2559,7 +2561,8 @@
       "category": "opensource",
       "collected_at": "2026-04-18T09:37:04.896524",
       "cn_title": "技术日报｜superpowers 突破 15.7 万星重夺榜首，Google AI 文件检测工具magika强势入榜",
-      "cover_image": "covers/article_3.jpg"
+      "cover_image": "covers/article_3.jpg",
+      "cn_summary": "🌟 TrendForge 每日精选 - 发现最具潜力的开源项目 📊 今日共收录 15 个热门项目 🌐 智能中文翻译版 - 项目描述已自动翻译，便于理解 🏆 今日最热项目 Top 10 🥇 obra/superpowers 项目简介: Claude Code 超级能力：核心技能库 今日新增: 1713 * 总星数: 157744 * 语言: Shell https://githu"
     },
     {
       "id": "73d04e7838b4",
@@ -2574,7 +2577,8 @@
       "category": "zhihu",
       "collected_at": "2026-04-18T09:36:51.172283",
       "cn_title": "追光动画电影《三国第一部：争洛阳》定档 7 月 10 日暑期上映并发布预告，对此你有哪些期待？",
-      "cover_image": "covers/article_4.jpg"
+      "cover_image": "covers/article_4.jpg",
+      "cn_summary": "《长安三万里》原班人马打造，追光动画“三国”系列首作《三国第一部：争洛阳》官宣定档7月10日，并发布“洛阳风云”版定档预告。东汉末年，三国鼎立大幕未启，黄巾军起，外戚弄权，宦官乱政。天下动荡之际，曹操、袁绍欲借大将军何进之力制衡宦官，匡扶汉室。不料董卓趁乱进京，图谋废立。乱世棋局渐开，袁术、吕布、孙坚及刘关张等各路群雄相继登场，洛阳风云起，大汉的命运走向十字路口…影片由谢君伟执导，宋依依担任制片人"
     },
     {
       "id": "7d176f81c331",
@@ -2589,7 +2593,8 @@
       "category": "zhihu",
       "collected_at": "2026-04-18T09:36:51.172221",
       "cn_title": "《杀戮尖塔2》4月17日正式版更新，测试版本都做了哪些平衡调整？",
-      "cover_image": "covers/article_5.jpg"
+      "cover_image": "covers/article_5.jpg",
+      "cn_summary": "关于「《杀戮尖塔2》4月17日正式版更新，测试版本都做了哪些平衡调」的详细内容，点击查看原文。"
     },
     {
       "id": "0b4abc1ba561",
@@ -2604,7 +2609,8 @@
       "category": "zhihu",
       "collected_at": "2026-04-18T09:36:51.172183",
       "cn_title": "如何看待橘子海乐队向华为终端发布侵权声明，要求在7日之内赔偿道歉？",
-      "cover_image": "covers/article_6.jpg"
+      "cover_image": "covers/article_6.jpg",
+      "cn_summary": "关于「如何看待橘子海乐队向华为终端发布侵权声明，要求在7日之内赔偿」的详细内容，点击查看原文。"
     },
     {
       "id": "09e95c23208a",
@@ -2619,7 +2625,8 @@
       "category": "zhihu",
       "collected_at": "2026-04-18T09:25:33.863383",
       "cn_title": "如何对于统计专业来说，哪个方向是核心?",
-      "cover_image": "covers/article_7.jpg"
+      "cover_image": "covers/article_7.jpg",
+      "cn_summary": "BugBuster喵 查看知乎原文 说句得罪人的话，如果谁现在还在纠结数理统计 vs 应用统计，已经落后这个时代至少五年了。 我知道这个开头会让很多人不舒服。但请你耐心看完。 我本科统计，博士期间做因果推断，现在在业界做 AI 相关的工作。看到了太多统计专业的学生，花了四年甚至六年时间，学了一堆正确但过时的方向规划经验，毕业后发现自己两头不靠。 学数"
     },
     {
       "id": "ab72277dc057",
@@ -2634,7 +2641,8 @@
       "category": "zhihu",
       "collected_at": "2026-04-18T09:25:33.863302",
       "cn_title": "都说生物的基因像屎山代码，那在演化史上有没有屎山被推倒重构的案例？",
-      "cover_image": "covers/article_8.jpg"
+      "cover_image": "covers/article_8.jpg",
+      "cn_summary": "mekdull，chem is try！永远记得对化学和生物的热爱！ 查看知乎原文 有倒是有，但所谓重构也不过是从一座屎山，奔向另一座更大的屎山。不过，对于本文的主角，真核生物中最权威的屎山拥有者——甲藻（Dinophytes）来说，那是它生存的最终秘技。 先来直观地感受一下甲藻的基因组有多恐怖。现在正在看这篇文章的你，作为智人（Homo sapie"
     },
     {
       "id": "c96ecd83b5fc",
@@ -2649,7 +2657,8 @@
       "category": "industry",
       "collected_at": "2026-04-18T09:15:59.670805",
       "cn_title": "大华股份：2025年营收超327亿元，2026年一季度业绩稳健增长",
-      "cover_image": "covers/article_9.jpg"
+      "cover_image": "covers/article_9.jpg",
+      "cn_summary": "4月17日，大华股份发布2025年年度报告及2026年第一季度财报。2025年，公司实现营收327.44亿元，同比增长1.75%；归母净利润38.58亿元，同比增长32.77%；毛利率为40.62%，同比提升1.78个百分点；经营性现金流净额39.08亿元，同比增长44.19 %。2026年第一季度实现营收69.02亿元，同比增长10.33%，业绩稳健增长。公司将持续推动AI大模型产品技术应用落地"
     },
     {
       "id": "98257d903f69",
@@ -2664,7 +2673,8 @@
       "category": "opensource",
       "collected_at": "2026-04-18T09:15:46.567399",
       "cn_title": "复旦大学 × StepFun开源PixelSmile：让人脸表情迈向连续可控",
-      "cover_image": "covers/article_10.jpg"
+      "cover_image": "covers/article_10.jpg",
+      "cn_summary": "关于「复旦大学 × StepFun开源PixelSmile：让人脸」的详细内容，点击查看原文。"
     },
     {
       "id": "3435112bb64a",
@@ -2679,7 +2689,8 @@
       "category": "agent",
       "collected_at": "2026-04-18T09:15:46.567377",
       "cn_title": "ICLR 2026 | 多轮推理越走越偏，T3让Agent找回主动思考",
-      "cover_image": "covers/article_11.jpg"
+      "cover_image": "covers/article_11.jpg",
+      "cn_summary": "关于「ICLR 2026 | 多轮推理越走越偏，T3让Agent找」的详细内容，点击查看原文。"
     },
     {
       "id": "ecb193676604",
@@ -2694,7 +2705,8 @@
       "category": "agent",
       "collected_at": "2026-04-18T09:15:46.567361",
       "cn_title": "1/3 Token↓，3×性能↑：通义 × 清华用强化学习重做Agent Memory",
-      "cover_image": "covers/article_12.jpg"
+      "cover_image": "covers/article_12.jpg",
+      "cn_summary": "关于「1/3 Token↓，3×性能↑：通义 × 清华用强化学习重」的详细内容，点击查看原文。"
     },
     {
       "id": "d3d648f44037",
@@ -2709,7 +2721,8 @@
       "category": "llm",
       "collected_at": "2026-04-18T09:15:46.567334",
       "cn_title": "长推理不一定更强：北航 × 字节提出SAGE-RL，挖出大模型隐藏天赋",
-      "cover_image": "covers/article_13.jpg"
+      "cover_image": "covers/article_13.jpg",
+      "cn_summary": "关于「长推理不一定更强：北航 × 字节提出SAGE-RL，挖出大模」的详细内容，点击查看原文。"
     },
     {
       "id": "b4d312bea426",
@@ -2724,7 +2737,8 @@
       "category": "wechat",
       "collected_at": "2026-04-18T09:15:46.567317",
       "cn_title": "OpenClaw也要装“杀毒软件”？ClawKeeper盯住「龙虾」每一步",
-      "cover_image": "covers/article_14.jpg"
+      "cover_image": "covers/article_14.jpg",
+      "cn_summary": "关于「OpenClaw也要装“杀毒软件”？ClawKeeper盯住」的详细内容，点击查看原文。"
     },
     {
       "id": "45bd94123fe1",
@@ -2739,7 +2753,8 @@
       "category": "llm",
       "collected_at": "2026-04-18T09:15:46.567299",
       "cn_title": "AI也有两幅面孔？复旦等最新研究：高压之下大模型集体变脸",
-      "cover_image": "covers/article_15.jpg"
+      "cover_image": "covers/article_15.jpg",
+      "cn_summary": "关于「AI也有两幅面孔？复旦等最新研究：高压之下大模型集体变脸」的详细内容，点击查看原文。"
     },
     {
       "id": "83e30bf9bbd7",
@@ -2753,7 +2768,8 @@
       "type": "article",
       "category": "wechat",
       "collected_at": "2026-04-18T09:15:46.567269",
-      "cn_title": "ACL 2026 | 微软提出RepoGenesis：AI能从README生成完整仓库吗？"
+      "cn_title": "ACL 2026 | 微软提出RepoGenesis：AI能从README生成完整仓库吗？",
+      "cn_summary": "关于「ACL 2026 | 微软提出RepoGenesis：AI能」的详细内容，点击查看原文。"
     },
     {
       "id": "e6c6cfaad335",
@@ -2767,7 +2783,8 @@
       "type": "article",
       "category": "wechat",
       "collected_at": "2026-04-18T09:15:46.567207",
-      "cn_title": "ACL 2026 | 通义首提R-EMID框架：形式化揭示角色扮演性能退化机制"
+      "cn_title": "ACL 2026 | 通义首提R-EMID框架：形式化揭示角色扮演性能退化机制",
+      "cn_summary": "关于「ACL 2026 | 通义首提R-EMID框架：形式化揭示角」的详细内容，点击查看原文。"
     },
     {
       "id": "6441b7456f03",
@@ -2781,7 +2798,8 @@
       "type": "article",
       "category": "opensource",
       "collected_at": "2026-04-18T09:15:39.698602",
-      "cn_title": "统一VLA范式！港科大开源StarVLA乐高式架构，复现成本大幅降低"
+      "cn_title": "统一VLA范式！港科大开源StarVLA乐高式架构，复现成本大幅降低",
+      "cn_summary": "关于「统一VLA范式！港科大开源StarVLA乐高式架构，复现成本」的详细内容，点击查看原文。"
     },
     {
       "id": "9b7b23ea080f",
@@ -2795,7 +2813,8 @@
       "type": "article",
       "category": "wechat",
       "collected_at": "2026-04-18T09:15:39.698584",
-      "cn_title": "全错！谷歌实锤AI越乖洗脑越深，现行安全指标沦为废纸"
+      "cn_title": "全错！谷歌实锤AI越乖洗脑越深，现行安全指标沦为废纸",
+      "cn_summary": "关于「全错！谷歌实锤AI越乖洗脑越深，现行安全指标沦为废纸」的详细内容，点击查看原文。"
     }
   ],
   "conference_papers": {
