@@ -28,3 +28,11 @@ Thumbs.db
 *.log
 cache/
 *.cache
+
+# 敏感文件 - 绝对不允许提交
+*minimax*
+*secret*
+*credential*
+*.pyc
+*.pyo
+__pycache__/
