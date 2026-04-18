@@ -50,11 +50,48 @@ class ReportGenerator:
     def generate_html(self, data: dict) -> str:
         """生成HTML日报"""
         
-        # 生成JavaScript数据
-        daily_pick_json = json.dumps(data.get('daily_pick', []), ensure_ascii=False)
-        hot_articles_json = json.dumps(data.get('hot_articles', []), ensure_ascii=False)
-        github_projects_json = json.dumps(data.get('github_projects', [])[:6], ensure_ascii=False)
-        arxiv_papers_json = json.dumps(data.get('arxiv_papers', [])[:10], ensure_ascii=False)
+        # ========== 强约束验证 ==========
+        # 1. 每日精选必须是5项，顺序为：3文章+1论文+1GitHub
+        daily_pick = data.get('daily_pick', [])
+        if len(daily_pick) != 5:
+            print(f"⚠️ 每日精选数量错误: {len(daily_pick)}项，应为5项")
+        
+        # 2. GitHub Trending必须是5项
+        github_projects = data.get('github_projects', data.get('github_trending', []))
+        if len(github_projects) > 5:
+            github_projects = github_projects[:5]
+            print(f"⚠️ GitHub项目截取为5项")
+        
+        # 3. arXiv论文必须是5项
+        arxiv_papers = data.get('arxiv_papers', [])
+        if len(arxiv_papers) > 5:
+            arxiv_papers = arxiv_papers[:5]
+            print(f"⚠️ arXiv论文截取为5项")
+        
+        # 4. 热门文章去重（移除与每日精选重复的）
+        pick_titles = set()
+        for item in daily_pick:
+            title = item.get('cn_title', item.get('title', item.get('name', '')))
+            pick_titles.add(title)
+        
+        hot_articles = data.get('hot_articles', [])
+        hot_articles = [item for item in hot_articles if item.get('cn_title', item.get('title', '')) not in pick_titles]
+        if len(hot_articles) > 10:
+            hot_articles = hot_articles[:10]
+        
+        # 5. 检查摘要是否为中文
+        for item in daily_pick:
+            cn_summary = item.get('cn_summary', '')
+            if not cn_summary:
+                print(f"⚠️ 每日精选缺少cn_summary: {item.get('cn_title', '')[:30]}")
+            elif len(cn_summary) < 50:
+                print(f"⚠️ 每日精选摘要过短: {item.get('cn_title', '')[:30]}")
+        
+        # ========== 生成JavaScript数据 ==========
+        daily_pick_json = json.dumps(daily_pick, ensure_ascii=False)
+        hot_articles_json = json.dumps(hot_articles, ensure_ascii=False)
+        github_projects_json = json.dumps(github_projects, ensure_ascii=False)
+        arxiv_papers_json = json.dumps(arxiv_papers, ensure_ascii=False)
         conference_data = self.get_conference_papers(data)
         conference_json = json.dumps(conference_data, ensure_ascii=False)
         
@@ -1084,11 +1121,10 @@ class ReportGenerator:
             
             // 添加链接按钮
             if (pickType === 'paper') {{
-                // 论文：跳转到解读页面
+                // 论文：必须先跳转到解读页面，不能直接跳转原文
                 const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
                 const insightUrl = `insights/paper_${{paperId}}.html`;
-                detailHtml += `<a href="${{insightUrl}}" class="detail-link"><i class="fas fa-book-reader"></i> 查看论文解读</a>`;
-                detailHtml += `<a href="${{itemLink}}" target="_blank" class="detail-link" style="background:rgba(102,126,234,0.1);color:#667eea;margin-top:8px;"><i class="fas fa-external-link-alt"></i> arXiv 原文</a>`;
+                detailHtml += `<a href="${{insightUrl}}" class="detail-link" style="width:100%;"><i class="fas fa-book-reader"></i> 查看论文解读</a>`;
             }} else {{
                 detailHtml += `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> ${{pickType === 'github' ? '访问 GitHub' : '阅读原文'}}</a>`;
             }}
