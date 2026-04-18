@@ -1050,8 +1050,18 @@
                     conf.papers.slice(0, 3).forEach((paper, i) => {
                         const categoryEmoji = { rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭' };
                         const emoji = categoryEmoji[paper.category] || '📄';
-                        // 论文解读页面链接
-                        const paperId = (paper.id || paper.arxiv_id || '').replace('/', '_').replace('.', '_');
+                        // 论文解读页面链接 - 从 link 中提取 ID
+                        let paperId = paper.id || paper.arxiv_id || '';
+                        if (!paperId && paper.link) {
+                            // 从 arXiv 链接提取 ID: https://arxiv.org/abs/2404.12345
+                            const arxivMatch = paper.link.match(/arxiv\.org\/abs\/([^\/\?]+)/i);
+                            if (arxivMatch) paperId = arxivMatch[1];
+                            // 从 AMiner 链接提取 ID: https://www.aminer.cn/pub/xxxxx
+                            const aminerMatch = paper.link.match(/aminer\.cn\/pub\/([^\/\?]+)/i);
+                            if (aminerMatch) paperId = aminerMatch[1];
+                        }
+                        if (!paperId) paperId = 'unknown_' + i;
+                        paperId = paperId.replace('/', '_').replace('.', '_');
                         const insightUrl = `insights/paper_${paperId}.html`;
                         html += `
                             <a href="${insightUrl}" class="conf-paper-item">
