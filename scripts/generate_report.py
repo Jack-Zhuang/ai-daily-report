@@ -206,12 +206,12 @@ class ReportGenerator:
             position: relative; z-index: 1;
             padding: 80px 16px 40px; text-align: center;
             padding-top: calc(80px + var(--safe-area-top));
-            background: linear-gradient(135deg, rgba(102,126,234,0.95) 0%, rgba(118,75,162,0.95) 50%, rgba(240,147,251,0.95) 100%), url('cover.jpg') center/cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             margin: -60px -12px 0;
             padding-left: 12px;
             padding-right: 12px;
             margin-bottom: 20px;
-            min-height: 280px;
+            min-height: 200px;
         }}
         .hero::before {{
             content: '';
@@ -407,7 +407,9 @@ class ReportGenerator:
         .card-title {{ font-size: 14px; font-weight: 700; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }}
         .card-source {{ font-size: 11px; color: var(--color-text-muted); margin-top: 4px; display: flex; align-items: center; gap: 4px; }}
         .card-source i {{ font-size: 10px; }}
-        .card-summary {{ font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }}
+        .card-summary {{ font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }}
+        .card-reason {{ display: flex; align-items: flex-start; gap: 6px; padding: 8px 12px; margin-bottom: 10px; background: linear-gradient(135deg, rgba(251,191,36,0.1) 0%, rgba(245,158,11,0.1) 100%); border-radius: 8px; font-size: 12px; color: #92400e; line-height: 1.5; }}
+        .card-reason i {{ margin-top: 2px; flex-shrink: 0; }}
         .card-tags {{ display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }}
         .card-tag {{ background: rgba(49,44,81,0.04); padding: 3px 10px; border-radius: 6px; font-size: 10px; color: var(--color-text-secondary); }}
         .card-footer {{ display: flex; align-items: center; justify-content: space-between; }}
@@ -953,6 +955,7 @@ class ReportGenerator:
                 // 中文标题和简介
                 const cnTitle = item.cn_title || (item.title || item.name);
                 const cnSummary = item.cn_summary || (item.summary || item.description || '');
+                const recommendReason = item.recommend_reason || '';
                 
                 // 存储完整数据到 data 属性
                 const itemData = encodeURIComponent(JSON.stringify(item));
@@ -978,6 +981,7 @@ class ReportGenerator:
                                 </div>
                             </div>
                             <p class="card-summary">${{cnSummary}}</p>
+                            ${{recommendReason ? `<div class="card-reason"><i class="fas fa-lightbulb" style="color:#fbbf24"></i> ${{recommendReason}}</div>` : ''}}
                             <div class="card-footer">
                                 <div class="card-stats">
                                     ${{item.stars ? `<span class="card-stat"><i class="fas fa-star" style="color:#fbbf24"></i> ${{item.stars.toLocaleString()}}</span>` : ''}}
