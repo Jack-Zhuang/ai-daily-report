@@ -1193,7 +1193,7 @@ class ReportGenerator:
                         </div>
                 `;
                 
-                // 显示论文列表
+                // 显示论文列表（外显3篇，点击查看全部）
                 if (conf.papers && conf.papers.length > 0) {{
                     html += `<div class="conf-papers">`;
                     conf.papers.slice(0, 3).forEach((paper, i) => {{

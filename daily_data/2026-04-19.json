@@ -412,7 +412,35 @@
       "published": "2026-04-16",
       "industry_score": 1,
       "paper_value": 2.72,
-      "type": "paper"
+      "type": "paper",
+      "cn_title": "From Reactive to Proactive: Assessing the Proactivity of Voice Agents via ProVoice-Bench",
+      "subtitle": "一篇关于AI Agent领域的研究论文",
+      "reading_time": "5分钟",
+      "difficulty": "进阶",
+      "tags": [
+        "大语言模型",
+        "智能体",
+        "RAG"
+      ],
+      "summary_detail": {
+        "one_sentence": "Recent advancements in LLM agents are gradually sh...",
+        "core_contribution": "请查看论文原文了解核心贡献",
+        "practical_value": "请查看论文原文了解实用价值"
+      },
+      "sections": [
+        {
+          "title": "📖 论文摘要",
+          "content": "Recent advancements in LLM agents are gradually shifting from reactive, text-based paradigms toward proactive, multimodal interaction. However, existing benchmarks primarily focus on reactive responses, overlooking the complexities of proactive intervention and monitoring. To bridge this gap, we int...",
+          "key_points": []
+        },
+        {
+          "title": "🏷️ 关键词",
+          "content": "大语言模型、智能体、RAG",
+          "key_points": []
+        }
+      ],
+      "has_insight": true,
+      "insight_type": "simple"
     },
     {
       "id": "2604.14878",
@@ -424,7 +452,33 @@
       "published": "2026-04-16",
       "industry_score": 4,
       "paper_value": 2.47,
-      "type": "paper"
+      "type": "paper",
+      "cn_title": "GenRec: A Preference-Oriented Generative Framework for Large-Scale Recommendation",
+      "subtitle": "一篇关于推荐系统领域的研究论文",
+      "reading_time": "5分钟",
+      "difficulty": "进阶",
+      "tags": [
+        "推荐"
+      ],
+      "summary_detail": {
+        "one_sentence": "Generative Retrieval (GR) offers a promising parad...",
+        "core_contribution": "请查看论文原文了解核心贡献",
+        "practical_value": "请查看论文原文了解实用价值"
+      },
+      "sections": [
+        {
+          "title": "📖 论文摘要",
+          "content": "Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the paginat...",
+          "key_points": []
+        },
+        {
+          "title": "🏷️ 关键词",
+          "content": "推荐",
+          "key_points": []
+        }
+      ],
+      "has_insight": true,
+      "insight_type": "simple"
     },
     {
       "id": "2604.15022",
@@ -436,7 +490,33 @@
       "published": "2026-04-16",
       "industry_score": 2,
       "paper_value": 2.47,
-      "type": "paper"
+      "type": "paper",
+      "cn_title": "Route to Rome Attack: Directing LLM Routers to Expensive Models via Adversarial Suffix Optimization",
+      "subtitle": "一篇关于大语言模型领域的研究论文",
+      "reading_time": "5分钟",
+      "difficulty": "进阶",
+      "tags": [
+        "大语言模型"
+      ],
+      "summary_detail": {
+        "one_sentence": "Cost-aware routing dynamically dispatches user que...",
+        "core_contribution": "请查看论文原文了解核心贡献",
+        "practical_value": "请查看论文原文了解实用价值"
+      },
+      "sections": [
+        {
+          "title": "📖 论文摘要",
+          "content": "Cost-aware routing dynamically dispatches user queries to models of varying capability to balance performance and inference cost. However, the routing strategy introduces a new security concern that adversaries may manipulate the router to consistently select expensive high-capability models. Existi...",
+          "key_points": []
+        },
+        {
+          "title": "🏷️ 关键词",
+          "content": "大语言模型",
+          "key_points": []
+        }
+      ],
+      "has_insight": true,
+      "insight_type": "simple"
     },
     {
       "id": "2604.14930",
@@ -448,7 +528,33 @@
       "published": "2026-04-16",
       "industry_score": 3,
       "paper_value": 2.32,
-      "type": "paper"
+      "type": "paper",
+      "cn_title": "IE as Cache: Information Extraction Enhanced Agentic Reasoning",
+      "subtitle": "一篇关于AI Agent领域的研究论文",
+      "reading_time": "5分钟",
+      "difficulty": "进阶",
+      "tags": [
+        "智能体"
+      ],
+      "summary_detail": {
+        "one_sentence": "Information Extraction aims to distill structured,...",
+        "core_contribution": "请查看论文原文了解核心贡献",
+        "practical_value": "请查看论文原文了解实用价值"
+      },
+      "sections": [
+        {
+          "title": "📖 论文摘要",
+          "content": "Information Extraction aims to distill structured, decision-relevant information from unstructured text, serving as a foundation for downstream understanding and reasoning. However, it is traditionally treated merely as a terminal objective: once extracted, the resulting structure is often consumed ...",
+          "key_points": []
+        },
+        {
+          "title": "🏷️ 关键词",
+          "content": "智能体",
+          "key_points": []
+        }
+      ],
+      "has_insight": true,
+      "insight_type": "simple"
     },
     {
       "id": "2604.15186",
@@ -460,7 +566,34 @@
       "published": "2026-04-16",
       "industry_score": 2,
       "paper_value": 2.17,
-      "type": "paper"
+      "type": "paper",
+      "cn_title": "Scepsy: Serving Agentic Workflows Using Aggregate LLM Pipelines",
+      "subtitle": "一篇关于AI Agent领域的研究论文",
+      "reading_time": "5分钟",
+      "difficulty": "进阶",
+      "tags": [
+        "大语言模型",
+        "智能体"
+      ],
+      "summary_detail": {
+        "one_sentence": "Agentic workflows carry out complex tasks by orche...",
+        "core_contribution": "请查看论文原文了解核心贡献",
+        "practical_value": "请查看论文原文了解实用价值"
+      },
+      "sections": [
+        {
+          "title": "📖 论文摘要",
+          "content": "Agentic workflows carry out complex tasks by orchestrating multiple large language models (LLMs) and tools. Serving such workflows at a target throughput with low latency is challenging because they can be defined using arbitrary agentic frameworks and exhibit unpredictable execution times: executio...",
+          "key_points": []
+        },
+        {
+          "title": "🏷️ 关键词",
+          "content": "大语言模型、智能体",
+          "key_points": []
+        }
+      ],
+      "has_insight": true,
+      "insight_type": "simple"
     },
     {
       "id": "2604.15190",
@@ -472,7 +605,33 @@
       "published": "2026-04-16",
       "industry_score": 3,
       "paper_value": 2.12,
-      "type": "paper"
+      "type": "paper",
+      "cn_title": "Meituan Merchant Business Diagnosis via Policy-Guided Dual-Process User Simulation",
+      "subtitle": "一篇关于AI Agent领域的研究论文",
+      "reading_time": "5分钟",
+      "difficulty": "进阶",
+      "tags": [
+        "AI Agent"
+      ],
+      "summary_detail": {
+        "one_sentence": "Simulating group-level user behavior enables scala...",
+        "core_contribution": "请查看论文原文了解核心贡献",
+        "practical_value": "请查看论文原文了解实用价值"
+      },
+      "sections": [
+        {
+          "title": "📖 论文摘要",
+          "content": "Simulating group-level user behavior enables scalable counterfactual evaluation of merchant strategies without costly online experiments. However, building a trustworthy simulator faces two structural challenges. First, information incompleteness causes reasoning-based simulators to over-rationalize...",
+          "key_points": []
+        },
+        {
+          "title": "🏷️ 关键词",
+          "content": "请查看论文原文",
+          "key_points": []
+        }
+      ],
+      "has_insight": true,
+      "insight_type": "simple"
     },
     {
       "id": "2604.15309",
@@ -484,7 +643,33 @@
       "published": "2026-04-16",
       "industry_score": 1,
       "paper_value": 1.82,
-      "type": "paper"
+      "type": "paper",
+      "cn_title": "MM-WebAgent: A Hierarchical Multimodal Web Agent for Webpage Generation",
+      "subtitle": "一篇关于AI Agent领域的研究论文",
+      "reading_time": "5分钟",
+      "difficulty": "进阶",
+      "tags": [
+        "智能体"
+      ],
+      "summary_detail": {
+        "one_sentence": "The rapid progress of Artificial Intelligence Gene...",
+        "core_contribution": "请查看论文原文了解核心贡献",
+        "practical_value": "请查看论文原文了解实用价值"
+      },
+      "sections": [
+        {
+          "title": "📖 论文摘要",
+          "content": "The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage ...",
+          "key_points": []
+        },
+        {
+          "title": "🏷️ 关键词",
+          "content": "智能体",
+          "key_points": []
+        }
+      ],
+      "has_insight": true,
+      "insight_type": "simple"
     },
     {
       "id": "2604.15267",
@@ -496,7 +681,34 @@
       "published": "2026-04-16",
       "industry_score": 1,
       "paper_value": 1.82,
-      "type": "paper"
+      "type": "paper",
+      "cn_title": "CoopEval: Benchmarking Cooperation-Sustaining Mechanisms and LLM Agents in Social Dilemmas",
+      "subtitle": "一篇关于AI Agent领域的研究论文",
+      "reading_time": "5分钟",
+      "difficulty": "进阶",
+      "tags": [
+        "大语言模型",
+        "智能体"
+      ],
+      "summary_detail": {
+        "one_sentence": "It is increasingly important that LLM agents inter...",
+        "core_contribution": "请查看论文原文了解核心贡献",
+        "practical_value": "请查看论文原文了解实用价值"
+      },
+      "sections": [
+        {
+          "title": "📖 论文摘要",
+          "content": "It is increasingly important that LLM agents interact effectively and safely with other goal-pursuing agents, yet, recent works report the opposite trend: LLMs with stronger reasoning capabilities behave _less_ cooperatively in mixed-motive games such as the prisoner's dilemma and public goods setti...",
+          "key_points": []
+        },
+        {
+          "title": "🏷️ 关键词",
+          "content": "大语言模型、智能体",
+          "key_points": []
+        }
+      ],
+      "has_insight": true,
+      "insight_type": "simple"
     },
     {
       "id": "2604.15153",
@@ -508,7 +720,35 @@
       "published": "2026-04-16",
       "industry_score": 1,
       "paper_value": 1.82,
-      "type": "paper"
+      "type": "paper",
+      "cn_title": "Compressing Sequences in the Latent Embedding Space: $K$-Token Merging for Large Language Models",
+      "subtitle": "一篇关于大语言模型领域的研究论文",
+      "reading_time": "5分钟",
+      "difficulty": "进阶",
+      "tags": [
+        "嵌入",
+        "注意力机制",
+        "大语言模型"
+      ],
+      "summary_detail": {
+        "one_sentence": "Large Language Models (LLMs) incur significant com...",
+        "core_contribution": "请查看论文原文了解核心贡献",
+        "practical_value": "请查看论文原文了解实用价值"
+      },
+      "sections": [
+        {
+          "title": "📖 论文摘要",
+          "content": "Large Language Models (LLMs) incur significant computational and memory costs when processing long prompts, as full self-attention scales quadratically with input length. Token compression aims to address this challenge by reducing the number of tokens representing inputs. However, existing prompt-c...",
+          "key_points": []
+        },
+        {
+          "title": "🏷️ 关键词",
+          "content": "嵌入、注意力机制、大语言模型",
+          "key_points": []
+        }
+      ],
+      "has_insight": true,
+      "insight_type": "simple"
     },
     {
       "id": "2604.14051",
@@ -520,7 +760,34 @@
       "published": "2026-04-15",
       "industry_score": 1,
       "paper_value": 1.81,
-      "type": "paper"
+      "type": "paper",
+      "cn_title": "Enhancing Local Life Service Recommendation with Agentic Reasoning in Large Language Model",
+      "subtitle": "一篇关于推荐系统领域的研究论文",
+      "reading_time": "5分钟",
+      "difficulty": "进阶",
+      "tags": [
+        "推荐",
+        "智能体"
+      ],
+      "summary_detail": {
+        "one_sentence": "Local life service recommendation is distinct from...",
+        "core_contribution": "请查看论文原文了解核心贡献",
+        "practical_value": "请查看论文原文了解实用价值"
+      },
+      "sections": [
+        {
+          "title": "📖 论文摘要",
+          "content": "Local life service recommendation is distinct from general recommendation scenarios due to its strong living need-driven nature. Fundamentally, accurately identifying a user's immediate living need and recommending the corresponding service are inextricably linked tasks. However, prior works typical...",
+          "key_points": []
+        },
+        {
+          "title": "🏷️ 关键词",
+          "content": "推荐、智能体",
+          "key_points": []
+        }
+      ],
+      "has_insight": true,
+      "insight_type": "simple"
     },
     {
       "id": "2604.13796",

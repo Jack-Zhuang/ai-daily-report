@@ -144,9 +144,9 @@ class ConferencePaperCollector:
         papers = []
         
         try:
-            # 使用 arXiv API 搜索会议相关论文
+            # 使用 arXiv API 搜索会议相关论文，增加数量
             query = f"all:{conference.lower()}"
-            url = f"http://export.arxiv.org/api/query?search_query={query}&start=0&max_results=50&sortBy=submittedDate"
+            url = f"http://export.arxiv.org/api/query?search_query={query}&start=0&max_results=100&sortBy=submittedDate"
             
             response = requests.get(url, timeout=30)
             
@@ -205,14 +205,14 @@ class ConferencePaperCollector:
             if conference not in conf_mapping:
                 return papers
             
-            # OpenReview API 查询
+            # OpenReview API 查询，增加数量
             url = "https://api.openreview.net/notes"
             params = {
                 "content.venueid": conf_mapping[conference],
-                "limit": 100
+                "limit": 500  # 增加到 500
             }
             
-            response = requests.get(url, params=params, timeout=30)
+            response = requests.get(url, params=params, timeout=60)
             
             if response.status_code == 200:
                 data = response.json()
@@ -248,16 +248,16 @@ class ConferencePaperCollector:
         papers = []
         
         try:
-            # Semantic Scholar API
+            # Semantic Scholar API，增加数量
             url = "https://api.semanticscholar.org/graph/v1/paper/search"
             params = {
                 "query": f"{conference} {year}",
                 "year": f"{year}-{year}",
-                "limit": 50,
+                "limit": 200,  # 增加到 200
                 "fields": "title,abstract,url,year,venue"
             }
             
-            response = requests.get(url, params=params, timeout=30)
+            response = requests.get(url, params=params, timeout=60)
             
             if response.status_code == 200:
                 data = response.json()
@@ -303,7 +303,7 @@ class ConferencePaperCollector:
         papers.extend(self.fetch_from_semantic_scholar(conference, year))
         
         # 3. arXiv（备用）
-        if len(papers) < 10:
+        if len(papers) < 50:
             papers.extend(self.fetch_from_arxiv(conference, year))
         
         # 去重
