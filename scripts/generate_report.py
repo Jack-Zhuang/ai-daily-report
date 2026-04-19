@@ -74,10 +74,10 @@ class ReportGenerator:
             title = item.get('cn_title', item.get('title', item.get('name', '')))
             pick_titles.add(title)
         
-        hot_articles = data.get('hot_articles', [])
+        # 使用 articles 字段（30篇），而不是 hot_articles
+        hot_articles = data.get('articles', data.get('hot_articles', []))
         hot_articles = [item for item in hot_articles if item.get('cn_title', item.get('title', '')) not in pick_titles]
-        if len(hot_articles) > 15:
-            hot_articles = hot_articles[:15]
+        # 不截断，保留所有文章
         
         # 5. 检查摘要是否为中文
         for item in daily_pick:
@@ -98,7 +98,7 @@ class ReportGenerator:
         # 统计数据
         total_papers = len(data.get('arxiv_papers', []))
         total_projects = len(data.get('github_projects', []))
-        total_articles = len(data.get('hot_articles', []))
+        total_articles = len(data.get('articles', data.get('hot_articles', [])))
         total_conference = sum(c.get('total', 0) for c in conference_data.values())
         
         html = f'''<!DOCTYPE html>
@@ -2022,7 +2022,11 @@ class ReportGenerator:
         if index_file.exists():
             index = json.loads(index_file.read_text(encoding="utf-8"))
         else:
-            index = {"reports": []}
+            index = {"archives": [], "reports": []}
+        
+        # 确保 reports 字段存在
+        if "reports" not in index:
+            index["reports"] = []
         
         # 添加新条目
         index["reports"].insert(0, {

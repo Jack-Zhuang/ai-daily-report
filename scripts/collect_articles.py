@@ -303,10 +303,10 @@ class ArticleCollector:
         
         print(f"\n✅ 共采集 {len(all_articles)} 篇新文章，缓存共 {len(unique)} 篇")
         
-        # 生成中文内容
+        # 生成中文内容（不截断标题，保留完整标题）
         for article in unique:
-            article['cn_title'] = article.get('title', '')[:30]
-            article['cn_summary'] = article.get('summary', '')[:80]
+            article['cn_title'] = article.get('title', '')
+            article['cn_summary'] = article.get('summary', '')[:200]
         
         return unique[:30]
     

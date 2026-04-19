@@ -1,10 +1,16 @@
 {
   "archives": [
     {
+      "date": "2026-04-19",
+      "papers": 27,
+      "projects": 20,
+      "articles": 30
+    },
+    {
       "date": "2026-04-18",
-      "papers": 46,
-      "projects": 59,
-      "articles": 19
+      "papers": 5,
+      "projects": 5,
+      "articles": 7
     },
     {
       "date": "2026-04-17",
@@ -19,180 +25,6 @@
       "total_papers": 20,
       "total_projects": 0,
       "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-19",
-      "total_papers": 20,
-      "total_projects": 0,
-      "total_articles": 0
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 8
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 8
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 8
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 8
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 8
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 11
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 11
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 11
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 12
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 12
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 12
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 12
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 15
-    },
-    {
-      "date": "2026-04-18",
-      "total_papers": 20,
-      "total_projects": 5,
-      "total_articles": 15
     }
   ]
 }

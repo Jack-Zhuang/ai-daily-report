@@ -17,7 +17,8 @@
       "cn_summary": "亚马逊云科技近期在 Amazon Bedrock AgentCore\" 中以公开预览形式发布了 Agent Registry\"，为企业提供一个集中式目录，用于在",
       "_score": 2.4,
       "_type": "article",
-      "_reason": "技术文章 | Agent热点"
+      "_reason": "技术文章 | Agent热点",
+      "pick_type": "article"
     },
     {
       "id": "28b899893567",
@@ -35,7 +36,8 @@
       "cn_summary": "深度研究助手的进化之路！",
       "_score": 2.08,
       "_type": "article",
-      "_reason": "技术文章 | Agent热点"
+      "_reason": "技术文章 | Agent热点",
+      "pick_type": "article"
     },
     {
       "id": "84d15b36b369",
@@ -53,7 +55,8 @@
       "cn_summary": "设计师的 Claude Code 时刻？",
       "_score": 1.87,
       "_type": "article",
-      "_reason": "技术文章"
+      "_reason": "技术文章",
+      "pick_type": "article"
     },
     {
       "id": "2604.14572",
@@ -70,7 +73,8 @@
       "cn_summary": "检索增强生成（RAG）能够将大语言模型（LLM）的响应建立在外部证据之上，但存在根本性局限：模型被视为搜索结果的被动接收者，无法了解语料库的组织结构或尚未检索到的内容，从而限制了回溯和整合分散证据的能力。我们提出Corpus2Skill方法，将文档语料库离线编译为层级技能目录，使LLM代理在服务时能够主动导航该目录。该编译流程通过迭代聚类文档、生成技能描述并评估其效用，逐步构建可导航的知识结构。这",
       "_score": 2.77,
       "_type": "paper",
-      "_reason": "前沿论文 | Agent热点"
+      "_reason": "前沿论文 | Agent热点",
+      "pick_type": "paper"
     },
     {
       "id": "trending-0",
@@ -92,7 +96,8 @@
       "_type": "github",
       "_reason": "开源项目",
       "cn_summary": "FinceptTerminal 是一款现代金融应用，提供实时市场数据、投资组合管理和智能分析功能。",
-      "cn_title": "FinceptTerminal - 现代金融终端应用"
+      "cn_title": "FinceptTerminal - 现代金融终端应用",
+      "pick_type": "github"
     }
   ],
   "hot_articles": [
@@ -184,8 +189,8 @@
       "_score": 2.2,
       "_type": "github",
       "_reason": "开源项目",
-      "cn_summary": "FinceptTerminal",
-      "cn_title": "FinceptTerminal"
+      "cn_summary": "FinceptTerminal 是一款现代金融应用程序，提供先进的市场分析和投资研究。",
+      "cn_title": "FinceptTerminal - FinceptTerminal 是一款现代金融应用程序，提供"
     },
     {
       "id": "trending-3",
@@ -204,7 +209,8 @@
       "topics": [],
       "_growth_score": 330.2901,
       "_score": 2.67,
-      "cn_title": "openai-agents-python"
+      "cn_title": "openai-agents-python - 一个轻量级且强大的多智能体工作流框架。",
+      "cn_summary": "一个轻量级且强大的多智能体工作流框架。"
     },
     {
       "id": "trending-9",
@@ -223,7 +229,8 @@
       "topics": [],
       "_growth_score": 534.3091,
       "_score": 2.57,
-      "cn_title": "Claude-Code-Game-Studios"
+      "cn_title": "Claude-Code-Game-Studios - Turn Claude Code into a full g",
+      "cn_summary": "Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coor"
     },
     {
       "id": "trending-1",
@@ -244,8 +251,8 @@
       "_score": 1.6,
       "_type": "github",
       "_reason": "开源项目",
-      "cn_summary": "thunderbolt",
-      "cn_title": "thunderbolt"
+      "cn_summary": "## 翻译\n\n**AI由你掌控：选择你的模型。拥有你的数据。消除供应商锁定。**\n\n---\n\n### 备注\n- \"AI You Control\" 作为品牌名/标题，翻译为\"AI由你掌控\"\n- \"ven",
+      "cn_title": "thunderbolt - ## 翻译\n\n**AI由你掌控：选择你的模型。拥有你的数据。"
     },
     {
       "id": "trending-8",
@@ -264,7 +271,8 @@
       "topics": [],
       "_growth_score": 632.0888,
       "_score": 2.2,
-      "cn_title": "omi"
+      "cn_title": "omi - 能够查看你的屏幕、监听你的对话并告诉你该做什么的人工智能",
+      "cn_summary": "能够查看你的屏幕、监听你的对话并告诉你该做什么的人工智能"
     },
     {
       "id": "trending-7",
@@ -283,7 +291,8 @@
       "topics": [],
       "_growth_score": 985.5331,
       "_score": 2.2,
-      "cn_title": "evolver"
+      "cn_title": "evolver - 为AI智能体打造的GEP驱动自我进化引擎。基因组进化协议。|",
+      "cn_summary": "为AI智能体打造的GEP驱动自我进化引擎。基因组进化协议。| evomap.ai"
     },
     {
       "id": "trending-5",
@@ -302,7 +311,8 @@
       "topics": [],
       "_growth_score": 102.8668,
       "_score": 2.2,
-      "cn_title": "paperless-ngx"
+      "cn_title": "paperless-ngx - **中文翻译：**\n\n一个社区支持的超级增强型文档管理系统：",
+      "cn_summary": "**中文翻译：**\n\n一个社区支持的超级增强型文档管理系统：扫描、索引并归档您所有的文档。\n\n---\n\n**备注：** 原文末尾的\"docu\"是不完整的，疑似\"documents\"（文档）的缩写。"
     },
     {
       "id": "trending-2",
@@ -321,7 +331,8 @@
       "topics": [],
       "_growth_score": 2978.0883,
       "_score": 1.38,
-      "cn_title": "arc-kit"
+      "cn_title": "arc-kit - **企业架构治理与供应商采购工具包**",
+      "cn_summary": "**企业架构治理与供应商采购工具包**"
     },
     {
       "id": "trending-6",
@@ -340,7 +351,8 @@
       "topics": [],
       "_growth_score": 29.7282,
       "_score": 2.2,
-      "cn_title": "RuView"
+      "cn_title": "RuView - **中文翻译**  \nπ RuView：WiFi Dense",
+      "cn_summary": "**中文翻译**  \nπ RuView：WiFi DensePose 将普通（商用）WiFi 信号转化为实时的人体姿态估计，关键信号。"
     },
     {
       "id": "trending-4",
@@ -359,7 +371,8 @@
       "topics": [],
       "_growth_score": 98.9752,
       "_score": 2.2,
-      "cn_title": "t3code"
+      "cn_title": "t3code",
+      "cn_summary": "热门开源项目"
     },
     {
       "id": "552661142",
@@ -398,7 +411,8 @@
       ],
       "_growth_score": 13.4058,
       "_score": 2.2,
-      "cn_title": "langchain"
+      "cn_title": "langchain - **智能体工程平台**",
+      "cn_summary": "**智能体工程平台**"
     },
     {
       "id": "793375104",
@@ -422,7 +436,8 @@
       ],
       "_growth_score": 10.6384,
       "_score": 2.57,
-      "cn_title": "awesome-llm-apps"
+      "cn_title": "awesome-llm-apps - 100+ AI Agent & RAG 应用，你可以直接运行",
+      "cn_summary": "100+ AI Agent & RAG 应用，你可以直接运行——克隆、定制、发布。"
     },
     {
       "id": "1024554267",
@@ -458,7 +473,8 @@
       ],
       "_growth_score": 10.1339,
       "_score": 2.67,
-      "cn_title": "hermes-agent"
+      "cn_title": "hermes-agent - ## 翻译\n\n\"The agent that grows w",
+      "cn_summary": "## 翻译\n\n\"The agent that grows with you\"\n\n常见的中文翻译：\n\n1. **与你共同成长的智能助手** (最常用，营销风格)\n2. **与你一起成长的代理** (直译"
     },
     {
       "id": "660551251",
@@ -483,7 +499,8 @@
       ],
       "_growth_score": 6.7233,
       "_score": 2.01,
-      "cn_title": "MetaGPT"
+      "cn_title": "MetaGPT - 🌟 多智能体框架：首家 AI 软件公司，迈向自然语言编程",
+      "cn_summary": "🌟 多智能体框架：首家 AI 软件公司，迈向自然语言编程"
     },
     {
       "id": "680120071",
@@ -513,7 +530,8 @@
       ],
       "_growth_score": 5.7209,
       "_score": 1.88,
-      "cn_title": "autogen"
+      "cn_title": "autogen - **代理式人工智能的编程框架**",
+      "cn_summary": "**代理式人工智能的编程框架**"
     },
     {
       "id": "615882673",
@@ -532,7 +550,8 @@
       "topics": [],
       "_growth_score": 3.9453,
       "_score": 1.64,
-      "cn_title": "FastChat"
+      "cn_title": "FastChat - **翻译：**\n\n一个用于训练、部署和评估大语言模型的开放平",
+      "cn_summary": "**翻译：**\n\n一个用于训练、部署和评估大语言模型的开放平台。Vicuna 发布仓库。\n\n---\n\n**注：** 原文中的 \"Vicun\" 可能是指 \"Vicuna\"（一个流行的开源大语言模型）。"
     },
     {
       "id": "752925682",
@@ -551,7 +570,8 @@
       "topics": [],
       "_growth_score": 2.7133,
       "_score": 1.64,
-      "cn_title": "Qwen3"
+      "cn_title": "Qwen3 - Qwen3 是阿里巴巴云 Qwen 团队开发的大型语言模型系",
+      "cn_summary": "Qwen3 是阿里巴巴云 Qwen 团队开发的大型语言模型系列。"
     },
     {
       "id": "740303686",
@@ -589,7 +609,8 @@
       ],
       "_growth_score": 2.6089,
       "_score": 2.2,
-      "cn_title": "sglang"
+      "cn_title": "sglang - SGLang 是一个用于大语言模型和多模态模型的高性能服务框",
+      "cn_summary": "SGLang 是一个用于大语言模型和多模态模型的高性能服务框架。"
     },
     {
       "id": "149430917",
@@ -626,7 +647,8 @@
       ],
       "_growth_score": 2.1643,
       "_score": 2.59,
-      "cn_title": "recommenders"
+      "cn_title": "recommenders - **推荐系统的最佳实践**",
+      "cn_summary": "**推荐系统的最佳实践**"
     },
     {
       "id": "543293939",
@@ -645,7 +667,8 @@
       "topics": [],
       "_growth_score": 0.929,
       "_score": 1.64,
-      "cn_title": "monolith"
+      "cn_title": "monolith - 轻量级推荐系统",
+      "cn_summary": "轻量级推荐系统"
     }
   ],
   "arxiv_papers": [
