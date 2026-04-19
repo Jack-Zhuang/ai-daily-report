@@ -75,7 +75,7 @@ class EnhancedInsightGenerator:
             
             payload = {
                 "model": "MiniMax-M2.7-highspeed",
-                "max_tokens": max_tokens,
+                "max_tokens": max_tokens + 500,  # 预留思考过程的空间
                 "messages": [
                     {"role": "user", "content": prompt}
                 ]
@@ -135,6 +135,7 @@ Mermaid 代码："""
 1. 使用标准 LaTeX 语法
 2. 多行公式使用 align 环境
 3. 只输出 LaTeX 代码，不要解释
+4. 使用常见的数学符号命令
 
 LaTeX 代码："""
 
@@ -149,8 +150,33 @@ LaTeX 代码："""
             match = re.search(r"\$([^\$]+)\$", result)
             if match:
                 return match.group(1).strip()
+        elif "\\[" in result:
+            match = re.search(r"\\\[([\s\S]*?)\\\]", result)
+            if match:
+                return match.group(1).strip()
         
         return result if result else ""
+    
+    def generate_formulas_section(self, equations: List[str]) -> List[Dict]:
+        """生成公式章节"""
+        formulas = []
+        
+        for eq in equations[:5]:  # 最多处理 5 个公式
+            if len(eq) < 10:
+                continue
+            
+            print(f"    🔢 转换公式: {eq[:30]}...")
+            latex = self.generate_latex_formula(eq)
+            
+            if latex:
+                formulas.append({
+                    "original": eq,
+                    "latex": latex
+                })
+            
+            time.sleep(0.3)  # 避免 API 限流
+        
+        return formulas
     
     def generate_code_example(self, method_description: str, language: str = "python") -> str:
         """生成代码示例"""
@@ -330,6 +356,12 @@ LaTeX 代码："""
         if method.get("details"):
             code_example = self.generate_code_example(method["details"])
         
+        # 生成公式
+        print("  🔢 生成 LaTeX 公式...")
+        formulas = []
+        if paper_content.equations:
+            formulas = self.generate_formulas_section(paper_content.equations)
+        
         # 构建 Markdown
         md = f"""# {cn_title}
 
@@ -410,6 +442,22 @@ arXiv: [{paper_content.arxiv_id}](http://arxiv.org/abs/{paper_content.arxiv_id})
 ```python
 {code_example}
 ```
+
+"""
+        
+        # 添加公式
+        if formulas:
+            md += """### 🔢 核心公式
+
+"""
+            for i, formula in enumerate(formulas, 1):
+                md += f"""**公式 {i}**：
+
+$$
+{formula['latex']}
+$$
+
+*含义*：{formula['original'][:100]}
 
 """
         

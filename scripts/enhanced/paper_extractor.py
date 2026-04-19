@@ -219,18 +219,29 @@ class PaperExtractor:
         return tables[:5]  # 最多 5 个表格
     
     def parse_equations(self, full_text: str) -> List[str]:
-        """解析公式（简化版）"""
+        """解析公式（增强版）"""
         equations = []
         
-        # 匹配编号公式 (1), (2), etc.
-        eq_pattern = r"\((\d+)\)\s*([^\n]{10,100})"
+        # 模式1: 编号公式 (1), (2), etc.
+        eq_pattern = r"\((\d+)\)\s*([^\n]{10,150})"
         matches = re.findall(eq_pattern, full_text)
         
         for eq_num, eq_content in matches:
-            if any(c in eq_content for c in ['=', '+', '-', '*', '/', '\\']):
-                equations.append(eq_content.strip()[:100])
+            # 过滤非公式内容
+            if any(c in eq_content for c in ['=', '+', '-', '*', '/', '\\', '∑', '∏', '∫', 'α', 'β', 'γ', 'θ', 'λ']):
+                equations.append(eq_content.strip())
         
-        return equations[:10]  # 最多 10 个公式
+        # 模式2: LaTeX 风格公式 $...$ 或 $$...$$
+        latex_pattern = r"\$\$?([^\$]+)\$\$?"
+        latex_matches = re.findall(latex_pattern, full_text)
+        equations.extend([m.strip() for m in latex_matches if len(m) > 5])
+        
+        # 模式3: 常见数学符号开头的行
+        math_pattern = r"(?m)^([∑∏∫∂∇αβγδθλμπσφψω∈∉⊂⊃∪∩∀∃].*[^\.\?\!])$"
+        math_matches = re.findall(math_pattern, full_text)
+        equations.extend([m.strip() for m in math_matches if len(m) > 5])
+        
+        return equations[:15]  # 最多 15 个公式
     
     def parse_references(self, full_text: str) -> List[str]:
         """解析参考文献"""
