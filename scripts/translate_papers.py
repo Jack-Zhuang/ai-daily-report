@@ -65,9 +65,12 @@ class PaperTranslator:
             if response.status_code == 200:
                 data = response.json()
                 content_blocks = data.get('content', [])
+                # 遍历所有 block，找到 text 类型的
                 for block in content_blocks:
                     if block.get('type') == 'text':
                         return block.get('text', '').strip()
+                # 如果没有 text block，返回空
+                return ""
         except Exception as e:
             print(f"    ⚠️ API调用失败: {e}")
         
@@ -85,18 +88,11 @@ class PaperTranslator:
         if not self.api_key:
             return title
         
-        prompt = f"""你是一个专业的学术翻译。请将以下英文论文标题翻译成简洁的中文标题。
+        prompt = f"""请将以下英文论文标题翻译成中文标题，只输出翻译结果，不要解释：
 
-要求：
-1. 保留专业术语（如 LLM、RAG、Transformer 等可不翻译）
-2. 简洁有力，不超过30个汉字
-3. 只输出翻译结果，不要解释
+{title}"""
 
-英文标题：{title}
-
-中文标题："""
-
-        result = self._call_api(prompt, max_tokens=100)
+        result = self._call_api(prompt, max_tokens=500)
         return result if result else title
     
     def translate_abstract(self, abstract: str) -> str:
@@ -114,19 +110,11 @@ class PaperTranslator:
         # 截取前 800 字符翻译
         text_to_translate = abstract[:800]
         
-        prompt = f"""你是一个专业的学术翻译。请将以下英文论文摘要翻译成流畅的中文摘要。
+        prompt = f"""请将以下英文论文摘要翻译成中文（150-200字），只输出翻译结果：
 
-要求：
-1. 保留专业术语（如 LLM、RAG、Transformer 等可不翻译）
-2. 输出 150-200 字的中文摘要
-3. 语言流畅，适合技术人员阅读
-4. 只输出翻译结果，不要解释
+{text_to_translate}"""
 
-英文摘要：{text_to_translate}
-
-中文摘要："""
-
-        result = self._call_api(prompt, max_tokens=400)
+        result = self._call_api(prompt, max_tokens=800)
         return result[:200] if result else abstract[:200]
     
     def translate_papers(self, papers: list) -> list:
@@ -137,9 +125,14 @@ class PaperTranslator:
             title = paper.get("title", "")
             summary = paper.get("summary", "")
             
-            # 检查是否需要翻译
-            need_title = not paper.get("cn_title")
-            need_summary = not paper.get("cn_summary") and summary
+            # 检查是否需要翻译（cn_title 不存在或仍是英文）
+            cn_title = paper.get("cn_title", "")
+            cn_summary = paper.get("cn_summary", "")
+            
+            # 如果 cn_title 和 title 一样，说明没翻译
+            need_title = not cn_title or cn_title == title
+            # 如果 cn_summary 没有中文，说明没翻译
+            need_summary = summary and (not cn_summary or not any('\u4e00' <= c <= '\u9fff' for c in cn_summary))
             
             if not need_title and not need_summary:
                 translated.append(paper)
