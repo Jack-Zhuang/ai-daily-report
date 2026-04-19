@@ -205,7 +205,7 @@ class PaperInsightGenerator:
             }
             
             payload = {
-                "model": "MiniMax-M2.7",
+                "model": "MiniMax-M2.7-highspeed",
                 "max_tokens": 4000,
                 "messages": [
                     {
