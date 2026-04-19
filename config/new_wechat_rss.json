@@ -1,0 +1,30 @@
+{
+  "found_accounts": [
+    {
+      "name": "夕小瑶科技说",
+      "rss_url": "https://wechat2rss.xlab.app/feed/a1cd365aa14ed7d64cabfc8aa086da40ecaba34d.xml",
+      "priority": 1,
+      "keywords": [
+        "AI",
+        "算法",
+        "推荐",
+        "机器学习"
+      ]
+    }
+  ],
+  "not_found": [
+    "AGI HUNT",
+    "阿里妈妈技术",
+    "大模型智能",
+    "DataFunTalk",
+    "机器学习与推荐算法",
+    "机器学习算法与自然语言处理",
+    "快手技术",
+    "深度传送门",
+    "淘天集团智能算法产品",
+    "腾讯广告技术",
+    "稳扎稳打学AI",
+    "小红书技术REDtech",
+    "应用机器学习"
+  ]
+}

@@ -1,9 +1,0 @@
-# Cloudflare Pages 配置
-name = "ai-daily-report"
-compatibility_date = "2024-01-01"
-
-[site]
-bucket = "./"
-
-[build]
-command = "echo 'Static site - no build required'"
