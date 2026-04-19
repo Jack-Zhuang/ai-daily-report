@@ -3,465 +3,211 @@
   "conferences": {
     "RecSys": [
       {
-        "id": "2604.13665",
-        "arxiv_id": "2604.13665",
-        "title": "RecNextEval: A Reference Implementation for Temporal Next-Batch Recommendation Evaluation",
-        "summary": "A good number of toolkits have been developed in Recommender Systems (RecSys) research to promote fair evaluation and reproducibility. However, recent critical examinations of RecSys evaluation protocols have raised concerns regarding the validity of existing evaluation pipelines. In this demonstration, we present RecNextEval, a reference implementation of an evaluation framework specifically designed for next-batch recommendation. RecNextEval utilizes a time-window data split to ensure models a",
-        "link": "http://arxiv.org/abs/2604.13665v1",
+        "id": "c6adda06133eae96a6eb11e7df25a66ac9cfe317",
+        "arxiv_id": "",
+        "title": "Proceedings of the Workshop on Recommenders in Tourism co-located with the 19th ACM Conference on Recommender Systems (RecSys 2025), Prague, Czech Republic, September 22, 2025",
+        "summary": "",
+        "link": "https://www.semanticscholar.org/paper/c6adda06133eae96a6eb11e7df25a66ac9cfe317",
         "conference": "RecSys",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
-        "id": "2604.12298",
-        "arxiv_id": "2604.12298",
-        "title": "Deep Situation-Aware Interaction Network for Click-Through Rate Prediction",
-        "summary": "User behavior sequence modeling plays a significant role in Click-Through Rate (CTR) prediction on e-commerce platforms. Except for the interacted items, user behaviors contain rich interaction information, such as the behavior type, time, location, etc. However, so far, the information related to user behaviors has not yet been fully exploited. In the paper, we propose the concept of a situation and situational features for distinguishing interaction behaviors and then design a CTR model named ",
-        "link": "http://arxiv.org/abs/2604.12298v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "other",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2604.03949",
-        "arxiv_id": "2604.03949",
-        "title": "Semantic IDs for Recommender Systems at Snapchat: Use Cases, Technical Challenges, and Design Choices",
-        "summary": "Effective item identifiers (IDs) are an important component for recommender systems (RecSys) in practice, and are commonly adopted in many use cases such as retrieval and ranking. IDs can encode collaborative filtering signals within training data, such that RecSys models can extrapolate during the inference and personalize the prediction based on users' behavioral histories. Recently, Semantic IDs (SIDs) have become a trending paradigm for RecSys. In comparison to the conventional atomic ID, an",
-        "link": "http://arxiv.org/abs/2604.03949v1",
+        "id": "a2a41227ecef997602d83903b199854f49fdebe8",
+        "arxiv_id": "",
+        "title": "RecSys Challenge 2025: Universal Behavioral Profiles for Recommender Systems",
+        "summary": "The RecSys Challenge 2025 promotes a unified approach to behavior modeling by introducing Universal Behavioral Profiles. These user representations encode essential aspects of past interactions and are designed for universal applicability across different downstream tasks, thereby promoting generalization across applications and addressing the need for portable and efficient recommender systems. The participants task was to create universal user embeddings from detailed e-commerce activity logs.",
+        "link": "https://www.semanticscholar.org/paper/a2a41227ecef997602d83903b199854f49fdebe8",
         "conference": "RecSys",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
-        "id": "2604.06232",
-        "arxiv_id": "2604.06232",
-        "title": "What Do Humanities Scholars Need? A User Model for Recommendation in Digital Archives",
-        "summary": "User models for recommender systems (RecSys) typically assume stable preferences, similarity-based relevance, and session-bounded interactions -- assumptions derived from high-volume consumer contexts. This paper investigates these assumptions for humanities scholars working with digital archives. Following a human-centered design approach, we conducted focus groups and analyzed interview data from 18 researchers. Our analysis identifies four dimensions where scholarly information-seeking diverg",
-        "link": "http://arxiv.org/abs/2604.06232v1",
+        "id": "e07fabcbfd3f0512d22a7d288f6e5b285111e322",
+        "arxiv_id": "",
+        "title": "Blending Sequential Embeddings, Graphs, and Engineered Features: 4th Place Solution in RecSys Challenge 2025",
+        "summary": "This paper describes the 4th-place solution by team ambitious for the RecSys Challenge 2025, organized by Synerise and ACM RecSys, which focused on universal behavioral modeling. The challenge objective was to generate user embeddings effective across six diverse downstream tasks. Our solution integrates (1) a sequential encoder to capture the temporal evolution of user interests, (2) a graph neural network to enhance generalization, (3) a deep cross network to model high-order feature interacti",
+        "link": "https://www.semanticscholar.org/paper/e07fabcbfd3f0512d22a7d288f6e5b285111e322",
         "conference": "RecSys",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
-        "id": "2603.29112",
-        "arxiv_id": "2603.29112",
-        "title": "GISTBench: Evaluating LLM User Understanding via Evidence-Based Interest Verification",
-        "summary": "We introduce GISTBench, a benchmark for evaluating Large Language Models' (LLMs) ability to understand users from their interaction histories in recommendation systems. Unlike traditional RecSys benchmarks that focus on item prediction accuracy, our benchmark evaluates how well LLMs can extract and verify user interests from engagement data. We propose two novel metric families: Interest Groundedness (IG), decomposed into precision and recall components to separately penalize hallucinated intere",
-        "link": "http://arxiv.org/abs/2603.29112v1",
+        "id": "3ea787afc69824245cb0ad4d3626f0447c9286b7",
+        "arxiv_id": "",
+        "title": "Fifth Workshop on Recommender Systems for Human Resources (RecSys in HR 2025)",
+        "summary": "",
+        "link": "https://www.semanticscholar.org/paper/3ea787afc69824245cb0ad4d3626f0447c9286b7",
+        "conference": "RecSys",
+        "year": 2025,
+        "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
+        "type": "conference_paper"
+      },
+      {
+        "id": "9a2412a9f2498d6c6a7247bd0963e1c8e77ac3fb",
+        "arxiv_id": "",
+        "title": "RecSys-DQKit: A Python Library for Comprehensive Data Quality Assessment of Recommender Systems",
+        "summary": "The performance and fairness of recommender systems depend critically on the quality of the underlying interaction data. Yet, training datasets often contain duplicates, temporal leakage, skewed exposure patterns, and implicit popularity bias, while also suffering from imbalance, missingness, and poor subgroup representativeness. Such issues distort evaluation, entrench bias, and undermine user trust. Existing toolkits either target general-purpose machine learning validation [1]–[3] or focus on",
+        "link": "https://www.semanticscholar.org/paper/9a2412a9f2498d6c6a7247bd0963e1c8e77ac3fb",
+        "conference": "RecSys",
+        "year": 2025,
+        "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
+        "type": "conference_paper"
+      },
+      {
+        "id": "96ccb6d23068e8b409f10ef2e2f7bc954a869903",
+        "arxiv_id": "",
+        "title": "NORMalize 2025: The Third Workshop on Normative Design and Evaluation of Recommender Systems",
+        "summary": "Recommender systems are one of the most widely used applications of artificial intelligence. Their use can have far-reaching consequences for stakeholders, users, and society at large. In this third edition of the NORMalize workshop, we once again seek to advance the research agenda of normative thinking, considering the norms and values that underpin recommender systems, as well as to introduce the concept to a broader audience. We aim to bring together a growing community of researchers and pr",
+        "link": "https://www.semanticscholar.org/paper/96ccb6d23068e8b409f10ef2e2f7bc954a869903",
+        "conference": "RecSys",
+        "year": 2025,
+        "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
+        "type": "conference_paper"
+      },
+      {
+        "id": "ae77ddb74065bf8b684f16f628c32f6bd772665c",
+        "arxiv_id": "",
+        "title": "Workshop on Recommenders in Tourism (RecTour) 2025",
+        "summary": "The Workshop on Recommenders in Tourism (RecTour) has been successfully held in conjunction with the ACM Conference on Recommender Systems (RecSys) since 2016, with the exception of one year. This workshop focuses on the unique and evolving challenges of recommender systems in the tourism domain. Over time, RecTour has fostered an active community supported by both academia and industry. In this overview paper, we outline our motivations for organizing the RecTour workshop and highlight the main",
+        "link": "https://www.semanticscholar.org/paper/ae77ddb74065bf8b684f16f628c32f6bd772665c",
+        "conference": "RecSys",
+        "year": 2025,
+        "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
+        "type": "conference_paper"
+      },
+      {
+        "id": "227e5b4dc5982c614eae026abf627cd5e290ecab",
+        "arxiv_id": "",
+        "title": "International Workshop on Online and Adaptive Recommender Systems (OARS 2025)",
+        "summary": "Recommender system (RecSys) plays important roles in helping users navigate, discover, and consume massive and highly-dynamic information. Today, many RecSys solutions deployed in the real world rely on categorical user profiles and/or pre-calculated recommendation actions that stay static during a user session. However, recent trends suggest that RecSys need to model user intent in real time and constantly adapt to meet user needs at the moment or change user behavior in situ. There are three p",
+        "link": "https://www.semanticscholar.org/paper/227e5b4dc5982c614eae026abf627cd5e290ecab",
+        "conference": "RecSys",
+        "year": 2025,
+        "category": "rec",
+        "is_industry": true,
+        "industry_score": 3,
+        "type": "conference_paper"
+      },
+      {
+        "id": "b8191f0cc74902b98a86bcc91d54b020ef7fe366",
+        "arxiv_id": "",
+        "title": "The SYNERISE dataset: An E-Commerce Dataset for Sequential Recommendation, Universal Behavior Modeling and Deep Relational Learning",
+        "summary": "Research in the area of recommender systems heavily relies on offline experimentation with historical data. The validity of such research efforts may however be limited by the quality and representativeness of publicly available datasets. To address these limitations, we introduce the Synerise dataset as a new, large-scale e-commerce dataset derived from real-world logs. This dataset provides rich, time-stamped user-item interactions alongside detailed item metadata—including categories, descrip",
+        "link": "https://www.semanticscholar.org/paper/b8191f0cc74902b98a86bcc91d54b020ef7fe366",
+        "conference": "RecSys",
+        "year": 2025,
+        "category": "rec",
+        "is_industry": true,
+        "industry_score": 4,
+        "type": "conference_paper"
+      },
+      {
+        "id": "41d003efb01cce3bea91dfa908f9135596f7da11",
+        "arxiv_id": "",
+        "title": "EARL: The 2nd Workshop on Evaluating and Applying Recommender Systems with Large Language Models",
+        "summary": "This article presents our proposal to organize the 2nd Workshop on Evaluating and Applying Recommender Systems with Large Language Models (EARL), to be held in conjunction with the 19th ACM Conference on Recommender Systems (RecSys 2025) in Prague, Czech Republic, in September 2025. Building on the success of the first EARL edition at RecSys 2024, we will foster dynamic and interactive discussions and debates on the application and evaluation of large language models (LLMs) in recommender system",
+        "link": "https://www.semanticscholar.org/paper/41d003efb01cce3bea91dfa908f9135596f7da11",
+        "conference": "RecSys",
+        "year": 2025,
+        "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
+        "type": "conference_paper"
+      },
+      {
+        "id": "edf34cbc59d45e8ce72ce9307f518701f636f4b5",
+        "arxiv_id": "",
+        "title": "Human-AI Collaboration in Search and Recommendation: Navigation, Personalization, and Evaluation of Carousel-Based Interfaces",
+        "summary": "Behnam Rahdari is a postdoctoral scholar at the Stanford Center for Biomedical Informatics Research. He holds a PhD in Information Science from the University of Pittsburgh and an MSc from the Polytechnic University of Milan. His research lies at the intersection of human-computer interaction and artificial intelligence, focusing on advancing Human-AI collaboration in search and recommender systems. He has received several academic honors, including the Best Blue Sky Paper Award (ACM Hypertext 2",
+        "link": "https://www.semanticscholar.org/paper/edf34cbc59d45e8ce72ce9307f518701f636f4b5",
+        "conference": "RecSys",
+        "year": 2025,
+        "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
+        "type": "conference_paper"
+      },
+      {
+        "id": "d34098047bd99d794786b163bdcf7fbd7ea5394b",
+        "arxiv_id": "",
+        "title": "Triple-Feature Transformer with Sparsity Regularization",
+        "summary": "The RecSys Challenge 2025 focuses on developing robust recommendation systems capable of generalizing across multiple tasks in a highly sparse and dynamic user-behavior dataset. Designing unified user representations that generalize across multiple recommendation tasks under extreme sparsity remains a key challenge. In this paper, we present TFT-SR (Triple-Feature Transformer with Sparsity Regularization), a unified framework for behavioral modeling in the RecSys Challenge 2025. Our method fuses",
+        "link": "https://www.semanticscholar.org/paper/d34098047bd99d794786b163bdcf7fbd7ea5394b",
         "conference": "RecSys",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
-        "id": "2603.00416",
-        "arxiv_id": "2603.00416",
-        "title": "MuonRec: Shifting the Optimizer Paradigm Beyond Adam in Scalable Generative Recommendation",
-        "summary": "Recommender systems (RecSys) are increasingly emphasizing scaling, leveraging larger architectures and more interaction data to improve personalization. Yet, despite the optimizer's pivotal role in training, modern RecSys pipelines almost universally default to Adam/AdamW, with limited scrutiny of whether these choices are truly optimal for recommendation. In this work, we revisit optimizer design for scalable recommendation and introduce MuonRec, the first framework that brings the recently pro",
-        "link": "http://arxiv.org/abs/2603.00416v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2602.08559",
-        "arxiv_id": "2602.08559",
-        "title": "QARM V2: Quantitative Alignment Multi-Modal Recommendation for Reasoning User Sequence Modeling",
-        "summary": "With the evolution of large language models (LLMs), there is growing interest in leveraging their rich semantic understanding to enhance industrial recommendation systems (RecSys). Traditional RecSys relies on ID-based embeddings for user sequence modeling in the General Search Unit (GSU) and Exact Search Unit (ESU) paradigm, which suffers from low information density, knowledge isolation, and weak generalization ability. While LLMs offer complementary strengths with dense semantic representatio",
-        "link": "http://arxiv.org/abs/2602.08559v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2602.06409",
-        "arxiv_id": "2602.06409",
-        "title": "VENOMREC: Cross-Modal Interactive Poisoning for Targeted Promotion in Multimodal LLM Recommender Systems",
-        "summary": "Multimodal large language models (MLLMs) are pushing recommender systems (RecSys) toward content-grounded retrieval and ranking via cross-modal fusion. We find that while cross-modal consensus often mitigates conventional poisoning that manipulates interaction logs or perturbs a single modality, it also introduces a new attack surface where synchronised multimodal poisoning can reliably steer fused representations along stable semantic directions during fine-tuning. To characterise this threat, ",
-        "link": "http://arxiv.org/abs/2602.06409v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2602.04567",
-        "arxiv_id": "2602.04567",
-        "title": "VK-LSVD: A Large-Scale Industrial Dataset for Short-Video Recommendation",
-        "summary": "Short-video recommendation presents unique challenges, such as modeling rapid user interest shifts from implicit feedback, but progress is constrained by a lack of large-scale open datasets that reflect real-world platform dynamics. To bridge this gap, we introduce the VK Large Short-Video Dataset (VK-LSVD), the largest publicly available industrial dataset of its kind. VK-LSVD offers an unprecedented scale of over 40 billion interactions from 10 million users and almost 20 million videos over s",
-        "link": "http://arxiv.org/abs/2602.04567v2",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2602.02338",
-        "arxiv_id": "2602.02338",
-        "title": "Rethinking Generative Recommender Tokenizer: Recsys-Native Encoding and Semantic Quantization Beyond LLMs",
-        "summary": "Semantic ID (SID)-based recommendation is a promising paradigm for scaling sequential recommender systems, but existing methods largely follow a semantic-centric pipeline: item embeddings are learned from foundation models and discretized using generic quantization schemes. This design is misaligned with generative recommendation objectives: semantic embeddings are weakly coupled with collaborative prediction, and generic quantization is inefficient at reducing sequential uncertainty for autoreg",
-        "link": "http://arxiv.org/abs/2602.02338v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2601.10027",
-        "arxiv_id": "2601.10027",
-        "title": "STCRank: Spatio-temporal Collaborative Ranking for Interactive Recommender System at Kuaishou E-shop",
-        "summary": "As a popular e-commerce platform, Kuaishou E-shop provides precise personalized product recommendations to tens of millions of users every day. To better respond real-time user feedback, we have deployed an interactive recommender system (IRS) alongside our core homepage recommender system. This IRS is triggered by user click on homepage, and generates a series of highly relevant recommendations based on the clicked item to meet focused browsing demands. Different from traditional e-commerce Rec",
-        "link": "http://arxiv.org/abs/2601.10027v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2512.17389",
-        "arxiv_id": "2512.17389",
-        "title": "The Mental World of Large Language Models in Recommendation: A Benchmark on Association, Personalization, and Knowledgeability",
-        "summary": "Large language models (LLMs) have shown potential in recommendation systems (RecSys) by using them as either knowledge enhancer or zero-shot ranker. A key challenge lies in the large semantic gap between LLMs and RecSys where the former internalizes language world knowledge while the latter captures personalized world of behaviors. Unfortunately, the research community lacks a comprehensive benchmark that evaluates the LLMs over their limitations and boundaries in RecSys so that we can draw a co",
-        "link": "http://arxiv.org/abs/2512.17389v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2512.17277",
-        "arxiv_id": "2512.17277",
-        "title": "Warmer for Less: A Cost-Efficient Strategy for Cold-Start Recommendations at Pinterest",
-        "summary": "Pinterest is a leading visual discovery platform where recommender systems (RecSys) are key to delivering relevant, engaging, and fresh content to our users. In this paper, we study the problem of improving RecSys model predictions for cold-start (CS) items, which appear infrequently in the training data. Although this problem is well-studied in academia, few studies have addressed its root causes effectively at the scale of a platform like Pinterest. By investigating live traffic data, we ident",
-        "link": "http://arxiv.org/abs/2512.17277v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2512.07424",
-        "arxiv_id": "2512.07424",
-        "title": "OnePiece: The Great Route to Generative Recommendation -- A Case Study from Tencent Algorithm Competition",
-        "summary": "In past years, the OpenAI's Scaling-Laws shows the amazing intelligence with the next-token prediction paradigm in neural language modeling, which pointing out a free-lunch way to enhance the model performance by scaling the model parameters. In RecSys, the retrieval stage is also follows a 'next-token prediction' paradigm, to recall the hunderds of items from the global item set, thus the generative recommendation usually refers specifically to the retrieval stage (without Tree-based methods). ",
-        "link": "http://arxiv.org/abs/2512.07424v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2511.14865",
-        "arxiv_id": "2511.14865",
-        "title": "FinTRec: Transformer Based Unified Contextual Ads Targeting and Personalization for Financial Applications",
-        "summary": "Transformer-based architectures are widely adopted in sequential recommendation systems, yet their application in Financial Services (FS) presents distinct practical and modeling challenges for real-time recommendation. These include:a) long-range user interactions (implicit and explicit) spanning both digital and physical channels generating temporally heterogeneous context, b) the presence of multiple interrelated products require coordinated models to support varied ad placements and personal",
-        "link": "http://arxiv.org/abs/2511.14865v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2510.22865",
-        "arxiv_id": "2510.22865",
-        "title": "Civic Ground Truth in News Recommenders: A Method for Public Value Scoring",
-        "summary": "Research in news recommendation systems (NRS) continues to explore the best ways to integrate normative goals such as editorial objectives and public service values into existing systems. Prior efforts have incorporated expert input or audience feedback to quantify these values, laying the groundwork for more civic-minded recommender systems. This paper contributes to that trajectory, introducing a method for embedding civic values into NRS through large-scale, structured audience evaluations. T",
-        "link": "http://arxiv.org/abs/2510.22865v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2510.20260",
-        "arxiv_id": "2510.20260",
-        "title": "Balancing Fine-tuning and RAG: A Hybrid Strategy for Dynamic LLM Recommendation Updates",
-        "summary": "Large Language Models (LLMs) empower recommendation systems through their advanced reasoning and planning capabilities. However, the dynamic nature of user interests and content poses a significant challenge: While initial fine-tuning aligns LLMs with domain knowledge and user preferences, it fails to capture such real-time changes, necessitating robust update mechanisms. This paper investigates strategies for updating LLM-powered recommenders, focusing on the trade-offs between ongoing fine-tun",
-        "link": "http://arxiv.org/abs/2510.20260v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2510.18104",
-        "arxiv_id": "2510.18104",
-        "title": "From AutoRecSys to AutoRecLab: A Call to Build, Evaluate, and Govern Autonomous Recommender-Systems Research Labs",
-        "summary": "Recommender-systems research has accelerated model and evaluation advances, yet largely neglects automating the research process itself. We argue for a shift from narrow AutoRecSys tools -- focused on algorithm selection and hyper-parameter tuning -- to an Autonomous Recommender-Systems Research Lab (AutoRecLab) that integrates end-to-end automation: problem ideation, literature analysis, experimental design and execution, result interpretation, manuscript drafting, and provenance logging. Drawi",
-        "link": "http://arxiv.org/abs/2510.18104v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2510.14704",
-        "arxiv_id": "2510.14704",
-        "title": "Dataset Pruning in RecSys and ML: Best Practice or Mal-Practice?",
-        "summary": "Offline evaluations in recommender system research depend heavily on datasets, many of which are pruned, such as the widely used MovieLens collections. This thesis examines the impact of data pruning - specifically, removing users with fewer than a specified number of interactions - on both dataset characteristics and algorithm performance. Five benchmark datasets were analysed in both their unpruned form and at five successive pruning levels (5, 10, 20, 50, 100). For each coreset, we examined s",
-        "link": "http://arxiv.org/abs/2510.14704v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2510.13359",
-        "arxiv_id": "2510.13359",
-        "title": "Improving Visual Recommendation on E-commerce Platforms Using Vision-Language Models",
-        "summary": "On large-scale e-commerce platforms with tens of millions of active monthly users, recommending visually similar products is essential for enabling users to efficiently discover items that align with their preferences. This study presents the application of a vision-language model (VLM) -- which has demonstrated strong performance in image recognition and image-text retrieval tasks -- to product recommendations on Mercari, a major consumer-to-consumer marketplace used by more than 20 million mon",
-        "link": "http://arxiv.org/abs/2510.13359v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2510.13229",
-        "arxiv_id": "2510.13229",
-        "title": "Beyond Static LLM Policies: Imitation-Enhanced Reinforcement Learning for Recommendation",
-        "summary": "Recommender systems (RecSys) have become critical tools for enhancing user engagement by delivering personalized content across diverse digital platforms. Recent advancements in large language models (LLMs) demonstrate significant potential for improving RecSys, primarily due to their exceptional generalization capabilities and sophisticated contextual understanding, which facilitate the generation of flexible and interpretable recommendations. However, the direct deployment of LLMs as primary r",
-        "link": "http://arxiv.org/abs/2510.13229v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2510.11402",
-        "arxiv_id": "2510.11402",
-        "title": "On Inherited Popularity Bias in Cold-Start Item Recommendation",
-        "summary": "Collaborative filtering (CF) recommender systems struggle with making predictions on unseen, or 'cold', items. Systems designed to address this challenge are often trained with supervision from warm CF models in order to leverage collaborative and content information from the available interaction data. However, since they learn to replicate the behavior of CF methods, cold-start models may therefore also learn to imitate their predictive biases. In this paper, we show that cold-start systems ca",
-        "link": "http://arxiv.org/abs/2510.11402v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2510.06657",
-        "arxiv_id": "2510.06657",
-        "title": "LLM-Powered Nuanced Video Attribute Annotation for Enhanced Recommendations",
-        "summary": "This paper presents a case study on deploying Large Language Models (LLMs) as an advanced \"annotation\" mechanism to achieve nuanced content understanding (e.g., discerning content \"vibe\") at scale within a large-scale industrial short-form video recommendation system. Traditional machine learning classifiers for content understanding face protracted development cycles and a lack of deep, nuanced comprehension. The \"LLM-as-annotators\" approach addresses these by significantly shortening developme",
-        "link": "http://arxiv.org/abs/2510.06657v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.18980",
-        "arxiv_id": "2509.18980",
-        "title": "From latent factors to language: a user study on LLM-generated explanations for an inherently interpretable matrix-based recommender system",
-        "summary": "We investigate whether large language models (LLMs) can generate effective, user-facing explanations from a mathematically interpretable recommendation model. The model is based on constrained matrix factorization, where user types are explicitly represented and predicted item scores share the same scale as observed ratings, making the model's internal representations and predicted scores directly interpretable. This structure is translated into natural language explanations using carefully desi",
-        "link": "http://arxiv.org/abs/2509.18980v2",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.20381",
-        "arxiv_id": "2509.20381",
-        "title": "USB-Rec: An Effective Framework for Improving Conversational Recommendation Capability of Large Language Model",
-        "summary": "Recently, Large Language Models (LLMs) have been widely employed in Conversational Recommender Systems (CRSs). Unlike traditional language model approaches that focus on training, all existing LLMs-based approaches are mainly centered around how to leverage the summarization and analysis capabilities of LLMs while ignoring the issue of training. Therefore, in this work, we propose an integrated training-inference framework, User-Simulator-Based framework (USB-Rec), for improving the performance ",
-        "link": "http://arxiv.org/abs/2509.20381v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.13001",
-        "arxiv_id": "2509.13001",
-        "title": "Green Recommender Systems: Understanding and Minimizing the Carbon Footprint of AI-Powered Personalization",
-        "summary": "As global warming soars, the need to assess and reduce the environmental impact of recommender systems is becoming increasingly urgent. Despite this, the recommender systems community hardly understands, addresses, and evaluates the environmental impact of their work. In this study, we examine the environmental impact of recommender systems research by reproducing typical experimental pipelines. Based on our results, we provide guidelines for researchers and practitioners on how to minimize the ",
-        "link": "http://arxiv.org/abs/2509.13001v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.12382",
-        "arxiv_id": "2509.12382",
-        "title": "LLM-as-a-Judge: Rapid Evaluation of Legal Document Recommendation for Retrieval-Augmented Generation",
-        "summary": "The evaluation bottleneck in recommendation systems has become particularly acute with the rise of Generative AI, where traditional metrics fall short of capturing nuanced quality dimensions that matter in specialized domains like legal research. Can we trust Large Language Models to serve as reliable judges of their own kind? This paper investigates LLM-as-a-Judge as a principled approach to evaluating Retrieval-Augmented Generation systems in legal contexts, where the stakes of recommendation ",
-        "link": "http://arxiv.org/abs/2509.12382v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.11080",
-        "arxiv_id": "2509.11080",
-        "title": "Membership Inference Attacks on Recommender System: A Survey",
-        "summary": "Recommender systems (RecSys) have been widely applied to various applications, including E-commerce, finance, healthcare, social media and have become increasingly influential in shaping user behavior and decision-making, highlighting their growing impact in various domains. However, recent studies have shown that RecSys are vulnerable to membership inference attacks (MIAs), which aim to infer whether user interaction record was used to train a target model or not. MIAs on RecSys models can dire",
-        "link": "http://arxiv.org/abs/2509.11080v3",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.10392",
-        "arxiv_id": "2509.10392",
-        "title": "Diversified recommendations of cultural activities with personalized determinantal point processes",
-        "summary": "While optimizing recommendation systems for user engagement is a well-established practice, effectively diversifying recommendations without negatively impacting core business metrics remains a significant industry challenge. In line with our initiative to broaden our audience's cultural practices, this study investigates using personalized Determinantal Point Processes (DPPs) to sample diverse and relevant recommendations. We rely on a well-known quality-diversity decomposition of the similarit",
-        "link": "http://arxiv.org/abs/2509.10392v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.06475",
-        "arxiv_id": "2509.06475",
-        "title": "Explained, yet misunderstood: How AI Literacy shapes HR Managers' interpretation of User Interfaces in Recruiting Recommender Systems",
-        "summary": "AI-based recommender systems increasingly influence recruitment decisions. Thus, transparency and responsible adoption in Human Resource Management (HRM) are critical. This study examines how HR managers' AI literacy influences their subjective perception and objective understanding of explainable AI (XAI) elements in recruiting recommender dashboards. In an online experiment, 410 German-based HR managers compared baseline dashboards to versions enriched with three XAI styles: important features",
-        "link": "http://arxiv.org/abs/2509.06475v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.05564",
-        "arxiv_id": "2509.05564",
-        "title": "Knowledge-Augmented Relation Learning for Complementary Recommendation with Large Language Models",
-        "summary": "Complementary recommendations play a crucial role in e-commerce by enhancing user experience through suggestions of compatible items. Accurate classification of complementary item relationships requires reliable labels, but their creation presents a dilemma. Behavior-based labels are widely used because they can be easily generated from interaction logs; however, they often contain significant noise and lack reliability. While function-based labels (FBLs) provide high-quality definitions of comp",
-        "link": "http://arxiv.org/abs/2509.05564v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.05460",
-        "arxiv_id": "2509.05460",
-        "title": "Calibrated Recommendations with Contextual Bandits",
-        "summary": "Spotify's Home page features a variety of content types, including music, podcasts, and audiobooks. However, historical data is heavily skewed toward music, making it challenging to deliver a balanced and personalized content mix. Moreover, users' preference towards different content types may vary depending on the time of day, the day of week, or even the device they use. We propose a calibration method that leverages contextual bandits to dynamically learn each user's optimal content type dist",
-        "link": "http://arxiv.org/abs/2509.05460v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.03764",
-        "arxiv_id": "2509.03764",
-        "title": "LLM-based Relevance Assessment for Web-Scale Search Evaluation at Pinterest",
-        "summary": "Relevance evaluation plays a crucial role in personalized search systems to ensure that search results align with a user's queries and intent. While human annotation is the traditional method for relevance evaluation, its high cost and long turnaround time limit its scalability. In this work, we present our approach at Pinterest Search to automate relevance evaluation for online experiments using fine-tuned LLMs. We rigorously validate the alignment between LLM-generated judgments and human anno",
-        "link": "http://arxiv.org/abs/2509.03764v2",
+        "id": "6c2d45517189fa65859703b01bc8b0a3f6b90d4d",
+        "arxiv_id": "",
+        "title": "Beyond Aggregation: A Feature-Fused Universal Behavioral Transformer for Generalizable User Representation",
+        "summary": "Modern enterprises require robust predictive analytics, yet tasks like churn prediction and propensity modeling are often treated as isolated problems. The ACM RecSys Challenge 2025 addressed this by proposing a unified task to create generalizable user profiles from a large-scale behavioral dataset provided by Synerise. This paper presents the 4th-place solution in the academic track from team \"ririka\". Our approach centers on creating a powerful, hybrid Universal Behavioral Profile by fusing a",
+        "link": "https://www.semanticscholar.org/paper/6c2d45517189fa65859703b01bc8b0a3f6b90d4d",
         "conference": "RecSys",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
-        "id": "2509.03696",
-        "arxiv_id": "2509.03696",
-        "title": "LLMs for estimating positional bias in logged interaction data",
-        "summary": "Recommender and search systems commonly rely on Learning To Rank models trained on logged user interactions to order items by predicted relevance. However, such interaction data is often subject to position bias, as users are more likely to click on items that appear higher in the ranking, regardless of their actual relevance. As a result, newly trained models may inherit and reinforce the biases of prior ranking models rather than genuinely improving relevance. A standard approach to mitigate p",
-        "link": "http://arxiv.org/abs/2509.03696v1",
+        "id": "0310ef9f8e1a89dc48ae9a54563ee5dd94817288",
+        "arxiv_id": "",
+        "title": "Privacy and Security Threats of Recommendation Systems: Awareness and Perspective of Users of Bangladesh",
+        "summary": "One of the most significant and ongoing concerns in the field of information management is the leakage of private information through the recommendation system (RecSys). The growing number of platforms that demand personal information from users draws attention to the shortcomings of earlier studies, which mostly concentrated on voluntary information sharing. The user disclosure behaviour for private information that we define in this study involves not only voluntary sharing but also mandatory ",
+        "link": "https://www.semanticscholar.org/paper/0310ef9f8e1a89dc48ae9a54563ee5dd94817288",
+        "conference": "RecSys",
+        "year": 2025,
+        "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
+        "type": "conference_paper"
+      },
+      {
+        "id": "1fb66d775e0879cbfe941581166fadec7e8873b7",
+        "arxiv_id": "",
+        "title": "Toward Universal User Representations: Contrastive Learning with Transformers and Embedding Ensembles",
+        "summary": "Traditional recommender systems are usually engineered for one of several objectives; predicting clicks, conversions, or churn depend on bespoke feature engineering that limits reuse and overlooks broader behavioral patterns. The RecSys Challenge 20251, organized by Synerise, tackles this shortcoming by introducing Universal Behavioral Profiles, a unified user representation framework meant to generalize across many downstream tasks. This paper presents the winning approach of the “rec2” team fo",
+        "link": "https://www.semanticscholar.org/paper/1fb66d775e0879cbfe941581166fadec7e8873b7",
         "conference": "RecSys",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
-        "id": "2509.03456",
-        "arxiv_id": "2509.03456",
-        "title": "Off-Policy Learning in Large Action Spaces: Optimization Matters More Than Estimation",
-        "summary": "Off-policy evaluation (OPE) and off-policy learning (OPL) are foundational for decision-making in offline contextual bandits. Recent advances in OPL primarily optimize OPE estimators with improved statistical properties, assuming that better estimators inherently yield superior policies. Although theoretically justified, we argue this estimator-centric approach neglects a critical practical obstacle: challenging optimization landscapes. In this paper, we provide theoretical insights and extensiv",
-        "link": "http://arxiv.org/abs/2509.03456v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "other",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.02942",
-        "arxiv_id": "2509.02942",
-        "title": "RankGraph: Unified Heterogeneous Graph Learning for Cross-Domain Recommendation",
-        "summary": "Cross-domain recommendation systems face the challenge of integrating fine-grained user and item relationships across various product domains. To address this, we introduce RankGraph, a scalable graph learning framework designed to serve as a core component in recommendation foundation models (FMs). By constructing and leveraging graphs composed of heterogeneous nodes and edges across multiple products, RankGraph enables the integration of complex relationships between users, posts, ads, and oth",
-        "link": "http://arxiv.org/abs/2509.02942v1",
+        "id": "8333cff023d52e6f75c293bb46dcb9103cc8635a",
+        "arxiv_id": "",
+        "title": "Software Testing in Recommender Systems: A Systematic Mapping Study",
+        "summary": "Recommender systems (RecSys) are essential components in modern web platforms, providing users with personalized suggestions based on preferences, behavior, or context. While significant attention has been given to evaluating RecSys performance using metrics such as precision and recall, formal software testing practices remain largely overlooked. This paper presents a systematic mapping study (SMS) aimed at identifying the types of software tests applied in RecSys, the preparatory activities in",
+        "link": "https://www.semanticscholar.org/paper/8333cff023d52e6f75c293bb46dcb9103cc8635a",
         "conference": "RecSys",
         "year": 2025,
         "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.02890",
-        "arxiv_id": "2509.02890",
-        "title": "Grocery to General Merchandise: A Cross-Pollination Recommender using LLMs and Real-Time Cart Context",
-        "summary": "Modern e-commerce platforms strive to enhance customer experience by providing timely and contextually relevant recommendations. However, recommending general merchandise to customers focused on grocery shopping -- such as pairing milk with a milk frother -- remains a critical yet under-explored challenge. This paper introduces a cross-pollination (XP) framework, a novel approach that bridges grocery and general merchandise cross-category recommendations by leveraging multi-source product associ",
-        "link": "http://arxiv.org/abs/2509.02890v2",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.02266",
-        "arxiv_id": "2509.02266",
-        "title": "Leveraging Media Frames to Improve Normative Diversity in News Recommendations",
-        "summary": "Click-based news recommender systems suggest users content that aligns with their existing history, limiting the diversity of articles they encounter. Recent advances in aspect-based diversification -- adding features such as sentiments or news categories (e.g. world, politics) -- have made progress toward diversifying recommendations in terms of perspectives. However, these approaches often overlook the role of news framing, which shapes how stories are told by emphasizing specific angles or in",
-        "link": "http://arxiv.org/abs/2509.02266v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.02220",
-        "arxiv_id": "2509.02220",
-        "title": "Towards Multi-Aspect Diversification of News Recommendations Using Neuro-Symbolic AI for Individual and Societal Benefit",
-        "summary": "News recommendations are complex, with diversity playing a vital role. So far, existing literature predominantly focuses on specific aspects of news diversity, such as viewpoints. In this paper, we introduce multi-aspect diversification in four distinct recommendation modes and outline the nuanced challenges in diversifying lists, sequences, summaries, and interactions. Our proposed research direction combines symbolic and subsymbolic artificial intelligence, leveraging both knowledge graphs and",
-        "link": "http://arxiv.org/abs/2509.02220v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2510.01196",
-        "arxiv_id": "2510.01196",
-        "title": "Location Matters: Leveraging Multi-Resolution Geo-Embeddings for Housing Search",
-        "summary": "QuintoAndar Group is Latin America's largest housing platform, revolutionizing property rentals and sales. Headquartered in Brazil, it simplifies the housing process by eliminating paperwork and enhancing accessibility for tenants, buyers, and landlords. With thousands of houses available for each city, users struggle to find the ideal home. In this context, location plays a pivotal role, as it significantly influences property value, access to amenities, and life quality. A great location can m",
-        "link": "http://arxiv.org/abs/2510.01196v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "llm",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.00333",
-        "arxiv_id": "2509.00333",
-        "title": "Counterfactual Risk Minimization with IPS-Weighted BPR and Self-Normalized Evaluation in Recommender Systems",
-        "summary": "Learning and evaluating recommender systems from logged implicit feedback is challenging due to exposure bias. While inverse propensity scoring (IPS) corrects this bias, it often suffers from high variance and instability. In this paper, we present a simple and effective pipeline that integrates IPS-weighted training with an IPS-weighted Bayesian Personalized Ranking (BPR) objective augmented by a Propensity Regularizer (PR). We compare Direct Method (DM), IPS, and Self-Normalized IPS (SNIPS) fo",
-        "link": "http://arxiv.org/abs/2509.00333v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
-        "type": "conference_paper"
-      },
-      {
-        "id": "2509.00199",
-        "arxiv_id": "2509.00199",
-        "title": "Algorithm Adaptation Bias in Recommendation System Online Experiments",
-        "summary": "Online experiments (A/B tests) are widely regarded as the gold standard for evaluating recommender system variants and guiding launch decisions. However, a variety of biases can distort the results of the experiment and mislead decision-making. An underexplored but critical bias is algorithm adaptation effect. This bias arises from the flywheel dynamics among production models, user data, and training pipelines: new models are evaluated on user data whose distributions are shaped by the incumben",
-        "link": "http://arxiv.org/abs/2509.00199v1",
-        "conference": "RecSys",
-        "year": 2025,
-        "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       }
     ],
@@ -475,6 +221,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -486,6 +234,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -497,6 +247,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -508,6 +260,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 5,
         "type": "conference_paper"
       },
       {
@@ -519,6 +273,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -530,6 +286,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -541,6 +299,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "other",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -552,6 +312,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -563,6 +325,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -574,6 +338,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -585,6 +351,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -596,6 +364,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -607,6 +377,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -618,6 +390,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -629,6 +403,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -640,6 +416,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -651,6 +429,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -662,6 +442,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -673,6 +455,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -684,6 +468,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -695,6 +481,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -706,6 +494,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -717,6 +507,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "agent",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -728,6 +520,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -739,6 +533,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -750,6 +546,8 @@
         "conference": "WSDM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       }
     ],
@@ -763,6 +561,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -774,6 +574,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "other",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -785,6 +587,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -796,6 +600,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -807,6 +613,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -818,6 +626,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -829,6 +639,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -840,6 +652,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -851,6 +665,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -862,6 +678,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -873,6 +691,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -884,6 +704,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -895,6 +717,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -906,6 +730,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -917,6 +743,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 4,
         "type": "conference_paper"
       },
       {
@@ -928,6 +756,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -939,6 +769,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -950,6 +782,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -961,6 +795,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "other",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -972,6 +808,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -983,6 +821,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -994,6 +834,8 @@
         "conference": "KDD",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       }
     ],
@@ -1007,6 +849,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 4,
         "type": "conference_paper"
       },
       {
@@ -1018,6 +862,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1029,6 +875,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -1040,6 +888,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1051,6 +901,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1062,6 +914,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1073,6 +927,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1084,6 +940,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1095,6 +953,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1106,6 +966,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1117,6 +979,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 4,
         "type": "conference_paper"
       },
       {
@@ -1128,6 +992,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1139,6 +1005,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -1150,6 +1018,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1161,6 +1031,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "agent",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1172,6 +1044,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1183,6 +1057,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1194,6 +1070,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1205,6 +1083,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1216,6 +1096,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1227,6 +1109,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1238,6 +1122,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1249,6 +1135,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1260,6 +1148,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1271,6 +1161,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1282,6 +1174,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1293,6 +1187,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1304,6 +1200,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1315,6 +1213,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "other",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1326,6 +1226,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1337,6 +1239,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1348,6 +1252,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -1359,6 +1265,8 @@
         "conference": "SIGIR",
         "year": 2025,
         "category": "agent",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       }
     ],
@@ -1372,6 +1280,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1383,6 +1293,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -1394,6 +1306,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 5,
         "type": "conference_paper"
       },
       {
@@ -1405,6 +1319,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1416,6 +1332,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1427,6 +1345,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -1438,6 +1358,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -1449,6 +1371,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1460,6 +1384,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1471,6 +1397,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1482,6 +1410,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1493,6 +1423,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1504,6 +1436,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1515,6 +1449,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1526,6 +1462,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1537,6 +1475,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "other",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1548,6 +1488,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1559,6 +1501,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1570,6 +1514,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1581,6 +1527,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1592,6 +1540,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1603,6 +1553,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1614,6 +1566,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1625,6 +1579,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1636,6 +1592,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1647,6 +1605,8 @@
         "conference": "WWW",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       }
     ],
@@ -1660,6 +1620,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1671,6 +1633,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "other",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1682,6 +1646,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "other",
+        "is_industry": true,
+        "industry_score": 5,
         "type": "conference_paper"
       },
       {
@@ -1693,6 +1659,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1704,6 +1672,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1715,6 +1685,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1726,6 +1698,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1737,6 +1711,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1748,6 +1724,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1759,6 +1737,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1770,6 +1750,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1781,6 +1763,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1792,6 +1776,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1803,6 +1789,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1814,6 +1802,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1825,6 +1815,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1836,6 +1828,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1847,6 +1841,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1858,6 +1854,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -1869,6 +1867,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1880,6 +1880,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1891,6 +1893,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1902,6 +1906,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1913,6 +1919,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -1924,6 +1932,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1935,6 +1945,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1946,6 +1958,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1957,6 +1971,8 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -1968,10 +1984,64 @@
         "conference": "CIKM",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       }
     ],
     "NeurIPS": [
+      {
+        "id": "3206bebb599d105e998c9bdb95a08ab5a3c65d5a",
+        "arxiv_id": "",
+        "title": "Usefulness of LLMs as an Author Checklist Assistant for Scientific Papers: NeurIPS'24 Experiment",
+        "summary": "Large language models (LLMs) represent a promising, but controversial, tool in aiding scientific peer review. This study evaluates the usefulness of LLMs in a conference setting as a tool for vetting paper submissions against submission standards. We conduct an experiment at the 2024 Neural Information Processing Systems (NeurIPS) conference, where 234 papers were voluntarily submitted to an\"LLM-based Checklist Assistant.\"This assistant validates whether papers adhere to the author checklist use",
+        "link": "https://www.semanticscholar.org/paper/3206bebb599d105e998c9bdb95a08ab5a3c65d5a",
+        "conference": "NeurIPS",
+        "year": 2024,
+        "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
+        "type": "conference_paper"
+      },
+      {
+        "id": "023e113b11ff7bac182713a069fedcbcccad9562",
+        "arxiv_id": "",
+        "title": "Monitoring AI-Modified Content at Scale: A Case Study on the Impact of ChatGPT on AI Conference Peer Reviews",
+        "summary": "We present an approach for estimating the fraction of text in a large corpus which is likely to be substantially modified or produced by a large language model (LLM). Our maximum likelihood model leverages expert-written and AI-generated reference texts to accurately and efficiently examine real-world LLM-use at the corpus level. We apply this approach to a case study of scientific peer review in AI conferences that took place after the release of ChatGPT: ICLR 2024, NeurIPS 2023, CoRL 2023 and ",
+        "link": "https://www.semanticscholar.org/paper/023e113b11ff7bac182713a069fedcbcccad9562",
+        "conference": "NeurIPS",
+        "year": 2024,
+        "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
+        "type": "conference_paper"
+      },
+      {
+        "id": "b88b25aba67d7a391eb480563fbfd5b4a6625444",
+        "arxiv_id": "",
+        "title": "Long Is More for Alignment: A Simple but Tough-to-Beat Baseline for Instruction Fine-Tuning",
+        "summary": "There is a consensus that instruction fine-tuning of LLMs requires high-quality data, but what are they? LIMA (NeurIPS 2023) and AlpaGasus (ICLR 2024) are state-of-the-art methods for selecting such high-quality examples, either via manual curation or using GPT-3.5-Turbo as a quality scorer. We show that the extremely simple baseline of selecting the 1,000 instructions with longest responses -- that intuitively contain more learnable information and are harder to overfit -- from standard dataset",
+        "link": "https://www.semanticscholar.org/paper/b88b25aba67d7a391eb480563fbfd5b4a6625444",
+        "conference": "NeurIPS",
+        "year": 2024,
+        "category": "other",
+        "is_industry": false,
+        "industry_score": 0,
+        "type": "conference_paper"
+      },
+      {
+        "id": "61ae2d8da9c203ac3aa92a1fd677810e078e4116",
+        "arxiv_id": "",
+        "title": "Classifier-free guidance in LLMs Safety",
+        "summary": "The paper describes LLM unlearning without a retaining dataset, using the ORPO reinforcement learning method with inference enhanced by modified classifier-free guidance. Significant improvement in unlearning, without degradation of the model, is achieved through direct training on synthetic replacement data in CFG-aware training regime, with classifier-free guidance applied during the inference. This article is an extended version of the NeurIPS 2024 LLM-PC submission, which was awarded second ",
+        "link": "https://www.semanticscholar.org/paper/61ae2d8da9c203ac3aa92a1fd677810e078e4116",
+        "conference": "NeurIPS",
+        "year": 2024,
+        "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
+        "type": "conference_paper"
+      },
       {
         "id": "2604.12167",
         "arxiv_id": "2604.12167",
@@ -1981,6 +2051,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "agent",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -1992,6 +2064,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -2003,6 +2077,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -2014,6 +2090,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2025,6 +2103,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "other",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2036,6 +2116,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 5,
         "type": "conference_paper"
       },
       {
@@ -2047,6 +2129,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2058,6 +2142,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2069,6 +2155,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2080,6 +2168,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2091,6 +2181,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2102,6 +2194,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2113,6 +2207,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2124,6 +2220,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -2135,6 +2233,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2146,6 +2246,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -2157,6 +2259,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "other",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2168,6 +2272,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2179,6 +2285,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -2190,6 +2298,8 @@
         "conference": "NeurIPS",
         "year": 2024,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       }
     ],
@@ -2203,6 +2313,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "agent",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2214,6 +2326,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2225,6 +2339,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "other",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -2236,6 +2352,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "other",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2247,6 +2365,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2258,6 +2378,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2269,6 +2391,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2280,6 +2404,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -2291,6 +2417,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "other",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2302,6 +2430,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "rec",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2313,6 +2443,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "agent",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2324,6 +2456,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2335,6 +2469,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 4,
         "type": "conference_paper"
       },
       {
@@ -2346,6 +2482,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2357,6 +2495,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2368,6 +2508,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "agent",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2379,6 +2521,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2390,6 +2534,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -2401,6 +2547,8 @@
         "conference": "ICML",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       }
     ],
@@ -2414,6 +2562,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "rec",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2425,6 +2575,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2436,6 +2588,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2447,6 +2601,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2458,6 +2614,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2469,6 +2627,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2480,6 +2640,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2491,6 +2653,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "agent",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2502,6 +2666,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2513,6 +2679,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2524,6 +2692,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -2535,6 +2705,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "agent",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2546,6 +2718,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2557,6 +2731,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       },
       {
@@ -2568,6 +2744,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2579,6 +2757,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -2590,6 +2770,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -2601,6 +2783,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 2,
         "type": "conference_paper"
       },
       {
@@ -2612,6 +2796,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "agent",
+        "is_industry": true,
+        "industry_score": 3,
         "type": "conference_paper"
       },
       {
@@ -2623,6 +2809,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": false,
+        "industry_score": 0,
         "type": "conference_paper"
       },
       {
@@ -2634,6 +2822,8 @@
         "conference": "ICLR",
         "year": 2025,
         "category": "llm",
+        "is_industry": true,
+        "industry_score": 1,
         "type": "conference_paper"
       }
     ]

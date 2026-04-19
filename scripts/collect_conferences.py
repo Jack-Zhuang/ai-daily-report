@@ -86,6 +86,16 @@ class ConferencePaperCollector:
             "llm", "large language model", "gpt", "bert", "transformer",
             "rag", "retrieval augmented", "prompt", "fine-tuning"
         ]
+        
+        # 工业界关键词
+        self.industry_keywords = [
+            "production", "industrial", "deploy", "deployment", "online",
+            "real-time", "realtime", "scalable", "large-scale", "distributed",
+            "A/B test", "experiment", "application", "system", "framework",
+            "efficiency", "optimization", "serving", "inference",
+            "alibaba", "amazon", "google", "meta", "microsoft", "netflix",
+            "bytedance", "tencent", "meituan", "baidu", "jd", "kuaishou"
+        ]
     
     def is_relevant(self, title: str) -> bool:
         """检查论文是否相关"""
@@ -107,6 +117,27 @@ class ConferencePaperCollector:
             return "llm"
         else:
             return "other"
+    
+    def is_industry_paper(self, title: str, summary: str = "") -> bool:
+        """判断是否为工业界论文"""
+        text = (title + ' ' + summary).lower()
+        
+        for kw in self.industry_keywords:
+            if kw.lower() in text:
+                return True
+        
+        return False
+    
+    def calculate_industry_score(self, title: str, summary: str = "") -> int:
+        """计算工业相关性分数"""
+        text = (title + ' ' + summary).lower()
+        score = 0
+        
+        for kw in self.industry_keywords:
+            if kw.lower() in text:
+                score += 1
+        
+        return min(score, 5)
     
     def fetch_from_arxiv(self, conference: str, year: int) -> List[Dict]:
         """从 arXiv 获取会议相关论文"""
@@ -149,6 +180,8 @@ class ConferencePaperCollector:
                         'conference': conference,
                         'year': year,
                         'category': self.categorize_paper(title),
+                        'is_industry': self.is_industry_paper(title, summary),
+                        'industry_score': self.calculate_industry_score(title, summary),
                         'type': 'conference_paper'
                     })
         except Exception as e:
@@ -201,6 +234,8 @@ class ConferencePaperCollector:
                         'conference': conference,
                         'year': year,
                         'category': self.categorize_paper(title),
+                        'is_industry': self.is_industry_paper(title, abstract),
+                        'industry_score': self.calculate_industry_score(title, abstract),
                         'type': 'conference_paper'
                     })
         except Exception as e:
@@ -243,6 +278,8 @@ class ConferencePaperCollector:
                         'conference': conference,
                         'year': year,
                         'category': self.categorize_paper(title),
+                        'is_industry': self.is_industry_paper(title, abstract),
+                        'industry_score': self.calculate_industry_score(title, abstract),
                         'type': 'conference_paper'
                     })
         except Exception as e:
@@ -309,10 +346,18 @@ class ConferencePaperCollector:
         
         # 统计
         total = sum(len(papers) for papers in all_papers.values())
+        industry_count = sum(1 for conf_papers in all_papers.values() for p in conf_papers if p.get('is_industry'))
+        
+        print(f"\n{'='*60}")
+        print(f"✅ 采集完成！")
+        print(f"{'='*60}")
+        
         print(f"\n📊 统计:")
         for conf, papers in all_papers.items():
-            print(f"  - {conf}: {len(papers)} 篇")
+            conf_industry = sum(1 for p in papers if p.get('is_industry'))
+            print(f"  - {conf}: {len(papers)} 篇 (工业界: {conf_industry} 篇)")
         print(f"\n  总计: {total} 篇")
+        print(f"  工业界相关: {industry_count} 篇 ({industry_count*100//total if total > 0 else 0}%)")
         print(f"\n📁 保存到: {output_file}")
         
         return all_papers

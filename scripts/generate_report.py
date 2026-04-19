@@ -76,8 +76,8 @@ class ReportGenerator:
         
         hot_articles = data.get('hot_articles', [])
         hot_articles = [item for item in hot_articles if item.get('cn_title', item.get('title', '')) not in pick_titles]
-        if len(hot_articles) > 10:
-            hot_articles = hot_articles[:10]
+        if len(hot_articles) > 15:
+            hot_articles = hot_articles[:15]
         
         # 5. 检查摘要是否为中文
         for item in daily_pick:

@@ -190,7 +190,7 @@ class ArticleCollector:
             
             items = self.parse_rss_xml(response.content)
             
-            for entry in items[:15]:
+            for entry in items[:15]:  # 每个源取最近15篇
                 title = entry.get('title', '')
                 link = entry.get('link', '')
                 summary = entry.get('summary', '')
@@ -310,26 +310,28 @@ class ArticleCollector:
         
         return unique[:30]
     
-    def get_hot_articles(self, limit: int = 10) -> list:
-        """获取热门文章（用于日报展示）"""
+    def get_hot_articles(self, limit: int = 15) -> list:
+        """获取热门文章（用于日报展示，共15篇）"""
         all_articles = self.collect_all_articles()
         
-        # 按分类筛选
+        # 按分类筛选，确保每个子tab都有内容
         hot_articles = []
-        categories_seen = set()
+        categories = {'wechat': [], 'tech_blog': [], 'industry': [], 'zhihu': [], 'other': []}
         
         for article in all_articles:
-            # 每个分类最多取3篇
             cat = article.get('category', 'other')
-            cat_count = sum(1 for a in hot_articles if a.get('category') == cat)
-            
-            if cat_count < 3:
-                hot_articles.append(article)
-            
-            if len(hot_articles) >= limit:
-                break
+            if cat in categories and len(categories[cat]) < 5:
+                categories[cat].append(article)
         
-        return hot_articles
+        # 合并，确保每个分类至少有1篇
+        for cat, articles in categories.items():
+            if articles:
+                hot_articles.extend(articles[:3])  # 每个分类最多3篇
+        
+        # 按时间排序
+        hot_articles.sort(key=lambda x: x.get('published', x.get('date', '')), reverse=True)
+        
+        return hot_articles[:limit]
 
 
 if __name__ == "__main__":

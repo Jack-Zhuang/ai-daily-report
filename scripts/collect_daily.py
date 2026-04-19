@@ -23,7 +23,7 @@ class ArxivCollector:
         self.today = datetime.now().strftime("%Y-%m-%d")
         
         # 采集配置
-        self.max_papers = 30  # 每天最多采集 30 篇
+        self.max_papers = 50  # 每天最多采集 50 篇
         self.max_days = 7     # 最近 7 天内的论文
         
         # 工业落地关键词（加分项）
@@ -89,6 +89,53 @@ class ArxivCollector:
                 score += 1
         
         return min(score, 5)  # 最高 5 分
+    
+    def calculate_paper_value(self, title: str, summary: str, published: str) -> float:
+        """
+        计算论文综合价值分数
+        综合考虑：工业落地、创新性、时效性、引用潜力
+        """
+        text = (title + ' ' + summary).lower()
+        
+        # 1. 工业落地分 (0-5)
+        industry_score = self.calculate_industry_score(title, summary)
+        
+        # 2. 创新性分 (0-5)
+        innovation_keywords = [
+            "novel", "new", "first", "propose", "introduce", "pioneer",
+            "breakthrough", "state-of-the-art", "sota", "outperform",
+            "创新", "首次", "突破", "超越"
+        ]
+        innovation_score = sum(1 for kw in innovation_keywords if kw in text)
+        innovation_score = min(innovation_score, 5)
+        
+        # 3. 时效性分 (0-5)
+        freshness_score = 5
+        if published:
+            try:
+                pub_date = datetime.strptime(published[:10], '%Y-%m-%d')
+                days_ago = (datetime.now() - pub_date).days
+                freshness_score = max(1, 5 - days_ago * 0.3)
+            except:
+                pass
+        
+        # 4. 热点话题分 (0-5)
+        hot_topics = [
+            "llm", "gpt", "chatgpt", "claude", "agent", "multi-agent",
+            "rag", "embedding", "multimodal", "personalization"
+        ]
+        hot_score = sum(1 for kw in hot_topics if kw in text)
+        hot_score = min(hot_score, 5)
+        
+        # 综合评分 (工业落地权重最高)
+        total_score = (
+            industry_score * 0.35 +    # 工业落地 35%
+            innovation_score * 0.25 +  # 创新性 25%
+            freshness_score * 0.20 +   # 时效性 20%
+            hot_score * 0.20           # 热点话题 20%
+        )
+        
+        return round(total_score, 2)
     
     def categorize_paper(self, title: str, summary: str) -> str:
         """对论文进行分类"""
@@ -172,6 +219,9 @@ class ArxivCollector:
                         # 计算工业落地分数
                         industry_score = self.calculate_industry_score(title, summary)
                         
+                        # 计算论文综合价值
+                        paper_value = self.calculate_paper_value(title, summary, published)
+                        
                         papers.append({
                             'id': arxiv_id,
                             'arxiv_id': arxiv_id,
@@ -181,6 +231,7 @@ class ArxivCollector:
                             'category': category,
                             'published': published,
                             'industry_score': industry_score,
+                            'paper_value': paper_value,
                             'type': 'paper'
                         })
                         
@@ -193,8 +244,8 @@ class ArxivCollector:
             except Exception as e:
                 print(f"❌ {e}")
         
-        # 按工业落地分数和发布时间排序
-        papers.sort(key=lambda x: (x.get('industry_score', 0), x.get('published', '')), reverse=True)
+        # 按论文综合价值排序
+        papers.sort(key=lambda x: x.get('paper_value', 0), reverse=True)
         
         # 限制数量
         papers = papers[:self.max_papers]
@@ -242,11 +293,12 @@ class ArxivCollector:
         if papers:
             self.save_papers(papers)
             
-            # 显示工业落地分数最高的论文
-            print(f"\n📊 工业落地相关性最高的论文:")
+            # 显示论文价值最高的论文
+            print(f"\n📊 论文价值最高的论文:")
             for i, p in enumerate(papers[:5], 1):
-                score = p.get('industry_score', 0)
-                print(f"  {i}. [{score}⭐] {p.get('title', '')[:50]}...")
+                value = p.get('paper_value', 0)
+                industry = p.get('industry_score', 0)
+                print(f"  {i}. [价值:{value} | 工业:{industry}⭐] {p.get('title', '')[:40]}...")
         
         return papers
 

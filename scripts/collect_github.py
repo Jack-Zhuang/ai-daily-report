@@ -33,13 +33,16 @@ class GitHubCollector:
             {"query": "recommendation system", "language": "python", "label": "rec"},
             {"query": "recommender system", "language": "python", "label": "rec"},
             {"query": "collaborative filtering", "language": "python", "label": "rec"},
+            {"query": "ctr prediction", "language": "python", "label": "rec"},
             # AI Agent
             {"query": "AI agent framework", "language": "python", "label": "agent"},
             {"query": "LLM agent", "language": "python", "label": "agent"},
             {"query": "autonomous agent", "language": "python", "label": "agent"},
+            {"query": "multi-agent system", "language": "python", "label": "agent"},
             # LLM
             {"query": "large language model", "language": "python", "label": "llm"},
             {"query": "RAG retrieval augmented", "language": "python", "label": "llm"},
+            {"query": "text embedding", "language": "python", "label": "llm"},
         ]
     
     def search_repos(self, query: str, language: str, label: str, max_results: int = 5) -> list:
@@ -96,7 +99,7 @@ class GitHubCollector:
             
             print(f"  🔍 搜索: {query} ({label})...", end=" ", flush=True)
             
-            repos = self.search_repos(query, language, label, max_results=3)
+            repos = self.search_repos(query, language, label, max_results=5)
             
             # 去重
             new_repos = []
@@ -116,8 +119,8 @@ class GitHubCollector:
         # 按星数排序
         all_repos.sort(key=lambda x: x.get("stars", 0), reverse=True)
         
-        # 取前 10 个
-        top_repos = all_repos[:10]
+        # 取前 20 个
+        top_repos = all_repos[:20]
         
         print(f"\n✅ 共采集 {len(top_repos)} 个热门项目")
         
