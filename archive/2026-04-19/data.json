@@ -2,23 +2,6 @@
   "date": "2026-04-19",
   "daily_pick": [
     {
-      "id": "2604.14572",
-      "arxiv_id": "2604.14572",
-      "title": "Don't Retrieve, Navigate: Distilling Enterprise Knowledge into Navigable Agent Skills for QA and RAG",
-      "summary": "Retrieval-Augmented Generation (RAG) grounds LLM responses in external evidence but treats the model as a passive consumer of search results: it never sees how the corpus is organized or what it has not yet retrieved, limiting its ability to backtrack or combine scattered evidence. We present Corpus2Skill, which distills a document corpus into a hierarchical skill directory offline and lets an LLM agent navigate it at serve time. The compilation pipeline iteratively clusters documents, generates",
-      "link": "http://arxiv.org/abs/2604.14572v1",
-      "category": "agent",
-      "published": "2026-04-16",
-      "industry_score": 0,
-      "paper_value": 1.42,
-      "type": "paper",
-      "cn_title": "Don't Retrieve, Navigate: Distilling Enterprise Knowledge into Navigable Agent Skills for QA and RAG",
-      "cn_summary": "检索增强生成（RAG）能够将大语言模型（LLM）的响应建立在外部证据之上，但存在根本性局限：模型被视为搜索结果的被动接收者，无法了解语料库的组织结构或尚未检索到的内容，从而限制了回溯和整合分散证据的能力。我们提出Corpus2Skill方法，将文档语料库离线编译为层级技能目录，使LLM代理在服务时能够主动导航该目录。该编译流程通过迭代聚类文档、生成技能描述并评估其效用，逐步构建可导航的知识结构。这",
-      "_score": 2.85,
-      "_type": "paper",
-      "_reason": "前沿论文 | Agent热点"
-    },
-    {
       "id": "a27148681f25",
       "title": "多云时代AI Agent治理难题，亚马逊云科技想用一个注册表解决",
       "summary": "亚马逊云科技近期在 Amazon Bedrock AgentCore\" 中以公开预览形式发布了 Agent Registry\"，为企业提供一个集中式目录，用于在组织内发现、共享并治理 AI Agent、工具、MCP 服务器以及 agent skills。该注册表可以索引运行在任何位置的 agent，无论是在 亚马逊云科技、其他云服务提供商，还是本地部署环境。它所解决的问题，对于任何见过 agent",
@@ -71,6 +54,23 @@
       "_score": 1.97,
       "_type": "article",
       "_reason": "技术文章"
+    },
+    {
+      "id": "2604.14572",
+      "arxiv_id": "2604.14572",
+      "title": "Don't Retrieve, Navigate: Distilling Enterprise Knowledge into Navigable Agent Skills for QA and RAG",
+      "summary": "Retrieval-Augmented Generation (RAG) grounds LLM responses in external evidence but treats the model as a passive consumer of search results: it never sees how the corpus is organized or what it has not yet retrieved, limiting its ability to backtrack or combine scattered evidence. We present Corpus2Skill, which distills a document corpus into a hierarchical skill directory offline and lets an LLM agent navigate it at serve time. The compilation pipeline iteratively clusters documents, generates",
+      "link": "http://arxiv.org/abs/2604.14572v1",
+      "category": "agent",
+      "published": "2026-04-16",
+      "industry_score": 0,
+      "paper_value": 1.42,
+      "type": "paper",
+      "cn_title": "Don't Retrieve, Navigate: Distilling Enterprise Knowledge into Navigable Agent Skills for QA and RAG",
+      "cn_summary": "检索增强生成（RAG）能够将大语言模型（LLM）的响应建立在外部证据之上，但存在根本性局限：模型被视为搜索结果的被动接收者，无法了解语料库的组织结构或尚未检索到的内容，从而限制了回溯和整合分散证据的能力。我们提出Corpus2Skill方法，将文档语料库离线编译为层级技能目录，使LLM代理在服务时能够主动导航该目录。该编译流程通过迭代聚类文档、生成技能描述并评估其效用，逐步构建可导航的知识结构。这",
+      "_score": 2.85,
+      "_type": "paper",
+      "_reason": "前沿论文 | Agent热点"
     },
     {
       "id": "552661142",

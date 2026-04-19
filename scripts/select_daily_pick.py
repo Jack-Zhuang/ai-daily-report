@@ -210,18 +210,10 @@ class DailyPickSelector:
         return sorted_projects[:count]
     
     def generate_daily_pick(self, data: Dict) -> List[Dict]:
-        """生成每日精选"""
+        """生成每日精选 - 顺序：3文章 + 1论文 + 1GitHub"""
         daily_pick = []
         
-        # 1. 筛选论文
-        papers = data.get("arxiv_papers", [])
-        selected_papers = self.select_papers(papers, self.pick_config["paper_count"])
-        for paper in selected_papers:
-            paper["_type"] = "paper"
-            paper["_reason"] = self._generate_reason(paper)
-            daily_pick.append(paper)
-        
-        # 2. 筛选文章
+        # 1. 先筛选文章（前3篇）
         articles = data.get("articles", data.get("hot_articles", []))
         selected_articles = self.select_articles(articles, self.pick_config["article_count"])
         for article in selected_articles:
@@ -229,7 +221,15 @@ class DailyPickSelector:
             article["_reason"] = self._generate_reason(article)
             daily_pick.append(article)
         
-        # 3. 筛选GitHub项目
+        # 2. 再筛选论文（第4篇）
+        papers = data.get("arxiv_papers", [])
+        selected_papers = self.select_papers(papers, self.pick_config["paper_count"])
+        for paper in selected_papers:
+            paper["_type"] = "paper"
+            paper["_reason"] = self._generate_reason(paper)
+            daily_pick.append(paper)
+        
+        # 3. 最后筛选GitHub项目（第5篇）
         projects = data.get("github_projects", [])
         selected_projects = self.select_github(projects, self.pick_config["github_count"])
         for project in selected_projects:

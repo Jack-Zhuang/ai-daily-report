@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LongAct: Harnessing Intrinsic Activation Patterns for Long-Context Reinforcement Learning - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.14922" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>LongAct：利用内在激活模式实现高效长上下文强化学习</h1>
+
+<strong>通过显著性引导的稀疏更新策略，让大模型在长上下文任务中实现高效训练</strong>
+
+
+<blockquote>📅 预计阅读：10分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.14922" target="_blank">2604.14922</a></p>
+
+
+<p>🏷️ 标签：<code>强化学习</code> | <code>大语言模型</code> | <code>长上下文处理</code> | <code>模型优化</code> | <code>稀疏更新</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：提出基于Q/K高幅度激活的显著性稀疏更新方法，显著提升长上下文RL训练效率。</li>
+<li><strong>核心贡献</strong>：首次发现LLM处理长上下文时的Q/K向量高幅度激活规律，并将其应用于RL训练的稀疏权重更新，实现高效优化。</li>
+<li><strong>实用价值</strong>：降低长上下文训练的计算开销，提升企业部署大模型处理长文档、长对话的业务效率。</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>近年来，强化学习（RL）已成为提升大语言模型（LLM）推理能力的关键技术。当前主流方法主要聚焦于奖励函数设计和训练数据合成两个方向，却忽略了一个重要维度——模型自身的内在表示特征。</p>
+
+<p>在处理长上下文任务（如长文档理解、代码补全、多轮对话）时，Transformer架构的计算开销随序列长度呈二次增长，这给RL训练带来了巨大挑战。同时，长上下文推理本身具有天然的稀疏性——并非所有token都对最终决策产生同等贡献。</p>
+
+<p>有趣的是，模型量化领域的研究早已发现：高幅度激活的权重往往承载着更关键的语义信息。这一发现为本文提供了重要启示。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>RL是提升LLM推理能力的关键，但现有方法忽视模型内在表示特征</li>
+<li>长上下文处理面临计算效率与稀疏性的双重挑战</li>
+<li>模型量化的洞察：高幅度激活权重具有更高重要性</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>LongAct核心思想是识别并仅更新与高幅度激活相关的关键权重，而非传统方法中对所有参数进行均匀更新。</p>
+
+
+<h3>详细设计</h3>
+
+<p>LongAct的完整流程分为三个阶段：</p>
+
+<strong>阶段一：激活分析</strong>
+<p>在前向传播过程中，首先计算query（Q）和key（K）向量在各层的激活值分布。观察发现，处理长上下文时，某些位置的Q/K激活幅度显著高于平均水平，这些位置对应的权重对模型行为影响更大。</p>
+
+<strong>阶段二：显著性计算</strong>
+<p>对于每个权重参数w，LongAct计算其与高幅度激活的关联程度。具体而言，通过追踪激活梯度或分析权重-激活的统计关系，生成一个显著性分数s(w)。显著性分数高的权重被认为对模型输出有更大影响。</p>
+
+<strong>阶段三：稀疏更新</strong>
+<p>根据预设的稀疏率λ（通常λ∈[0.01, 0.3]），选择top-k权重进行更新：k=⌊λD⌋，其中D为总参数量。更新公式仅应用于选中的权重子集，其余参数保持冻结。</p>
+
+<p>这一设计基于两个假设：（1）高幅度Q/K激活驱动的权重是模型学习长依赖关系的关键；（2）长上下文推理的稀疏结构允许我们安全地跳过大部分不重要的更新。</p>
+
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| 激活分析器 | 实时监控Q/K向量的激活幅度，识别高幅度位置 |</p>
+<p>| 显著性计算器 | 基于激活-权重关联度计算每个参数的显著性分数 |</p>
+<p>| 稀疏更新器 | 根据top-k策略选择性更新显著性最高的权重子集 |</p>
+
+<h3>💻 代码示例</h3>
+
+<p>``<code>python</p>
+<p>import torch</p>
+<p>import torch.nn as nn</p>
+
+<p>class LongActSparseUpdater:</p>
+<p>"""</p>
+<p>LongAct: 稀疏权重更新策略</p>
+<p>三个阶段：激活分析 -> 显著性计算 -> 稀疏更新</p>
+<p>"""</p>
+
+<p>def __init__(self, model, sparse_rate=0.1):</p>
+<p>self.model = model</p>
+<p>self.sparse_rate = sparse_rate  # λ: 稀疏率 [0.01, 0.3]</p>
+<p>self.significance_scores = {}</p>
+
+<p># ========== 阶段一：激活分析 ==========</p>
+<p>def analyze_activations(self, input_ids, attention_mask=None):</p>
+<p>"""计算Q/K在各层的激活值分布，识别高幅度位置"""</p>
+
+<p>activations = {}</p>
+
+<p>def hook_fn(module, input, output):</p>
+<p># 假设 module 是 Attention 层</p>
+<p># 简化：output[0] 是 attention 输出</p>
+<p># 实际中需要从 forward 中获取 Q, K</p>
+<p>qkv = module.qkv(output)  # 伪代码</p>
+<p>q, k, v = qkv.split(module.head_dim, dim=-1)</p>
+
+<p># 计算激活幅度（取平均或最大值）</p>
+<p>activation = torch.abs(q) + torch.abs(k)  # |Q| + |K|</p>
+<p>activations[module.name] = activation</p>
+
+<p>return output</p>
+
+<p>return activations  # {layer_name: activation_tensor}</p>
+
+<p># ========== 阶段二：显著性计算 ==========</p>
+<p>def compute_significance(self, activations):</p>
+<p>"""计算每个权重参数的显著性分数 s(w)"""</p>
+
+<p>significance_scores = {}</p>
+
+<p>for name, param in self.model.named_parameters():</p>
+<p>if 'weight' not in name:</p>
+<p>continue</p>
+
+<p># 简化：显著性 = 权重幅度 × 关联激活的平均幅度</p>
+<p>weight_magnitude = torch.abs(param.data)</p>
+
+<p># 找到该权重对应的激活（简化处理）</p>
+<p>related_activation = self._get_related_activation(name, activations)</p>
+
+<p>if related_activation is not None:</p>
+<p># 计算显著性分数</p>
+<p>s_w = weight_magnitude * related_activation.mean()</p>
+<p>significance_scores[name] = s_w</p>
+<p>else:</p>
+<p>significance_scores[name] = weight_magnitude</p>
+
+<p>self.significance_scores = significance_scores</p>
+<p>return significance_scores</p>
+
+<p>def _get_related_activation(self, param_name, activations):</p>
+<p>"""伪代码：根据参数名找到关联的激活值"""</p>
+<p>return activations.get(param_name.split('.')[0], None)</p>
+
+<p># ========== 阶段三：稀疏更新 ==========</p>
+<p>def select_and_update(self, gradients, learning_rate):</p>
+<p>"""</p>
+<p>根据显著性分数选择 top-k 权重进行更新</p>
+
+<p>k = ⌊λD⌋, D 为总参数量</p>
+<p>"""</p>
+
+<p>D = sum(p.numel() for p in self.model.parameters())  # 总参数量</p>
+<p>k = int(self.sparse_rate * D)  # 需要更新的参数量</p>
+
+<p># 展平所有显著性分数</p>
+<p>all_scores = []</p>
+<p>all_grads = []</p>
+<p>param_names = []</p>
+
+<p>for name, score in self.significance_scores.items():</p>
+<p>all_scores.append(score.flatten())</p>
+<p>all_grads.append(gradients[name].flatten())</p>
+<p>param_names.append(name)</p>
+
+<p>all_scores = torch.cat(all_scores)</p>
+<p>all_grads = torch.cat(all_grads)</p>
+
+<p># 选择 top-k 显著性的位置</p>
+<p>_, topk_indices = torch.topk(all_scores, k=min(k, len(all_scores)))</p>
+
+<p># 仅更新选中的权重</p>
+<p>updated_count = 0</p>
+<p>offset = 0</p>
+
+<p>for name, param in self.model.named_parameters():</p>
+<p>if name not in self.significance_scores:</p>
+<p>continue</p>
+
+<p>grad_shape = gradients[name].shape</p>
+<p>grad_flat = gradients[name].flatten()</p>
+
+<p># 创建掩码：1表示需要更新</p>
+<p>mask = torch.zeros_like(grad_flat, dtype=torch.bool)</p>
+<p>local_indices = topk_indices[(topk_indices >= offset) &</p>
+<p>(topk_indices < offset + len(grad_flat))]</p>
+<p>if len(local_indices) > 0:</p>
+<p>mask[local_indices - offset] = True</p>
+
+<p># 应用更新</p>
+<p>param.data -= learning_rate <em> grad_flat </em> mask.float()</p>
+<p>updated_count += mask.sum().item()</p>
+
+<p>offset += len(grad_flat)</p>
+
+<p>print(f"[LongAct] 总参数量: {D}, 稀疏率: {self.sparse_rate}, "</p>
+<p>f"更新参数量: {updated_count} ({100*updated_count/D:.2f}%)")</p>
+
+<p>return updated_count</p>
+
+<p># ========== 完整训练步骤 ==========</p>
+<p>def training_step(self, batch, learning_rate=1e-4):</p>
+<p>"""整合三个阶段的完整训练流程"""</p>
+
+<p>input_ids, labels = batch</p>
+
+<p># 阶段一：前向传播 + 激活分析</p>
+<p>activations = self.analyze_activations(input_ids)</p>
+
+<p># 前向传播获取损失</p>
+<p>output = self.model(input_ids)</p>
+<p>loss = nn.functional.cross_entropy(output, labels)</p>
+
+<p># 反向传播</p>
+<p>loss.backward()</p>
+
+<p># 收集梯度</p>
+<p>gradients = {name: p.grad.clone()</p>
+<p>for name, p in self.model.named_parameters()</p>
+<p>if p.grad is not None}</p>
+
+<p># 阶段二：计算显著性分数</p>
+<p>self.compute_significance(activations)</p>
+
+<p># 阶段三：稀疏更新</p>
+<p>self.select_and_update(gradients, learning_rate)</p>
+
+<p># 清零标准梯度（因为已手动应用）</p>
+<p>self.model.zero_grad()</p>
+
+<p>return loss</p>
+
+
+<h1>============ 使用示例（伪代码风格）============</h1>
+
+<h1>初始化</h1>
+<p>model = nn.TransformerEncoder(</p>
+<p>nn.TransformerEncoderLayer(d_model=512, nhead=8),</p>
+<p>num_layers=6</p>
+<p>)</p>
+<p>longact = LongActSparseUpdater(model, sparse_rate=0.1)</p>
+
+<h1>模拟训练循环</h1>
+<p>for epoch in range(10):</p>
+<p>for batch in dataloader:  # 伪代码</p>
+<p>loss = longact.training_step(batch)</p>
+<p>print(f"Epoch {epoch}, Loss: {loss.item():.4f}")</p>
+</code>`<code>
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>\text{where}\quad &k = \lfloor \lambda D \rfloor \text{ is determined by the sparsity.}</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：where k = ⌊λD⌋is determined by the sparsity
+
+<strong>公式 2</strong>：
+
+<p>$$</p>
+</code>`<code>latex
+<p>\begin{align}</p>
+<p>\text{and Top‑}k\text{ selection are per‑group}</p>
+<p>\end{align}</p>
+</code>``
+<p>$$</p>
+
+<em>含义</em>：and Top-k selection are per-
+
+<strong>公式 3</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>\text{the officially re-}</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：the officially re-
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：RULER benchmark（专门评估长上下文理解能力的基准数据集）
+
+<strong>评价指标</strong>：任务准确率、训练效率（FLOPs reduction）、收敛速度
+
+<strong>主要结果</strong>：
+
+<p>在Qwen3-8B模型上，LongAct展现出显著优势：使用约30%的稀疏度即可达到与全参数更新相当的任务性能，同时将计算开销降低至原来的约35%。在RULER基准的多个长上下文任务（如大海捞针、多跳推理）中，LongAct在保持性能的同时实现了3倍以上的训练加速。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ Q/K向量的高幅度激活呈现明显的层级和位置分布规律</li>
+<li>✅ 稀疏率λ=0.1时性能与全更新最接近，λ过大或过小都会导致性能下降</li>
+<li>✅ 不同层的权重显著性差异显著，浅层倾向于更高的稀疏率容忍度</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 首次利用Q/K激活模式指导RL训练 | 突破传统均匀更新的范式，首次系统性分析长上下文中Q/K激活的分布规律，并将其应用于训练优化 |</p>
+<p>| 建立量化研究与RL训练的跨领域桥梁 | 借鉴模型量化中高幅度激活关键性的洞察，创造性地应用于强化学习的策略优化 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 法律文档分析：处理数百页的合同审查</li>
+<li>🎯 医疗病历理解：整合多轮问诊记录进行诊断辅助</li>
+<li>🎯 代码仓库理解：基于整个代码库的智能补全与审查</li>
+<li>🎯 长文本摘要与问答：处理整本书籍级别的阅读理解</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 显著性计算引入额外开销，需优化为O(1)级别</li>
+<li>⚠️ 不同模型架构（MoE/Dense）需要重新标定稀疏率</li>
+<li>⚠️ 生产环境中的动态上下文长度变化需要自适应调整</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>实现时可在LLM的attention层后插入hook，提取Q/K激活矩阵，计算行/列方向的L2范数作为显著性代理。具体步骤：① hook注册② 激活采集③ Top-k筛选④ 梯度掩码应用。伪代码：mask = (weight_grad.abs() > threshold).float(); optimizer.step(grad * mask)</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：LongAct证明了长上下文RL训练中稀疏更新的有效性，为高效训练大模型提供了新思路。
+
+<strong>未来方向</strong>：探索自动化的稀疏率调度策略、跨架构迁移显著性模式、以及与量化感训练（QAT）的联合优化。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：为什么只关注Q/K激活而不是V（value）？</strong>
+
+<p>A：从Figure 5可以看出，V表示的幅度分布相对均匀，而Q/K在高幅度区域有更明显的稀疏峰值，这与长依赖关系的定向性特征相符。</p>
+
+
+<strong>Q：稀疏更新会不会导致模型过拟合到特定模式？</strong>
+
+<p>A：论文通过实验表明，只要稀疏率控制在合理范围（λ≤0.3），模型能够保持较好的泛化能力。这可能是因为显著性权重本身就捕获了任务相关的核心模式。</p>
+
+
+<strong>Q：如何确定合适的稀疏率λ？</strong>
+
+<p>A：论文建议从λ=0.1开始尝试，根据任务复杂度和模型规模进行微调。更长的上下文和更大的模型通常能承受更高的稀疏率。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: Visualization of the query/key (Q/K) represen-
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_0_0.jpeg" target="_blank">Figure 1</a></p>
+
+<strong>Figure 2</strong>: Overview of the LongAct framework. The left panel illustrates the dynamic saliency-guided sparse
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_0_1.jpeg" target="_blank">Figure 2</a></p>
+
+<strong>Figure 3</strong>: Visualization of the query representation magnitudes in Qwen3-8B on the RULER benchmark.
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_0_2.jpeg" target="_blank">Figure 3</a></p>
+
+<strong>Figure 4</strong>: Visualization of the key representation magnitudes in Qwen3-8B on the RULER benchmark.
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_0_3.jpeg" target="_blank">Figure 4</a></p>
+
+<strong>Figure 5</strong>: Visualization of the value representation magnitudes in Qwen3-8B on the RULER benchmark.
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_11_4.jpeg" target="_blank">Figure 5</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
