@@ -1,0 +1,15 @@
+# Cloudflare Pages 配置
+# 排除不需要部署的文件
+
+# 不部署这些目录
+# - cache/: 缓存文件
+# - scripts/: 脚本文件
+# - config/: 配置文件
+# - archive/: 历史存档
+# - daily_data/: 数据文件
+# - conferences/: 会议数据
+# - insights/: 分析数据
+# - collectors/: 采集器
+# - generators/: 生成器
+# - docs/: 文档
+# - history/: 历史记录
