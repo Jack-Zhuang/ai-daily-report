@@ -127,7 +127,44 @@ class GitHubCollector:
         return top_repos
     
     def save_to_daily_data(self, repos: list):
-        """保存到今日数据文件"""
+        """保存到今日数据文件，并计算增长"""
+        # 加载历史数据计算增长
+        cache_file = self.cache_dir / "github_cache.json"
+        history = {}
+        
+        if cache_file.exists():
+            try:
+                with open(cache_file, 'r', encoding='utf-8') as f:
+                    cached = json.load(f)
+                    items = cached.get('items', cached if isinstance(cached, list) else [])
+                    for item in items if isinstance(items, list) else []:
+                        if isinstance(item, dict):
+                            name = item.get('name', item.get('full_name', ''))
+                            if name:
+                                history[name] = {
+                                    'stars': item.get('stars', item.get('stargazers_count', 0)),
+                                    'date': cached.get('date', '')
+                                }
+            except:
+                pass
+        
+        # 计算增长
+        today = self.today
+        for repo in repos:
+            name = repo.get('name', '')
+            current_stars = repo.get('stars', 0)
+            
+            if name in history:
+                old_stars = history[name].get('stars', 0)
+                growth = current_stars - old_stars
+                growth_rate = (growth / old_stars * 100) if old_stars > 0 else 0
+                repo['growth'] = growth
+                repo['growth_rate'] = round(growth_rate, 2)
+            else:
+                repo['growth'] = 0
+                repo['growth_rate'] = 0
+        
+        # 保存到 daily_data
         data_file = self.base_dir / "daily_data" / f"{self.today}.json"
         
         if data_file.exists():
@@ -148,6 +185,11 @@ class GitHubCollector:
         
         with open(data_file, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
+        
+        # 更新缓存
+        cache_data = {'items': repos, 'date': today}
+        with open(cache_file, "w", encoding="utf-8") as f:
+            json.dump(cache_data, f, ensure_ascii=False, indent=2)
         
         print(f"✅ 已保存到: {data_file}")
     

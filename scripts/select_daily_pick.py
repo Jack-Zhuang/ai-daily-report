@@ -197,15 +197,20 @@ class DailyPickSelector:
         
         # 计算增长分数（优先看增长，其次看星数）
         for project in projects:
-            stars = project.get("stargazers_count", 0)
+            stars = project.get("stars", project.get("stargazers_count", 0))
             # 假设有 growth 字段，如果没有则用星数估算
             growth = project.get("growth_rate", project.get("growth", 0))
             # 增长分数 = 增长率 * 100 + 星数/10000
             project["_growth_score"] = growth * 100 + stars / 10000
             project["_score"] = self.calculate_score(project)
         
-        # 按增长分数排序
-        sorted_projects = sorted(projects, key=lambda x: x.get("_growth_score", 0), reverse=True)
+        # 按增长分数排序（如果没有增长数据，则按星数排序）
+        if all(p.get("_growth_score", 0) == 0 for p in projects):
+            # 都没有增长数据，按星数排序
+            sorted_projects = sorted(projects, key=lambda x: x.get("stars", x.get("stargazers_count", 0)), reverse=True)
+        else:
+            # 有增长数据，按增长分数排序
+            sorted_projects = sorted(projects, key=lambda x: x.get("_growth_score", 0), reverse=True)
         
         return sorted_projects[:count]
     
