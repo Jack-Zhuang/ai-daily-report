@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Behavior-Aware Dual-Channel Preference Learning for Heterogeneous Sequential Recommendation - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.14581" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>行为感知的双通道偏好学习：异构序列推荐新范式</h1>
+
+<strong>通过双通道架构融合辅助与目标行为，有效缓解稀疏性与噪声问题</strong>
+
+
+<blockquote>📅 预计阅读：15分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.14581" target="_blank">2604.14581</a></p>
+
+
+<p>🏷️ 标签：<code>推荐系统</code> | <code>序列推荐</code> | <code>异构行为建模</code> | <code>对比学习</code> | <code>注意力机制</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：提出BDPL框架，通过双通道分别建模辅助行为与目标行为，实现异构序列推荐的精准偏好学习。</li>
+<li><strong>核心贡献</strong>：设计行为感知的双通道偏好学习架构，结合改进的对比学习增强方法，同时解决数据稀疏与噪声干扰问题。</li>
+<li><strong>实用价值</strong>：可应用于电商、新闻、视频等多行为场景，显著提升推荐准确率与用户满意度。。</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>在推荐系统领域，用户的交互行为天然具有异构性——同一用户可能同时产生浏览、点击、收藏、购买等多种行为。传统的序列推荐方法通常只关注单一目标行为（如购买），忽视了其他行为中蕴含的丰富信息。虽然辅助行为（如点击）可以提供额外的监督信号，但其本身存在大量噪声，且与目标行为（如购买）之间存在语义差异。直接将所有行为混合处理会模糊用户的真实偏好，导致推荐效果下降。此外，现有的对比学习方法在处理异构行为时，往往采用单一行为类型的增强策略，丢失了不同行为之间的细粒度偏好信息。如何有效地从异构行为数据中提取用户偏好，同时抑制噪声影响，成为该领域的关键挑战。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>用户交互行为具有天然的异构性，单一行为建模难以捕捉完整偏好</li>
+<li>辅助行为虽能缓解稀疏性，但引入噪声且与目标行为语义不同</li>
+<li>现有对比学习方法忽视行为类型的差异，增强策略缺乏针对性</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>BDPL提出行为感知的双通道偏好学习框架，分别构建辅助行为通道与目标行为通道，通过跨通道注意力机制实现信息交互与融合，并设计行为感知的对比学习增强策略。</p>
+
+
+<h3>详细设计</h3>
+
+<p>BDPL的核心设计包含三个关键模块：首先是双通道编码器，分别处理辅助行为序列（examination）和目标行为序列（purchase），每个通道采用Transformer架构捕获序列依赖关系，通过多头自注意力机制建模行为之间的转换模式；其次是跨通道注意力融合层，允许目标行为通道查询辅助行为通道的表示，实现信息互补，同时设计门控机制自适应控制信息流动比例，避免噪声过度干扰；最后是行为感知的对比学习模块，对辅助行为和目标行为分别设计不同的增强策略，通过构建跨行为视角的正样本对，增强模型对细粒度偏好的识别能力。在训练阶段，模型联合优化推荐任务的交叉熵损失与对比学习的对比损失，实现端到端训练。推理阶段，双通道的融合表示用于预测用户下一步可能交互的目标物品。</p>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>graph TD</p>
+<p>%% 定义样式</p>
+<p>classDef inputStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px</p>
+<p>classDef encoderStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px</p>
+<p>classDef attentionStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px</p>
+<p>classDef fusionStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px</p>
+<p>classDef outputStyle fill:#fce4ec,stroke:#c2185b,stroke-width:2px</p>
+
+<p>%% 输入层</p>
+<p>subgraph 输入层["📥 输入层"]</p>
+<p>A[辅助行为序列<br/>点击/浏览]</p>
+<p>B[目标行为序列<br/>购买]</p>
+<p>end</p>
+
+<p>%% Transformer编码层</p>
+<p>subgraph 编码层["⚙️ Transformer编码层"]</p>
+<p>A1[辅助偏好表示<br/>编码器]</p>
+<p>B1[目标偏好表示<br/>编码器]</p>
+<p>end</p>
+
+<p>%% 跨通道注意力层</p>
+<p>subgraph 注意力层["🔗 跨通道注意力层"]</p>
+<p>C[注意力权重计算<br/>双向交互]</p>
+<p>end</p>
+
+<p>%% 门控融合层</p>
+<p>subgraph 融合层["🔀 门控融合层"]</p>
+<p>D[双通道信息整合]</p>
+<p>end</p>
+
+<p>%% 输出层</p>
+<p>subgraph 输出层["📤 输出层"]</p>
+<p>E[推荐任务头]</p>
+<p>F[对比学习任务头]</p>
+<p>end</p>
+
+<p>%% 数据流向</p>
+<p>A --> A1</p>
+<p>B --> B1</p>
+<p>A1 <-.->|注意力权重| C</p>
+<p>B1 <-.->|注意力权重| C</p>
+<p>C --> D</p>
+<p>D --> E</p>
+<p>D --> F</p>
+
+<p>%% 应用样式</p>
+<p>class A,B inputStyle</p>
+<p>class A1,B1 encoderStyle</p>
+<p>class C attentionStyle</p>
+<p>class D fusionStyle</p>
+<p>class E,F outputStyle</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| 双通道行为编码器 | 基于Transformer的双通道编码器，分别处理辅助行为和目标行为序列，采用位置编码捕获时序依赖，通过多头自注意力建模行为转换模式 |</p>
+<p>| 跨通道注意力融合模块 | 通过Query-Key-Value注意力机制实现双通道信息交互，设计门控单元自适应控制辅助信息向目标通道的流动比例，有效过滤噪声 |</p>
+<p>| 行为感知对比学习模块 | 针对不同行为类型设计差异化增强策略，构建跨行为视角的正样本对，通过InfoNCE损失最大化互信息，增强细粒度偏好表达 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+</code>`<code>python
+<p>import torch</p>
+<p>import torch.nn as nn</p>
+<p>import torch.nn.functional as F</p>
+
+<h1>=============================================</h1>
+<h1>BDPL: Behavior-aware Dual-Path Learning Model</h1>
+<h1>=============================================</h1>
+
+<p>class BDPLModel(nn.Module):</p>
+<p>"""BDPL核心模型结构"""</p>
+
+<p>def __init__(self, config):</p>
+<p>super().__init__()</p>
+<p>self.hidden_dim = config['hidden_dim']</p>
+<p>self.num_heads = config['num_heads']</p>
+
+<p># ===============================</p>
+<p># 1. 双通道编码器 (Dual-channel Encoder)</p>
+<p># ===============================</p>
+<p>self.exam_encoder = TransformerEncoder(</p>
+<p>d_model=self.hidden_dim,</p>
+<p>n_heads=self.num_heads,</p>
+<p>n_layers=2</p>
+<p>)</p>
+<p>self.purchase_encoder = TransformerEncoder(</p>
+<p>d_model=self.hidden_dim,</p>
+<p>n_heads=self.num_heads,</p>
+<p>n_layers=2</p>
+<p>)</p>
+
+<p># ===============================</p>
+<p># 2. 跨通道注意力融合层 (Cross-channel Attention Fusion)</p>
+<p># ===============================</p>
+<p>self.cross_attention = CrossChannelAttention(</p>
+<p>d_model=self.hidden_dim,</p>
+<p>n_heads=self.num_heads</p>
+<p>)</p>
+
+<p># 门控机制 (Gating Mechanism)</p>
+<p>self.gate_fc = nn.Linear(self.hidden_dim * 2, 1)</p>
+
+<p># ===============================</p>
+<p># 3. 行为感知对比学习模块 (Behavior-aware Contrastive Learning)</p>
+<p># ===============================</p>
+<p>self.contrastive_head = ContrastiveHead(</p>
+<p>hidden_dim=self.hidden_dim</p>
+<p>)</p>
+
+<p># 投影头</p>
+<p>self.projection = nn.Linear(self.hidden_dim, self.hidden_dim)</p>
+
+<p>def forward(self, exam_seq, purchase_seq, labels=None):</p>
+<p>"""</p>
+<p>前向传播</p>
+<p>exam_seq: 辅助行为序列 (examination)</p>
+<p>purchase_seq: 目标行为序列 (purchase)</p>
+<p>"""</p>
+
+<p># ----------------------</p>
+<p># Step 1: 双通道编码</p>
+<p># ----------------------</p>
+<p>exam_encoded = self.exam_encoder(exam_seq)      # [B, L1, D]</p>
+<p>purchase_encoded = self.purchase_encoder(purchase_seq)  # [B, L2, D]</p>
+
+<p># ----------------------</p>
+<p># Step 2: 跨通道注意力融合</p>
+<p># ----------------------</p>
+<p># 目标通道查询辅助通道表示</p>
+<p>cross_feat = self.cross_attention(</p>
+<p>query=purchase_encoded,</p>
+<p>key=exam_encoded,</p>
+<p>value=exam_encoded</p>
+<p>)</p>
+
+<p># 门控机制 - 自适应控制信息流动</p>
+<p>gate_input = torch.cat([purchase_encoded, cross_feat], dim=-1)</p>
+<p>gate_weight = torch.sigmoid(self.gate_fc(gate_input))  # [0,1]范围</p>
+
+<p># 融合表示</p>
+<p>fused_repr = gate_weight <em> cross_feat + (1 - gate_weight) </em> purchase_encoded</p>
+
+<p># ----------------------</p>
+<p># Step 3: 对比学习增强</p>
+<p># ----------------------</p>
+<p># 对两种行为分别设计增强策略</p>
+<p>exam_aug = self.augment(exam_seq, mode='examination')</p>
+<p>purchase_aug = self.augment(purchase_seq, mode='purchase')</p>
+
+<p># 编码增强后的序列</p>
+<p>exam_aug_encoded = self.exam_encoder(exam_aug)</p>
+<p>purchase_aug_encoded = self.purchase_encoder(purchase_aug)</p>
+
+<p># 构建跨行为视角的正样本对</p>
+<p>pos_pairs = self.build_positive_pairs(</p>
+<p>exam_aug_encoded,</p>
+<p>purchase_aug_encoded</p>
+<p>)</p>
+
+<p>contrastive_loss = self.contrastive_head(pos_pairs)</p>
+
+<p># ----------------------</p>
+<p># Step 4: 推荐任务预测</p>
+<p># ----------------------</p>
+<p># 使用融合表示预测</p>
+<p>logits = self.predict(fused_repr)  # [B, num_items]</p>
+
+<p># ----------------------</p>
+<p># 联合训练损失</p>
+<p># ----------------------</p>
+<p>if labels is not None:</p>
+<p>ce_loss = F.cross_entropy(logits, labels)</p>
+<p>total_loss = ce_loss + contrastive_loss * 0.1  # 权重平衡</p>
+<p>return logits, total_loss</p>
+
+<p>return logits</p>
+
+
+<h1>=============================================</h1>
+<h1>子模块定义</h1>
+<h1>=============================================</h1>
+
+<p>class TransformerEncoder(nn.Module):</p>
+<p>"""简化的Transformer编码器"""</p>
+
+<p>def __init__(self, d_model, n_heads, n_layers):</p>
+<p>super().__init__()</p>
+<p>self.layers = nn.ModuleList([</p>
+<p>TransformerLayer(d_model, n_heads)</p>
+<p>for _ in range(n_layers)</p>
+<p>])</p>
+
+<p>def forward(self, x):</p>
+<p>for layer in self.layers:</p>
+<p>x = layer(x)</p>
+<p>return x</p>
+
+
+<p>class TransformerLayer(nn.Module):</p>
+<p>"""Transformer层 (Multi-Head Self-Attention + FFN)"""</p>
+
+<p>def __init__(self, d_model, n_heads):</p>
+<p>super().__init__()</p>
+<p>self.attention = nn.MultiheadAttention(d_model, n_heads, batch_first=True)</p>
+<p>self.norm1 = nn.LayerNorm(d_model)</p>
+<p>self.norm2 = nn.LayerNorm(d_model)</p>
+<p>self.ffn = nn.Sequential(</p>
+<p>nn.Linear(d_model, d_model * 4),</p>
+<p>nn.ReLU(),</p>
+<p>nn.Linear(d_model * 4, d_model)</p>
+<p>)</p>
+
+<p>def forward(self, x):</p>
+<p>attn_out, _ = self.attention(x, x, x)  # 自注意力</p>
+<p>x = self.norm1(x + attn_out)</p>
+<p>x = self.norm2(x + self.ffn(x))</p>
+<p>return x</p>
+
+
+<p>class CrossChannelAttention(nn.Module):</p>
+<p>"""跨通道注意力融合"""</p>
+
+<p>def __init__(self, d_model, n_heads):</p>
+<p>super().__init__()</p>
+<p>self.cross_attention = nn.MultiheadAttention(d_model, n_heads, batch_first=True)</p>
+
+<p>def forward(self, query, key, value):</p>
+<p># 目标通道(query)查询辅助通道(key, value)</p>
+<p>out, _ = self.cross_attention(query, key, value)</p>
+<p>return out</p>
+
+
+<p>class ContrastiveHead(nn.Module):</p>
+<p>"""对比学习模块"""</p>
+
+<p>def __init__(self, hidden_dim, temperature=0.1):</p>
+<p>super().__init__()</p>
+<p>self.temperature = temperature</p>
+
+<p>def forward(self, pos_pairs):</p>
+<p>"""</p>
+<p>pos_pairs: [(z1, z2), ...] 跨行为正样本对</p>
+<p>简化的对比损失计算</p>
+<p>"""</p>
+<p># 归一化</p>
+<p>z1, z2 = pos_pairs[0]</p>
+<p>z1 = F.normalize(z1, dim=-1)</p>
+<p>z2 = F.normalize(z2, dim=-1)</p>
+
+<p># 计算相似度</p>
+<p>sim = torch.matmul(z1, z2.T) / self.temperature</p>
+
+<p># InfoNCE损失</p>
+<p>loss = F.cross_entropy(sim, torch.arange(len(sim)))</p>
+<p>return loss</p>
+
+
+<h1>=============================================</h1>
+<h1>辅助函数</h1>
+<h1>=============================================</h1>
+
+<p>def build_positive_pairs(exam_enc, purchase_enc):</p>
+<p>"""</p>
+<p>构建跨行为视角的正样本对</p>
+<p>增强策略: examination使用序列随机遮蔽</p>
+<p>purchase使用特征扰动</p>
+<p>"""</p>
+<p># 简化为返回第一对</p>
+<p>exam_pooled = exam_enc.mean(dim=1)  # 序列池化</p>
+<p>purchase_pooled = purchase_enc.mean(dim=1)</p>
+<p>return [(exam_pooled, purchase_pooled)]</p>
+
+
+<p>def augment(behavior_seq, mode='examination'):</p>
+<p>"""</p>
+<p>行为感知的增强策略</p>
+<p>- examination: 序列随机遮蔽</p>
+<p>- purchase: 特征扰动</p>
+<p>"""</p>
+<p>if mode == 'examination':</p>
+<p># 随机遮蔽部分行为</p>
+<p>mask = torch.rand_like(behavior_seq.float()) > 0.3</p>
+<p>return behavior_seq * mask.float()</p>
+<p>else:</p>
+<p># 高斯扰动</p>
+<p>noise = torch.randn_like(behavior_seq) * 0.1</p>
+<p>return behavior_seq + noise</p>
+
+
+<h1>=============================================</h1>
+<h1>训练示例</h1>
+<h1>=============================================</h1>
+
+<p>def train_step(model, exam_data, purchase_data, labels):</p>
+<p>model.train()</p>
+<p>optimizer = torch.optim.Adam(model.parameters(), lr=0.001)</p>
+
+<p># 前向传播</p>
+<p>logits, loss = model(exam_data, purchase_data, labels)</p>
+
+<p># 反向传播</p>
+<p>optimizer.zero_grad()</p>
+<p>loss.backward()</p>
+<p>optimizer.step()</p>
+
+<p>return loss.item()</p>
+
+
+<h1>=============================================</h1>
+<h1>使用示例</h1>
+<h1>=============================================</h1>
+
+<p>if __name__ == "__main__":</p>
+<p># 配置参数</p>
+<p>config = {</p>
+<p>'hidden_dim': 64,</p>
+<p>'num_heads': 4,</p>
+<p>}</p>
+
+<p># 初始化模型</p>
+<p>model = BDPLModel(config)</p>
+
+<p># 模拟数据</p>
+<p>batch_size = 32</p>
+<p>exam_seq = torch.randn(batch_size, 20, config['hidden_dim'])   # 辅助行为序列</p>
+<p>purchase_seq = torch.randn(batch_size, 10, config['hidden_dim'])  # 目标行为序列</p>
+<p>labels = torch.randint(0, 100, (batch_size,))  # 物品标签</p>
+
+<p># 训练步骤</p>
+<p>loss = train_step(model, exam</p>
+</code>`<code>
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+</code>`<code>latex
+<p>\begin{align*}</p>
+<p>\text{head}_i &= \operatorname{Att}\!\bigl( X^{(k)} \, W_Q \bigr)</p>
+<p>\end{align*}</p>
+</code>``
+<p>$$</p>
+
+<em>含义</em>：head𝑖= Att(𝑿(𝑘)𝑾𝑄
+
+<strong>公式 2</strong>：
+
+<p>$$</p>
+<p>\begin{align*}</p>
+<p>\operatorname{Att}(Q,K,V) &= \operatorname{softmax}\!\left(\frac{Q K^{\top}}{\sqrt{d_{k}}}\right) V,\\[4pt]</p>
+<p>Q &= W_{Q} X,\\</p>
+<p>K &= W_{K} X,\\</p>
+<p>V &= W_{V} X.</p>
+<p>\end{align*}</p>
+<p>$$</p>
+
+<em>含义</em>：where Att(·) is the scaled dot-product attention, using three linear
+
+<strong>公式 3</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>\mathbf{X}^{(k)} &= \operatorname{LayerNorm}\!\Bigl(\mathbf{X}^{(k)} + \operatorname{Dropout}\!\bigl(\operatorname{FFN}(\mathbf{X}^{(k)})\bigr)\Bigr)</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：𝑿(𝑘) = LayerNorm(𝑿(𝑘) + Dropout(FFN(𝑿(𝑘)
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：使用三个真实世界数据集：Steam（游戏平台）、IJCAI-16（推荐竞赛数据）、RetailRocket（电商数据），均包含用户的多种行为类型
+
+<strong>评价指标</strong>：采用Hit Ratio@K和NDCG@K作为评价指标，K取10和20
+
+<strong>主要结果</strong>：
+
+<p>BDPL在三个数据集上均显著优于基线方法，相比最佳基线模型，HR@10提升约5-8%，NDCG@10提升约4-7%。消融实验表明双通道架构和对比学习模块均能带来性能提升，其中跨通道注意力融合的贡献最大。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ 双通道架构相比单通道混合建模能够更好地区分不同行为的语义差异</li>
+<li>✅ 行为感知的对比学习策略比单一行为类型的增强方法更有效</li>
+<li>✅ 门控机制在噪声较大的数据集上表现出更强的鲁棒性</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 双通道行为解耦 | 首次提出双通道架构分别建模辅助与目标行为，避免噪声干扰与语义混淆 |</p>
+<p>| 跨通道注意力交互 | 通过跨通道注意力机制实现双通道信息融合，门控自适应控制信息流动 |</p>
+<p>| 行为感知对比学习 | 设计针对不同行为类型的差异化增强策略，构建跨行为正样本对增强表示 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 电商平台商品推荐</li>
+<li>🎯 视频平台内容推荐</li>
+<li>🎯 新闻聚合平台个性化推送</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 多行为日志的采集与对齐需要完善的埋点系统</li>
+<li>⚠️ 双通道模型参数量约为单通道的1.8倍，推理延迟需优化</li>
+<li>⚠️ 不同业务场景下辅助行为与目标行为的定义需灵活适配</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>基于PyTorch实现：双通道各用nn.TransformerEncoder实现，注意共享位置编码参数；跨通道注意力可复用torch.nn.functional.multi_head_attention_forward；对比学习模块使用InfoNCE损失，temperature参数建议设为0.1-0.2</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：BDPL通过双通道架构有效解耦异构行为，结合跨通道注意力与行为感知对比学习，显著提升了稀疏场景下的推荐性能。
+
+<strong>未来方向</strong>：探索更多行为类型的自动发现与层次化建模，结合大型语言模型增强行为语义理解
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：为什么双通道比单通道混合建模效果更好？</strong>
+
+<p>A：单通道方法将所有行为混合处理，会模糊不同行为类型的语义差异。例如点击可能出于好奇而非真实购买意向，混合建模会将这种噪声信号也编码到表示中。双通道允许目标行为通道专门学习购买偏好，辅助通道提供补充信息但不直接干扰核心任务。</p>
+
+
+<strong>Q：对比学习在推荐系统中通常用于解决什么问题？</strong>
+
+<p>A：主要解决数据稀疏和表示学习不充分的问题。通过构建同一用户的不同视图（如同一个序列的不同增强版本），让正样本对在表示空间中接近，负样本对远离，从而学习到更鲁棒的用户偏好表示，避免过拟合于稀疏的监督信号。</p>
+
+
+<strong>Q：门控机制如何过滤辅助行为中的噪声？</strong>
+
+<p>A：门控机制根据当前上下文动态调整辅助信息向目标通道流动的比例。当辅助行为与当前上下文高度相关且噪声较小时，门控值接近1，允许更多信息通过；反之则降低门控值，抑制噪声影响。这个门控值是通过可学习的神经网络自动计算的。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
