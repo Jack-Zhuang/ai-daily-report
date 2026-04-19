@@ -1,0 +1,12 @@
+{
+  "name": "ai-daily-report",
+  "version": "1.0.0",
+  "description": "AI推荐日报 - 每日AI技术资讯聚合",
+  "scripts": {
+    "build": "echo 'Static site - no build required'",
+    "dev": "npx serve ."
+  },
+  "keywords": ["AI", "daily", "report", "recommendation"],
+  "author": "Jack-Zhuang",
+  "license": "MIT"
+}
