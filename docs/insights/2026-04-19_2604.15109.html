@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IUQ: Interrogative Uncertainty Quantification for Long-Form Large Language Model Generation - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.15109" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>IUQ：面向长文本大语言模型生成的质疑式不确定性量化</h1>
+
+<strong>通过质疑-响应范式实现声明级不确定性量化和可信度评估</strong>
+
+
+<blockquote>📅 预计阅读：15分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.15109" target="_blank">2604.15109</a></p>
+
+
+<p>🏷️ 标签：<code>不确定性量化</code> | <code>大语言模型</code> | <code>长文本生成</code> | <code>可信度评估</code> | <code>幻觉检测</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：提出IUQ框架，通过质疑-响应范式量化长文本LLM输出的声明级不确定性和可信度。</li>
+<li><strong>核心贡献</strong>：利用样本间一致性和样本内可信度双重指标，结合质疑式问答机制，实现对复杂长文本的细粒度不确定性评估。</li>
+<li><strong>实用价值</strong>：可帮助用户在医疗、法律、金融等高风险场景中识别LLM生成内容中的不可靠声明，提升应用安全性。</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>大语言模型（LLM）在各类任务中展现出强大能力，但其输出常常存在"幻觉"问题——生成看似流畅连贯却事实错误的内容。现有不确定性量化方法主要针对短回答或受限输出场景，在需要长文本自由生成的实际应用中效果有限。核心挑战在于：长文本语义多维、语言结构复杂，传统的基于概率或采样的方法难以准确捕捉细粒度的错误信息。因此，需要一种既能评估整体可信度，又能定位具体错误声明的新框架。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>LLM长文本生成中幻觉问题严重，但现有方法难以有效量化</li>
+<li>短回答场景的不确定性方法（如约束输出、概率校准）不适用于自由生成</li>
+<li>长文本语义多维、结构复杂，需要更精细的评估粒度</li>
+<li>用户需要能够定位具体不可靠声明的工具，而非仅给出一个整体分数</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>IUQ采用"质疑-响应"范式，通过对LLM输出生成追问，测量模型在相同问题上的响应一致性来量化不确定性。</p>
+
+
+<h3>详细设计</h3>
+
+<p>IUQ框架包含两个核心维度：样本间一致性（Inter-sample Consistency）和样本内可信度（Intra-sample Faithfulness）。</p>
+
+<strong>样本间一致性</strong>：对同一原始问题，通过对提示进行扰动（如改变温度、加入前缀指令等）生成多个LLM响应，然后使用LLM本身作为分析器，将这些响应分解为独立声明并生成验证问题。测量这些验证问题在不同采样响应上的回答一致性，一致性低则表示高不确定性。
+
+<strong>样本内可信度</strong>：针对单个响应中的每个声明，直接生成质疑性问题并让LLM自我回答，评估声明对质疑的抵抗能力。可信度分数反映该声明在面对直接追问时的鲁棒性。
+
+<strong>质疑-响应流程</strong>：1）将LLM长文本响应分解为原子声明集合；2）为每个声明生成N个相关质疑问题；3）使用扰动采样获取同一问题域的多个响应；4）计算声明级别的信念度（belief score），最终汇总为整体不确定性指标。
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>graph TD</p>
+<p>%% 样式定义</p>
+<p>classDef inputStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:3px</p>
+<p>classDef samplingStyle fill:#fff8e1,stroke:#f9a825,stroke-width:3px</p>
+<p>classDef processStyle fill:#fce4ec,stroke:#c2185b,stroke-width:3px</p>
+<p>classDef analysisStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:3px</p>
+<p>classDef outputStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px</p>
+
+<p>%% 主流程</p>
+<p>START(("原始问题")):::inputStyle</p>
+<p>START --> SAMPLING</p>
+
+<p>subgraph 采样模块</p>
+<p>SAMPLING["LLM响应采样模块<br/><font size='10'>（扰动提示→多响应）</font>"]:::samplingStyle</p>
+<p>end</p>
+
+<p>SAMPLING -->|并行处理| BRANCH1</p>
+<p>SAMPLING -->|并行处理| BRANCH2</p>
+
+<p>subgraph 分解分析模块</p>
+<p>BRANCH1["声明分解器<br/><font size='10'>（响应→原子声明）</font>"]:::processStyle</p>
+<p>BRANCH2["质疑问题生成器<br/><font size='10'>（声明→N个验证问题）</font>"]:::processStyle</p>
+<p>end</p>
+
+<p>BRANCH1 --> CONSISTENCY</p>
+<p>BRANCH2 --> CONSISTENCY</p>
+
+<p>subgraph 一致性评估模块</p>
+<p>CONSISTENCY["一致性测量模块<br/><font size='10'>（计算声明级信念度）</font>"]:::analysisStyle</p>
+<p>end</p>
+
+<p>CONSISTENCY --> AGGREGATOR</p>
+
+<p>subgraph 输出模块</p>
+<p>AGGREGATOR["聚合器<br/><font size='10'>（整合信念度）</font>"]:::outputStyle</p>
+<p>AGGREGATOR --> OUTPUT["整体不确定性<br/>声明级可信度热力图"]:::outputStyle</p>
+<p>end</p>
+
+<p>%% 流程标注</p>
+<p>note1["🔄 多响应"]:::samplingStyle</p>
+<p>note2["📋 原子声明"]:::processStyle</p>
+<p>note3["❓ 验证问题"]:::processStyle</p>
+<p>note4["📊 信念度分数"]:::analysisStyle</p>
+<p>note5["📈 可视化输出"]:::outputStyle</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| 声明分解器 | 使用LLM将长文本响应自动分解为原子声明（atomic claims），每个声明可独立验证真伪，便于细粒度不确定性定位 |</p>
+<p>| 质疑问题生成器 | 为每个声明生成一组相关但措辞不同的验证问题，模拟用户从不同角度追问同一事实 |</p>
+<p>| 信念度计算器 | 综合多个扰动采样响应对质疑问题的回答，计算声明级别的信念度分数，反映该声明的可靠程度 |</p>
+<p>| 不确定性聚合器 | 将声明级信念度聚合为整体不确定性指标，并生成可视化热力图标识高风险声明 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+<p>import random</p>
+<p>from typing import List, Dict, Tuple</p>
+
+<h1>============================================</h1>
+<h1>IUQ (Interrogative Uncertainty Quantification) 框架</h1>
+<h1>============================================</h1>
+
+<p>class IUQFramework:</p>
+<p>"""IUQ框架：测量LLM输出的不确定性"""</p>
+
+<p>def __init__(self, llm):</p>
+<p>self.llm = llm  # 底层LLM模型接口</p>
+<p>self.n_samples = 5      # 扰动采样数量</p>
+<p>self.n_questions = 3    # 每个声明的质疑问题数</p>
+
+<p># ==================== 核心方法 ====================</p>
+
+<p>def quantify_uncertainty(self, question: str, response: str) -> Dict:</p>
+<p>"""</p>
+<p>主入口：计算输入问题-响应对的不确定性指标</p>
+<p>"""</p>
+<p># Step 1: 分解为原子声明</p>
+<p>claims = self._decompose_to_claims(response)</p>
+
+<p># Step 2: 计算每个声明的信念度</p>
+<p>claim_beliefs = []</p>
+<p>for claim in claims:</p>
+<p>belief = self._compute_claim_belief(claim, question)</p>
+<p>claim_beliefs.append(belief)</p>
+
+<p># Step 3: 汇总指标</p>
+<p>return {</p>
+<p>'inter_consistency': self._compute_inter_consistency(question, claim_beliefs),</p>
+<p>'intra_faithfulness': sum(claim_beliefs) / len(claim_beliefs) if claim_beliefs else 0,</p>
+<p>'claim_beliefs': claim_beliefs,</p>
+<p>'overall_uncertainty': self._compute_overall_uncertainty(claim_beliefs)</p>
+<p>}</p>
+
+<p># ==================== 样本间一致性 ====================</p>
+
+<p>def _compute_inter_consistency(self, question: str, claim_beliefs: List[float]) -> float:</p>
+<p>"""</p>
+<p>样本间一致性：同一问题域内不同采样响应的一致程度</p>
+<p>"""</p>
+<p># 对问题进行扰动采样</p>
+<p>perturbed_responses = self._perturbed_sampling(question, self.n_samples)</p>
+
+<p># 分解每个扰动响应</p>
+<p>all_claims = [self._decompose_to_claims(resp) for resp in perturbed_responses]</p>
+
+<p># 生成验证问题并检查一致性</p>
+<p>consistency_scores = []</p>
+<p>for base_claim in self._decompose_to_claims(question):</p>
+<p>verification_q = self._generate_verification_question(base_claim)</p>
+
+<p># 在不同采样响应上验证</p>
+<p>answers = [</p>
+<p>self._ask_verification(verification_q, resp)</p>
+<p>for resp in perturbed_responses</p>
+<p>]</p>
+
+<p># 计算一致性（相同回答的比例）</p>
+<p>consistency = self._calculate_answer_consistency(answers)</p>
+<p>consistency_scores.append(consistency)</p>
+
+<p>return 1 - (sum(consistency_scores) / len(consistency_scores))</p>
+
+<p># ==================== 样本内可信度 ====================</p>
+
+<p>def _compute_claim_belief(self, claim: str, context: str) -> float:</p>
+<p>"""</p>
+<p>样本内可信度：单个声明抵抗质疑的能力</p>
+<p>"""</p>
+<p># 生成N个质疑问题</p>
+<p>challenge_questions = self._generate_challenges(claim, self.n_questions)</p>
+
+<p># 让LLM自我回答每个质疑</p>
+<p>resistance_scores = []</p>
+<p>for q in challenge_questions:</p>
+<p>original_answer = self._extract_supporting_evidence(claim, context)</p>
+<p>challenge_response = self.llm.ask(q, context=claim)</p>
+
+<p># 评估抵抗能力</p>
+<p>resistance = self._evaluate_resistance(original_answer, challenge_response)</p>
+<p>resistance_scores.append(resistance)</p>
+
+<p>return sum(resistance_scores) / len(resistance_scores)</p>
+
+<p># ==================== 辅助方法（伪代码） ====================</p>
+
+<p>def _decompose_to_claims(self, text: str) -> List[str]:</p>
+<p>"""将长文本分解为原子声明集合"""</p>
+<p>prompt = f"分解以下文本为独立的事实性声明列表:\n{text}"</p>
+<p>claims_text = self.llm.ask(prompt)</p>
+<p>return [c.strip() for c in claims_text.split('\n') if c.strip()]</p>
+
+<p>def _perturbed_sampling(self, question: str, n: int) -> List[str]:</p>
+<p>"""扰动采样：改变温度/添加前缀等生成多个响应"""</p>
+<p>perturbations = [</p>
+<p>"",  # 原始</p>
+<p>"请仔细思考后回答：",</p>
+<p>"作为一个专家，请分析：",</p>
+<p>"用简单易懂的方式解释：",</p>
+<p>]</p>
+<p>return [</p>
+<p>self.llm.ask(question,</p>
+<p>system_prompt=p,</p>
+<p>temperature=random.uniform(0.5, 1.5))</p>
+<p>for p in perturbations[:n]</p>
+<p>]</p>
+
+<p>def _generate_verification_question(self, claim: str) -> str:</p>
+<p>"""为声明生成验证问题"""</p>
+<p>prompt = f"基于声明生成一个可用于验证真伪的问题: {claim}"</p>
+<p>return self.llm.ask(prompt)</p>
+
+<p>def _generate_challenges(self, claim: str, n: int) -> List[str]:</p>
+<p>"""为声明生成质疑问题"""</p>
+<p>prompt = f"生成{n}个质疑以下声明的问题:\n{claim}"</p>
+<p>questions_text = self.llm.ask(prompt)</p>
+<p>return [q.strip() for q in questions_text.split('\n')[:n]]</p>
+
+<p>def _ask_verification(self, question: str, response: str) -> str:</p>
+<p>"""在给定响应上下文中回答验证问题"""</p>
+<p>return self.llm.ask(question, context=response)</p>
+
+<p>def _calculate_answer_consistency(self, answers: List[str]) -> float:</p>
+<p>"""计算回答一致性"""</p>
+<p>if not answers:</p>
+<p>return 0.0</p>
+<p># 简化为答案完全相同的比例</p>
+<p>most_common = max(set(answers), key=answers.count)</p>
+<p>return answers.count(most_common) / len(answers)</p>
+
+<p>def _evaluate_resistance(self, original: str, challenge: str) -> float:</p>
+<p>"""评估声明对质疑的抵抗能力"""</p>
+<p>prompt = f"评估第二个回答是否有效支持了第一个声明:\n声明:{original}\n质疑回答:{challenge}"</p>
+<p>score = self.llm.ask(prompt)</p>
+<p>return float(score) if score.replace('.', '').isdigit() else 0.5</p>
+
+<p>def _compute_overall_uncertainty(self, belief_scores: List[float]) -> float:</p>
+<p>"""计算整体不确定性指标"""</p>
+<p># 综合样本间一致性和样本内可信度</p>
+<p>avg_belief = sum(belief_scores) / len(belief_scores) if belief_scores else 0</p>
+<p>return 1 - avg_belief  # 不确定性 = 1 - 信念度</p>
+
+
+<h1>==================== 使用示例 ====================</h1>
+
+<p>if __name__ == "__main__":</p>
+<p># 伪LLM接口</p>
+<p>class MockLLM:</p>
+<p>def ask(self, prompt, **kwargs):</p>
+<p>return f"[LLM响应]: {prompt[:50]}..."</p>
+
+<p># 初始化</p>
+<p>llm = MockLLM()</p>
+<p>iuq = IUQFramework(llm)</p>
+
+<p># 测试</p>
+<p>question = "气候变化的主要原因是什么？"</p>
+<p>response = """</p>
+<p>全球气候变化主要由人类活动排放的温室气体引起。</p>
+<p>二氧化碳是最主要的温室气体。</p>
+<p>工业革命以来，大气中CO2浓度增加了约50%。</p>
+<p>"""</p>
+
+<p># 计算不确定性</p>
+<p>result = iuq.quantify_uncertainty(question, response)</p>
+
+<p>print("=" * 50)</p>
+<p>print("IUQ 不确定性分析结果")</p>
+<p>print("=" * 50)</p>
+<p>print(f"样本间一致性 (Inter-consistency): {result['inter_consistency']:.3f}")</p>
+<p>print(f"样本内可信度 (Intra-faithfulness): {result['intra_faithfulness']:.3f}")</p>
+<p>print(f"整体不确定性 (Overall Uncertainty): {result['overall_uncertainty']:.3f}")</p>
+<p>print("-" * 50)</p>
+<p>print("各声明信念度:")</p>
+<p>for i, belief in enumerate(result['claim_beliefs'], 1):</p>
+<p>print(f"  声明 {i}: {belief:.3f}")</p>
+</code>``
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>n_q &\text{ denotes the number of questions generated.}</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：where nq denotes the number of questions gen-
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：BioDEX、Public Square、FActScore等数据集，涵盖传记生成、观点问答、事实性陈述等多种长文本任务
+
+<strong>评价指标</strong>：声明级可信度分数（Claim-level Faithfulness）、与人类标注的一致性、AUC-ROC、精确率/召回率等
+
+<strong>主要结果</strong>：
+
+<p>在多个数据集和模型（GPT-4、Claude、LLaMA等）上的实验表明，IUQ在识别不可靠声明方面显著优于现有方法。对于传记生成任务，IUQ能准确定位80%以上的虚假陈述，同时保持较低误报率。在观点生成场景中，该方法成功区分了有据可查的事实和主观推断。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ IUQ在声明级不确定性预测上比基于概率熵的方法更准确，尤其在模型"过度自信"场景下</li>
+<li>✅ 样本间一致性结合样本内可信度比单独使用任一指标效果更好，两者具有互补性</li>
+<li>✅ 质疑问题的数量（N）存在拐点，超过一定数量后收益递减，实际应用中N=5-10较为合理</li>
+<li>✅ 不同LLM在面对质疑时表现差异显著，IUQ可作为模型可信度评估工具</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 质疑-响应范式 | 首次将"质疑"机制引入不确定性量化，通过生成验证问题让LLM自我审查，而非仅依赖输出概率 |</p>
+<p>| 声明级粒度评估 | 突破传统整体评分模式，实现对长文本中每个具体声明的可信度评估和可视化定位 |</p>
+<p>| 双维度不确定性度量 | 统一框架下整合样本间一致性和样本内可信度，前者捕捉跨采样变异性，后者衡量单次响应的内部一致性 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 医疗辅助诊断：识别AI生成的诊断建议中的不可靠信息，避免误导临床决策</li>
+<li>🎯 法律文档审查：自动标记合同、判决书等法律文本中的可疑陈述</li>
+<li>🎯 金融报告生成：核实AI撰写的市场分析中引用的数据和结论</li>
+<li>🎯 新闻内容审核：辅助编辑识别AI生成新闻稿中的潜在虚假信息</li>
+<li>🎯 教育培训：作为智能辅导系统的可信度提示，帮助学生辨别AI答案的可靠性</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 计算成本：需要多次采样和LLM调用，推理延迟较高，需优化批处理和缓存策略</li>
+<li>⚠️ 质疑问题质量：生成的验证问题可能偏离声明核心，需设计质量评估机制</li>
+<li>⚠️ 跨领域泛化：不同领域的事实标准不同，领域适配需要额外标注数据</li>
+<li>⚠️ 阈值设定：声明级信念度的决策阈值需要针对具体应用场景调优</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>核心实现包括：1）使用LLM的function calling能力批量生成声明分解和质疑问题；2）构建采样管道并行处理多个扰动响应；3）实现信念度聚合算法，结合贝叶斯推断和启发式规则；4）输出JSON格式的声明级分析结果和可视化热力图数据。关键优化点在于利用批量API减少调用次数，以及实现增量缓存避免重复计算。</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：IUQ通过质疑-响应范式和双维度不确定性度量，为长文本LLM应用提供了实用的可信度评估工具，能有效识别语义连贯但事实错误的声明。
+
+<strong>未来方向</strong>：探索与其他不确定性方法（如RAG置信度）的融合；研究自适应质疑策略减少计算开销；将IUQ扩展到多模态输出的不确定性评估。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：IUQ与传统的LLM概率校准方法有何本质区别？</strong>
+
+<p>A：传统概率校准方法依赖LLM输出的token概率分布，但这种方法在自由生成场景下不可靠（模型常过度自信）。IUQ通过"质疑"外部机制绕过概率，直接验证声明内容本身的一致性，是一种更鲁棒的事后评估方法。</p>
+
+
+<strong>Q：IUQ的计算开销是否适合实时应用？</strong>
+
+<p>A：IUQ需要多次采样和多个LLM调用，当前版本主要面向离线审核场景。可通过减少质疑问题数量（N=3-5）、使用更小的LLM进行验证问题生成、以及结果缓存来降低延迟，实时场景需进一步优化。</p>
+
+
+<strong>Q：对于完全虚构的实体名称，IUQ如何处理？</strong>
+
+<p>A：IUQ生成的质疑问题会针对声明中的具体实体和属性提问。如果多个采样响应对同一实体的描述存在矛盾，系统会标记为高不确定性；对于单一采样中都未涉及的实体，可能需要额外的知识库检索作为补充验证。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: An example of LLM generation on biography. The
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_0_0.png" target="_blank">Figure 1</a></p>
+
+<strong>Figure 2</strong>: The framework of Interrogative Uncertainty Quantification (IUQ): Responses are sampled from LLMs and decomposed
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_0_1.png" target="_blank">Figure 2</a></p>
+
+<strong>Figure 2</strong>: In practice, we
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_0_2.png" target="_blank">Figure 2</a></p>
+
+<strong>Figure 3</strong>: Statistics of the claim-level faithfulness over selected models. (a) The faithfulness scores of all claims over FActScore
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_14_3.png" target="_blank">Figure 3</a></p>
+
+<strong>Figure 3</strong>: (i) The average claim faithfulness exhibits a clear
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_14_4.png" target="_blank">Figure 3</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

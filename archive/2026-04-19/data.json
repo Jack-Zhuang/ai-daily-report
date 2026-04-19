@@ -19,23 +19,6 @@
       "_reason": "前沿论文 | Agent热点"
     },
     {
-      "id": "2604.13551",
-      "arxiv_id": "2604.13551",
-      "title": "Debate to Align: Reliable Entity Alignment through Two-Stage Multi-Agent Debate",
-      "summary": "Entity alignment (EA) aims to identify entities referring to the same real-world object across different knowledge graphs (KGs). Recent approaches based on large language models (LLMs) typically obtain entity embeddings through knowledge representation learning and use embedding similarity to identify an alignment-uncertain entity set. For each uncertain entity, a candidate entity set (CES) is then retrieved based on embedding similarity to support subsequent alignment reasoning and decision mak",
-      "link": "http://arxiv.org/abs/2604.13551v1",
-      "category": "agent",
-      "published": "2026-04-15",
-      "industry_score": 0,
-      "paper_value": 1.56,
-      "type": "paper",
-      "cn_title": "Debate to Align: Reliable Entity Alignment through Two-Stage Multi-Agent Debate",
-      "cn_summary": "Entity alignment (EA) aims to identify entities referring to the same real-world object across different knowledge graphs (KGs). Recent approaches based on large language models (LLMs) typically obtai",
-      "_score": 2.68,
-      "_type": "paper",
-      "_reason": "前沿论文 | Agent热点"
-    },
-    {
       "id": "a27148681f25",
       "title": "多云时代AI Agent治理难题，亚马逊云科技想用一个注册表解决",
       "summary": "亚马逊云科技近期在 Amazon Bedrock AgentCore\" 中以公开预览形式发布了 Agent Registry\"，为企业提供一个集中式目录，用于在组织内发现、共享并治理 AI Agent、工具、MCP 服务器以及 agent skills。该注册表可以索引运行在任何位置的 agent，无论是在 亚马逊云科技、其他云服务提供商，还是本地部署环境。它所解决的问题，对于任何见过 agent",
@@ -54,39 +37,58 @@
       "_reason": "技术文章 | Agent热点"
     },
     {
-      "id": "373368d4b86e",
-      "title": "Cursor 3 推出智能体优先界面，突破传统 IDE 模式",
-      "summary": "Anysphere 最近发布了 Cursor 3\"，对其 AI 编程工具进行了全面重构。新版本将核心交互模式从文件编辑转向对并行编码智能体的管理。界面为全新设计，并非基于 Cursor 现有的 VS Code 分支扩展而来，不过用户可随时切换回完整 IDE 模式。Cursor 3 的核心理念是：开发者应将更多时间用于编排智能体，而非直接编辑代码，工具设计也应贴合这一现状。联合创始人 Michael",
-      "link": "https://www.infoq.cn/article/G6hkU9pDHzwd6GCWQ0BH",
-      "source": "InfoQ技术文章",
+      "id": "28b899893567",
+      "title": "新一代记忆智能体框架MIA：让智能体告别「失忆式工作」，在持续进化中变强",
+      "summary": "深度研究助手的进化之路！",
+      "link": "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651028576&idx=3&sn=120c373ab59dfb6b6f7f0bbd1209387f",
+      "source": "机器之心",
       "published": "2026-04-19",
       "views": 0,
       "likes": 0,
       "type": "article",
       "category": "agent",
-      "collected_at": "2026-04-19T10:52:10.415753",
-      "cn_title": "Cursor 3 推出智能体优先界面，突破传统 IDE 模式",
-      "cn_summary": "Anysphere 最近发布了 Cursor 3\"，对其 AI 编程工具进行了全面重构。新版本将核心交互模式从文件编辑转向对并行编码智能体的管理。界面为全新设计",
-      "_score": 2.28,
+      "collected_at": "2026-04-19T21:35:06.122483",
+      "cn_title": "新一代记忆智能体框架MIA：让智能体告别「失忆式工作」，在持",
+      "cn_summary": "深度研究助手的进化之路！",
+      "_score": 2.18,
       "_type": "article",
       "_reason": "技术文章 | Agent热点"
     },
     {
-      "id": "1024554267",
-      "name": "NousResearch/hermes-agent",
-      "title": "hermes-agent",
-      "description": "The agent that grows with you",
-      "link": "https://github.com/NousResearch/hermes-agent",
-      "stars": 100960,
-      "forks": 14354,
+      "id": "84d15b36b369",
+      "title": "终于，Claude革了设计行业的命：Figma、Adobe股价重挫",
+      "summary": "设计师的 Claude Code 时刻？",
+      "link": "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651028489&idx=2&sn=7c0538c8436d81bd9af9135697e0fd96",
+      "source": "机器之心",
+      "published": "2026-04-18",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "llm",
+      "collected_at": "2026-04-19T21:35:06.122526",
+      "cn_title": "终于，Claude革了设计行业的命：Figma、Adobe股",
+      "cn_summary": "设计师的 Claude Code 时刻？",
+      "_score": 1.97,
+      "_type": "article",
+      "_reason": "技术文章"
+    },
+    {
+      "id": "552661142",
+      "name": "langchain-ai/langchain",
+      "title": "langchain",
+      "description": "The agent engineering platform",
+      "link": "https://github.com/langchain-ai/langchain",
+      "stars": 134040,
+      "forks": 22151,
       "language": "Python",
       "category": "agent",
       "published": "2026-04-19",
       "type": "github",
-      "_score": 2.75,
+      "_score": 2.28,
+      "_growth_score": 0.0,
       "_type": "github",
-      "_reason": "开源项目 | Agent热点",
-      "cn_summary": "hermes-agent"
+      "_reason": "开源项目",
+      "cn_summary": "langchain"
     }
   ],
   "hot_articles": [
@@ -171,7 +173,11 @@
       "category": "agent",
       "published": "2026-04-19",
       "type": "github",
-      "_score": 2.28
+      "_score": 2.28,
+      "_growth_score": 0.0,
+      "_type": "github",
+      "_reason": "开源项目",
+      "cn_summary": "langchain"
     },
     {
       "id": "793375104",
@@ -185,7 +191,8 @@
       "category": "agent",
       "published": "2026-04-19",
       "type": "github",
-      "_score": 2.65
+      "_score": 2.65,
+      "_growth_score": 0.0
     },
     {
       "id": "1024554267",
@@ -202,7 +209,8 @@
       "_score": 2.75,
       "_type": "github",
       "_reason": "开源项目 | Agent热点",
-      "cn_summary": "hermes-agent"
+      "cn_summary": "hermes-agent",
+      "_growth_score": 0.0
     },
     {
       "id": "881458615",
@@ -216,7 +224,8 @@
       "category": "agent",
       "published": "2026-04-19",
       "type": "github",
-      "_score": 2.28
+      "_score": 2.28,
+      "_growth_score": 0.0
     },
     {
       "id": "145553672",
@@ -230,7 +239,8 @@
       "category": "llm",
       "published": "2024-05-10",
       "type": "github",
-      "_score": 1.64
+      "_score": 1.64,
+      "_growth_score": 0.0
     },
     {
       "id": "730534580",
@@ -244,7 +254,8 @@
       "category": "agent",
       "published": "2026-04-18",
       "type": "github",
-      "_score": 2.57
+      "_score": 2.57,
+      "_growth_score": 0.0
     },
     {
       "id": "660551251",
@@ -258,7 +269,8 @@
       "category": "agent",
       "published": "2026-01-21",
       "type": "github",
-      "_score": 2.01
+      "_score": 2.01,
+      "_growth_score": 0.0
     },
     {
       "id": "680120071",
@@ -272,7 +284,8 @@
       "category": "agent",
       "published": "2026-04-15",
       "type": "github",
-      "_score": 1.96
+      "_score": 1.96,
+      "_growth_score": 0.0
     },
     {
       "id": "710601088",
@@ -286,7 +299,8 @@
       "category": "agent",
       "published": "2026-04-17",
       "type": "github",
-      "_score": 2.12
+      "_score": 2.12,
+      "_growth_score": 0.0
     },
     {
       "id": "615882673",
@@ -300,7 +314,8 @@
       "category": "llm",
       "published": "2025-06-02",
       "type": "github",
-      "_score": 1.64
+      "_score": 1.64,
+      "_growth_score": 0.0
     },
     {
       "id": "396569538",
@@ -314,7 +329,8 @@
       "category": "agent",
       "published": "2026-03-26",
       "type": "github",
-      "_score": 1.64
+      "_score": 1.64,
+      "_growth_score": 0.0
     },
     {
       "id": "866513204",
@@ -328,7 +344,8 @@
       "category": "llm",
       "published": "2026-04-19",
       "type": "github",
-      "_score": 2.65
+      "_score": 2.65,
+      "_growth_score": 0.0
     },
     {
       "id": "778431525",
@@ -342,7 +359,8 @@
       "category": "llm",
       "published": "2026-04-13",
       "type": "github",
-      "_score": 2.17
+      "_score": 2.17,
+      "_growth_score": 0.0
     },
     {
       "id": "676672661",
@@ -356,7 +374,8 @@
       "category": "agent",
       "published": "2026-04-19",
       "type": "github",
-      "_score": 2.28
+      "_score": 2.28,
+      "_growth_score": 0.0
     },
     {
       "id": "752925682",
@@ -370,7 +389,8 @@
       "category": "llm",
       "published": "2026-01-09",
       "type": "github",
-      "_score": 1.64
+      "_score": 1.64,
+      "_growth_score": 0.0
     },
     {
       "id": "639835356",
@@ -384,7 +404,8 @@
       "category": "agent",
       "published": "2026-04-16",
       "type": "github",
-      "_score": 2.41
+      "_score": 2.41,
+      "_growth_score": 0.0
     },
     {
       "id": "740303686",
@@ -398,7 +419,8 @@
       "category": "llm",
       "published": "2026-04-19",
       "type": "github",
-      "_score": 2.28
+      "_score": 2.28,
+      "_growth_score": 0.0
     },
     {
       "id": "935604638",
@@ -412,7 +434,8 @@
       "category": "agent",
       "published": "2026-04-11",
       "type": "github",
-      "_score": 2.11
+      "_score": 2.11,
+      "_growth_score": 0.0
     },
     {
       "id": "149430917",
@@ -426,7 +449,8 @@
       "category": "rec",
       "published": "2026-04-18",
       "type": "github",
-      "_score": 2.67
+      "_score": 2.67,
+      "_growth_score": 0.0
     },
     {
       "id": "674075444",
@@ -440,7 +464,8 @@
       "category": "llm",
       "published": "2026-03-05",
       "type": "github",
-      "_score": 1.64
+      "_score": 1.64,
+      "_growth_score": 0.0
     }
   ],
   "arxiv_papers": [
@@ -891,7 +916,9 @@
       "collected_at": "2026-04-19T21:35:06.122483",
       "cn_title": "新一代记忆智能体框架MIA：让智能体告别「失忆式工作」，在持",
       "cn_summary": "深度研究助手的进化之路！",
-      "_score": 2.18
+      "_score": 2.18,
+      "_type": "article",
+      "_reason": "技术文章 | Agent热点"
     },
     {
       "id": "2bdb27d6e386",
@@ -1151,7 +1178,9 @@
       "collected_at": "2026-04-19T21:35:06.122526",
       "cn_title": "终于，Claude革了设计行业的命：Figma、Adobe股",
       "cn_summary": "设计师的 Claude Code 时刻？",
-      "_score": 1.97
+      "_score": 1.97,
+      "_type": "article",
+      "_reason": "技术文章"
     },
     {
       "id": "1de5af77fdee",

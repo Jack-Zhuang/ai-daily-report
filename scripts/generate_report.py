@@ -1025,8 +1025,10 @@ class ReportGenerator:
                 
                 // 中文标题和简介
                 const cnTitle = item.cn_title || (item.title || item.name);
-                const cnSummary = item.cn_summary || (item.summary || item.description || '');
-                const recommendReason = item.recommend_reason || '';
+                // 摘要限制80字
+                const rawSummary = item.cn_summary || (item.summary || item.description || '');
+                const cnSummary = rawSummary.length > 80 ? rawSummary.substring(0, 80) + '...' : rawSummary;
+                const recommendReason = item._reason || item.recommend_reason || '';
                 
                 // 存储完整数据到 data 属性
                 const itemData = encodeURIComponent(JSON.stringify(item));
@@ -1158,7 +1160,7 @@ class ReportGenerator:
             if (pickType === 'paper') {{
                 // 论文：必须先跳转到解读页面，不能直接跳转原文
                 const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
-                const insightUrl = `insights/paper_${{paperId}}.html`;
+                const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
                 footerHtml = `<a href="${{insightUrl}}" class="detail-link"><i class="fas fa-book-reader"></i> 查看论文解读</a>`;
             }} else {{
                 footerHtml = `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> ${{pickType === 'github' ? '访问 GitHub' : '阅读原文'}}</a>`;
@@ -1243,7 +1245,7 @@ class ReportGenerator:
                         }}
                         if (!paperId) paperId = 'unknown_' + i;
                         paperId = paperId.replace('/', '_').replace('.', '_');
-                        const insightUrl = `insights/paper_${{paperId}}.html`;
+                        const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
                         html += `
                             <a href="${{insightUrl}}" class="conf-paper-item">
                                 <div class="conf-paper-rank">${{i + 1}}</div>
@@ -1280,12 +1282,44 @@ class ReportGenerator:
         // 渲染热门文章
         function renderHotArticles(filter = 'all') {{
             const container = document.getElementById('hot-list');
-            const filtered = filter === 'all' ? hotArticles : hotArticles.filter(a => a.category === filter);
+            
+            // 筛选逻辑：确保每个子tab至少有1篇
+            let filtered = [];
+            if (filter === 'all') {{
+                // 全部：显示15篇，确保每个分类都有
+                const categories = ['rec', 'agent', 'llm'];
+                const byCategory = {{}};
+                categories.forEach(cat => byCategory[cat] = []);
+                const others = [];
+                
+                hotArticles.forEach(a => {{
+                    if (categories.includes(a.category)) {{
+                        byCategory[a.category].push(a);
+                    }} else {{
+                        others.push(a);
+                    }}
+                }});
+                
+                // 每个分类至少取1篇
+                categories.forEach(cat => {{
+                    if (byCategory[cat].length > 0) {{
+                        filtered.push(byCategory[cat].shift());
+                    }}
+                }});
+                
+                // 补充剩余文章
+                const remaining = [...byCategory.rec, ...byCategory.agent, ...byCategory.llm, ...others]
+                    .sort((a, b) => (b.views || 0) - (a.views || 0));
+                filtered = [...filtered, ...remaining].slice(0, 15);
+            }} else {{
+                // 按分类筛选
+                filtered = hotArticles.filter(a => a.category === filter).slice(0, 15);
+            }}
+            
             const categoryEmoji = {{ rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭', wechat: '📱', zhihu: '💬', opensource: '💻', tech: '🔧' }};
             const categoryImages = {{ rec: 'card-image-rec', agent: 'card-image-agent', llm: 'card-image-llm', industry: 'card-image-paper' }};
             
-            // 只显示前5篇
-            container.innerHTML = filtered.slice(0, 5).map((item, i) => {{
+            container.innerHTML = filtered.map((item, i) => {{
                 const cnTitle = item.cn_title || item.title;
                 const cnSummary = item.cn_summary || item.summary || '';
                 return `
@@ -1478,7 +1512,7 @@ class ReportGenerator:
                 const cnSummary = item.cn_summary || '本文在推荐系统相关领域做出了创新研究，提出了新的方法和见解。';
                 // 论文解读页面链接
                 const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
-                const insightUrl = `insights/paper_${{paperId}}.html`;
+                const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
                 return `
                     <div class="card" onclick="window.location.href='${{insightUrl}}'">
                         <div class="card-image ${{item.cover_image ? '' : (categoryImages[item.category] || 'card-image-paper')}}" style="${{item.cover_image ? `background-image: url('${{item.cover_image}}')` : ''}}">
@@ -1560,7 +1594,7 @@ class ReportGenerator:
             
             // 论文解读页面链接
             const paperId = (item.id || '').replace('/', '_').replace('.', '_');
-            const insightUrl = `insights/paper_${{paperId}}.html`;
+            const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
             
             // 论文弹窗只显示解读按钮，不显示原文链接
             const footerHtml = `<a href="${{insightUrl}}" class="detail-link"><i class="fas fa-book-open"></i> 查看论文解读</a>`;

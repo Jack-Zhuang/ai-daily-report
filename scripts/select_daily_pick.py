@@ -63,8 +63,8 @@ class DailyPickSelector:
         # 每日精选配置
         self.pick_config = {
             "total_count": 5,  # 总共5篇
-            "paper_count": 2,  # 论文2篇
-            "article_count": 2,  # 文章2篇
+            "paper_count": 1,  # 论文1篇
+            "article_count": 3,  # 文章3篇
             "github_count": 1,  # GitHub项目1篇
         }
         
@@ -191,16 +191,21 @@ class DailyPickSelector:
         return selected
     
     def select_github(self, projects: List[Dict], count: int = 1) -> List[Dict]:
-        """筛选GitHub项目"""
+        """筛选GitHub项目 - 按增长趋势排序"""
         if not projects:
             return []
         
-        # 计算评分
+        # 计算增长分数（优先看增长，其次看星数）
         for project in projects:
+            stars = project.get("stargazers_count", 0)
+            # 假设有 growth 字段，如果没有则用星数估算
+            growth = project.get("growth_rate", project.get("growth", 0))
+            # 增长分数 = 增长率 * 100 + 星数/10000
+            project["_growth_score"] = growth * 100 + stars / 10000
             project["_score"] = self.calculate_score(project)
         
-        # 按评分排序
-        sorted_projects = sorted(projects, key=lambda x: x.get("_score", 0), reverse=True)
+        # 按增长分数排序
+        sorted_projects = sorted(projects, key=lambda x: x.get("_growth_score", 0), reverse=True)
         
         return sorted_projects[:count]
     
