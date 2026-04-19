@@ -1,6 +1,45 @@
 {
   "items": [
     {
+      "id": "80660dfed437",
+      "title": "横扫全球15项SOTA！高德首个面向AGI的全栈具身技术体系大公开",
+      "summary": "“懂物理”这个行业老大难终于有解了",
+      "link": "https://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247884586&idx=1&sn=9bf96cc00105a72306c125f3513f7d07",
+      "source": "量子位",
+      "published": "2026-04-19",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "wechat",
+      "collected_at": "2026-04-19T21:19:52.466063"
+    },
+    {
+      "id": "4ccb56df5979",
+      "title": "马斯克来抖音卖老干妈了？？",
+      "summary": "没AI味，或许才更可怕",
+      "link": "https://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247884586&idx=2&sn=0aacf822168e53db756d3748c6173b0d",
+      "source": "量子位",
+      "published": "2026-04-19",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "wechat",
+      "collected_at": "2026-04-19T21:19:52.466109"
+    },
+    {
+      "id": "5a183d9fba0f",
+      "title": "今年最火的AI产品，不止龙虾｜榜单申报中",
+      "summary": "抓紧申报了！截至4月27日",
+      "link": "https://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247884586&idx=3&sn=e36368d661ceb8a4f9002c1288971acd",
+      "source": "量子位",
+      "published": "2026-04-19",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "wechat",
+      "collected_at": "2026-04-19T21:19:52.466131"
+    },
+    {
       "id": "12a58c671bd0",
       "title": "高德发布全球首个面向AGI的全栈具身技术体系“ABot”",
       "summary": "4月19日，在2026北京亦庄机器人半程马拉松上，阿里巴巴旗下高德正式公开全球首款开放环境全自主具身机器人“高德途途”。这款四足机器人协助视障人士完成复杂避障、人群穿行等实战挑战。其底层依托高德发布的ABot具身技术体系，基于上万种真实场景与千万级多模态数据构建。目前，高德ABot系列模型已经在全球15项基准测试中拿到SOTA。",
@@ -90,6 +129,32 @@
       "type": "article",
       "category": "tech",
       "collected_at": "2026-04-19T10:52:10.415811"
+    },
+    {
+      "id": "232463a06817",
+      "title": "AI开始接管实验室了！玻尔·跃迁实验室：试剂、设备、数据一个入口搞定，1800+设备即插即用",
+      "summary": "自然语言操控设备、零代码编排流程",
+      "link": "https://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247884413&idx=2&sn=b1ba4663befe724d0146e2b79ee61489",
+      "source": "量子位",
+      "published": "2026-04-18",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "wechat",
+      "collected_at": "2026-04-19T21:19:52.466162"
+    },
+    {
+      "id": "ede71c325e5c",
+      "title": "今年最火的AI产品，不止龙虾｜榜单申报中",
+      "summary": "抓紧申报了！截至4月27日",
+      "link": "https://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247884413&idx=4&sn=839cab63ae22c25685a39e9fbf1b971d",
+      "source": "量子位",
+      "published": "2026-04-18",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "wechat",
+      "collected_at": "2026-04-19T21:19:52.466184"
     },
     {
       "id": "3eabe9890d88",
@@ -194,6 +259,19 @@
       "type": "article",
       "category": "industry",
       "collected_at": "2026-04-18T09:15:59.670805"
+    },
+    {
+      "id": "609ed3d290da",
+      "title": "DeepSeek 拟首次启动融资，估值超百亿美元，有何战略意图？对国内 AI 大模型赛道带来哪些改变？",
+      "summary": "据四位知情人士透露，深度求索（DeepSeek）正就首次引入外部资本展开洽谈，希望充实资金储备，以便在研发顶尖人工智能模型的高成本竞争中占据更有利地位。此前该公司已多次拒绝中国头部风投机构与科技巨头的投资邀约。但据其中两位人士消息，该初创企业近期已开始与投资方接触，计划以至少 100 亿美元的估值，募集不少于 3 亿美元资金。截至发稿，DeepSeek 尚未就置评请求作出回应。DeepSeek 首",
+      "link": "https://www.zhihu.com/question/2028616808370849247",
+      "source": "知乎热榜",
+      "published": "2026-04-17",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "llm",
+      "collected_at": "2026-04-19T21:20:51.301601"
     },
     {
       "id": "7318e9c4417c",
@@ -1067,6 +1145,19 @@
       "collected_at": "2026-04-18T09:15:46.567334"
     },
     {
+      "id": "c6b09a2e9eee",
+      "title": "有什么「一粒就足以致命」的分子？",
+      "summary": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n啃米\n查看知乎原文\n\n\n\n卡利奇霉素γ1（Calicheamicin γ1）所代表的 1,5- 二炔 -3- 烯（enediyne）类抗生素。有记录一个分子足以杀死一个细菌：\nhttps://www.vaia.com/en-us/textbooks/chemistry/chemistry-the-central-science-14-edition/cha",
+      "link": "https://daily.zhihu.com/story/9788972",
+      "source": "知乎日报",
+      "published": "2026-04-13",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "zhihu",
+      "collected_at": "2026-04-19T21:20:53.682012"
+    },
+    {
       "id": "91e6e6d0ca17",
       "title": "迎接范式革命：最新、最全的大模型Latent Space综述，NUS、复旦、清华等联合出品",
       "summary": "基础 — 演进 — 机制 — 能力 — 展望",
@@ -1208,98 +1299,7 @@
       "type": "article",
       "category": "opensource",
       "collected_at": "2026-04-18T09:15:46.567399"
-    },
-    {
-      "id": "e3e884480f6b",
-      "title": "LongCat-Flash-Prover：AI 攻克数学定理证明，不仅要“算得对”，更要“证得严”",
-      "summary": "引言现如今的大语言模型已经能流畅地写文章、写代码，甚至执行复杂的 Agent 工作流，然而，它们在面对严谨的数学定理证明时，却往往显得力不从心。在常规的数学解题中，模型只需要“答对最终数值”即可，但数学定理证明不同，它要求极度严苛的逻辑链条，任何一句自然语言的模棱两可，都可能导致整个证明的崩塌。那么，如何让 AI 从“猜答案”走向“严谨证明”，成为复杂推理具有挑战的课题。为了解答这个问题，我们开源",
-      "link": "https://tech.meituan.com/2026/04/07/longcat-flash-prover.html",
-      "source": "美团技术团队",
-      "published": "2026-04-07",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "tech_blog",
-      "collected_at": "2026-04-19T01:23:08.363701"
-    },
-    {
-      "id": "52b0aa274643",
-      "title": "美团发布原生多模态 LongCat-Next：当视觉和语音成为AI的母语",
-      "summary": "引言物理世界的信息由图像、声音、文字交织而成。今天的大模型，本质上仍然是以语言为中心的建模系统，语言作为人类智慧符号化表述，在”压缩即智能”的范式下表现出强大的能力。但通往真正的物理世界智能，也许语言并不是世界的边界。视觉、语音与文本等多模态信号，实际上是对现实物理对象的不同侧面投影。这就引出一个根本问题：能否让 AI 像处理语言一样，用同一种方式简洁有效地处理物理世界的多种信息？ 如果能，那么物",
-      "link": "https://tech.meituan.com/2026/04/02/longcat-next.html",
-      "source": "美团技术团队",
-      "published": "2026-04-02",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "tech_blog",
-      "collected_at": "2026-04-19T01:23:08.363745"
-    },
-    {
-      "id": "5397820e9ff1",
-      "title": "重塑站外体验：大众点评 M 站基于 Qwik.js 的重构实践",
-      "summary": "一、背景与挑战：流量转化与用户体验的困境什么是 M 站？M 即 Mobile，对大众点评而言，M 站是面向公域的流量引流入口，经近年 M 站与 PC 站形态融合、交互链路剥离后，定位进一步明确为“信息展示 + 点击唤端”的极简触点。我们所维护的大众点评 M 站，也由此聚焦至商户详情页、内容详情页、首页这三大高流量页面。在移动互联网流量进入精细化运营的背景下，主流互联网厂商均将交易、内容生产等高用户",
-      "link": "https://tech.meituan.com/2026/03/13/qwik-practice-in-dianping.html",
-      "source": "美团技术团队",
-      "published": "2026-03-13",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "tech_blog",
-      "collected_at": "2026-04-19T01:23:08.363776"
-    },
-    {
-      "id": "d8b4d0b91709",
-      "title": "LongCat 为 OpenClaw 装上效率引擎：你的自动化任务还能再快 30%",
-      "summary": "OpenClaw 在开发者社区迅速获得 23万+ Stars，因其作为开源、本地优先的个人 AI Agent，能够将大语言模型的推理能力转化为对计算机的实际操作，为构建个人 AI 助手提供了系统级权限与自动化基础。然而，近期部分平台开始收紧对非官方入口的访问。谷歌以“恶意使用”为由，大规模封禁通过 OpenClaw 路由 Gemini token 的用户账号，Anthropic 随后也更新使用条款",
-      "link": "https://tech.meituan.com/2026/03/09/longcat-openclaw.html",
-      "source": "美团技术团队",
-      "published": "2026-03-09",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "tech_blog",
-      "collected_at": "2026-04-19T01:23:08.363794"
-    },
-    {
-      "id": "ccba919b806c",
-      "title": "美团发布基于 N-gram 全新模型：嵌入扩展新范式，实现轻量化 MoE 高效进化",
-      "summary": "传统 MoE 架构通常通过增加专家数量来提升模型能力，但随着专家数量增加，会面临边际收益递减和系统通信开销上升等问题。美团 LongCat 团队通过全面的分析与实验发现：嵌入扩展相比专家扩展能获得更优的帕累托前沿。这意味着嵌入扩展在特定条件下相比专家扩展能实现更优的效能边界。基于这些洞见，我们正式推出&nbsp;LongCat-Flash-Lite —— 一款拥有 685 亿参数，每次推理仅激活2",
-      "link": "https://tech.meituan.com/2026/02/10/longcat-flash-lite.html",
-      "source": "美团技术团队",
-      "published": "2026-02-10",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "tech_blog",
-      "collected_at": "2026-04-19T01:23:08.363815"
-    },
-    {
-      "id": "8c7995e0d39b",
-      "title": "2025美团技术年货，「马」上到来",
-      "summary": "新春将至，美团技术年货如约而来。感谢这一路上，伙伴们的并肩前行与坚定支持！❤️时光荏苒，美团技术博客已经陪伴大家走过了 12 个年头。过去一年，美团技术团队在持续深耕中积累了诸多值得分享的实践案例与开源项目。尤其值得关注的是，美团 LongCat 团队在大模型开源领域取得了不少亮眼的成果，这一年，我们陆续发布了覆盖基座模型、图像、视频、语音等多个方向的开源产品与工具，持续助力 AI 技术共享与生态",
-      "link": "https://tech.meituan.com/2026/02/02/2025-spring-festival-present.html",
-      "source": "美团技术团队",
-      "published": "2026-02-02",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "tech_blog",
-      "collected_at": "2026-04-19T01:23:08.363832"
-    },
-    {
-      "id": "7a09b13975fc",
-      "title": "多维创新打造强泛化智能体模型，LongCat-Flash-Thinking-2601技术报告发布",
-      "summary": "当大模型在数学竞赛、代码编写等领域持续突破，甚至超越顶尖人类专家时，大家难免会好奇：这些在基准测试中拿高分的模型，能否真正落地到复杂多变、充满噪声的真实世界任务中？近期，美团 LongCat 团队交出了一份重磅答卷——开源 LongCat-Flash-Thinking-2601。作为一款拥有 5600 亿参数的 MoE（混合专家） 模型，它不仅在 BrowseComp、VitaBench 等智能体",
-      "link": "https://tech.meituan.com/2026/02/02/longcat-flash-thinking-2601-techreport.html",
-      "source": "美团技术团队",
-      "published": "2026-02-02",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "agent",
-      "collected_at": "2026-04-19T01:23:08.363862"
     }
   ],
-  "last_update": "2026-04-19T10:52:10.917225"
+  "last_update": "2026-04-19T21:22:00.857711"
 }

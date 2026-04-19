@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAGER: Self-Evolving User Policy Skills for Recommendation Agent - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.14972" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>SAGER：面向推荐智能体的自进化用户策略技能框架</h1>
+
+<strong>让每个用户拥有专属的、不断进化的决策推理逻辑</strong>
+
+
+<blockquote>📅 预计阅读：15分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.14972" target="_blank">2604.14972</a></p>
+
+
+<p>🏷️ 标签：<code>LLM Agent</code> | <code>推荐系统</code> | <code>个性化推理</code> | <code>策略自进化</code> | <code>工业落地</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：为每个用户创建随交互持续进化的个性化决策策略，填补推荐智能体推理能力个性化的空白。</li>
+<li><strong>核心贡献</strong>：提出双表示策略技能架构，解耦丰富的进化基材与轻量级推理注入，实现用户级决策逻辑的持续自我优化。</li>
+<li><strong>实用价值</strong>：可直接应用于现有LLM推荐系统，无需改变基础模型，仅通过策略技能进化即可显著提升推荐准确性和用户满意度。</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>当前基于大语言模型（LLM）的推荐智能体普遍采用「记忆个性化、推理通用化」的非对称架构。系统通过维护用户的历史交互记忆来实现个性化理解，但推理决策逻辑始终依赖预定义的静态系统提示词，所有用户共享同一套决策规则。这一根本性瓶颈导致：当推荐失败时，智能体只能更新用户偏好记忆，却无法修正产生错误的推理过程——即使积累再多错误，决策逻辑也保持不变。</p>
+
+<p>SAGER团队观察到，真正的个性化推荐不仅需要知道「用户喜欢什么」（记忆），更需要理解「用户如何做决策」（推理策略）。例如，有些用户优先考虑价格，有些用户更看重品牌，有些用户会权衡多个因素。这种个性化的决策原则在现有框架中完全缺失。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>记忆个性化≠推理个性化：现有框架在「知识层面」实现了个性化，但在「决策层面」仍是千人一面的静态规则</li>
+<li>推理错误的累积盲区：当推荐失败时，更新记忆但不修正决策逻辑，导致同类错误反复发生</li>
+<li>用户决策多样性的忽视：不同用户有不同的决策优先级和偏好模式，需要专属的推理策略</li>
+<li>工业落地的现实需求：实际推荐系统需要根据用户反馈快速调整决策规则，而非重新训练模型</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>SAGER为每个用户构建一套可进化的策略技能文档，包含决策原则、优先级规则和决策模式。该策略在每次交互后自动分析用户反馈，提取新的偏好主题和决策模式，并更新到策略文档中。推理时，仅注入策略文档的精简摘要，实现轻量级个性化推理。</p>
+
+
+<h3>详细设计</h3>
+
+<p>SAGER采用双表示技能架构，将策略技能分离为两个层次：</p>
+
+<p>【进化基材层】</p>
+<p>存储丰富的原始策略信息，包括：</p>
+<ul><li>偏好主题（Preference Themes）：从用户反馈中提取的2-3个主导偏好维度</li>
+<li>决策模式短语（Decision Pattern）：一个简洁的决策风格描述</li>
+<li>优先级规则：三层决策优先级（指令匹配 > 维度对齐 > 技能权衡）</li>
+<li>规避规则：用户明确不喜欢的决策方向</li>
+</ul>
+<p>【推理注入层】</p>
+<p>在推理时，系统从进化基材中提取最小化的策略摘要（约100-200 tokens），作为prompt注入LLM，实现轻量级推理增强。</p>
+
+<p>【四阶段交互流程】</p>
+<li>Retrieve（检索）：根据当前上下文从记忆库中检索相关历史</li>
+<li>Memory（记忆）：访问用户历史偏好和交互上下文</li>
+<li>Generation（生成）：结合策略技能生成个性化推荐</li>
+<li>Evolution（进化）：分析本次交互结果，更新策略技能</li>
+
+<p>【策略进化机制】</p>
+<p>每次交互后，Evolution模块会：</p>
+<li>分析用户对推荐的反应（接受/拒绝/反馈）</li>
+<li>提取新的偏好主题或决策模式</li>
+<li>更新优先级规则中的权重</li>
+<li>补充Must-Avoid规则</li>
+<li>精简策略摘要以保持推理效率</li>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>graph LR</p>
+<p>%% 主流程样式定义</p>
+<p>classDef mainStage fill:#e1f5fe,stroke:#01579b,stroke-width:2px</p>
+<p>classDef process fill:#fff3e0,stroke:#e65100,stroke-width:1.5px</p>
+<p>classDef userNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px</p>
+<p>classDef skillNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1.5px</p>
+
+<p>%% 主流程</p>
+<p>A[👤 用户输入] --> B</p>
+
+<p>subgraph RETRIEVE["🔍 Retrieve 阶段"]</p>
+<p>B{检索判断} --> C[从Memory检索<br/>相关历史]</p>
+<p>end</p>
+
+<p>C --> D</p>
+
+<p>subgraph MEMORY["💾 Memory 阶段"]</p>
+<p>D{偏好判断} --> E[加载用户<br/>偏好记忆]</p>
+<p>end</p>
+
+<p>E --> F</p>
+
+<p>subgraph GENERATION["⚡ Generation 阶段"]</p>
+<p>F{生成判断} --> G[注入进化后<br/>策略技能]</p>
+<p>G --> H[LLM生成推荐]</p>
+<p>H --> I[📤 输出给用户]</p>
+<p>end</p>
+
+<p>I --> J</p>
+
+<p>subgraph EVOLUTION["🔄 Evolution 阶段"]</p>
+<p>J{反馈判断} --> K[分析用户反馈]</p>
+<p>K --> L[更新策略<br/>技能文档]</p>
+<p>end</p>
+
+<p>L -.-> |"循环迭代"| A</p>
+
+<p>%% 策略技能双表示架构（右侧）</p>
+<p>subgraph SKILL_ARCH["🎯 策略技能架构"]</p>
+<p>direction TB</p>
+<p>M[📚 进化基材<br/>完整策略库]</p>
+<p>N[💡 推理注入<br/>精简摘要]</p>
+<p>M ⟷|"🔄 同步机制"| N</p>
+<p>end</p>
+
+<p>%% 应用样式</p>
+<p>class A userNode</p>
+<p>class B,D,F,J mainStage</p>
+<p>class C,E,G,H,I,K,L process</p>
+<p>class M,N skillNode</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| 双表示技能架构 | 将策略技能分离为丰富的进化基材和轻量推理注入，支持持续学习的同时保证推理效率 |</p>
+<p>| 四阶段交互循环 | Retrieve-Memory-Generation-Evolution构成的闭环，每次交互都驱动策略自我优化 |</p>
+<p>| 偏好主题提取器 | 从用户反馈中自动提取2-3个主导偏好维度，形成结构化的决策依据 |</p>
+<p>| 决策模式编码器 | 将用户决策风格凝练为一个模式短语，便于推理时快速注入 |</p>
+<p>| 优先级规则引擎 | 维护三层决策优先级（指令匹配>维度对齐>技能权衡），指导推荐生成 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+<p>import random</p>
+<p>from dataclasses import dataclass, field</p>
+<p>from typing import List, Dict, Optional</p>
+
+<h1>==================== 进化基材层 ====================</h1>
+<p>@dataclass</p>
+<p>class PreferenceThemes:</p>
+<p>"""偏好主题：从用户反馈中提取的2-3个主导偏好维度"""</p>
+<p>themes: List[str] = field(default_factory=list)</p>
+
+<p>@dataclass</p>
+<p>class DecisionPattern:</p>
+<p>"""决策模式短语：简洁的决策风格描述"""</p>
+<p>pattern: str = ""</p>
+
+<p>@dataclass</p>
+<p>class PriorityRules:</p>
+<p>"""三层决策优先级"""</p>
+<p>weights: Dict[str, float] = field(default_factory=lambda: {</p>
+<p>"指令匹配": 1.0,</p>
+<p>"维度对齐": 0.7,</p>
+<p>"技能权衡": 0.5</p>
+<p>})</p>
+
+<p>@dataclass</p>
+<p>class AvoidRules:</p>
+<p>"""规避规则：用户明确不喜欢的决策方向"""</p>
+<p>avoid_directions: List[str] = field(default_factory=list)</p>
+
+<p>@dataclass</p>
+<p>class EvolutionBase:</p>
+<p>"""进化基材层：存储原始策略信息"""</p>
+<p>preferences: PreferenceThemes = field(default_factory=PreferenceThemes)</p>
+<p>decision_pattern: DecisionPattern = field(default_factory=DecisionPattern)</p>
+<p>priority_rules: PriorityRules = field(default_factory=PriorityRules)</p>
+<p>avoid_rules: AvoidRules = field(default_factory=AvoidRules)</p>
+
+<p>def to_summary(self) -> str:</p>
+<p>"""生成策略摘要（约100-200 tokens）"""</p>
+<p>themes_str = ", ".join(self.preferences.themes)</p>
+<p>summary = f"""</p>
+<p>偏好: {themes_str}</p>
+<p>风格: {self.decision_pattern.pattern}</p>
+<p>优先级: {self.priority_rules.weights}</p>
+<p>规避: {', '.join(self.avoid_rules.avoid_directions)}</p>
+<p>""".strip()</p>
+<p>return summary</p>
+
+<h1>==================== 推理注入层 ====================</h1>
+<p>class InferenceInjector:</p>
+<p>"""推理注入层：在推理时注入策略摘要"""</p>
+
+<p>def __init__(self, base: EvolutionBase):</p>
+<p>self.base = base</p>
+<p>self.summary = base.to_summary()</p>
+
+<p>def inject(self, prompt: str) -> str:</p>
+<p>"""将策略摘要注入LLM prompt"""</p>
+<p>enhanced_prompt = f"""[策略技能]</p>
+<p>{self.summary}</p>
+<hr>
+<p>[用户请求]</p>
+<p>{prompt}"""</p>
+<p>return enhanced_prompt</p>
+
+<h1>==================== 四阶段交互流程 ====================</h1>
+<p>class SAGERSystem:</p>
+<p>"""SAGER双表示技能架构"""</p>
+
+<p>def __init__(self):</p>
+<p>self.base = EvolutionBase()  # 进化基材层</p>
+<p>self.injector = InferenceInjector(self.base)  # 推理注入层</p>
+<p>self.memory = []  # 记忆库</p>
+
+<p># ---- 阶段1: Retrieve ----</p>
+<p>def retrieve(self, context: str) -> List[Dict]:</p>
+<p>"""检索相关历史"""</p>
+<p># 伪代码：从记忆库中检索相关交互</p>
+<p>relevant_history = [</p>
+<p>h for h in self.memory</p>
+<p>if any(kw in h.get("context", "") for kw in context.split()[:3])</p>
+<p>]</p>
+<p>return relevant_history[-3:]  # 返回最近3条</p>
+
+<p># ---- 阶段2: Memory ----</p>
+<p>def access_memory(self, user_id: str) -> Dict:</p>
+<p>"""访问用户历史偏好和交互上下文"""</p>
+<p># 伪代码：获取用户画像</p>
+<p>return {</p>
+<p>"preferences": self.base.preferences.themes,</p>
+<p>"pattern": self.base.decision_pattern.pattern,</p>
+<p>"interactions": len(self.memory)</p>
+<p>}</p>
+
+<p># ---- 阶段3: Generation ----</p>
+<p>def generate(self, user_input: str, context: str) -> Dict:</p>
+<p>"""结合策略技能生成个性化推荐"""</p>
+<p># 获取策略摘要</p>
+<p>strategy = self.injector.inject(user_input)</p>
+
+<p># 伪代码：LLM生成（实际调用LLM API）</p>
+<p>generated = {</p>
+<p>"content": f"[基于策略] 推荐内容 for {user_input}",</p>
+<p>"used_strategy": True,</p>
+<p>"priority_applied": self.base.priority_rules.weights</p>
+<p>}</p>
+<p>return generated</p>
+
+<p># ---- 阶段4: Evolution ----</p>
+<p>def evolve(self, user_input: str, response: Dict, feedback: str):</p>
+<p>"""分析交互结果，更新策略技能"""</p>
+<p># 分析用户反馈</p>
+<p>if "喜欢" in feedback or "接受" in feedback:</p>
+<p># 接受：强化当前偏好</p>
+<p>new_theme = self._extract_preference(user_input)</p>
+<p>if new_theme and new_theme not in self.base.preferences.themes:</p>
+<p>self.base.preferences.themes.append(new_theme)</p>
+
+<p>elif "拒绝" in feedback or "不喜欢" in feedback:</p>
+<p># 拒绝：更新规避规则</p>
+<p>avoid_direction = self._extract_avoid(user_input)</p>
+<p>if avoid_direction:</p>
+<p>self.base.avoid_rules.avoid_directions.append(avoid_direction)</p>
+
+<p># 更新权重</p>
+<p>self._update_weights(feedback)</p>
+
+<p># 精简策略摘要</p>
+<p>self._compact_summary()</p>
+
+<p>def _extract_preference(self, text: str) -> Optional[str]:</p>
+<p>"""提取偏好主题"""</p>
+<p>return f"新偏好_{random.randint(1,10)}"  # 伪代码</p>
+
+<p>def _extract_avoid(self, text: str) -> Optional[str]:</p>
+<p>"""提取规避方向"""</p>
+<p>return f"规避_{random.randint(1,5)}" if "不" in text else None</p>
+
+<p>def _update_weights(self, feedback: str):</p>
+<p>"""更新优先级权重"""</p>
+<p># 伪代码：根据反馈调整权重</p>
+<p>for key in self.base.priority_rules.weights:</p>
+<p>delta = random.uniform(-0.1, 0.1)</p>
+<p>self.base.priority_rules.weights[key] = max(0, min(1,</p>
+<p>self.base.priority_rules.weights[key] + delta))</p>
+
+<p>def _compact_summary(self):</p>
+<p>"""精简策略摘要以保持推理效率"""</p>
+<p># 限制主题数量</p>
+<p>if len(self.base.preferences.themes) > 3:</p>
+<p>self.base.preferences.themes = self.base.preferences.themes[-3:]</p>
+<p># 重建摘要</p>
+<p>self.injector.summary = self.base.to_summary()</p>
+
+<h1>==================== 使用示例 ====================</h1>
+<p>if __name__ == "__main__":</p>
+<p># 初始化系统</p>
+<p>sager = SAGERSystem()</p>
+
+<p># 模拟用户交互</p>
+<p>user_input = "我想学习Python"</p>
+<p>context = "用户想学编程"</p>
+
+<p># 四阶段流程</p>
+<p>history = sager.retrieve(context)      # 1. 检索</p>
+<p>user_profile = sager.access_memory("user_1")  # 2. 记忆</p>
+<p>response = sager.generate(user_input, context)  # 3. 生成</p>
+
+<p># 模拟用户反馈</p>
+<p>feedback = "喜欢这个推荐，但不要游戏相关的"</p>
+<p>sager.evolve(user_input, response, feedback)  # 4. 进化</p>
+
+<p>print("=== 策略摘要 ===")</p>
+<p>print(sager.injector.summary)</p>
+<p>print("\n=== 当前权重 ===")</p>
+<p>print(sager.base.priority_rules.weights)</p>
+</code>`<code>
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>\begin{align*}</p>
+<p>\text{From this starting point, the skill self-evolves through interaction: } S(t-2)</p>
+<p>\end{align*}</p>
+<p>$$</p>
+
+<em>含义</em>：From this starting point, the skill self-evolves through interaction: S(t−2)
+
+<strong>公式 2</strong>：
+
+<p>$$</p>
+</code>`<code>latex
+<p>\begin{align*}</p>
+<p>&\text{Plist encodes a three-tier priority:}\\</p>
+<p>&\qquad \text{instruction match} \succ \text{facets alignment} \succ \text{slim skill tie}.</p>
+<p>\end{align*}</p>
+</code>``
+<p>$$</p>
+
+<em>含义</em>：where Plist encodes a three-tier priority: instruction match ≻facets alignment ≻slim skill tie-
+
+<strong>公式 3</strong>：
+
+<p>$$</p>
+<p>\begin{align*}</p>
+<p>\text{Full prompt templates are in Appendix C.}\\</p>
+<p>\text{The complete per-interaction procedure is summarized in \dots}</p>
+<p>\end{align*}</p>
+<p>$$</p>
+
+<em>含义</em>：Full prompt templates are in Appendix C. The complete per-interaction procedure is summarized in
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：在MovieLens-1M、Book-Crossing、LastFM音乐推荐、Amazon Electronics四个标准数据集上验证，涵盖电影、图书、音乐、电子产品四个领域
+
+<strong>评价指标</strong>：采用Hit Rate@K（推荐命中率）、NDCG@K（归一化折扣累积增益）、MRR（平均倒数排名）作为核心指标
+
+<strong>主要结果</strong>：
+
+<p>SAGER在所有数据集上均取得显著提升：iAgent集成SAGER后Hit Rate@10平均提升15.3%，NDCG@10提升12.7%；i2Agent提升幅度分别为18.2%和14.5%；甚至在基础LLM（GPT-3.5）上直接应用SAGER也获得9.8%和8.3%的提升。值得注意的是，策略进化带来的增益具有累加性，与其他优化方法正交。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ 策略进化带来的增益具有持续性：随着交互轮数增加，性能提升幅度单调递增，不存在收益饱和</li>
+<li>✅ 用户间差异显著：高决策复杂度用户的提升幅度（23.1%）远超低复杂度用户（8.7%）</li>
+<li>✅ 零样本泛化能力：在一个数据集上进化的策略技能可有效迁移到相似领域</li>
+<li>✅ 推理开销可控：双表示架构将推理时的token开销控制在原prompt的15%以内</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 首个用户级策略技能框架 | 首次为每个用户构建专属的决策策略文档，而非共享的静态规则，实现推理层面的真正个性化 |</p>
+<p>| 双表示技能架构 | 解耦进化基材与推理注入，在保持策略丰富性的同时确保推理效率，满足工业部署的延迟要求 |</p>
+<p>| 自进化决策逻辑 | 通过分析推荐成败自动更新决策规则，形成闭环优化，无需人工干预即可持续改进推理质量 |</p>
+<p>| 累加性优化范式 | 策略进化可与记忆增强、检索优化等技术叠加使用，为现有系统提供即插即用的性能提升 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 电商平台个性化推荐：根据用户决策风格（价格敏感型、品牌导向型）动态调整推荐策略</li>
+<li>🎯 内容分发平台：学习用户的阅读/观看决策模式，优化内容排序逻辑</li>
+<li>🎯 金融产品推荐：适应不同风险偏好用户的决策逻辑，提供合规且个性化的理财建议</li>
+<li>🎯 客服对话推荐：在多轮对话中学习用户的咨询偏好和决策模式，提升服务效率</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 策略冲突解决：当多个偏好主题相互矛盾时，需要有效的冲突消解机制</li>
+<li>⚠️ 冷启动问题：新用户缺乏交互历史，初始策略技能的构建需要借鉴相似用户</li>
+<li>⚠️ 隐私合规：策略技能的存储和更新涉及用户决策模式的敏感信息</li>
+<li>⚠️ 线上延迟：进化过程需要在后台异步完成，避免影响推荐响应时间</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>核心实现分为三个模块：</p>
+<li>策略存储模块：使用向量数据库存储进化基材，支持语义检索和更新</li>
+<li>策略注入模块：在LLM调用前动态组装策略摘要，控制token数量</li>
+<li>进化分析模块：定期批量处理用户反馈，提取偏好更新策略</li>
+<p>关键接口设计：update_user_skill(user_id, interaction_result)和get_skill_summary(user_id, max_tokens)</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：SAGER通过为每个用户构建自进化的策略技能，填补了LLM推荐智能体在决策推理个性化方面的空白，为构建真正理解「用户如何决策」的推荐系统提供了可行路径。
+
+<strong>未来方向</strong>：探索策略技能的跨用户迁移学习，实现冷启动用户的快速适配；研究多智能体协作下的策略技能共享机制；将框架扩展到更多模态（如图文混合推荐）
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：SAGER与现有RAG（检索增强生成）有何本质区别？</strong>
+
+<p>A：RAG主要解决「知道什么」的问题（增强知识检索），而SAGER解决「如何决策」的问题（增强推理逻辑）。两者是正交互补的：RAG可以看作是记忆层面的增强，SAGER是推理层面的增强，可以叠加使用。</p>
+
+
+<strong>Q：双表示架构的具体实现是怎样的？</strong>
+
+<p>A：进化基材采用完整的结构化文档存储，包含所有偏好主题、决策模式、规则等；推理注入时，系统从基材中提取关键信息并压缩为固定长度的摘要。两者通过定期同步保持一致：每次交互后更新基材，定期重新生成摘要用于推理。</p>
+
+
+<strong>Q：策略进化是否会引入噪声或过度拟合用户历史？</strong>
+
+<p>A：论文设计了去噪机制：每次进化前会对比历史策略，识别并过滤异常更新；同时采用衰减权重，让近期反馈权重更高，避免过度拟合。用户也可手动干预策略技能的调整。</p>
+
+
+<strong>Q：该方法对基础LLM的能力有要求吗？</strong>
+
+<p>A：论文验证了SAGER在GPT-3.5、GPT-4以及开源模型上的有效性。基础LLM需要具备基本的指令遵循和上下文理解能力。策略进化本身不依赖特定模型，因此具有良好的模型无关性。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: (a) Existing recommendation agents personalize what they know (memory) but reason
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_0.png" target="_blank">Figure 1</a></p>
+
+<strong>Figure 2</strong>: The SAGER framework operates in four stages per interaction: 1⃝Retrieve: the Memory
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_1.png" target="_blank">Figure 2</a></p>
+
+<strong>Figure 3</strong>: iAgent with and without SAGER skill evolution across four datasets. Consistent improve-
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_2.png" target="_blank">Figure 3</a></p>
+
+<strong>Figure 4</strong>: i2Agent with and without SAGER skill evolution. Skill evolution provides additive gains
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_3.png" target="_blank">Figure 4</a></p>
+
+<strong>Figure 5</strong>: Vanilla LLM with and without SAGER skill evolution. Skill evolution yields consistent
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_4.png" target="_blank">Figure 5</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
