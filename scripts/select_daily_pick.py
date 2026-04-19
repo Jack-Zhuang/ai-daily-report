@@ -67,6 +67,14 @@ class DailyPickSelector:
             "article_count": 2,  # 文章2篇
             "github_count": 1,  # GitHub项目1篇
         }
+        
+        # 工业落地关键词（优先级更高）
+        self.industry_keywords = [
+            "production", "industrial", "deploy", "deployment", "online",
+            "real-time", "realtime", "scalable", "large-scale", "distributed",
+            "工业", "落地", "部署", "线上", "实时", "大规模", "分布式",
+            "A/B test", "experiment", "实践", "practice", "application"
+        ]
     
     def calculate_score(self, item: Dict[str, Any]) -> float:
         """
