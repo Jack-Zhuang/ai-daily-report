@@ -266,6 +266,7 @@ class ArxivCollector:
             data = {
                 'date': self.today,
                 'daily_pick': [],
+                'articles': [],
                 'hot_articles': [],
                 'github_projects': [],
                 'arxiv_papers': [],
@@ -274,6 +275,10 @@ class ArxivCollector:
         
         # 更新论文列表
         data['arxiv_papers'] = papers
+        
+        # 确保 articles 字段存在
+        if 'articles' not in data:
+            data['articles'] = []
         
         with open(data_file, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)

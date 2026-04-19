@@ -217,7 +217,7 @@ class DailyPickSelector:
             daily_pick.append(paper)
         
         # 2. 筛选文章
-        articles = data.get("hot_articles", [])
+        articles = data.get("articles", data.get("hot_articles", []))
         selected_articles = self.select_articles(articles, self.pick_config["article_count"])
         for article in selected_articles:
             article["_type"] = "article"
@@ -247,6 +247,12 @@ class DailyPickSelector:
                     item["_reason"] = self._generate_reason(item)
                     daily_pick.append(item)
                     remaining -= 1
+        
+        # 确保 cn_summary 存在
+        for item in daily_pick:
+            if not item.get("cn_summary"):
+                # 使用 title 或 summary 作为后备
+                item["cn_summary"] = item.get("cn_title", item.get("title", ""))[:80]
         
         return daily_pick[:self.pick_config["total_count"]]
     
@@ -301,7 +307,7 @@ class DailyPickSelector:
         
         print(f"\n📊 输入数据统计:")
         print(f"  - arXiv论文: {len(data.get('arxiv_papers', []))} 篇")
-        print(f"  - 热门文章: {len(data.get('hot_articles', []))} 篇")
+        print(f"  - 热门文章: {len(data.get('articles', data.get('hot_articles', [])))} 篇")
         print(f"  - GitHub项目: {len(data.get('github_projects', []))} 个")
         
         # 生成精选

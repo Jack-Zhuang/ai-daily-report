@@ -332,11 +332,44 @@ class ArticleCollector:
         hot_articles.sort(key=lambda x: x.get('published', x.get('date', '')), reverse=True)
         
         return hot_articles[:limit]
+    
+    def save_to_daily_data(self, articles: list):
+        """保存文章到 daily_data"""
+        from datetime import datetime
+        
+        today = datetime.now().strftime("%Y-%m-%d")
+        data_file = self.base_dir / "daily_data" / f"{today}.json"
+        
+        if data_file.exists():
+            with open(data_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        else:
+            data = {
+                'date': today,
+                'daily_pick': [],
+                'articles': [],
+                'hot_articles': [],
+                'github_projects': [],
+                'arxiv_papers': [],
+                'conferences': []
+            }
+        
+        # 更新文章列表
+        data['articles'] = articles
+        
+        with open(data_file, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        
+        print(f"✅ 已保存 {len(articles)} 篇文章到: {data_file}")
 
 
 if __name__ == "__main__":
     collector = ArticleCollector()
     articles = collector.collect_all_articles()
+    
+    # 保存到 daily_data
+    collector.save_to_daily_data(articles)
+    
     print(f"\n📚 共采集 {len(articles)} 篇文章")
     print("\n热门文章预览：")
     for i, a in enumerate(articles[:10], 1):
