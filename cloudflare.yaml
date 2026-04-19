@@ -1,0 +1,13 @@
+# Cloudflare Pages 配置
+$schema: https://developers.cloudflare.com/pages/platform/build-configuration
+
+# 项目基本信息
+projectName: ai-daily-report
+
+# 构建配置
+build:
+  command: echo "Static site"
+  outputDirectory: ./
+
+# 部署分支
+productionBranch: main
