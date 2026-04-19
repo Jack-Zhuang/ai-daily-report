@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnosing LLM Judge Reliability: Conformal Prediction Sets and Transitivity Violations - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.15302" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>LLM法官可靠性诊断：保角预测与传递性违规</h1>
+
+<strong>用统计保角预测和传递性分析双管齐下，揭示LLM评估器被隐藏的不一致性</strong>
+
+
+<blockquote>📅 预计阅读：10分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.15302" target="_blank">2604.15302</a></p>
+
+
+<p>🏷️ 标签：<code>LLM评估</code> | <code>可靠性诊断</code> | <code>保角预测</code> | <code>传递性分析</code> | <code>NLG评估</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：论文提出双重诊断框架揭示LLM评判者隐藏的可靠性问题。</li>
+<li><strong>核心贡献</strong>：首次将保角预测和传递性分析引入LLM-as-judge评估，提供理论保证的实例级可靠性度量。</li>
+<li><strong>实用价值</strong>：帮助开发者识别LLM评估器不可靠的case，为构建更可信的自动评估系统提供诊断工具。</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>LLM-as-Judge已成为NLG领域的主流自动评估范式，通过让大语言模型扮演评判者，对生成文本的质量打分。这种方法在Chatbot Arena、MT-Bench等评测基准中被广泛采用。然而，这种范式存在一个根本性问题：我们知道LLM在聚合层面的表现尚可，但对于具体到"每一个"样本的评估结果，它的可靠性如何？是否有隐藏的系统性错误？</p>
+
+<p>传统评估方法只关注整体准确率或相关性等宏观指标，忽视了实例级别的可靠性诊断。就像医疗诊断不仅需要知道整体治愈率，还需要知道对每个病人的诊断可信度。LLM评估同样需要这种细粒度的可靠性度量。</p>
+
+<p>这篇论文的动机正是填补这一空白：如何为LLM-as-Judge提供理论保证的实例级可靠性评估工具？</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>LLM-as-Judge被广泛用于自动NLG评估，但实例级可靠性未被充分研究</li>
+<li>宏观指标（准确率、相关性）掩盖了微观层面的不一致性</li>
+<li>需要理论保证的可靠性度量，而非仅依赖经验观察</li>
+<li>实际应用场景（如内容审核、自动评分）迫切需要可信的实例级可靠性评估</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>论文提出双管齐下的诊断框架：传递性分析检验评判偏好的逻辑一致性，保角预测提供理论保证的置信区间。两者互补，从不同维度诊断LLM评判者的可靠性。</p>
+
+
+<h3>详细设计</h3>
+
+<strong>传递性分析</strong>：在数学上，传递性指如果A>B且B>C，则必有A>C。对于LLM评判，传递性违规表现为"有向3-循环"——如模型A认为B比C好，B认为C比D好，C又认为D比A好，形成闭环。论文在SummEval数据集上发现，尽管整体违规率很低（0.8-4.1%），但33-67%的文档至少存在一个3-循环，说明LLM在细微偏好上存在系统性不一致。
+
+<strong>分裂保角预测（Split Conformal Prediction）</strong>：这是核心创新点。传统置信区间只告诉我们"答案对不对"，保角预测告诉我们"正确答案在哪些选项中"。具体步骤：
+<li>将数据分为校准集和测试集</li>
+<li>在校准集上计算非一致性分数（LCrit = |score - ground_truth|）</li>
+<li>取(1-α)分位数q̂作为阈值</li>
+<li>对测试样本，预测集C(x) = {y: |score(x,y) - median| ≤ q̂}</li>
+<li>理论保证：P(y* ∈ C(x)) ≥ 1-α</li>
+
+<p>论文发现预测集宽度与人类可靠性标注高度相关（rs=+0.576），且跨评判者一致（r̄=0.32-0.38），说明宽度确实捕获了"文档难度"而非"评判者噪声"。</p>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+</code>`<code>mermaid
+<p>%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#f5f5f5', 'fontSize': '16px'}}}%%</p>
+<p>graph TD</p>
+<p>%% 样式定义</p>
+<p>classDef inputStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#1565c0</p>
+<p>classDef processStyle fill:#fff8e1,stroke:#f57f17,stroke-width:2px,color:#e65100</p>
+<p>classDef outputStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#2e7d32</p>
+<p>classDef mergeStyle fill:#f3e5f5</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| 传递性违规检测器 | 对每个文档构建三个模型的偏好图，检测有向3-循环（ABC、ADC、BDC三种模式），计算per-document违规率 |</p>
+<p>| 保角预测生成器 | 基于分裂保角预测原理，为1-5 Likert评分生成置信集，保证理论覆盖率≥1-α，集合宽度为可靠性指标 |</p>
+<p>| 跨评判者一致性分析器 | 计算不同LLM评判者在预测集宽度上的Spearman相关性，验证宽度捕获的是文档难度而非评判者特异性 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+<p>import numpy as np</p>
+<p>from typing import List, Set, Dict</p>
+<p>from collections import defaultdict</p>
+
+<h1>============================================================</h1>
+<h1>1. 传递性分析：检测有向3-循环</h1>
+<h1>============================================================</h1>
+
+<p>def detect_3cycles(judgments: Dict[str, Dict[str, float]]) -> List[tuple]:</p>
+<p>"""</p>
+<p>检测LLM评判中的传递性违规（3-循环）</p>
+
+<p>参数:</p>
+<p>judgments: 模型A认为B优于C的得分 {model_A: {model_B: score, model_C: score}}</p>
+<p>返回:</p>
+<p>3-循环列表，如 [(A,B,C), ...]</p>
+<p>"""</p>
+<p>models = list(judgments.keys())</p>
+<p>cycles = []</p>
+
+<p>for A in models:</p>
+<p>for B in models:</p>
+<p>if A == B:</p>
+<p>continue</p>
+<p>for C in models:</p>
+<p>if C in [A, B]:</p>
+<p>continue</p>
+<p># A > B > C > A 形成闭环</p>
+<p>if (judgments[A].get(B, 0) > judgments[B].get(A, 0) and  # A > B</p>
+<p>judgments[B].get(C, 0) > judgments[C].get(B, 0) and  # B > C</p>
+<p>judgments[C].get(A, 0) > judgments[A].get(C, 0)):    # C > A</p>
+<p>cycles.append((A, B, C))</p>
+
+<p>return cycles</p>
+
+
+<p>def compute_transitivity_violation_rate(judgments: Dict) -> float:</p>
+<p>"""计算传递性违规率"""</p>
+<p>cycles = detect_3cycles(judgments)</p>
+<p>n_models = len(judgments)</p>
+<p>n_pairs = n_models * (n_models - 1)</p>
+<p>return len(cycles) / max(n_pairs, 1)</p>
+
+
+<h1>============================================================</h1>
+<h1>2. 分裂保角预测 (Split Conformal Prediction)</h1>
+<h1>============================================================</h1>
+
+<p>class SplitConformalPredictor:</p>
+<p>"""</p>
+<p>简化版分裂保角预测器</p>
+<p>核心思想：不预测单一答案，而是预测"正确答案在哪些选项中"</p>
+<p>"""</p>
+
+<p>def __init__(self, alpha: float = 0.1):</p>
+<p>"""</p>
+<p>参数:</p>
+<p>alpha: 期望的错误率（如0.1表示10%的概率漏掉正确答案）</p>
+<p>"""</p>
+<p>self.alpha = alpha</p>
+<p>self.threshold = None</p>
+<p>self.median = None</p>
+
+<p>def fit(self, calibration_scores: np.ndarray,</p>
+<p>ground_truth: np.ndarray):</p>
+<p>"""</p>
+<p>步骤1-3: 在校准集上计算阈值</p>
+
+<p>参数:</p>
+<p>calibration_scores: 校准集上的模型得分</p>
+<p>ground_truth: 校准集的真实得分</p>
+<p>"""</p>
+<p># 计算非一致性分数 (LCrit = |score - ground_truth|)</p>
+<p>nonconformity_scores = np.abs(calibration_scores - ground_truth)</p>
+
+<p># 计算中位数</p>
+<p>self.median = np.median(ground_truth)</p>
+
+<p># 取 (1 - alpha) 分位数作为阈值</p>
+<p>n = len(nonconformity_scores)</p>
+<p>self.threshold = np.quantile(</p>
+<p>nonconformity_scores,</p>
+<p>np.ceil((n + 1) * (1 - self.alpha)) / n</p>
+<p>)</p>
+<p>return self</p>
+
+<p>def predict(self, test_scores: np.ndarray,</p>
+<p>candidates: List) -> List[Set]:</p>
+<p>"""</p>
+<p>步骤4-5: 对测试样本生成预测集</p>
+
+<p>返回:</p>
+<p>每个测试样本的候选答案集合</p>
+<p>"""</p>
+<p>prediction_sets = []</p>
+
+<p>for score in test_scores:</p>
+<p># C(x) = {y: |score(x,y) - median| ≤ threshold}</p>
+<p>valid_candidates = {</p>
+<p>cand for cand in candidates</p>
+<p>if abs(score - self.median) <= self.threshold</p>
+<p>}</p>
+<p>prediction_sets.append(valid_candidates)</p>
+
+<p>return prediction_sets</p>
+
+<p>def coverage(self, prediction_sets: List[Set],</p>
+<p>true_labels: List) -> float:</p>
+<p>"""</p>
+<p>计算覆盖率：正确答案在预测集中的比例</p>
+<p>理论保证: ≥ 1 - alpha</p>
+<p>"""</p>
+<p>hits = sum(</p>
+<p>true in pred_set</p>
+<p>for true, pred_set in zip(true_labels, prediction_sets)</p>
+<p>)</p>
+<p>return hits / len(true_labels)</p>
+
+
+<h1>============================================================</h1>
+<h1>3. 演示示例（伪代码风格）</h1>
+<h1>============================================================</h1>
+
+<p>def demo_split_conformal():</p>
+<p>"""演示分裂保角预测的完整流程"""</p>
+
+<p># 模拟数据</p>
+<p>np.random.seed(42)</p>
+
+<p># 假设有10个文档，每个文档有5个候选摘要评分</p>
+<p>n_calibration = 100</p>
+<p>n_test = 20</p>
+<p>n_candidates = 5</p>
+
+<p># 校准集</p>
+<p>cal_scores = np.random.randn(n_calibration) * 2 + 3  # 均值3，std 2</p>
+<p>cal_truth = np.random.randn(n_calibration) * 2 + 3</p>
+
+<p># 测试集</p>
+<p>test_scores = np.random.randn(n_test) * 2 + 3</p>
+<p>test_truth = np.random.randn(n_test) * 2 + 3</p>
+
+<p>candidates = [f"candidate_{i}" for i in range(n_candidates)]</p>
+
+<p># 训练预测器</p>
+<p>predictor = SplitConformalPredictor(alpha=0.1)</p>
+<p>predictor.fit(cal_scores, cal_truth)</p>
+
+<p># 预测</p>
+<p>pred_sets = predictor.predict(test_scores, candidates)</p>
+
+<p># 评估</p>
+<p>coverage = predictor.coverage(pred_sets, test_truth)</p>
+
+<p># 计算平均预测集宽度（与人类可靠性相关）</p>
+<p>avg_width = np.mean([len(s) for s in pred_sets])</p>
+
+<p>print(f"阈值 (q_hat): {predictor.threshold:.3f}")</p>
+<p>print(f"覆盖率: {coverage:.2%}")  # 理论上 ≥ 90%</p>
+<p>print(f"平均预测集宽度: {avg_width:.1f}")</p>
+<p>print(f"宽度越大 → 文档越难 → 人类评判越不可靠")</p>
+
+
+<p>if __name__ == "__main__":</p>
+<p># 1. 演示传递性分析</p>
+<p>judgments = {</p>
+<p>"A": {"B": 0.6, "C": 0.4},</p>
+<p>"B": {"C": 0.7, "A": 0.3},</p>
+<p>"C": {"A": 0.5, "B": 0.2}</p>
+<p>}</p>
+
+<p>cycles = detect_3cycles(judgments)</p>
+<p>print(f"检测到的3-循环: {cycles}")</p>
+
+<p># 2. 演示分裂保角预测</p>
+<p>demo_split_conformal()</p>
+</code>`<code>
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+</code>`<code>latex
+<p>\begin{align}</p>
+<p>\text{We introduced } & \text{MT-Bench and Chatbot Arena.}</p>
+<p>\end{align}</p>
+</code>`<code>
+<p>$$</p>
+
+<em>含义</em>：introduced MT-Bench and Chatbot Arena,
+
+<strong>公式 2</strong>：
+
+<p>$$</p>
+</code>`<code>latex
+<p>\begin{align}</p>
+<p>\text{showed that GPT-}</p>
+<p>\end{align}</p>
+</code>``
+<p>$$</p>
+
+<em>含义</em>：showed that GPT-
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：SummEval数据集（新闻摘要评估，包含180篇文档、4个评估标准、4个LLM评判者）
+
+<strong>评价指标</strong>：传递性违规率、有向3-循环比例、保角预测覆盖率、预测集宽度、Spearman相关性
+
+<strong>主要结果</strong>：
+
+<p>传递性分析显示，尽管平均违规率仅0.8-4.1%（看似很低），但33-67%的文档存在至少一个3-循环，说明不一致性被聚合指标掩盖。保角预测在α=0.10时达到理论覆盖率，预测集宽度与人工可靠性标注强相关（rs=+0.576）。跨评判者宽度相关性r̄=0.32-0.38，表明宽度捕获的是文档级难度而非评判者噪声。四标准对比：相关性最可靠（avg set size≈3.0），连贯性最不可靠。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ 33-67%文档存在传递性违规，远超宏观指标的暗示</li>
+<li>✅ 预测集宽度是有效的实例级可靠性指标（rs=+0.576）</li>
+<li>✅ 文档难度是可靠性的主要因素，评判者差异次之</li>
+<li>✅ 评估标准比评判者更重要——相关性比连贯性更可靠</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 首次将保角预测引入LLM评估 | 用统计学习理论为LLM评判提供有理论保证的置信区间，而非仅依赖经验观察 |</p>
+<p>| 传递性违规的微观诊断 | 揭示被低聚合违规率掩盖的实例级不一致，发现67%文档存在隐藏的3-循环 |</p>
+<p>| 可靠性解耦分析 | 通过跨评判者宽度相关性证明，预测集宽度捕获的是文档难度而非评判者噪声 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 AI内容审核系统：对每条用户生成内容给出可信度评估，高风险内容预警</li>
+<li>🎯 自动作文评分系统：为每个分数预测置信区间，低置信样本转人工复核</li>
+<li>🎯 对话系统质量监控：实时评估对话质量，过滤低可靠性评估结果</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 保角预测需要足够的校准数据，小样本场景下可靠性降低</li>
+<li>⚠️ 传递性分析的计算复杂度为O(n³)，大规模评估时开销显著</li>
+<li>⚠️ 预测集宽度阈值需要针对具体应用场景调优</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>核心实现：1)使用sklearn的train_test_split分割数据；2)定义非一致性分数函数；3)用numpy.percentile计算分位数；4)生成预测集并计算宽度；5)与ground truth验证覆盖率。注意需要保存校准集以复用。</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：LLM-as-Judge的可靠性问题被传统宏观指标严重低估，保角预测和传递性分析提供了互补的细粒度诊断工具，预测集宽度可作为实用的实例级可靠性指示器。
+
+<strong>未来方向</strong>：将诊断框架扩展到多模态LLM评估；探索自适应校准减少样本需求；研究如何利用诊断结果改进LLM评判本身。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：为什么传递性违规率很低（0.8-4.1%）却说明LLM不可靠？</strong>
+
+<p>A：因为宏观违规率是聚合指标，掩盖了微观不一致性。33-67%的文档存在至少一个3-循环，说明在具体样本上LLM经常自相矛盾——今天说A比B好，明天说B比A好。0.8%是全局平均值，但分布极不均匀，某些文档可能100%违规。类比：95%的癌症检测准确率听起来很高，但如果漏检了所有早期癌症患者，仍是灾难性的。</p>
+
+
+<strong>Q：保角预测和传统置信区间有什么区别？</strong>
+
+<p>A：传统置信区间告诉你单个预测值的可信范围（如"分数在3.2-3.8之间"）。保角预测告诉你正确答案在哪些选项中（如"正确答案在{3,4}里"）。更关键的是，保角预测有理论保证：无论数据分布、模型复杂度如何，P(y*∈C(x))≥1-α，而传统方法依赖假设检验的前提条件。</p>
+
+
+<strong>Q：这个研究对实际应用有什么直接帮助？</strong>
+
+<p>A：开发者可以：1)用预测集宽度过滤低可靠性评估，自动转人工复核；2)识别LLM评判的"困难样本"，针对性改进；3)在合规场景（如自动审批）用覆盖率保证做风险控制；4)对比不同评判模型，选择更可靠的那个。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: Two-pronged diagnostic pipeline. SummEval documents are evaluated by four
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_5_0.png" target="_blank">Figure 1</a></p>
+
+<strong>Figure 2</strong>: Per-document violation rate distributions. Each violin shows the distribution
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_5_1.png" target="_blank">Figure 2</a></p>
+
+<strong>Figure 3</strong>: Average prediction set size at α=0.10 (green = small = reliable; red = large = un-
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_7_2.png" target="_blank">Figure 3</a></p>
+
+<strong>Figure 4</strong>: Pooled reliability diagrams (all four judges, α=0.10). x-axis: prediction set width;
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_7_3.png" target="_blank">Figure 4</a></p>
+
+<strong>Figure 5</strong>: Inter-judge width agreement matrices (Spearman r, α=0.10). Rows/columns: the
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_7_4.png" target="_blank">Figure 5</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
