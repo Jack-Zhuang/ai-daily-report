@@ -36,3 +36,12 @@ cache/
 *.pyc
 *.pyo
 __pycache__/
+
+# Cloudflare
+.wrangler/
+worker/
+workerd
+*.wasm
+
+# 压缩包（不需要部署）
+*.zip
