@@ -195,32 +195,41 @@ class PaperInsightGenerator:
 4. 工程挑战要实事求是"""
 
         try:
+            # 使用 Anthropic 兼容 API (Token Plan)
+            api_url = "https://api.minimaxi.com/anthropic/v1/messages"
+            
+            headers = {
+                "x-api-key": self.api_key,
+                "anthropic-version": "2023-06-01",
+                "Content-Type": "application/json"
+            }
+            
             payload = {
-                "model": "abab6.5s-chat",
+                "model": "MiniMax-M2.7",
+                "max_tokens": 4000,
                 "messages": [
-                    {
-                        "role": "system",
-                        "content": "你是一位资深的AI技术博主，擅长用通俗易懂的语言解读学术论文，注重实践价值和工程落地。你的文章风格类似于机器之心、量子位等科技媒体。"
-                    },
                     {
                         "role": "user",
                         "content": prompt
                     }
-                ],
-                "temperature": 0.3,
-                "max_tokens": 3000
+                ]
             }
             
-            headers = {
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json"
-            }
-            
-            response = requests.post(self.api_url, json=payload, headers=headers, timeout=90)
+            response = requests.post(api_url, json=payload, headers=headers, timeout=120)
             
             if response.status_code == 200:
                 data = response.json()
-                content = data.get("choices", [{}])[0].get("message", {}).get("content", "")
+                # Anthropic API 返回格式
+                content_blocks = data.get('content', [])
+                content = ""
+                for block in content_blocks:
+                    if block.get('type') == 'text':
+                        content += block.get('text', '')
+                
+                if not content:
+                    print(f"    ⚠️ API返回空内容")
+                    paper["has_insight"] = False
+                    return paper
                 
                 # 尝试解析 JSON
                 try:
@@ -244,11 +253,13 @@ class PaperInsightGenerator:
                             "has_insight": True
                         })
                     else:
+                        print(f"    ⚠️ 未找到JSON")
                         paper["has_insight"] = False
                 except Exception as e:
                     print(f"    ⚠️ JSON解析失败: {e}")
                     paper["has_insight"] = False
             else:
+                print(f"    ⚠️ API错误: {response.status_code}")
                 paper["has_insight"] = False
         except Exception as e:
             print(f"    ⚠️ 解读失败: {e}")
