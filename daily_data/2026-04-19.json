@@ -91,7 +91,8 @@
       "_score": 2.2,
       "_type": "github",
       "_reason": "开源项目",
-      "cn_summary": "FinceptTerminal"
+      "cn_summary": "FinceptTerminal 是一款现代金融应用，提供实时市场数据、投资组合管理和智能分析功能。",
+      "cn_title": "FinceptTerminal - 现代金融终端应用"
     }
   ],
   "hot_articles": [
@@ -183,7 +184,8 @@
       "_score": 2.2,
       "_type": "github",
       "_reason": "开源项目",
-      "cn_summary": "FinceptTerminal"
+      "cn_summary": "FinceptTerminal",
+      "cn_title": "FinceptTerminal"
     },
     {
       "id": "trending-3",
@@ -201,7 +203,8 @@
       "growth_rate": 3.28,
       "topics": [],
       "_growth_score": 330.2901,
-      "_score": 2.67
+      "_score": 2.67,
+      "cn_title": "openai-agents-python"
     },
     {
       "id": "trending-9",
@@ -219,7 +222,8 @@
       "growth_rate": 5.33,
       "topics": [],
       "_growth_score": 534.3091,
-      "_score": 2.57
+      "_score": 2.57,
+      "cn_title": "Claude-Code-Game-Studios"
     },
     {
       "id": "trending-1",
@@ -240,7 +244,8 @@
       "_score": 1.6,
       "_type": "github",
       "_reason": "开源项目",
-      "cn_summary": "thunderbolt"
+      "cn_summary": "thunderbolt",
+      "cn_title": "thunderbolt"
     },
     {
       "id": "trending-8",
@@ -258,7 +263,8 @@
       "growth_rate": 6.31,
       "topics": [],
       "_growth_score": 632.0888,
-      "_score": 2.2
+      "_score": 2.2,
+      "cn_title": "omi"
     },
     {
       "id": "trending-7",
@@ -276,7 +282,8 @@
       "growth_rate": 9.85,
       "topics": [],
       "_growth_score": 985.5331,
-      "_score": 2.2
+      "_score": 2.2,
+      "cn_title": "evolver"
     },
     {
       "id": "trending-5",
@@ -294,7 +301,8 @@
       "growth_rate": 0.99,
       "topics": [],
       "_growth_score": 102.8668,
-      "_score": 2.2
+      "_score": 2.2,
+      "cn_title": "paperless-ngx"
     },
     {
       "id": "trending-2",
@@ -312,7 +320,8 @@
       "growth_rate": 29.78,
       "topics": [],
       "_growth_score": 2978.0883,
-      "_score": 1.38
+      "_score": 1.38,
+      "cn_title": "arc-kit"
     },
     {
       "id": "trending-6",
@@ -330,7 +339,8 @@
       "growth_rate": 0.25,
       "topics": [],
       "_growth_score": 29.7282,
-      "_score": 2.2
+      "_score": 2.2,
+      "cn_title": "RuView"
     },
     {
       "id": "trending-4",
@@ -348,7 +358,8 @@
       "growth_rate": 0.98,
       "topics": [],
       "_growth_score": 98.9752,
-      "_score": 2.2
+      "_score": 2.2,
+      "cn_title": "t3code"
     },
     {
       "id": "552661142",
@@ -386,7 +397,8 @@
         "rag"
       ],
       "_growth_score": 13.4058,
-      "_score": 2.2
+      "_score": 2.2,
+      "cn_title": "langchain"
     },
     {
       "id": "793375104",
@@ -409,7 +421,8 @@
         "rag"
       ],
       "_growth_score": 10.6384,
-      "_score": 2.57
+      "_score": 2.57,
+      "cn_title": "awesome-llm-apps"
     },
     {
       "id": "1024554267",
@@ -444,7 +457,8 @@
         "openclaw"
       ],
       "_growth_score": 10.1339,
-      "_score": 2.67
+      "_score": 2.67,
+      "cn_title": "hermes-agent"
     },
     {
       "id": "660551251",
@@ -468,7 +482,8 @@
         "multi-agent"
       ],
       "_growth_score": 6.7233,
-      "_score": 2.01
+      "_score": 2.01,
+      "cn_title": "MetaGPT"
     },
     {
       "id": "680120071",
@@ -497,7 +512,8 @@
         "llm-framework"
       ],
       "_growth_score": 5.7209,
-      "_score": 1.88
+      "_score": 1.88,
+      "cn_title": "autogen"
     },
     {
       "id": "615882673",
@@ -515,7 +531,8 @@
       "growth_rate": 0,
       "topics": [],
       "_growth_score": 3.9453,
-      "_score": 1.64
+      "_score": 1.64,
+      "cn_title": "FastChat"
     },
     {
       "id": "752925682",
@@ -533,7 +550,8 @@
       "growth_rate": 0,
       "topics": [],
       "_growth_score": 2.7133,
-      "_score": 1.64
+      "_score": 1.64,
+      "cn_title": "Qwen3"
     },
     {
       "id": "740303686",
@@ -570,7 +588,8 @@
         "wan"
       ],
       "_growth_score": 2.6089,
-      "_score": 2.2
+      "_score": 2.2,
+      "cn_title": "sglang"
     },
     {
       "id": "149430917",
@@ -606,7 +625,8 @@
         "tutorial"
       ],
       "_growth_score": 2.1643,
-      "_score": 2.59
+      "_score": 2.59,
+      "cn_title": "recommenders"
     },
     {
       "id": "543293939",
@@ -624,7 +644,8 @@
       "growth_rate": 0,
       "topics": [],
       "_growth_score": 0.929,
-      "_score": 1.64
+      "_score": 1.64,
+      "cn_title": "monolith"
     }
   ],
   "arxiv_papers": [

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovering Novel LLM Experts via Task-Capability Coevolution - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.14969" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>通过任务-能力协同进化发现新型LLM专家</h1>
+
+<strong>AC/DC框架：让模型与任务自主协同进化，自动发现超越大模型的专家模型</strong>
+
+
+<blockquote>📅 预计阅读：15分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.14969" target="_blank">2604.14969</a></p>
+
+
+<p>🏷️ 标签：<code>LLM进化</code> | <code>模型合并</code> | <code>开放性学习</code> | <code>协同进化</code> | <code>ICLR2026</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：通过模型合并与任务生成的协同进化，自动发现高性能LLM专家。</li>
+<li><strong>核心贡献</strong>：提出AC/DC框架，将协同进化思想引入LLM发现，同时进化LLM档案库和自然语言任务库，在单一运行中实现能力的开放性提升。</li>
+<li><strong>实用价值</strong>：可自动生成比肩甚至超越更大模型的专业LLM，同时显著降低GPU内存占用，为企业定制化模型部署提供新路径。</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>当前大语言模型的发展面临一个核心瓶颈：每次能力提升都需要人工启动新的训练流程，使用静态数据集或固定奖励函数。这种「手工作坊」模式不仅耗时耗力，更难以发现 emergent（涌现）能力——即那些在小规模训练中无法预见、但在大规模训练中突然出现的能力。</p>
+
+<p>学术界一直在探索「开放性」（open-endedness）的概念，希望构建能像生物进化一样自主产生新颖性和复杂性的系统。类比自然界的「红皇后假说」——物种必须不断进化才能维持生态位——LLM也需要持续进化以应对不断变化的任务需求。</p>
+
+<p>这篇论文的核心洞察是：如果能让模型进化和任务进化协同进行（coevolution），就可能在单一训练运行中自动发现具有越来越强、越来越多样化能力的模型，从而突破当前范式的局限。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>当前预训练-后训练范式依赖人工启动训练，效率低下</li>
+<li>开放性进化可自主产生新颖能力，但此前未应用于LLM发现</li>
+<li>协同进化（模型+任务）有望实现能力的持续自主提升</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>AC/DC（Assessment Coevolving with Diverse Capabilities）是一个双档案协同进化框架，一边维护LLM模型档案库，一边维护自然语言任务档案库。两个档案通过互相评估、筛选、变异和重组不断进化，最终在档案中积累越来越多样的高能力LLM。</p>
+
+
+<h3>详细设计</h3>
+
+<p>AC/DC的协同进化机制包含两条主线：</p>
+
+<strong>模型进化</strong>：从初始的少量基础LLM开始，通过模型合并（model merging）技术将多个模型的优势能力整合到单一模型中。合并策略包括多种权重组合方式，生成的新模型继承父模型的某些能力的同时，可能涌现出父模型都不具备的新能力。
+
+<strong>任务进化</strong>：为了给模型进化提供「选择压力」，AC/DC持续生成新的合成任务。这些任务基于已有的高质量任务进行变异（调整难度、改变主题），生成更难的挑战。关键设计是「不可能任务过滤器」，过滤掉超出当前模型能力范围太远的任务，确保任务始终具有适当的挑战性。
+
+<strong>协同机制</strong>：模型档案和任务档案相互促进——更强的模型可以解锁更困难的任务，更难的任务则筛选出更有能力的模型。这个循环不断迭代，档案库中的LLM和任务都在持续进化。评估时，论文使用「覆盖率」（Coverage）指标，衡量模型档案整体能解决的问题范围。
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>graph LR</p>
+<p>%% 样式定义</p>
+<p>classDef controller fill:#ff6b6b,stroke:#333,color:#fff</p>
+<p>classDef llm fill:#4ecdc4,stroke:#333,color:#fff</p>
+<p>classDef task fill:#ffe66d,stroke:#333,color:#333</p>
+<p>classDef output fill:#95e1d3,stroke:#333,color:#333</p>
+
+<p>%% 顶部协同控制器</p>
+<p>subgraph 协同进化控制器["🔄 协同进化控制器"]</p>
+<p>C1["迭代节奏调控"]</p>
+<p>C2["双向信息交换"]</p>
+<p>end</p>
+
+<p>%% 左侧LLM档案库</p>
+<p>subgraph LLM档案库["📦 LLM档案库"]</p>
+<p>L1["初始模型"]</p>
+<p>L2["模型合并"]</p>
+<p>L3["新模型"]</p>
+<p>L4["性能评估"]</p>
+<p>end</p>
+
+<p>%% 右侧任务档案库</p>
+<p>subgraph 任务档案库["📚 任务档案库"]</p>
+<p>T1["初始任务"]</p>
+<p>T2["任务变异"]</p>
+<p>T3["新任务"]</p>
+<p>T4["难度过滤"]</p>
+<p>end</p>
+
+<p>%% 底部输出</p>
+<p>subgraph 最终输出["🎯 最终输出"]</p>
+<p>O1["多样化LLM专家集合"]</p>
+<p>end</p>
+
+<p>%% LLM档案库流程</p>
+<p>L1 --> L2 --> L3 --> L4</p>
+
+<p>%% 任务档案库流程</p>
+<p>T1 --> T2 --> T3 --> T4</p>
+
+<p>%% 双向连接箭头</p>
+<p>L4 <-.->|任务需求/模型反馈| T4</p>
+<p>L2 <-.->|能力要求/任务适配| T2</p>
+
+<p>%% 控制器连接</p>
+<p>C1 --> L1</p>
+<p>C1 --> T1</p>
+<p>C2 --> L4</p>
+<p>C2 --> T4</p>
+
+<p>%% 输出连接</p>
+<p>L4 -.->|持续优化| O1</p>
+
+<p>%% 应用样式</p>
+<p>class C1,C2 controller</p>
+<p>class L1,L2,L3,L4 llm</p>
+<p>class T1,T2,T3,T4 task</p>
+<p>class O1 output</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| LLM档案库（Model Archive） | 存储进化过程中的所有LLM变体，每个模型附带能力评分和能力向量，支持基于能力相似度的筛选和多样性维护 |</p>
+<p>| 任务档案库（Task Archive） | 存储合成的问答对任务，每个任务有难度评估和覆盖能力标记，通过变异和重组生成新任务，同时用不可能任务过滤器防止难度跳跃过大 |</p>
+<p>| 模型合并模块（Model Merging） | 核心进化操作器，将多个候选模型的权重按一定策略合并，生成可能涌现新能力的新模型。合并策略可调，支持多种权重平均方式 |</p>
+<p>| 协同进化控制器（Coevolution Controller） | 协调模型进化和任务进化的节奏，决定何时触发模型合并、何时生成新任务、如何平衡探索与利用 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+<p>import random</p>
+<p>from dataclasses import dataclass, field</p>
+<p>from typing import List</p>
+
+<h1>========== 数据结构定义 ==========</h1>
+
+<p>@dataclass</p>
+<p>class LLM:</p>
+<p>id: int</p>
+<p>abilities: dict        # 能力评分</p>
+<p>generation: int = 0    # 所属代数</p>
+
+<p>@dataclass</p>
+<p>class Task:</p>
+<p>id: int</p>
+<p>difficulty: float      # 难度系数 0~1</p>
+<p>topic: str             # 主题</p>
+<p>solved: bool = False   # 是否已被解决</p>
+
+<h1>========== 核心类定义 ==========</h1>
+
+<p>class ModelArchiv:</p>
+<p>"""模型档案库"""</p>
+<p>def __init__(self):</p>
+<p>self.models: List[LLM] = []</p>
+<p>self.next_id = 0</p>
+
+<p>def add_model(self, model: LLM):</p>
+<p>self.models.append(model)</p>
+<p>model.id = self.next_id</p>
+<p>self.next_id += 1</p>
+
+<p>def merge_models(self, parent1: LLM, parent2: LLM) -> LLM:</p>
+<p>"""模型合并：整合两个模型的能力"""</p>
+<p>child_abilities = {</p>
+<p>k: (parent1.abilities[k] + parent2.abilities[k]) / 2</p>
+<p>for k in parent1.abilities</p>
+<p>}</p>
+<p># 可能的涌现能力（伪随机）</p>
+<p>if random.random() < 0.1:</p>
+<p>child_abilities["new_ability"] = random.uniform(0.3, 0.7)</p>
+
+<p>return LLM(</p>
+<p>id=-1,</p>
+<p>abilities=child_abilities,</p>
+<p>generation=max(parent1.generation, parent2.generation) + 1</p>
+<p>)</p>
+
+<p>class TaskArchiv:</p>
+<p>"""任务档案库"""</p>
+<p>def __init__(self):</p>
+<p>self.tasks: List[Task] = []</p>
+<p>self.next_id = 0</p>
+
+<p>def generate_initial_tasks(self, n: int = 5):</p>
+<p>"""生成初始任务"""</p>
+<p>for i in range(n):</p>
+<p>self.tasks.append(Task(</p>
+<p>id=self.next_id,</p>
+<p>difficulty=random.uniform(0.2, 0.6),</p>
+<p>topic=random.choice(["math", "code", "reasoning"])</p>
+<p>))</p>
+<p>self.next_id += 1</p>
+
+<p>def mutate_task(self, task: Task, max_difficulty: float) -> Task:</p>
+<p>"""任务变异：调整难度和主题"""</p>
+<p># 不可能任务过滤器：限制难度上限</p>
+<p>new_difficulty = min(task.difficulty * random.uniform(0.8, 1.3), max_difficulty)</p>
+<p>new_topic = random.choice(["math", "code", "reasoning", "logic"]) if random.random() < 0.3 else task.topic</p>
+
+<p>return Task(</p>
+<p>id=self.next_id,</p>
+<p>difficulty=new_difficulty,</p>
+<p>topic=new_topic</p>
+<p>)</p>
+
+<h1>========== AC/DC 协同进化循环 ==========</h1>
+
+<p>def ac_dc_coevolution(n_iterations: int = 10):</p>
+<p>model_archiv = ModelArchiv()</p>
+<p>task_archiv = TaskArchiv()</p>
+
+<p># 1. 初始化：少量基础模型和任务</p>
+<p>for _ in range(3):</p>
+<p>model_archiv.add_model(LLM(</p>
+<p>id=-1,</p>
+<p>abilities={"math": 0.4, "code": 0.3, "reasoning": 0.5}</p>
+<p>))</p>
+<p>task_archiv.generate_initial_tasks()</p>
+
+<p>for iteration in range(n_iterations):</p>
+<p>print(f"\n{'='*40}")</p>
+<p>print(f"迭代 {iteration + 1}")</p>
+
+<p># 2. 评估：模型解决任务的能力</p>
+<p>for model in model_archiv.models:</p>
+<p>for task in task_archiv.tasks:</p>
+<p># 简化评估：能力 > 难度 → 可解决</p>
+<p>avg_ability = sum(model.abilities.values()) / len(model.abilities)</p>
+<p>if avg_ability > task.difficulty:</p>
+<p>task.solved = True</p>
+
+<p># 3. 计算覆盖率指标</p>
+<p>solved_tasks = sum(1 for t in task_archiv.tasks if t.solved)</p>
+<p>coverage = solved_tasks / len(task_archiv.tasks)</p>
+<p>print(f"模型数量: {len(model_archiv.models)}, 任务数量: {len(task_archiv.tasks)}")</p>
+<p>print(f"覆盖率 (Coverage): {coverage:.2%}")</p>
+
+<p># 4. 任务进化：基于已解决任务生成更难任务</p>
+<p>solved = [t for t in task_archiv.tasks if t.solved]</p>
+<p>if solved:</p>
+<p># 当前模型最强能力决定任务难度上限</p>
+<p>max_ability = max(</p>
+<p>max(m.abilities.values()) for m in model_archiv.models</p>
+<p>)</p>
+<p># 从已解决任务变异生成新任务</p>
+<p>for _ in range(2):</p>
+<p>parent_task = random.choice(solved)</p>
+<p>new_task = task_archiv.mutate_task(parent_task, max_ability * 0.9)</p>
+<p>task_archiv.tasks.append(new_task)</p>
+<p>task_archiv.next_id += 1</p>
+
+<p># 5. 模型进化：合并表现好的模型</p>
+<p>if len(model_archiv.models) >= 2:</p>
+<p>parent_a, parent_b = random.sample(model_archiv.models, 2)</p>
+<p>child = model_archiv.merge_models(parent_a, parent_b)</p>
+<p>model_archiv.add_model(child)</p>
+<p>print(f"合并生成新模型 #{child.id} (第{child.generation}代)")</p>
+
+<p># 重置任务解决状态</p>
+<p>for task in task_archiv.tasks:</p>
+<p>task.solved = False</p>
+
+<h1>========== 运行示例 ==========</h1>
+
+<p>if __name__ == "__main__":</p>
+<p>ac_dc_coevolution(n_iterations=5)</p>
+</code>``
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：MMLU（大规模多任务语言理解）、BBH（Big Bench Hard）、自建的合成任务档案库
+
+<strong>评价指标</strong>：Coverage（覆盖率）：衡量模型档案整体解决的任务范围；Per-task Accuracy（单任务准确率）；GPU Memory Footprint（内存占用）；Diversity Score（多样性评分）
+
+<strong>主要结果</strong>：
+
+<p>AC/DC在单一运行中发现的LLM群体，在多个基准上超越了参数量更大的闭源模型（如GPT-4）和开源基线。值得注意的是，这些高性能模型所需的GPU内存显著低于对比的大模型。实验还展示了模型档案的持续进化特性：随着协同进化的进行，档案中模型的整体Coverage指标不断提升，证明开放性提升是可持续的。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ 协同进化能在单一运行中持续提升模型能力，无需人工干预</li>
+<li>✅ 发现的LLM专家在覆盖范围上优于精心设计的单一模型</li>
+<li>✅ 模型合并是有效的能力组合手段，可涌现父模型不具备的能力</li>
+<li>✅ 合理的任务难度控制（不可能任务过滤器）对进化稳定性至关重要</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 首次将协同进化引入LLM发现 | 将生物进化领域的协同进化思想首次系统性地应用于大规模语言模型的自动发现，开创了新范式 |</p>
+<p>| 双档案协同进化机制 | 提出模型档案与任务档案互相驱动、互相促进的进化架构，模型进化产生选择压力，任务进化提供进化方向 |</p>
+<p>| 不可能任务过滤器设计 | 通过智能过滤超出当前能力边界的任务，保持进化的稳定性和效率，避免探索空间的盲目扩张 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 企业定制化小模型自动生成：针对特定业务场景（如客服风控）自动进化出专用小模型，替代昂贵的大模型API</li>
+<li>🎯 边缘设备模型优化：在手机、IoT设备上部署经过协同进化优化的高性能小模型</li>
+<li>🎯 持续能力迭代流水线：构建自动化的模型能力提升管道，持续发现新能力而不依赖人工训练</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 模型合并的计算成本：合并操作需要对多个模型进行参数组合，GPU显存要求较高</li>
+<li>⚠️ 任务生成的评估难题：如何保证合成任务的质量和多样性，避免任务档案趋同</li>
+<li>⚠️ 开放性边界控制：协同进化可能导致能力分布不可预测，需要额外的监控机制</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>核心实现包含两个迭代循环：外层循环控制协同进化代数，内层分别执行模型合并（基于torch权重平均）和任务生成（基于父任务变异的prompt engineering）。使用FAISS或类似向量索引维护模型档案的能力表示，支持高效的相似度查询和多样性采样。任务档案采用JSON格式存储问答对，配合难度评估器过滤无效任务。</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：AC/DC证明了通过模型与任务的协同进化，可以像生物进化一样自主发现越来越强的LLM专家，为打破人工训练范式提供了可行路径。
+
+<strong>未来方向</strong>：探索多模态协同进化（图像-文本-代码联合进化）；研究更复杂的任务表示和进化策略；将此框架扩展到终身学习场景，实现模型能力的持续自主进化。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：AC/DC与传统的模型合并方法有何本质区别？</strong>
+
+<p>A：传统模型合并是静态的、一次性操作，输入固定模型集合输出合并结果。AC/DC将模型合并作为动态进化的操作符，配合任务档案的演化持续执行，形成不断迭代的协同进化循环。这使得合并本身成为进化过程中的自适应选择，而非预先确定的策略。</p>
+
+
+<strong>Q：为什么需要「不可能任务过滤器」？不过滤可以吗？</strong>
+
+<p>A：如果不过滤，当前模型能力完全无法解决的任务会大量积累在任务档案中，导致进化压力信号失真——模型始终无法在这些任务上取得进展，进化方向迷失。过滤器确保任务始终处于「适度挑战区」，既能提供有效的选择压力，又不至于让进化完全停滞。</p>
+
+
+<strong>Q：这篇工作对实际业务部署有什么直接价值？</strong>
+
+<p>A：AC/DC可以直接生成针对特定任务集合优化过的小模型，这些模型在目标任务上的表现可能接近甚至超过通用大模型，但体积和推理成本大幅降低。对于有定制化AI需求的企业，这意味着可以在自有硬件上运行「物美价廉」的专用模型，同时整个过程几乎不需要人工调参与。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: Method Overview. AC/DC coevolves an increasing set of diverse LLMs alongside an
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_33_0.png" target="_blank">Figure 1</a></p>
+
+<strong>Figure 2</strong>: Algorithm Overview. AC/DC continuously coevolves a model (LLM) archive and a
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_36_1.png" target="_blank">Figure 2</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
