@@ -21,6 +21,12 @@
   ],
   "reports": [
     {
+      "date": "2026-04-20",
+      "total_papers": 0,
+      "total_projects": 0,
+      "total_articles": 0
+    },
+    {
       "date": "2026-04-19",
       "total_papers": 20,
       "total_projects": 0,

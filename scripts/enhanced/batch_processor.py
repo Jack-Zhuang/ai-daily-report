@@ -246,6 +246,29 @@ class BatchProcessor:
         print(f"  跳过: {self.stats['skipped']} 篇")
         print(f"  累计已处理: {len(processed_ids)} 篇")
         print("="*60)
+        
+        # 生成摘要文件（供后续读取）
+        self._generate_summary_report(pending_papers, processed_ids, failed_ids)
+    
+    def _generate_summary_report(self, pending_papers: List[Dict], processed_ids: set, failed_ids: set):
+        """生成摘要报告文件"""
+        summary_file = self.base_dir / "logs" / "batch_summary.json"
+        summary_file.parent.mkdir(parents=True, exist_ok=True)
+        
+        summary = {
+            "timestamp": datetime.now().isoformat(),
+            "stats": self.stats,
+            "processed_count": len(processed_ids),
+            "failed_count": len(failed_ids),
+            "pending_count": len(pending_papers),
+            "processed_ids": list(processed_ids)[-20:],  # 最近20个
+            "failed_ids": list(failed_ids)[-10:]  # 最近10个失败的
+        }
+        
+        with open(summary_file, 'w', encoding='utf-8') as f:
+            json.dump(summary, f, ensure_ascii=False, indent=2)
+        
+        print(f"\n📄 摘要报告已保存: {summary_file}")
 
 
 def main():

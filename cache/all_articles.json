@@ -209,6 +209,19 @@
       "collected_at": "2026-04-19T10:52:10.415811"
     },
     {
+      "id": "55c52cdf513d",
+      "title": "如何看待网传 DeepSeek V4 即将发布并提出「去CUDA化」？",
+      "summary": "国产大模型真的能摆脱对英伟达软件生态的依赖吗？ 最近 DeepSeek V4 的消息引发热议，重点不在于模型跑分，而在于其底层对国产芯片的深度适配和“去CUDA化”。长期以来，CUDA 都是英伟达不可逾越的护城河。这种从“适配硬件”到“重构软件生态”的路径，是否是国产算力突围的最优解？阿里、字节、腾讯提前预订数十万片国产芯片，是否意味着行业已经达成了“去 CUDA”的共识？这对开发者来说，迁移成本",
+      "link": "https://www.zhihu.com/question/2028817450829976782",
+      "source": "知乎热榜",
+      "published": "2026-04-18",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "opensource",
+      "collected_at": "2026-04-20T05:00:47.583417"
+    },
+    {
       "id": "2be6b54f5b66",
       "title": "游戏行业不缺AI工具，缺什么？腾讯游戏用一场大赛给出答案",
       "summary": "从一场大赛到一个生态",
@@ -402,6 +415,19 @@
       "type": "article",
       "category": "industry",
       "collected_at": "2026-04-18T09:15:59.670805"
+    },
+    {
+      "id": "f22e08552f2f",
+      "title": "如何评价claude design 功能发布后 Figma 股价下跌 7%？",
+      "summary": "Claude 发布了 Design 功能。这是一个单独的功能页面，可以用来设计幻灯片和设计产品原型。 而 Figma 股价则下跌了超 7%。",
+      "link": "https://www.zhihu.com/question/2028695048301102521",
+      "source": "知乎热榜",
+      "published": "2026-04-17",
+      "views": 0,
+      "likes": 0,
+      "type": "article",
+      "category": "llm",
+      "collected_at": "2026-04-20T05:00:47.583440"
     },
     {
       "id": "609ed3d290da",
@@ -1273,33 +1299,7 @@
       "type": "article",
       "category": "wechat",
       "collected_at": "2026-04-18T09:15:39.698548"
-    },
-    {
-      "id": "b4d312bea426",
-      "title": "OpenClaw也要装“杀毒软件”？ClawKeeper盯住「龙虾」每一步",
-      "summary": "Agent也要安全底座",
-      "link": "https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719552&idx=1&sn=a88bf66c21ab36eb8ad60266acbfeae9",
-      "source": "PaperWeekly",
-      "published": "2026-04-14",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "wechat",
-      "collected_at": "2026-04-18T09:15:46.567317"
-    },
-    {
-      "id": "d3d648f44037",
-      "title": "长推理不一定更强：北航 × 字节提出SAGE-RL，挖出大模型隐藏天赋",
-      "summary": "大模型其实会自己踩刹车",
-      "link": "https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719552&idx=2&sn=e414a3299500b622cc0a8175271890d1",
-      "source": "PaperWeekly",
-      "published": "2026-04-14",
-      "views": 0,
-      "likes": 0,
-      "type": "article",
-      "category": "llm",
-      "collected_at": "2026-04-18T09:15:46.567334"
     }
   ],
-  "last_update": "2026-04-19T21:38:36.967803"
+  "last_update": "2026-04-20T05:01:45.918621"
 }
