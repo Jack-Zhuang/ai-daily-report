@@ -1,0 +1,43 @@
+{
+  "arxiv": {
+    "enabled": true,
+    "categories": [
+      "cs.IR",
+      "cs.AI",
+      "cs.LG",
+      "cs.CL"
+    ],
+    "max_results": 50,
+    "sort_by": "submittedDate"
+  },
+  "github": {
+    "enabled": true,
+    "languages": [
+      "Python",
+      "JavaScript",
+      "TypeScript"
+    ],
+    "since": "daily",
+    "topics": [
+      "recommendation-system",
+      "llm",
+      "ai-agent"
+    ]
+  },
+  "wechat": {
+    "enabled": true,
+    "accounts": [
+      "机器之心",
+      "量子位",
+      "InfoQ"
+    ],
+    "rsshub_url": "http://localhost:1200"
+  },
+  "articles": {
+    "enabled": true,
+    "sources": [
+      "https://www.infoq.cn",
+      "https://www.jiqizhixin.com"
+    ]
+  }
+}

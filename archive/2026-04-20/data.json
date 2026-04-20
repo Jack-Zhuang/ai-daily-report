@@ -17,7 +17,8 @@
       "cn_summary": "亚马逊云科技近期在 Amazon Bedrock AgentCore\" 中以公开预览形式发布了 Agent Registry\"，为企业提供一个集中式目录，用于在组织内发现、共享并治理 AI Agent、工具、MCP 服务器以及 agent skills。该注册表可以索引运行在任何位置的 agent，无论是在 亚马逊云科技、其他云服务提供商，还是本地部署环境。它所解决的问题，对于任何见过 agent",
       "_score": 2.4,
       "_type": "article",
-      "_reason": "技术文章 | Agent热点"
+      "_reason": "技术文章 | Agent热点",
+      "cover_image": "covers/pick_1.jpg"
     },
     {
       "id": "28b899893567",
@@ -35,7 +36,8 @@
       "cn_summary": "深度研究助手的进化之路！",
       "_score": 2.08,
       "_type": "article",
-      "_reason": "技术文章 | Agent热点"
+      "_reason": "技术文章 | Agent热点",
+      "cover_image": "covers/pick_2.jpg"
     },
     {
       "id": "84d15b36b369",
@@ -53,7 +55,8 @@
       "cn_summary": "设计师的 Claude Code 时刻？",
       "_score": 1.87,
       "_type": "article",
-      "_reason": "技术文章"
+      "_reason": "技术文章",
+      "cover_image": "covers/pick_3.jpg"
     },
     {
       "id": "2604.15037",
@@ -97,7 +100,8 @@
       "_score": 2.96,
       "_type": "paper",
       "_reason": "前沿论文 | Agent热点",
-      "cn_summary": "From Reactive to Proactive: Assessing the Proactivity of Voice Agents via ProVoi"
+      "cn_summary": "From Reactive to Proactive: Assessing the Proactivity of Voice Agents via ProVoi",
+      "cover_image": "covers/pick_4.jpg"
     },
     {
       "id": "552661142",
@@ -137,7 +141,8 @@
       "_score": 2.2,
       "_type": "github",
       "_reason": "开源项目",
-      "cn_summary": "langchain"
+      "cn_summary": "langchain",
+      "cover_image": "covers/pick_5.jpg"
     }
   ],
   "articles": [
@@ -668,7 +673,8 @@
       "_score": 2.2,
       "_type": "github",
       "_reason": "开源项目",
-      "cn_summary": "langchain"
+      "cn_summary": "langchain",
+      "cover_image": "covers/github_1.jpg"
     },
     {
       "id": "793375104",
@@ -690,7 +696,8 @@
         "python",
         "rag"
       ],
-      "_score": 2.57
+      "_score": 2.57,
+      "cover_image": "covers/github_2.jpg"
     },
     {
       "id": "1024554267",
@@ -724,7 +731,8 @@
         "openai",
         "openclaw"
       ],
-      "_score": 2.67
+      "_score": 2.67,
+      "cover_image": "covers/github_3.jpg"
     },
     {
       "id": "730534580",
@@ -762,7 +770,8 @@
         "rag",
         "retrieval-augmented-generation"
       ],
-      "_score": 2.49
+      "_score": 2.49,
+      "cover_image": "covers/github_4.jpg"
     },
     {
       "id": "660551251",
@@ -785,7 +794,8 @@
         "metagpt",
         "multi-agent"
       ],
-      "_score": 2.01
+      "_score": 2.01,
+      "cover_image": "covers/github_5.jpg"
     },
     {
       "id": "680120071",
@@ -813,7 +823,8 @@
         "llm-agent",
         "llm-framework"
       ],
-      "_score": 1.88
+      "_score": 1.88,
+      "cover_image": "covers/github_6.jpg"
     },
     {
       "id": "615882673",
@@ -830,7 +841,8 @@
       "growth": 0,
       "growth_rate": 0,
       "topics": [],
-      "_score": 1.64
+      "_score": 1.64,
+      "cover_image": "covers/github_7.jpg"
     },
     {
       "id": "866513204",
@@ -857,7 +869,8 @@
         "rag",
         "retrieval-augmented-generation"
       ],
-      "_score": 2.57
+      "_score": 2.57,
+      "cover_image": "covers/github_8.jpg"
     },
     {
       "id": "778431525",
@@ -882,7 +895,8 @@
         "llms",
         "rag"
       ],
-      "_score": 2.09
+      "_score": 2.09,
+      "cover_image": "covers/github_9.jpg"
     },
     {
       "id": "752925682",
@@ -899,7 +913,8 @@
       "growth": 0,
       "growth_rate": 0,
       "topics": [],
-      "_score": 1.64
+      "_score": 1.64,
+      "cover_image": "covers/github_10.jpg"
     },
     {
       "id": "740303686",
@@ -935,7 +950,8 @@
         "vlm",
         "wan"
       ],
-      "_score": 2.2
+      "_score": 2.2,
+      "cover_image": "covers/github_11.jpg"
     },
     {
       "id": "149430917",
@@ -970,7 +986,8 @@
         "recommender",
         "tutorial"
       ],
-      "_score": 2.59
+      "_score": 2.59,
+      "cover_image": "covers/github_12.jpg"
     },
     {
       "id": "543293939",
@@ -987,7 +1004,8 @@
       "growth": 0,
       "growth_rate": 0,
       "topics": [],
-      "_score": 1.64
+      "_score": 1.64,
+      "cover_image": "covers/github_13.jpg"
     },
     {
       "id": "71709976",
@@ -1012,7 +1030,8 @@
         "svd",
         "systems"
       ],
-      "_score": 1.64
+      "_score": 1.64,
+      "cover_image": "covers/github_14.jpg"
     },
     {
       "id": "261366056",
@@ -1033,7 +1052,8 @@
         "machine-learning",
         "recommender-system"
       ],
-      "_score": 1.19
+      "_score": 1.19,
+      "cover_image": "covers/github_15.jpg"
     }
   ],
   "arxiv_papers": [
@@ -1079,7 +1099,8 @@
       "_score": 2.96,
       "_type": "paper",
       "_reason": "前沿论文 | Agent热点",
-      "cn_summary": "From Reactive to Proactive: Assessing the Proactivity of Voice Agents via ProVoi"
+      "cn_summary": "From Reactive to Proactive: Assessing the Proactivity of Voice Agents via ProVoi",
+      "cover_image": "covers/paper_2604.15037.jpg"
     },
     {
       "id": "2604.14878",
@@ -1118,7 +1139,8 @@
       ],
       "has_insight": true,
       "insight_type": "simple",
-      "_score": 2.03
+      "_score": 2.03,
+      "cover_image": "covers/paper_2604.14878.jpg"
     },
     {
       "id": "2604.15022",
@@ -1157,7 +1179,8 @@
       ],
       "has_insight": true,
       "insight_type": "simple",
-      "_score": 2.12
+      "_score": 2.12,
+      "cover_image": "covers/paper_2604.15022.jpg"
     },
     {
       "id": "2604.14930",
@@ -1196,7 +1219,8 @@
       ],
       "has_insight": true,
       "insight_type": "simple",
-      "_score": 2.03
+      "_score": 2.03,
+      "cover_image": "covers/paper_2604.14930.jpg"
     },
     {
       "id": "2604.15186",
@@ -1236,7 +1260,8 @@
       ],
       "has_insight": true,
       "insight_type": "simple",
-      "_score": 2.4
+      "_score": 2.4,
+      "cover_image": "covers/paper_2604.15186.jpg"
     },
     {
       "id": "2604.15190",
@@ -1275,7 +1300,8 @@
       ],
       "has_insight": true,
       "insight_type": "simple",
-      "_score": 1.75
+      "_score": 1.75,
+      "cover_image": "covers/paper_2604.15190.jpg"
     },
     {
       "id": "2604.15309",
@@ -1314,7 +1340,8 @@
       ],
       "has_insight": true,
       "insight_type": "simple",
-      "_score": 2.31
+      "_score": 2.31,
+      "cover_image": "covers/paper_2604.15309.jpg"
     },
     {
       "id": "2604.15267",
@@ -1354,7 +1381,8 @@
       ],
       "has_insight": true,
       "insight_type": "simple",
-      "_score": 2.4
+      "_score": 2.4,
+      "cover_image": "covers/paper_2604.15267.jpg"
     },
     {
       "id": "2604.15153",
@@ -1395,7 +1423,8 @@
       ],
       "has_insight": true,
       "insight_type": "simple",
-      "_score": 2.49
+      "_score": 2.49,
+      "cover_image": "covers/paper_2604.15153.jpg"
     },
     {
       "id": "2604.14051",
@@ -1435,7 +1464,8 @@
       ],
       "has_insight": true,
       "insight_type": "simple",
-      "_score": 2.6
+      "_score": 2.6,
+      "cover_image": "covers/paper_2604.14051.jpg"
     },
     {
       "id": "2604.13796",
@@ -1448,7 +1478,8 @@
       "industry_score": 3,
       "paper_value": 1.75,
       "type": "paper",
-      "_score": 2.6
+      "_score": 2.6,
+      "cover_image": "covers/paper_2604.13796.jpg"
     },
     {
       "id": "2604.14586",
@@ -1461,7 +1492,8 @@
       "industry_score": 2,
       "paper_value": 1.71,
       "type": "paper",
-      "_score": 2.49
+      "_score": 2.49,
+      "cover_image": "covers/paper_2604.14586.jpg"
     },
     {
       "id": "2604.15244",
@@ -1474,7 +1506,8 @@
       "industry_score": 2,
       "paper_value": 1.71,
       "type": "paper",
-      "_score": 1.56
+      "_score": 1.56,
+      "cover_image": "covers/paper_2604.15244.jpg"
     },
     {
       "id": "2604.14833",
@@ -1487,7 +1520,8 @@
       "industry_score": 2,
       "paper_value": 1.66,
       "type": "paper",
-      "_score": 2.87
+      "_score": 2.87,
+      "cover_image": "covers/paper_2604.14833.jpg"
     },
     {
       "id": "2604.15233",
@@ -1500,7 +1534,8 @@
       "industry_score": 2,
       "paper_value": 1.66,
       "type": "paper",
-      "_score": 2.03
+      "_score": 2.03,
+      "cover_image": "covers/paper_2604.15233.jpg"
     },
     {
       "id": "2604.15093",
@@ -1513,7 +1548,8 @@
       "industry_score": 2,
       "paper_value": 1.66,
       "type": "paper",
-      "_score": 2.03
+      "_score": 2.03,
+      "cover_image": "covers/paper_2604.15093.jpg"
     },
     {
       "id": "2604.15148",
@@ -1526,7 +1562,8 @@
       "industry_score": 1,
       "paper_value": 1.61,
       "type": "paper",
-      "_score": 1.56
+      "_score": 1.56,
+      "cover_image": "covers/paper_2604.15148.jpg"
     },
     {
       "id": "2604.14510",
@@ -1539,7 +1576,8 @@
       "industry_score": 1,
       "paper_value": 1.61,
       "type": "paper",
-      "_score": 2.77
+      "_score": 2.77,
+      "cover_image": "covers/paper_2604.14510.jpg"
     },
     {
       "id": "2604.15184",
@@ -1552,7 +1590,8 @@
       "industry_score": 1,
       "paper_value": 1.56,
       "type": "paper",
-      "_score": 2.03
+      "_score": 2.03,
+      "cover_image": "covers/paper_2604.15184.jpg"
     },
     {
       "id": "2604.14972",
@@ -1565,7 +1604,8 @@
       "industry_score": 1,
       "paper_value": 1.51,
       "type": "paper",
-      "_score": 2.87
+      "_score": 2.87,
+      "cover_image": "covers/paper_2604.14972.jpg"
     },
     {
       "id": "2604.15124",
@@ -1578,7 +1618,8 @@
       "industry_score": 1,
       "paper_value": 1.51,
       "type": "paper",
-      "_score": 2.4
+      "_score": 2.4,
+      "cover_image": "covers/paper_2604.15124.jpg"
     },
     {
       "id": "2604.14951",
@@ -1591,7 +1632,8 @@
       "industry_score": 1,
       "paper_value": 1.51,
       "type": "paper",
-      "_score": 2.21
+      "_score": 2.21,
+      "cover_image": "covers/paper_2604.14951.jpg"
     },
     {
       "id": "2604.14598",
@@ -1604,7 +1646,8 @@
       "industry_score": 2,
       "paper_value": 1.46,
       "type": "paper",
-      "_score": 2.49
+      "_score": 2.49,
+      "cover_image": "covers/paper_2604.14598.jpg"
     },
     {
       "id": "2604.13801",
@@ -1617,7 +1660,8 @@
       "industry_score": 1,
       "paper_value": 1.45,
       "type": "paper",
-      "_score": 2.88
+      "_score": 2.88,
+      "cover_image": "covers/paper_2604.13801.jpg"
     },
     {
       "id": "2604.13665",
@@ -1630,7 +1674,8 @@
       "industry_score": 2,
       "paper_value": 1.4,
       "type": "paper",
-      "_score": 2.41
+      "_score": 2.41,
+      "cover_image": "covers/paper_2604.13665.jpg"
     },
     {
       "id": "2604.14613",
@@ -1643,7 +1688,8 @@
       "industry_score": 1,
       "paper_value": 1.36,
       "type": "paper",
-      "_score": 2.03
+      "_score": 2.03,
+      "cover_image": "covers/paper_2604.14613.jpg"
     },
     {
       "id": "2604.15302",
@@ -1656,7 +1702,8 @@
       "industry_score": 1,
       "paper_value": 1.31,
       "type": "paper",
-      "_score": 1.93
+      "_score": 1.93,
+      "cover_image": "covers/paper_2604.15302.jpg"
     },
     {
       "id": "2604.15236",
@@ -1669,7 +1716,8 @@
       "industry_score": 1,
       "paper_value": 1.31,
       "type": "paper",
-      "_score": 2.03
+      "_score": 2.03,
+      "cover_image": "covers/paper_2604.15236.jpg"
     },
     {
       "id": "2604.15224",
@@ -1682,7 +1730,8 @@
       "industry_score": 1,
       "paper_value": 1.31,
       "type": "paper",
-      "_score": 1.93
+      "_score": 1.93,
+      "cover_image": "covers/paper_2604.15224.jpg"
     },
     {
       "id": "2604.15109",
@@ -1695,7 +1744,8 @@
       "industry_score": 1,
       "paper_value": 1.31,
       "type": "paper",
-      "_score": 1.93
+      "_score": 1.93,
+      "cover_image": "covers/paper_2604.15109.jpg"
     },
     {
       "id": "2604.13573",
@@ -1708,7 +1758,8 @@
       "industry_score": 1,
       "paper_value": 1.3,
       "type": "paper",
-      "_score": 1.95
+      "_score": 1.95,
+      "cover_image": "covers/paper_2604.13573.jpg"
     },
     {
       "id": "2604.15231",
@@ -1721,7 +1772,8 @@
       "industry_score": 0,
       "paper_value": 1.21,
       "type": "paper",
-      "_score": 2.49
+      "_score": 2.49,
+      "cover_image": "covers/paper_2604.15231.jpg"
     },
     {
       "id": "2604.15140",
@@ -1734,7 +1786,8 @@
       "industry_score": 0,
       "paper_value": 1.21,
       "type": "paper",
-      "_score": 1.93
+      "_score": 1.93,
+      "cover_image": "covers/paper_2604.15140.jpg"
     },
     {
       "id": "2604.14922",
@@ -1747,7 +1800,8 @@
       "industry_score": 0,
       "paper_value": 1.21,
       "type": "paper",
-      "_score": 1.93
+      "_score": 1.93,
+      "cover_image": "covers/paper_2604.14922.jpg"
     },
     {
       "id": "2604.14902",
@@ -1760,7 +1814,8 @@
       "industry_score": 0,
       "paper_value": 1.21,
       "type": "paper",
-      "_score": 2.03
+      "_score": 2.03,
+      "cover_image": "covers/paper_2604.14902.jpg"
     },
     {
       "id": "2604.14839",
@@ -1773,7 +1828,8 @@
       "industry_score": 0,
       "paper_value": 1.16,
       "type": "paper",
-      "_score": 2.96
+      "_score": 2.96,
+      "cover_image": "covers/paper_2604.14839.jpg"
     },
     {
       "id": "2604.14030",
@@ -1786,7 +1842,8 @@
       "industry_score": 0,
       "paper_value": 1.15,
       "type": "paper",
-      "_score": 1.85
+      "_score": 1.85,
+      "cover_image": "covers/paper_2604.14030.jpg"
     },
     {
       "id": "2604.13737",
@@ -1799,7 +1856,8 @@
       "industry_score": 1,
       "paper_value": 1.05,
       "type": "paper",
-      "_score": 2.41
+      "_score": 2.41,
+      "cover_image": "covers/paper_2604.13737.jpg"
     },
     {
       "id": "2604.15165",
@@ -1812,7 +1870,8 @@
       "industry_score": 0,
       "paper_value": 0.96,
       "type": "paper",
-      "_score": 1.93
+      "_score": 1.93,
+      "cover_image": "covers/paper_2604.15165.jpg"
     },
     {
       "id": "2604.14114",
@@ -1825,7 +1884,8 @@
       "industry_score": 0,
       "paper_value": 0.9,
       "type": "paper",
-      "_score": 2.6
+      "_score": 2.6,
+      "cover_image": "covers/paper_2604.14114.jpg"
     },
     {
       "id": "2604.13389",
@@ -1838,7 +1898,8 @@
       "industry_score": 0,
       "paper_value": 0.9,
       "type": "paper",
-      "_score": 2.23
+      "_score": 2.23,
+      "cover_image": "covers/paper_2604.13389.jpg"
     },
     {
       "id": "2604.14581",
@@ -1851,7 +1912,8 @@
       "industry_score": 0,
       "paper_value": 0.76,
       "type": "paper",
-      "_score": 2.03
+      "_score": 2.03,
+      "cover_image": "covers/paper_2604.14581.jpg"
     },
     {
       "id": "2604.15151",
@@ -1864,7 +1926,8 @@
       "industry_score": 0,
       "paper_value": 0.76,
       "type": "paper",
-      "_score": 1.56
+      "_score": 1.56,
+      "cover_image": "covers/paper_2604.15151.jpg"
     }
   ],
   "conferences": []
