@@ -452,3 +452,53 @@ MIT License
 
 - 项目地址：https://github.com/your-org/ai-daily
 - 问题反馈：https://github.com/your-org/ai-daily/issues
+
+## 🚀 自动部署
+
+系统已配置自动部署功能，每次修改后会自动部署最新内容。
+
+### 自动部署触发时机
+
+1. **报告生成后** - 运行 `generate_report.py` 后自动部署
+2. **封面生成后** - 运行 `batch_generate_covers.py` 后自动部署
+3. **Git 提交后** - 每次 `git commit` 后自动部署（通过 post-commit hook）
+
+### 手动部署
+
+```bash
+# 快捷部署命令
+bash scripts/deploy.sh
+
+# 或使用自动部署脚本
+bash scripts/auto_deploy.sh
+```
+
+### 完整工作流（一键执行）
+
+```bash
+# 执行完整流程：采集 + 生成 + 部署
+bash scripts/full_workflow.sh
+
+# 跳过数据采集
+bash scripts/full_workflow.sh --skip-collect
+
+# 跳过封面生成
+bash scripts/full_workflow.sh --skip-covers
+```
+
+### 部署内容
+
+自动部署会同步以下内容到 `~/public_html/ai-daily/`：
+
+- ✅ 主报告 (`index.html`)
+- ✅ 论文解读页面 (`insights/*.html`)
+- ✅ 封面图 (`covers/*.jpg`)
+- ✅ 归档索引 (`archive.html`, `index.json`)
+
+### 部署日志
+
+每次部署会更新 `.last_deploy` 文件，记录部署时间。
+
+---
+
+*自动部署功能已启用，你随时都能看到最新内容！*

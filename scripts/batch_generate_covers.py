@@ -278,3 +278,12 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    # 自动部署
+    import subprocess
+    from pathlib import Path
+    base_dir = Path(__file__).parent.parent
+    deploy_script = base_dir / "scripts" / "auto_deploy.sh"
+    if deploy_script.exists():
+        print("\n🚀 自动部署中...")
+        subprocess.run(["bash", str(deploy_script)], cwd=str(base_dir))
