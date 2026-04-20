@@ -43,15 +43,25 @@ class BatchCoverGenerator:
             "failed": 0
         }
 
-        # 提示词模板
-        self.prompts = {
-            'paper': "Academic research paper cover, scientific visualization, neural network architecture diagram, professional academic style, blue and white color scheme, clean modern design, high quality",
-            'article': "Tech news article illustration, AI technology concept, digital transformation, gradient background, modern minimalist style, vibrant colors",
-            'github': "Open source project showcase, code interface, GitHub style, dark theme, tech aesthetic, developer tools, professional design",
-            'rec': "Recommendation system visualization, data flow diagram, algorithm illustration, tech blue theme, modern design, clean layout",
-            'agent': "AI agent architecture diagram, multi-agent collaboration network, purple tech theme, futuristic design, innovative",
-            'llm': "Large language model illustration, transformer architecture, green tech theme, academic style, professional",
-            'pick': "Featured content highlight, premium quality, elegant gradient background, modern design, sophisticated"
+        # 提示词模板（会结合具体内容）
+        self.prompt_templates = {
+            'paper': "Academic research paper cover about {topic}, {style}, professional academic style, blue and white color scheme, clean modern design, high quality",
+            'article': "Tech news article illustration about {topic}, {style}, gradient background, modern minimalist style, vibrant colors",
+            'github': "Open source project showcase for {topic}, {style}, GitHub style, dark theme, tech aesthetic, developer tools, professional design",
+            'rec': "Recommendation system visualization for {topic}, {style}, tech blue theme, modern design, clean layout",
+            'agent': "AI agent architecture for {topic}, {style}, purple tech theme, futuristic design, innovative",
+            'llm': "Large language model illustration for {topic}, {style}, green tech theme, academic style, professional",
+            'pick': "Featured content about {topic}, {style}, elegant gradient background, modern design, sophisticated"
+        }
+        
+        # 风格关键词映射
+        self.style_keywords = {
+            'agent': 'multi-agent collaboration, autonomous systems, intelligent workflows',
+            'llm': 'transformer architecture, neural networks, language processing',
+            'rec': 'data flow, algorithm visualization, personalized recommendations',
+            'paper': 'scientific diagrams, research methodology, experimental results',
+            'article': 'technology trends, innovation, digital transformation',
+            'github': 'code visualization, developer tools, open source community'
         }
 
     def load_progress(self) -> Dict:
@@ -98,6 +108,49 @@ class BatchCoverGenerator:
         """检查封面是否有效"""
         return cover_path.exists() and cover_path.stat().st_size > 10000
 
+    def generate_contextual_prompt(self, title: str, category: str, summary: str = '') -> str:
+        """根据内容生成上下文相关的提示词"""
+        # 提取关键词
+        keywords = []
+        combined_text = f"{title} {summary}".lower()
+        
+        # 更详细的关键词映射
+        keyword_map = {
+            'AI agent': ['agent', '智能体', 'autonomous', '自主', 'multi-agent', '多智能体', 'tool use'],
+            'large language model': ['llm', 'large language model', '大语言模型', 'gpt', 'bert', 'transformer', 'qwen', 'claude'],
+            'recommendation system': ['recommendation', '推荐', 'recsys', 'recommender', 'personalization', '个性化'],
+            'RAG': ['rag', 'retrieval-augmented', '检索增强', 'knowledge retrieval'],
+            'reinforcement learning': ['reinforcement', '强化学习', 'rlhf', 'ppo', 'reward'],
+            'NLP': ['nlp', 'natural language', '自然语言', 'text generation', '文本生成'],
+            'computer vision': ['vision', '视觉', 'image recognition', '图像识别', 'multimodal', '多模态'],
+            'security': ['security', '安全', 'privacy', '隐私', 'attack', '攻击', 'adversarial'],
+            'optimization': ['optimization', '优化', 'efficiency', '效率', 'acceleration', '加速'],
+            'federated learning': ['federated', '联邦学习', 'distributed learning'],
+            'graph neural network': ['graph', '图神经网络', 'gnn', 'knowledge graph', '知识图谱'],
+            'diffusion model': ['diffusion', '扩散模型', 'stable diffusion', 'generative'],
+        }
+        
+        # 匹配关键词
+        for key, words in keyword_map.items():
+            if any(word in combined_text for word in words):
+                keywords.append(key)
+        
+        # 如果没有匹配，使用分类
+        if not keywords:
+            keywords = ['AI technology']
+        
+        # 构建主题描述（最多2个关键词）
+        topic = ', '.join(keywords[:2])
+        
+        # 获取风格描述
+        style = self.style_keywords.get(category, 'modern technology visualization')
+        
+        # 生成提示词
+        template = self.prompt_templates.get(category, self.prompt_templates['article'])
+        prompt = template.format(topic=topic, style=style)
+        
+        return prompt
+
     def process_arxiv_paper(self, paper: Dict, progress: Dict) -> bool:
         """处理单篇 arXiv 论文"""
         arxiv_id = paper.get('id') or paper.get('arxiv_id')
@@ -106,6 +159,7 @@ class BatchCoverGenerator:
 
         self.stats['total'] += 1
         title = paper.get('cn_title') or paper.get('title', 'Untitled')
+        summary = paper.get('cn_summary') or paper.get('summary', '')
 
         # 封面命名：paper_<arxiv_id>.jpg
         cover_name = f"paper_{arxiv_id}.jpg"
@@ -129,7 +183,10 @@ class BatchCoverGenerator:
 
         # 生成封面
         print(f"  🎨 [{arxiv_id}] {title[:40]}...", end=" ", flush=True)
-        prompt = self.prompts['paper']
+        
+        # 使用内容相关的提示词
+        category = paper.get('category', 'paper')
+        prompt = self.generate_contextual_prompt(title, category, summary)
 
         gen_image = self.generate_cover_with_seedream(prompt)
         if gen_image:
@@ -174,7 +231,10 @@ class BatchCoverGenerator:
 
         # 生成封面
         print(f"  🎨 [{index}] {title[:40]}...", end=" ", flush=True)
-        prompt = self.prompts.get(category, self.prompts['article'])
+        
+        # 使用内容相关的提示词
+        summary = item.get('cn_summary') or item.get('summary') or item.get('description', '')
+        prompt = self.generate_contextual_prompt(title, category, summary)
 
         gen_image = self.generate_cover_with_seedream(prompt)
         if gen_image:
