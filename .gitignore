@@ -1,47 +1,95 @@
-# 敏感文件
-*.env
-.env.*
+# 敏感配置文件
+.xiaoyienv
+*.key
+*.pem
+*_key.txt
 secrets.json
 credentials.json
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-*.egg-info/
-dist/
-build/
+# 数据文件（包含采集的原始数据）
+daily_data/*.json
+!daily_data/.gitkeep
 
-# IDE
+# 日志文件
+logs/*.log
+logs/*.json
+*.log
+
+# 缓存文件
+paper_cache/*.pdf
+cache/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# 生成的封面图（太大）
+covers/*.jpg
+covers/*.png
+!covers/.gitkeep
+
+# 生成的解读文件
+insights_enhanced/*.md
+!insights_enhanced/.gitkeep
+
+# 部署文件
+docs/insights/*.html
+docs/covers/
+docs/index.html
+
+# 归档文件
+archive/*/
+!archive/.gitkeep
+
+# IDE 配置
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
 
-# OS
+# 系统文件
 .DS_Store
 Thumbs.db
 
-# 日志和缓存
-*.log
-cache/
-*.cache
+# 临时文件
+*.tmp
+*.temp
+.tmp/
+.temp/
 
-# 敏感文件 - 绝对不允许提交
-*minimax*
-*secret*
-*credential*
-*.pyc
-*.pyo
-__pycache__/
+# 备份文件
+*.bak
+*.backup
+backup_*.tar.gz
 
-# Cloudflare
-.wrangler/
-worker/
-workerd
-*.wasm
+# Node modules（如果有）
+node_modules/
 
-# 压缩包（不需要部署）
-*.zip
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# 测试覆盖率
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# 虚拟环境
+venv/
+ENV/
+env/
+.venv

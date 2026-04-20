@@ -23,6 +23,13 @@ from paper_extractor import PaperExtractor
 from insight_generator import EnhancedInsightGenerator
 from generate_insight_page import generate_insight_page, markdown_to_html
 
+# 导入封面生成器
+try:
+    from generate_covers_enhanced import EnhancedCoverGenerator
+    HAS_COVER_GENERATOR = True
+except ImportError:
+    HAS_COVER_GENERATOR = False
+
 
 class BatchProcessor:
     """批量论文处理器"""
@@ -269,6 +276,53 @@ class BatchProcessor:
             json.dump(summary, f, ensure_ascii=False, indent=2)
         
         print(f"\n📄 摘要报告已保存: {summary_file}")
+        
+        # 生成封面图
+        self._generate_covers_for_papers(pending_papers)
+    
+    def _generate_covers_for_papers(self, papers: List[Dict]):
+        """为论文生成封面图"""
+        if not HAS_COVER_GENERATOR:
+            print("\n⚠️ 封面生成器未安装，跳过封面生成")
+            return
+        
+        print("\n" + "="*60)
+        print("🎨 生成论文封面图")
+        print("="*60)
+        
+        try:
+            cover_gen = EnhancedCoverGenerator(str(self.base_dir))
+            
+            for i, paper in enumerate(papers[:10]):  # 只处理前10篇
+                arxiv_id = paper.get("arxiv_id", paper.get("id", ""))
+                title = paper.get("cn_title", paper.get("title", ""))
+                
+                if not arxiv_id:
+                    continue
+                
+                print(f"\n[{i+1}/{min(10, len(papers))}] {title[:40]}...")
+                
+                # 检查是否已有封面
+                cover_path = self.base_dir / "covers" / f"paper_{arxiv_id}.jpg"
+                if cover_path.exists() and cover_path.stat().st_size > 10000:
+                    print(f"  ✓ 封面已存在")
+                    paper['cover_image'] = f"covers/paper_{arxiv_id}.jpg"
+                    continue
+                
+                # 生成封面
+                cover = cover_gen.generate_cover(paper, i+1)
+                if cover:
+                    paper['cover_image'] = cover
+                    print(f"  ✓ 封面生成成功: {cover}")
+                else:
+                    print(f"  ✗ 封面生成失败")
+                
+                time.sleep(1)  # 避免API限流
+            
+            print("\n✅ 封面生成完成")
+            
+        except Exception as e:
+            print(f"\n❌ 封面生成出错: {e}")
 
 
 def main():
