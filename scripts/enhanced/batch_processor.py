@@ -25,9 +25,12 @@ from generate_insight_page import generate_insight_page, markdown_to_html
 
 # 导入封面生成器
 try:
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent))
     from generate_covers_enhanced import EnhancedCoverGenerator
     HAS_COVER_GENERATOR = True
-except ImportError:
+except ImportError as e:
+    print(f"⚠️ 封面生成器导入失败: {e}")
     HAS_COVER_GENERATOR = False
 
 
