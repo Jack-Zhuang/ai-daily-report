@@ -2,17 +2,44 @@
 """
 AI推荐日报 - 文章采集脚本
 从多个技术媒体平台采集真实文章数据
-使用国内可用的 RSSHub 镜像源
+使用本地 RSSHub 或国内镜像源
 """
 
 import json
 import requests
 import hashlib
 import time
+import subprocess
 from datetime import datetime
 from pathlib import Path
 import re
 import xml.etree.ElementTree as ET
+
+
+def ensure_rsshub_running():
+    """确保 RSSHub 正在运行"""
+    try:
+        # 检查本地 RSSHub 是否可用
+        response = requests.get("http://localhost:1200/", timeout=2)
+        if response.status_code == 200:
+            print("  ✅ RSSHub 已在运行")
+            return True
+    except:
+        pass
+
+    # 尝试启动 RSSHub
+    print("  ⚠️ RSSHub 未运行，尝试启动...")
+    start_script = Path(__file__).parent / "start_rsshub.sh"
+    if start_script.exists():
+        result = subprocess.run(["bash", str(start_script)], capture_output=True, text=True)
+        if result.returncode == 0:
+            print("  ✅ RSSHub 启动成功")
+            return True
+        else:
+            print(f"  ❌ RSSHub 启动失败: {result.stderr}")
+            return False
+    return False
+
 
 class ArticleCollector:
     def __init__(self, base_dir: str = None):
