@@ -880,10 +880,10 @@ class ReportGenerator:
                 <p class="section-subtitle">基于热度综合排序</p>
             </div>
             <div class="tabs">
-                <button class="tab active" data-tab="all">全部 (${{hotArticles.length}})</button>
-                <button class="tab" data-tab="rec">推荐 (${{hotArticles.filter(a=>a.category==='rec').length}})</button>
-                <button class="tab" data-tab="agent">Agent (${{hotArticles.filter(a=>a.category==='agent').length}})</button>
-                <button class="tab" data-tab="llm">LLM (${{hotArticles.filter(a=>a.category==='llm').length}})</button>
+                <button class="tab active" data-tab="all">全部 <span id="count-all"></span></button>
+                <button class="tab" data-tab="rec">推荐 <span id="count-rec"></span></button>
+                <button class="tab" data-tab="agent">Agent <span id="count-agent"></span></button>
+                <button class="tab" data-tab="llm">LLM <span id="count-llm"></span></button>
             </div>
             <div id="hot-list"></div>
         </section>
@@ -1991,7 +1991,16 @@ class ReportGenerator:
             }}
         }}
         
+        // 更新分类计数
+        function updateCategoryCounts() {{
+            document.getElementById('count-all').textContent = `(${{hotArticles.length}})`;
+            document.getElementById('count-rec').textContent = `(${{hotArticles.filter(a=>a.category==='rec').length}})`;
+            document.getElementById('count-agent').textContent = `(${{hotArticles.filter(a=>a.category==='agent').length}})`;
+            document.getElementById('count-llm').textContent = `(${{hotArticles.filter(a=>a.category==='llm').length}})`;
+        }}
+        
         // 初始化
+        updateCategoryCounts();
         renderDailyPick();
         renderConferences();
         renderHotArticles();
