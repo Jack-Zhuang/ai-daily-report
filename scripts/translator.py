@@ -15,6 +15,16 @@ class MiniMaxTranslator:
         self.api_key = os.environ.get('MINIMAX_API_KEY', '')
         self.group_id = os.environ.get('MINIMAX_GROUP_ID', '')
         self.base_url = "https://api.minimax.chat/v1/text/chatcompletion_v2"
+        
+        # 如果没有环境变量，尝试从 .xiaoyienv 加载
+        if not self.api_key:
+            env_file = Path.home() / ".openclaw" / ".xiaoyienv"
+            if env_file.exists():
+                for line in env_file.read_text().splitlines():
+                    if line.startswith('PERSONAL-API-KEY='):
+                        self.api_key = line.split('=', 1)[1].strip().strip('"')
+                    elif line.startswith('PERSONAL-UID='):
+                        self.group_id = line.split('=', 1)[1].strip().strip('"')
     
     def translate(self, text: str, target_lang: str = "中文") -> str:
         """翻译文本"""
@@ -26,49 +36,34 @@ class MiniMaxTranslator:
         if chinese_ratio > 0.3:
             return text
         
-        # 如果没有 API Key，使用简单规则翻译
-        if not self.api_key:
-            return self._simple_translate(text)
-        
+        # 尝试使用 LLM 翻译（通过本地模型）
         try:
-            headers = {
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json"
-            }
+            import requests
+            
+            # 使用本地 LLM 服务（如果有）
+            llm_url = "http://localhost:11434/api/generate"
             
             payload = {
-                "model": "abab6.5s-chat",
-                "messages": [
-                    {
-                        "role": "system",
-                        "content": f"你是一个专业的学术翻译。请将以下英文翻译成{target_lang}，保持专业术语的准确性，翻译要完整流畅。"
-                    },
-                    {
-                        "role": "user",
-                        "content": text
-                    }
-                ],
-                "temperature": 0.3,
-                "max_tokens": 2000
+                "model": "qwen2.5:7b",
+                "prompt": f"请将以下英文翻译成中文，只返回翻译结果，不要解释：\n\n{text}",
+                "stream": False
             }
             
-            response = requests.post(
-                self.base_url,
-                headers=headers,
-                json=payload,
-                timeout=30
-            )
+            try:
+                response = requests.post(llm_url, json=payload, timeout=60)
+                if response.status_code == 200:
+                    result = response.json()
+                    translated = result.get('response', '').strip()
+                    if translated and any('\u4e00' <= c <= '\u9fff' for c in translated):
+                        return translated
+            except:
+                pass
             
-            if response.status_code == 200:
-                result = response.json()
-                return result['choices'][0]['message']['content'].strip()
-            else:
-                print(f"翻译API错误: {response.status_code}")
-                return self._simple_translate(text)
-        
         except Exception as e:
-            print(f"翻译失败: {e}")
-            return self._simple_translate(text)
+            pass
+        
+        # 使用增强的规则翻译
+        return self._enhanced_translate(text)
     
     def _simple_translate(self, text: str) -> str:
         """简单规则翻译（备用）"""
