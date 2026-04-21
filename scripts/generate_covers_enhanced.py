@@ -208,7 +208,8 @@ class EnhancedCoverGenerator:
 if __name__ == "__main__":
     import sys
     
-    input_file = sys.argv[1] if len(sys.argv) > 1 else 'daily_data/2026-04-18.json'
+    today = datetime.now().strftime("%Y-%m-%d")
+    input_file = sys.argv[1] if len(sys.argv) > 1 else f'daily_data/{today}.json'
     with open(input_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
     

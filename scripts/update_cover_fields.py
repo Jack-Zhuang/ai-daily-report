@@ -6,9 +6,11 @@
 
 import json
 from pathlib import Path
+from datetime import datetime
 
 base_dir = Path("/home/sandbox/.openclaw/workspace/ai_daily")
-data_file = base_dir / "daily_data" / "2026-04-20.json"
+today = datetime.now().strftime("%Y-%m-%d")
+data_file = base_dir / "daily_data" / f"{today}.json"
 covers_dir = base_dir / "covers"
 
 with open(data_file, 'r', encoding='utf-8') as f:

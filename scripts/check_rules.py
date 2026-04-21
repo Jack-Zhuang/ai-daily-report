@@ -156,6 +156,7 @@ def check_rules(data_file):
     return len(errors) == 0
 
 if __name__ == '__main__':
-    data_file = sys.argv[1] if len(sys.argv) > 1 else 'daily_data/2026-04-18.json'
+    today = datetime.now().strftime("%Y-%m-%d")
+    data_file = sys.argv[1] if len(sys.argv) > 1 else f'daily_data/{today}.json'
     success = check_rules(data_file)
     sys.exit(0 if success else 1)

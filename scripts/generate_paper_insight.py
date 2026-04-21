@@ -443,7 +443,7 @@ if __name__ == "__main__":
         'title': 'SAGER: Self-Evolving User Policy Skills for Recommendation Agent',
         'cn_title': '智能Agent推荐方法研究',
         'authors': ['Zhen Tao', 'Riwei Lai', 'Chenyun Yu'],
-        'published': '2026-04-17',
+        'published': datetime.now().strftime('%Y-%m-%d'),
         'summary': 'This paper proposes a novel framework...',
         'category': 'rec'
     }
