@@ -50,6 +50,9 @@ class ReportGenerator:
     def generate_html(self, data: dict) -> str:
         """生成HTML日报"""
         
+        # 获取日期
+        date = data.get('date', datetime.now().strftime('%Y-%m-%d'))
+        
         # ========== 强约束验证 ==========
         # 1. 每日精选必须是5项，顺序为：3文章+1论文+1GitHub
         daily_pick = data.get('daily_pick', [])
@@ -989,6 +992,7 @@ class ReportGenerator:
 
     <script>
         // 数据
+        const data = {{ date: "{date}" }};
         const dailyPick = {daily_pick_json};
         const hotArticles = {hot_articles_json};
         const githubProjects = {github_projects_json};
