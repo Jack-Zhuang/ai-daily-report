@@ -1057,7 +1057,7 @@
             if (pickType === 'paper') {
                 // 论文：必须先跳转到解读页面，不能直接跳转原文
                 const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
-                const insightUrl = `docs/insights/${data.date}_${paperId}.html`;
+                const insightUrl = `docs/insights/2026-04-21_${paperId}.html`;
                 footerHtml = `<a href="${insightUrl}" class="detail-link"><i class="fas fa-book-reader"></i> 查看论文解读</a>`;
             } else {
                 footerHtml = `<a href="${itemLink}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> ${pickType === 'github' ? '访问 GitHub' : '阅读原文'}</a>`;
@@ -1142,7 +1142,7 @@
                         }
                         if (!paperId) paperId = 'unknown_' + i;
                         paperId = paperId.replace('/', '_').replace('.', '_');
-                        const insightUrl = `docs/insights/${data.date}_${paperId}.html`;
+                        const insightUrl = `docs/insights/2026-04-21_${paperId}.html`;
                         html += `
                             <a href="${insightUrl}" class="conf-paper-item">
                                 <div class="conf-paper-rank">${i + 1}</div>
@@ -1409,7 +1409,7 @@
                 const cnSummary = item.cn_summary || '本文在推荐系统相关领域做出了创新研究，提出了新的方法和见解。';
                 // 论文解读页面链接
                 const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
-                const insightUrl = `docs/insights/${data.date}_${paperId}.html`;
+                const insightUrl = `docs/insights/2026-04-21_${paperId}.html`;
                 return `
                     <div class="card" onclick="window.location.href='${insightUrl}'">
                         <div class="card-image ${item.cover_image ? '' : (categoryImages[item.category] || 'card-image-paper')}" style="${item.cover_image ? `background-image: url('${item.cover_image}')` : ''}">
@@ -1491,7 +1491,7 @@
             
             // 论文解读页面链接
             const paperId = (item.id || '').replace('/', '_').replace('.', '_');
-            const insightUrl = `docs/insights/${data.date}_${paperId}.html`;
+            const insightUrl = `docs/insights/2026-04-21_${paperId}.html`;
             
             // 论文弹窗只显示解读按钮，不显示原文链接
             const footerHtml = `<a href="${insightUrl}" class="detail-link"><i class="fas fa-book-open"></i> 查看论文解读</a>`;
