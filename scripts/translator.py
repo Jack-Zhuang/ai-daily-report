@@ -36,34 +36,50 @@ class MiniMaxTranslator:
         if chinese_ratio > 0.3:
             return text
         
-        # 尝试使用 LLM 翻译（通过本地模型）
+        # 尝试使用免费翻译 API
         try:
-            import requests
-            
-            # 使用本地 LLM 服务（如果有）
-            llm_url = "http://localhost:11434/api/generate"
-            
-            payload = {
-                "model": "qwen2.5:7b",
-                "prompt": f"请将以下英文翻译成中文，只返回翻译结果，不要解释：\n\n{text}",
-                "stream": False
-            }
-            
-            try:
-                response = requests.post(llm_url, json=payload, timeout=60)
-                if response.status_code == 200:
-                    result = response.json()
-                    translated = result.get('response', '').strip()
-                    if translated and any('\u4e00' <= c <= '\u9fff' for c in translated):
-                        return translated
-            except:
-                pass
-            
-        except Exception as e:
+            # 使用 MyMemory 翻译 API（免费）
+            translated = self._mymemory_translate(text)
+            if translated and any('\u4e00' <= c <= '\u9fff' for c in translated):
+                return translated
+        except:
             pass
         
         # 使用增强的规则翻译
         return self._enhanced_translate(text)
+    
+    def _mymemory_translate(self, text: str) -> str:
+        """使用免费翻译 API"""
+        import urllib.parse
+        
+        # 截取前500字符（API限制）
+        text_to_translate = text[:500]
+        
+        # 尝试 Google Translate（通过 translate.googleapis.com）
+        try:
+            url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh&dt=t&q={urllib.parse.quote(text_to_translate)}"
+            response = requests.get(url, timeout=10)
+            if response.status_code == 200:
+                result = response.json()
+                if result and result[0]:
+                    translated = ''.join([item[0] for item in result[0] if item[0]])
+                    if translated:
+                        return translated
+        except:
+            pass
+        
+        # 备用：MyMemory API
+        try:
+            url = f"https://api.mymemory.translated.net/get?q={urllib.parse.quote(text_to_translate)}&langpair=en|zh"
+            response = requests.get(url, timeout=10)
+            if response.status_code == 200:
+                result = response.json()
+                if result.get('responseStatus') == 200:
+                    return result.get('responseData', {}).get('translatedText', '')
+        except:
+            pass
+        
+        return ""
     
     def _simple_translate(self, text: str) -> str:
         """简单规则翻译（备用）"""
@@ -180,6 +196,19 @@ class MiniMaxTranslator:
         result = text
         for en, cn in sorted(translations.items(), key=lambda x: -len(x[0])):
             result = result.replace(en, cn)
+        
+        return result
+    
+    def _enhanced_translate(self, text: str) -> str:
+        """增强的规则翻译"""
+        # 先进行基础翻译
+        result = self._simple_translate(text)
+        
+        # 如果结果还是大部分英文，添加提示
+        english_ratio = sum(1 for c in result if c.isascii() and c.isalpha()) / max(len(result), 1)
+        if english_ratio > 0.5:
+            # 标记为需要人工翻译
+            return f"[待翻译] {result}"
         
         return result
     
