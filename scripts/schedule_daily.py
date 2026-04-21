@@ -90,7 +90,7 @@ class DailyScheduler:
         steps = [
             ("构建每日精选", f"python3 {self.scripts_dir / 'build_daily_pick.py'} {data_file}", 300),
             ("功能增强", f"python3 {self.scripts_dir / 'enhance_features.py'}", 300),
-            ("翻译内容", f"python3 {self.scripts_dir / 'translate_papers.py'}", 1200),
+            ("完整翻译", f"python3 {self.scripts_dir / 'translate_all.py'}", 600),
         ]
         
         for name, cmd, timeout in steps:
