@@ -14,10 +14,20 @@ class PaperInsightGenerator:
         if base_dir is None:
             base_dir = Path(__file__).parent.parent
         self.base_dir = Path(base_dir)
-        self.insights_dir = self.base_dir / "insights"
-        self.insights_dir.mkdir(exist_ok=True)
+        self.insights_dir = self.base_dir / "docs" / "insights"
+        self.insights_dir.mkdir(parents=True, exist_ok=True)
         
         self.today = datetime.now().strftime("%Y-%m-%d")
+        
+        # 检查今日数据是否存在，如果不存在则使用昨天的
+        data_file = self.base_dir / "daily_data" / f"{self.today}.json"
+        if not data_file.exists():
+            from datetime import timedelta
+            yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+            data_file_yesterday = self.base_dir / "daily_data" / f"{yesterday}.json"
+            if data_file_yesterday.exists():
+                self.today = yesterday
+                print(f"⚠️ 使用前一天的数据: {yesterday}")
     
     def generate_paper_insight(self, paper: dict) -> str:
         """生成单篇论文的解读页面"""
@@ -484,14 +494,14 @@ class PaperInsightGenerator:
 </html>'''
         return html
     
-    def generate_all_insights(self, daily_pick: list, github_projects: list):
+    def generate_all_insights(self, daily_pick: list, github_projects: list, arxiv_papers: list = None):
         """生成所有解读页面"""
         # 为每日精选生成解读
         for item in daily_pick:
             if item.get('type') == 'paper' or item.get('pick_type') == 'paper':
                 html = self.generate_paper_insight(item)
-                paper_id = item.get('id', 'unknown').replace('/', '_').replace('.', '_')
-                file_path = self.insights_dir / f"paper_{paper_id}.html"
+                paper_id = item.get('id', item.get('arxiv_id', 'unknown')).replace('/', '_').replace('.', '_')
+                file_path = self.insights_dir / f"{self.today}_{paper_id}.html"
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(html)
                 print(f"  ✅ 生成论文解读: {item.get('title', '')[:30]}...")
@@ -503,6 +513,17 @@ class PaperInsightGenerator:
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(html)
                 print(f"  ✅ 生成项目解读: {item.get('name', '')}")
+        
+        # 为 arXiv 论文生成解读（前10篇）
+        if arxiv_papers:
+            for paper in arxiv_papers[:10]:
+                paper_id = paper.get('id', paper.get('arxiv_id', 'unknown')).replace('/', '_').replace('.', '_')
+                file_path = self.insights_dir / f"{self.today}_{paper_id}.html"
+                if not file_path.exists():
+                    html = self.generate_paper_insight(paper)
+                    with open(file_path, 'w', encoding='utf-8') as f:
+                        f.write(html)
+                    print(f"  ✅ 生成论文解读: {paper.get('title', '')[:30]}...")
         
         # 为GitHub项目列表生成解读（使用项目名）
         for item in github_projects[:3]:
@@ -530,7 +551,8 @@ class PaperInsightGenerator:
         
         self.generate_all_insights(
             data.get('daily_pick', []),
-            data.get('github_projects', [])
+            data.get('github_projects', data.get('github', [])),
+            data.get('arxiv_papers', [])
         )
         
         print(f"\n{'='*50}")
