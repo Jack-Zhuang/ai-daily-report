@@ -2,164 +2,422 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>热门文章列表 | AI推荐日报</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>热门文章 - AI推荐日报 2026-04-21</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --color-text-anchor: #312C51;
-            --color-text-secondary: rgba(49,44,81,0.68);
-            --color-text-muted: rgba(49,44,81,0.40);
-            --color-card: #FFFFFF;
-            --bg: #FAFAFA;
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --safe-area-top: env(safe-area-inset-top, 0px);
-            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
-        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
-            background: var(--bg);
-            color: var(--color-text-anchor);
-            line-height: 1.6;
-        }
-        
-        .nav {
-            position: fixed; top: 0; left: 0; right: 0;
-            background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
-            padding: 12px 16px; z-index: 100;
-            display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 1px solid rgba(49,44,81,0.08);
-            padding-top: calc(12px + var(--safe-area-top));
-        }
-        .nav-back {
-            display: flex; align-items: center; gap: 8px;
-            color: var(--color-text-anchor); text-decoration: none;
-            font-size: 14px; font-weight: 600;
-        }
-        .nav-title { font-size: 16px; font-weight: 700; }
-        .nav-count { font-size: 13px; color: var(--color-text-muted); }
-        
-        .hero {
-            background: var(--gradient-primary);
-            padding: 80px 20px 40px;
-            padding-top: calc(80px + var(--safe-area-top));
-            color: white;
-            text-align: center;
-        }
-        .hero-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
-        .hero-subtitle { font-size: 14px; opacity: 0.9; }
-        
-        .main {
-            padding: 20px 16px 100px;
-            padding-bottom: calc(100px + var(--safe-area-bottom));
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .card {
-            background: var(--color-card); border-radius: 16px;
-            margin-bottom: 16px; overflow: hidden;
-            cursor: pointer; transition: transform 0.2s;
-        }
-        .card:active { transform: scale(0.98); }
-        
-        .card-image {
-            width: 100%; height: 120px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-        .card-image::before {
-            content: '';
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
-        }
-        .card-image-badge {
-            position: absolute; top: 10px; right: 10px; z-index: 2;
-            background: rgba(255,255,255,0.95); color: var(--color-text-anchor);
-            padding: 4px 12px; border-radius: 8px;
-            font-size: 11px; font-weight: 700;
-        }
-        .card-image-rank {
-            position: absolute; top: 10px; left: 10px; z-index: 2;
-            width: 28px; height: 28px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 13px; font-weight: 700;
-        }
-        
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #1e293b; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header p { opacity: 0.9; }
+        .back-link { display: inline-block; margin-top: 15px; color: white; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
+        .article-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; }
+        .article-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+        .card-image { width: 100%; height: 160px; background-size: cover; background-position: center; }
         .card-body { padding: 16px; }
-        .card-category {
-            display: inline-flex; align-items: center; gap: 4px;
-            padding: 4px 10px; border-radius: 6px;
-            font-size: 11px; font-weight: 700; margin-bottom: 8px;
-            background: rgba(240,147,251,0.1); color: #f5576c;
-        }
-        .card-title {
-            font-size: 15px; font-weight: 700; line-height: 1.4;
-            color: var(--color-text-anchor); margin-bottom: 8px;
-            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-        }
-        .card-summary {
-            font-size: 13px; color: var(--color-text-secondary); line-height: 1.5;
-            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-            margin-bottom: 12px;
-        }
-        .card-meta {
-            display: flex; align-items: center; gap: 12px;
-            font-size: 12px; color: var(--color-text-muted);
-        }
+        .card-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
+        .card-summary { font-size: 14px; color: #64748b; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #94a3b8; }
+        .card-source { display: flex; align-items: center; gap: 4px; }
+        .card-link { color: #667eea; text-decoration: none; font-weight: 500; }
+        .card-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="index.html" class="nav-back">
-            <i class="fas fa-chevron-left"></i>
-            <span>日报</span>
-        </a>
-        <div class="nav-title">热门文章</div>
-        <div class="nav-count">剩余 3 篇</div>
-    </nav>
-    
-    <div class="hero">
-        <h1 class="hero-title">🔥 更多热门文章</h1>
-        <p class="hero-subtitle">2026-04-18 · 第6-8篇</p>
+    <div class="header">
+        <h1><i class="fas fa-newspaper"></i> 热门文章</h1>
+        <p>共 30 篇文章 · 2026-04-21</p>
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回首页</a>
     </div>
     
-    <main class="main" id="articles-list"></main>
-    
-    <script>
-        const articles = [{"id": "2604.14839v1", "title": "Well Begun is Half Done: Training-Free and Model-Agnostic Semantically Guaranteed User Representation Initialization for Multimodal Recommendation", "summary": "Recent advancements in multimodal recommendations, which leverage diverse modality information to mitigate data sparsity and improve recommendation accuracy, have gained significant attention. However, existing multimodal recommendations overlook the critical role of user representation initializati", "authors": ["Jinfeng Xu", "Zheyu Chen", "Shuo Yang"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14839v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621770", "cn_title": "推荐注意力机制相关研究", "cn_summary": "本文研究多模态推荐系统，提出新的注意力机制来提升推荐准确性。", "cover_image": "covers/paper_3.jpg", "insight_url": "insights/paper_2604_14839v1.html"}, {"id": "1201476594", "name": "santifer/career-ops", "description": "AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.", "stars": 35414, "forks": 7073, "language": "JavaScript", "url": "https://github.com/santifer/career-ops", "topics": ["ai-agent", "anthropic", "automation", "career", "claude", "claude-code", "cli", "golang", "interview-prep", "job-search", "open-source", "resume"], "created_at": "2026-04-04", "growth_rate": 2724.2, "type": "github", "source": "GitHub", "collected_at": "2026-04-17T21:38:21.964883", "cn_title": "热门项目：career-ops", "cn_summary": "【JavaScript项目】AI驱动的求职系统，基于Claude Code构建，支持14种技能模式、Go仪表盘、PDF生成和批量处理。今日增长2724.2%，已获得35,414 Stars。", "pick_type": "github", "rank": 3, "cover_image": "covers/github_1.jpg", "category": "agent"}, {"id": "1136590548", "name": "affaan-m/everything-claude-code", "description": "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.", "stars": 159354, "forks": 24782, "language": "JavaScript", "url": "https://github.com/affaan-m/everything-claude-code", "topics": ["ai-agents", "anthropic", "claude", "claude-code", "developer-tools", "llm", "mcp", "productivity"], "created_at": "2026-01-18", "growth_rate": 1790.5, "type": "github", "source": "GitHub", "collected_at": "2026-04-17T21:38:20.104833", "cn_title": "LLM项目：everything-claude-code", "cn_summary": "【JavaScript项目】Claude Code性能优化系统，提供技能、本能、记忆、安全和研究优先开发功能。今日增长1790.5%，已获得159,354 Stars。", "pick_type": "github", "rank": 4, "cover_image": "covers/github_2.jpg", "category": "agent"}];
-        const categoryLabels = { rec: '推荐算法', agent: 'AI Agent', llm: 'LLM应用', industry: '工业实践', wechat: '微信', zhihu: '知乎', opensource: '开源' };
-        const categoryEmoji = { rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭', wechat: '📱', zhihu: '💬', opensource: '💻' };
-        
-        const container = document.getElementById('articles-list');
-        
-        container.innerHTML = articles.map((item, i) => {
-            const cnTitle = item.cn_title || item.title || '未知标题';
-            const cnSummary = item.cn_summary || item.summary || '暂无摘要';
-            const link = item.link || '#';
-            
-            return `
-                <div class="card" onclick="window.open('${link}', '_blank')">
-                    <div class="card-image" style="${item.cover_image ? `background-image: url('${item.cover_image}')` : ''}">
-                        <div class="card-image-rank">${i + 1}</div>
-                        <div class="card-image-badge">HOT</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-category">${categoryEmoji[item.category] || '🔥'} ${categoryLabels[item.category] || item.source || '文章'}</div>
-                        <h3 class="card-title">${cnTitle}</h3>
-                        <p class="card-summary">${cnSummary}</p>
-                        <div class="card-meta">
-                            <span><i class="fas fa-external-link-alt"></i> ${item.source || '来源未知'}</span>
-                        </div>
+    <div class="container">
+        <div class="articles-grid">
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_1.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">如何正确Vibe Coding？这是来自Anthropic编程智能体负责人的大师课</div>
+                    <div class="card-summary">必须了解的 Vibe Coding方法论和实用技巧</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 机器之心</span>
+                        <a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651028728&idx=2&sn=da63a2e1b8efd8ded5b369187dbf970b" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
-            `;
-        }).join('');
-    </script>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_2.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">CVPR 2026｜突破3D空间推理瓶颈：北大联合南科大提出QuatRoPE，让大模型精准理解三维物体关系</div>
+                    <div class="card-summary">3D大模型空间推理的全新基石！</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 机器之心</span>
+                        <a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651028728&idx=3&sn=47e0887d67e1f7a1368bb26e66f6b74d" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_3.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">继Harness之后，“龙虾”JiuwenClaw率先开启“Coordination Engineering”时代</div>
+                    <div class="card-summary">把多Agent协同玩明白了</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 量子位</span>
+                        <a href="https://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247884737&idx=2&sn=47f6370c4a779a3d01d1bb5bf7994c26" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_4.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">英特尔：CPU的痛就像送外卖</div>
+                    <div class="card-summary">发布AI高静本Plus</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 量子位</span>
+                        <a href="https://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247884737&idx=3&sn=4b3e9c5c5614ec57163b99cc4904e25d" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_5.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">@所有人，2026真的需要自己上手用AI了丨年度AI盛会</div>
+                    <div class="card-summary">马上AI起来！五月北京见</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 量子位</span>
+                        <a href="https://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247884737&idx=4&sn=deacde55a2d2c5726cc287ddddbd25f9" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_6.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">马斯克暴走官宣：Grok 5就是AGI！五月连轰两代万亿怪兽，OpenAI慌了</div>
+                    <div class="card-summary"></div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 新智元</span>
+                        <a href="https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652693613&idx=2&sn=59391d3806cfc469f2d6ee06f7f80448" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_7.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">Agent不是关键！人大AiScientist实现23小时、74轮长程记忆</div>
+                    <div class="card-summary"></div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 新智元</span>
+                        <a href="https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652693613&idx=3&sn=7fa2163604c338406d7beaefd751df54" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_8.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">大模型开始“懂你”了！PersonaVLM如何实现长期个性化记忆</div>
+                    <div class="card-summary">从“回答问题”，走向“理解用户”。</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> PaperWeekly</span>
+                        <a href="https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719707&idx=1&sn=3fa9c5c102b06ff91b66c9c50b3173ef" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_9.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">大模型架构新范式！NUS、复旦等发布首篇Latent Space系统综述</div>
+                    <div class="card-summary">从Token到Latent，大模型开始换计算空间</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> PaperWeekly</span>
+                        <a href="https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719707&idx=2&sn=1423a6767f8cfb128e90e99d47c74893" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_10.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">北京/上海内推 | 美团基座大模型团队招聘多模态/具身智能研究型实习生</div>
+                    <div class="card-summary"></div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> PaperWeekly</span>
+                        <a href="https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247719707&idx=3&sn=47fb63c076b0faa25a6414bb3ac69d51" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_11.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">突破零样本 TTS 音色克隆上限：LongCat-AudioDiT 的声音克隆艺术</div>
+                    <div class="card-summary">音频生成技术正在经历一场全新的范式迁移——从传统级联架构，逐步向端到端生成范式演进。长期以来，主流的做法是”曲线救国”：合成系统先将音频压缩成梅尔频谱图等中间表征，再依赖神经声码器”翻译”回波形。每一次转换都带来信息损失与误差累积，最终丢失了最需要保留的细腻音色与个性化细节。能不能让 AI 直接学会</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 美团技术团队</span>
+                        <a href="https://tech.meituan.com/2026/04/20/longcat-audiodit.html" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_12.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">日本东北部沿海地区发生 7.7 级地震，已发布海啸警报，目前情况怎么样？</div>
+                    <div class="card-summary">当地时间20日，据日本气象厅最新信息，日本本州东部附近海域当天下午发生的地震震级被修正为7.7级，震源深度被修正为20公里。 日本气象厅20日稍早前发布消息称，当天16时53分左右，该国东北部沿海地区发生7.4级地震，最大震感为震度5强，东京有明显震感。随后，日本气象厅将地震震级修正为7.5级。岩手</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 知乎热榜</span>
+                        <a href="https://www.zhihu.com/question/2029592121372362319" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_13.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">钉钉 CEO 称严禁员工写文档、做会议纪要，沟通仅用白板，全靠 AI 自动整理，这种办公理念怎么样？</div>
+                    <div class="card-summary">2026年4月17-18日，由《中国企业家》杂志主办的2026（第十八届）《中国企业家》商界木兰年会在浙江省湖州市安吉县召开，主题为“她创·无界”。谈及AI组织，钉钉创始人兼CEO陈航在演讲中表示，如果公司里面还有人天天写文档，以写文档自居，这个公司一定是过去式。 他提到，公司现在一千四五百人，严禁</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 知乎热榜</span>
+                        <a href="https://www.zhihu.com/question/2029565174948914400" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_14.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">爱奇艺 CEO 龚宇称 AI 影视化无法阻挡，真人实拍可能成为非物质文化遗产，你认同他的观点吗？</div>
+                    <div class="card-summary">4月20日，在2026年爱奇艺世界大会上，爱奇艺创始人、CEO龚宇关于影视内容生产的一番表述，引发市场和舆论关注。 在当天的演讲中，龚宇提到，未来如果没有技术参与，百分之百依赖真实物理拍摄的影视内容，可能会成为一种“非物质文化遗产”。这一说法很快在社交平台发酵，并引发关于演员就业、影视产业链岗位以及</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 知乎热榜</span>
+                        <a href="https://www.zhihu.com/question/2029557729014933493" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_15.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">陈哲远、曾舜晞等百位演员入驻爱奇艺 AI 艺人库，明知可能分走自己饭碗，演员们为何还要入场？</div>
+                    <div class="card-summary">最新进展：20日下午，多位艺人及头部粉丝发声称艺人未签过相关授权 4月20日，爱奇艺世界大会举行。爱奇艺在大会上宣布，有100余位深度合作艺人已签署AI授权协议，包括陈哲远、丞磊、曾舜晞等演员入驻爱奇艺纳逗Pro艺人库。 陈哲远丞磊等100多位艺人授权AI 入驻爱奇艺纳逗Pro艺人库</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 知乎热榜</span>
+                        <a href="https://www.zhihu.com/question/2029556060424332961" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_16.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">如何看待 4 月 20 日发布的华为Pura X Max，有哪些创新，值得购买吗？</div>
+                    <div class="card-summary">华为Pura系列及全场景新品发布会上，华为正式推出全球首款大阔折Pura X Max，这款新机除了肉眼可见的全新形态，还带来了什么创新，有哪些升级点？总体来说推荐购买吗？</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 知乎热榜</span>
+                        <a href="https://www.zhihu.com/question/2029526692234829977" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_17.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">华为 Pura X Max 行业首款横阔折手机发布：√2:1 类纸比例屏、全系麒麟 9030 Pro，售价 10999 元起</div>
+                    <div class="card-summary">感谢IT之家网友 手机系统、風見暉一、Autumn_Dream、files、雨雪载途 的线索投递！
+            IT之家 4 月 20 日消息，在今天的华为 Pura 系列及全场景新品发布会上，华为常务董事、产品投资评审委员会主任、终端 BG 董事长余承东正式发布行业首款横向阔折叠手机 </div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> IT之家热榜</span>
+                        <a href="https://www.ithome.com/0/941/233.htm" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_18.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">华为 Pura90 Pro / Pro Max 手机发布：首发麒麟 9030S 芯片，售价 5499 元起</div>
+                    <div class="card-summary">感谢IT之家网友 软媒新友2619302、Autumn_Dream、雨雪载途、蛋炒鱼、远方_、花雨龘魔王、風見暉一 的线索投递！
+            IT之家 4 月 20 日消息，在今天的华为 Pura 系列及全场景新品发布会上，华为 Pura 90 Pro 和 Pura 90 Pro Max</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> IT之家热榜</span>
+                        <a href="https://www.ithome.com/0/941/208.htm" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_19.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">Vercel 确认遭入侵：第三方 AI 工具成突破口，黑客索要 200 万美元赎金</div>
+                    <div class="card-summary">云开发平台Vercel近日披露一起安全入侵事件。该公司确认，攻击者通过第三方AI工具Context.ai的Google Workspace OAuth应用获取了初始访问权限，进而入侵内部系统。与此同时，一名自称"ShinyHunters"的黑客声称正在暗网论坛出售窃取的数据，并向Vercel索要20</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 开源中国资讯</span>
+                        <a href="https://www.oschina.net/news/434713" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_20.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">通义实验室推出 Fun-ASR1.5，“方言工业级可用”模型</div>
+                    <div class="card-summary">通义实验室宣布正式推出 Fun-ASR1.5，实现了「方言工业级可用」的语音识别大模型。
+
+Fun-ASR1.5 基于统一的大模型架构，单模型即可无缝覆盖 30 种语言、汉语七大方言体系及 20+ 地方口音，古诗词吟诵也能精准转写。测试显示，典型方言场景字错误率（CER）相对下降 56.2%。目前已</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 开源中国资讯</span>
+                        <a href="https://www.oschina.net/news/434699" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_21.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">老牌开源项目该不该接受 AI 代码？</div>
+                    <div class="card-summary">对于是否接受由 AI 生成的代码，开源界的 OG 们似乎分成了两大派别。
+</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 开源中国资讯</span>
+                        <a href="https://www.oschina.net/news/434696" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_22.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">HarmonyOS 6.1.0(23) Release 版本更新速览，关键技术特性抢先看！</div>
+                    <div class="card-summary">概述：
+
+今天，HarmonyOS 6.1.0(23) Release 版本正式发布！本次版本更新聚焦系统能力增强、创新场景升级以及开发工具体验优化，带来多项关键能力更新，为开发者打造更高质量应用提供坚实支撑，进一步提升整体开发效率。
+从系统能力到创新特性，再到工具链升级，HarmonyOS持续优化</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 开源中国资讯</span>
+                        <a href="https://www.oschina.net/news/434695" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_23.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">21.0975 公里，是人形机器人的里程碑，也是 RISC-V 的新起点</div>
+                    <div class="card-summary">2026年4月19日，第二届北京亦庄人形机器人半程马拉松赛事圆满落幕。多台搭载进迭时空 RISC－V AI&nbsp;CPU K3 芯片的「灵龙 2.0」人形机器人顺利完赛。「灵龙 2.0」是上海国家地方共建人形机器人创新中心开发的人形机器人平台。
+
+在长距离、高负载、强实时的极限场景中，K3 经受</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 开源中国资讯</span>
+                        <a href="https://www.oschina.net/news/434683" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_24.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">调问更新 4.3~4.17：新版重磅上线+生产力跃升，AI 与高级逻辑引擎和模板中心重构+19 项功能优化与 BUG 修复</div>
+                    <div class="card-summary">调问自开源以来一直坚持前后端所有代码 100% 开源💯，助力企业建设属于自己的问卷调研系统👏。
+
+🔥 官网地址：https://www.diaowen.net
+
+🔥 在线服务：https://www.surveyform.cn
+
+🔥 源码下载：https://gitee.com/wkeyuan/DW</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 开源中国资讯</span>
+                        <a href="https://www.oschina.net/news/434682" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_25.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">上海 AI 实验室推出 ViraHInter 模型</div>
+                    <div class="card-summary">上海人工智能实验室（上海AI实验室）、复旦大学、上海交通大学医学院附属瑞金医院及上海市病毒研究院联合团队推出 ViraHInter —— 一款融合蛋白序列与结构双模态的AI预测模型，不用开展湿实验就能预判出病毒将“劫持”哪些人体蛋白。将抗病毒药物研发从逐个病毒应对的模式，推进到针对多病毒共性宿主因子</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 开源中国资讯</span>
+                        <a href="https://www.oschina.net/news/434674" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_26.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">Testin云测赋能大湾区出海：AI测试如何解决金融科技企业全球化质量难题</div>
+                    <div class="card-summary">2026年，大湾区企业出海已从"规模扩张"转向"质量竞争"。在香港这座连接内地与全球市场的金融枢纽城市，软件质量管理正在成为中资金融科技企业突破全球化瓶颈的核心战场。
+
+根据公开调研数据，2025年至2026年间，香港本地金融科技企业在海外市场遭遇的用户投诉中，超过60%与应用程序在不同设备、系统及</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 开源中国资讯</span>
+                        <a href="https://www.oschina.net/news/434672" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_27.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">jsoup 1.22.2 发布，Java HTML 解析器</div>
+                    <div class="card-summary">jsoup 1.22.2 现已发布，对库进行了多项修复和改进。它使遍历 DOM 时编辑 DOM 的操作更加可预测，使用更新的元素和更佳的文本边界更新了默认的 HTML 标签定义，并提高了解析和 HTTP 传输的可靠性。此版本还修复了清理、流解析、XML 文档类型处理和 Android 打包方面的一些</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 开源中国资讯</span>
+                        <a href="https://www.oschina.net/news/434661/jsoup-1-22-2-released" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_28.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">Qwen3.6-Max-Preview 发布</div>
+                    <div class="card-summary">继 Qwen3.6-Plus 发布之后，阿里今日发布 Qwen3.6-Max-Preview。相比 Qwen3.6-Plus，本次预览版带来了更强的世界知识和指令遵循能力，以及在多项基准上显著提升的智能体编程表现。
+
+Qwen3.6-Max-Preview&nbsp;在 SWE-bench Pro、</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 开源中国资讯</span>
+                        <a href="https://www.oschina.net/news/434641" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_29.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">技嘉主板DUO X技术创风冷内存超频纪录：逼近13000MT/s，液氮不再是唯一答案</div>
+                    <div class="card-summary">近日，知名超频玩家 Saltycroissant 使用技嘉 Z890 AORUS TACHYON DUO X ICE（钛冰雕）主板，在纯风冷条件下，将一对海盗船 Vengeance DDR5 内存超频至 12917 MT/s。随后，他进一步采用液氮散热，将频率推至 13407.8 MT/s，这一成绩</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> 开源中国资讯</span>
+                        <a href="https://www.oschina.net/news/434640" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <div class="card-image" style="background-image: url('covers/article_30.jpg')"></div>
+                <div class="card-body">
+                    <div class="card-title">AI 时代的中欧产业重构与合作：建交 51 周年新起点，共探双向共赢新路径</div>
+                    <div class="card-summary">2026 年 5 月 6 日，中国与欧盟将迎来建交 51 周年，中欧合作百年征程由此迈入携手发展的 “新半个世纪”。五十余载国际风云变幻，中欧关系始终保持着强大的韧性与活力，双方贸易额实现超 300 倍的飞跃式增长，在经贸、科技、绿色发展等领域的深度合作，早已成为维护全球多边主义、稳定世界经济增长的</div>
+                    <div class="card-meta">
+                        <span class="card-source"><i class="fas fa-rss"></i> InfoQ技术文章</span>
+                        <a href="https://www.infoq.cn/article/DbItbFaOU2trizVYJam2" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </body>
 </html>

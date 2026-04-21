@@ -77,6 +77,12 @@ log "------------------------------------------"
 log "生成日报 HTML..."
 python3 "$SCRIPTS_DIR/generate_report.py" >> "$LOG_FILE" 2>&1 || log "⚠️ 报告生成失败"
 
+log "生成文章列表页..."
+python3 "$SCRIPTS_DIR/generate_articles_page.py" >> "$LOG_FILE" 2>&1 || log "⚠️ 文章列表页生成失败"
+
+log "生成论文列表页..."
+python3 "$SCRIPTS_DIR/generate_papers_list_page.py" >> "$LOG_FILE" 2>&1 || log "⚠️ 论文列表页生成失败"
+
 log "生成论文解读..."
 python3 "$SCRIPTS_DIR/generate_paper_insights.py" >> "$LOG_FILE" 2>&1 || log "⚠️ 论文解读生成失败"
 

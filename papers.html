@@ -2,170 +2,792 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>arXiv 论文列表 | AI推荐日报</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>arXiv 论文 - AI推荐日报 2026-04-21</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --color-text-anchor: #312C51;
-            --color-text-secondary: rgba(49,44,81,0.68);
-            --color-text-muted: rgba(49,44,81,0.40);
-            --color-card: #FFFFFF;
-            --bg: #FAFAFA;
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --safe-area-top: env(safe-area-inset-top, 0px);
-            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
-        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
-            background: var(--bg);
-            color: var(--color-text-anchor);
-            line-height: 1.6;
-        }
-        
-        .nav {
-            position: fixed; top: 0; left: 0; right: 0;
-            background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
-            padding: 12px 16px; z-index: 100;
-            display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 1px solid rgba(49,44,81,0.08);
-            padding-top: calc(12px + var(--safe-area-top));
-        }
-        .nav-back {
-            display: flex; align-items: center; gap: 8px;
-            color: var(--color-text-anchor); text-decoration: none;
-            font-size: 14px; font-weight: 600;
-        }
-        .nav-title { font-size: 16px; font-weight: 700; }
-        .nav-count { font-size: 13px; color: var(--color-text-muted); }
-        
-        .hero {
-            background: var(--gradient-primary);
-            padding: 80px 20px 40px;
-            padding-top: calc(80px + var(--safe-area-top));
-            color: white;
-            text-align: center;
-        }
-        .hero-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
-        .hero-subtitle { font-size: 14px; opacity: 0.9; }
-        
-        .main {
-            padding: 20px 16px 100px;
-            padding-bottom: calc(100px + var(--safe-area-bottom));
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .card {
-            background: var(--color-card); border-radius: 16px;
-            margin-bottom: 16px; overflow: hidden;
-            cursor: pointer; transition: transform 0.2s;
-        }
-        .card:active { transform: scale(0.98); }
-        
-        .card-image {
-            width: 100%; height: 120px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-        .card-image::before {
-            content: '';
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
-        }
-        .card-image-badge {
-            position: absolute; top: 10px; right: 10px; z-index: 2;
-            background: rgba(255,255,255,0.95); color: var(--color-text-anchor);
-            padding: 4px 12px; border-radius: 8px;
-            font-size: 11px; font-weight: 700;
-        }
-        .card-image-rank {
-            position: absolute; top: 10px; left: 10px; z-index: 2;
-            width: 28px; height: 28px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 13px; font-weight: 700;
-        }
-        
-        .card-body { padding: 16px; }
-        .card-category {
-            display: inline-flex; align-items: center; gap: 4px;
-            padding: 4px 10px; border-radius: 6px;
-            font-size: 11px; font-weight: 700; margin-bottom: 8px;
-            background: rgba(102,126,234,0.1); color: #667eea;
-        }
-        .card-title {
-            font-size: 15px; font-weight: 700; line-height: 1.4;
-            color: var(--color-text-anchor); margin-bottom: 8px;
-            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-        }
-        .card-summary {
-            font-size: 13px; color: var(--color-text-secondary); line-height: 1.5;
-            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-            margin-bottom: 12px;
-        }
-        .card-meta {
-            display: flex; align-items: center; gap: 12px;
-            font-size: 12px; color: var(--color-text-muted);
-        }
-        .card-link {
-            display: flex; align-items: center; gap: 4px;
-            color: #667eea; font-size: 13px; font-weight: 600;
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #1e293b; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header p { opacity: 0.9; }
+        .back-link { display: inline-block; margin-top: 15px; color: white; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        .papers-list { display: flex; flex-direction: column; gap: 16px; }
+        .paper-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .paper-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .paper-title { font-size: 16px; font-weight: 600; line-height: 1.4; flex: 1; }
+        .paper-category { background: rgba(102,126,234,0.1); color: #667eea; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; white-space: nowrap; margin-left: 12px; }
+        .paper-summary { font-size: 14px; color: #64748b; line-height: 1.6; margin-bottom: 12px; }
+        .paper-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #94a3b8; }
+        .paper-id { font-family: monospace; }
+        .paper-links { display: flex; gap: 12px; }
+        .paper-link { color: #667eea; text-decoration: none; font-weight: 500; }
+        .paper-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="index.html" class="nav-back">
-            <i class="fas fa-chevron-left"></i>
-            <span>日报</span>
-        </a>
-        <div class="nav-title">arXiv 论文</div>
-        <div class="nav-count">剩余 15 篇</div>
-    </nav>
-    
-    <div class="hero">
-        <h1 class="hero-title">📄 更多 arXiv 论文</h1>
-        <p class="hero-subtitle">2026-04-18 · 第6-20篇</p>
+    <div class="header">
+        <h1><i class="fas fa-file-alt"></i> arXiv 论文</h1>
+        <p>共 50 篇论文 · 2026-04-21</p>
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回首页</a>
     </div>
     
-    <main class="main" id="papers-list"></main>
-    
-    <script>
-        const papers = [{"id": "2604.14598v1", "title": "Category-based and Popularity-guided Video Game Recommendation: A Balance-oriented Framework", "summary": "In recent years, the video game industry has experienced substantial growth, presenting players with a vast array of game choices. This surge in options has spurred the need for a specialized recommender system tailored for video games. However, current video game recommendation approaches tend to p", "authors": ["Xiping Li", "Jianghong Ma", "Kangzhe Liu"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14598v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621844", "cn_title": "推荐推荐相关研究", "cn_summary": "本文在rec相关领域做出了创新研究，提出了新的方法和见解。", "cover_image": "covers/paper_6.jpg", "insight_url": "insights/paper_2604_14598v1.html"}, {"id": "2604.14586v1", "title": "CPGRec+: A Balance-oriented Framework for Personalized Video Game Recommendations", "summary": "The rapid expansion of gaming industry requires advanced recommender systems tailored to its dynamic landscape. Existing Graph Neural Network (GNN)-based methods primarily prioritize accuracy over diversity, overlooking their inherent trade-off. To address this, we previously proposed CPGRec, a bala", "authors": ["Xiping Li", "Aier Yang", "Jianghong Ma"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14586v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621868", "cn_title": "图神经网络神经网络推荐相关研究", "cn_summary": "本文研究生成式检索在推荐系统中的应用，提出解决大规模工业系统中的三大挑战的方案。", "cover_image": "covers/paper_7.jpg", "insight_url": "insights/paper_2604_14586v1.html"}, {"id": "2604.14581v1", "title": "Behavior-Aware Dual-Channel Preference Learning for Heterogeneous Sequential Recommendation", "summary": "Heterogeneous sequential recommendation (HSR) aims to learn dynamic behavior dependencies from the diverse behaviors of user-item interactions to facilitate precise sequential recommendation. Despite many efforts yielding promising achievements, there are still challenges in modeling heterogeneous b", "authors": ["Jing Xiao", "Dongqi Wu", "Liwei Pan"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14581v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621892", "cn_title": "推荐相关研究", "cn_summary": "本文在rec相关领域做出了创新研究，提出了新的方法和见解。", "cover_image": "covers/paper_8.jpg", "insight_url": "insights/paper_2604_14581v1.html"}, {"id": "2604.14510v1", "title": "NewsTorch: A PyTorch-based Toolkit for Learner-oriented News Recommendation", "summary": "News recommender systems are devised to alleviate the information overload, attracting more and more researchers' attention in recent years. The lack of a dedicated learner-oriented news recommendation toolkit hinders the advancement of research in news recommendation. We propose a PyTorch-based new", "authors": ["Rongyao Wang", "Veronica Liesaputra", "Zhiyi Huang"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.14510v1", "category": "rec", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:35.621916", "cn_title": "推荐推荐注意力机制相关研究", "cn_summary": "本文在rec相关领域做出了创新研究，提出了新的方法和见解。", "cover_image": "covers/paper_9.jpg", "insight_url": "insights/paper_2604_14510v1.html"}, {"id": "2604.15309v1", "title": "MM-WebAgent: A Hierarchical Multimodal Web Agent for Webpage Generation", "summary": "The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage ", "authors": ["Yan Li", "Zezi Zeng", "Yifan Yang"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.15309v1", "category": "agent", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:54.102840", "cn_title": "智能Agent推荐方法研究", "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐。", "cover_image": "covers/paper_10.jpg", "insight_url": "insights/paper_2604_15309v1.html"}, {"id": "2604.15306v1", "title": "Generalization in LLM Problem Solving: The Case of the Shortest Path", "summary": "Whether language models can systematically generalize remains actively debated. Yet empirical performance is jointly shaped by multiple factors such as training data, training paradigms, and inference-time strategies, making failures difficult to interpret. We introduce a controlled synthetic enviro", "authors": ["Yao Tong", "Jiayuan Ye", "Anastasia Borovykh"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.15306v1", "category": "llm", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:54.102890", "cn_title": "Generalization in LLM Problem Solving: The Case of...", "cn_summary": "本文在llm相关领域做出了创新研究，提出了新的方法和见解。", "cover_image": "covers/paper_11.jpg", "insight_url": "insights/paper_2604_15306v1.html"}, {"id": "2604.15302v1", "title": "Diagnosing LLM Judge Reliability: Conformal Prediction Sets and Transitivity Violations", "summary": "LLM-as-judge frameworks are increasingly used for automatic NLG evaluation, yet their per-instance reliability remains poorly understood. We present a two-pronged diagnostic toolkit applied to SummEval: $\\textbf{(1)}$ a transitivity analysis that reveals widespread per-input inconsistency masked by ", "authors": ["Manan Gupta", "Dhruv Kumar"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.15302v1", "category": "llm", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:54.102929", "cn_title": "大语言模型相关研究", "cn_summary": "本文在llm相关领域做出了创新研究，提出了新的方法和见解。", "cover_image": "covers/paper_12.jpg", "insight_url": "insights/paper_2604_15302v1.html"}, {"id": "2604.15294v1", "title": "How Do LLMs and VLMs Understand Viewpoint Rotation Without Vision? An Interpretability Study", "summary": "Over the past year, spatial intelligence has drawn increasing attention. Many prior works study it from the perspective of visual-spatial intelligence, where models have access to visuospatial information from visual inputs. However, in the absence of visual information, whether linguistic intellige", "authors": ["Zhen Yang", "Ping Jian", "Zhongbin Guo"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.15294v1", "category": "llm", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:54.102954", "cn_title": "注意力机制相关研究", "cn_summary": "本文在llm相关领域做出了创新研究，提出了新的方法和见解。", "cover_image": "covers/paper_13.jpg", "insight_url": "insights/paper_2604_15294v1.html"}, {"id": "2604.15272v1", "title": "Prism: Symbolic Superoptimization of Tensor Programs", "summary": "This paper presents Prism, the first symbolic superoptimizer for tensor programs. The key idea is sGraph, a symbolic, hierarchical representation that compactly encodes large classes of tensor programs by symbolically representing some execution parameters. Prism organizes optimization as a two-leve", "authors": ["Mengdi Wu", "Xiaoyu Jiang", "Oded Padon"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.15272v1", "category": "industry", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:54.102979", "cn_title": "推荐系统前沿研究", "cn_summary": "本文在industry相关领域做出了创新研究，提出了新的方法和见解。", "cover_image": "covers/paper_14.jpg", "insight_url": "insights/paper_2604_15272v1.html"}, {"id": "2604.15267v1", "title": "CoopEval: Benchmarking Cooperation-Sustaining Mechanisms and LLM Agents in Social Dilemmas", "summary": "It is increasingly important that LLM agents interact effectively and safely with other goal-pursuing agents, yet, recent works report the opposite trend: LLMs with stronger reasoning capabilities behave _less_ cooperatively in mixed-motive games such as the prisoner's dilemma and public goods setti", "authors": ["Emanuel Tewolde", "Xiao Zhang", "David Guzman Piedrahita"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.15267v1", "category": "agent", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:54.103007", "cn_title": "智能Agent推荐方法研究", "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐。", "cover_image": "covers/paper_15.jpg", "insight_url": "insights/paper_2604_15267v1.html"}, {"id": "2604.15236v1", "title": "Agentic Microphysics: A Manifesto for Generative AI Safety", "summary": "This paper advances a methodological proposal for safety research in agentic AI. As systems acquire planning, memory, tool use, persistent identity, and sustained interaction, safety can no longer be analysed primarily at the level of the isolated model. Population-level risks arise from structured ", "authors": ["Federico Pierucci", "Matteo Prandi", "Marcantonio Bracale Syrnikov"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.15236v1", "category": "agent", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:54.103030", "cn_title": "智能Agent推荐方法研究", "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐。"}, {"id": "2604.15233v1", "title": "Blue Data Intelligence Layer: Streaming Data and Agents for Multi-source Multi-modal Data-Centric Applications", "summary": "NL2SQL systems aim to address the growing need for natural language interaction with data. However, real-world information rarely maps to a single SQL query because (1) users express queries iteratively (2) questions often span multiple data sources beyond the closed-world assumption of a single dat", "authors": ["Moin Aminnaseri", "Farima Fatahi Bayat", "Nikita Bhutani"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.15233v1", "category": "agent", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:54.103054", "cn_title": "智能Agent推荐方法研究", "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐。"}, {"id": "2604.15231v1", "title": "RadAgent: A tool-using AI agent for stepwise interpretation of chest computed tomography", "summary": "Vision-language models (VLM) have markedly advanced AI-driven interpretation and reporting of complex medical imaging, such as computed tomography (CT). Yet, existing methods largely relegate clinicians to passive observers of final outputs, offering no interpretable reasoning trace for them to insp", "authors": ["Mélanie Roschewitz", "Kenneth Styppa", "Yitian Tao"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.15231v1", "category": "agent", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:54.103077", "cn_title": "智能Agent推荐方法研究", "cn_summary": "本文提出SAGER框架，研究基于大语言模型的推荐Agent如何通过用户策略技能的自演化实现个性化推荐。"}, {"id": "2604.15224v1", "title": "Context Over Content: Exposing Evaluation Faking in Automated Judges", "summary": "The $\\textit{LLM-as-a-judge}$ paradigm has become the operational backbone of automated AI evaluation pipelines, yet rests on an unverified assumption: that judges evaluate text strictly on its semantic content, impervious to surrounding contextual framing. We investigate $\\textit{stakes signaling}$", "authors": ["Manan Gupta", "Inderjeet Nair", "Lu Wang"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.15224v1", "category": "industry", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:54.103100", "cn_title": "推荐系统前沿研究", "cn_summary": "本文在industry相关领域做出了创新研究，提出了新的方法和见解。"}, {"id": "2604.15190v1", "title": "Meituan Merchant Business Diagnosis via Policy-Guided Dual-Process User Simulation", "summary": "Simulating group-level user behavior enables scalable counterfactual evaluation of merchant strategies without costly online experiments. However, building a trustworthy simulator faces two structural challenges. First, information incompleteness causes reasoning-based simulators to over-rationalize", "authors": ["Ziyang Chen", "Renbing Chen", "Daowei Li"], "published": "2026-04-16", "link": "http://arxiv.org/abs/2604.15190v1", "category": "industry", "type": "paper", "source": "arXiv", "collected_at": "2026-04-17T21:37:54.103127", "cn_title": "推荐系统前沿研究", "cn_summary": "本文在industry相关领域做出了创新研究，提出了新的方法和见解。"}];
-        const categoryLabels = { rec: '推荐算法', agent: 'AI Agent', llm: 'LLM应用', industry: '工业实践' };
-        const categoryEmoji = { rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭' };
-        
-        const container = document.getElementById('papers-list');
-        
-        container.innerHTML = papers.map((item, i) => {
-            const cnTitle = item.cn_title || (item.title ? item.title.slice(0, 50) + '...' : '论文');
-            const cnSummary = item.cn_summary || '本文在推荐系统相关领域做出了创新研究。';
-            const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
-            const insightUrl = `insights/paper_${paperId}.html`;
-            
-            return `
-                <div class="card" onclick="window.location.href='${insightUrl}'">
-                    <div class="card-image" style="${item.cover_image ? `background-image: url('${item.cover_image}')` : ''}">
-                        <div class="card-image-rank">${i + 1}</div>
-                        <div class="card-image-badge">arXiv</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-category">${categoryEmoji[item.category] || '📄'} ${categoryLabels[item.category] || '论文'}</div>
-                        <h3 class="card-title">${cnTitle}</h3>
-                        <p class="card-summary">${cnSummary}</p>
-                        <div class="card-meta">
-                            <span><i class="fas fa-calendar"></i> ${item.published || ''}</span>
-                            <span><i class="fas fa-users"></i> ${item.authors ? item.authors.slice(0,2).join(', ') : 'Unknown'}</span>
-                        </div>
+    <div class="container">
+        <div class="papers-list">
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">从基准测试到推理：双方面的大规模评估大型语言模型在越南法律文本上的表现</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">The complexity of Vietnam's legal texts presents a significant barrier to public access to justice. While Large Language Models offer a promising solution for legal text simplification, evaluating the</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16270 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16270v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16270.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
                     </div>
                 </div>
-            `;
-        }).join('');
-    </script>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">经验压缩谱：在大语言模型代理中统一记忆、技能与规则</div>
+                    <span class="paper-category">rec</span>
+                </div>
+                <div class="paper-summary">As LLM agents scale to long-horizon, multi-session deployments, efficiently managing accumulated experience becomes a critical bottleneck. Agent memory systems and agent skill discovery both address t</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15877 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15877v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15877.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">Weak-Link Optimization for Multi-Agent Reasoning and Collaboration</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">大语言模型驱动的多智能体框架通过多角色协作的方式处理复杂推理任务。然而，现有方法常常面临推理不稳定性问题，即单个智能体的错误会在协作过程中被放大，从而损害整体性能表现。当前研究主要聚焦于增强高性能智能体的能力或抑制不可靠的输出来提升框架效能，而对系统性地识别和强化性能受限智能体的研究相对不足。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15972 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15972v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15972.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">联合中心的双对比对齐与结构保持和信息平衡正则化</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">We propose HILBERT (HIerarchical Long-sequence Balanced Embedding with Reciprocal contrastive Training), a cross-attentive multimodal framework for learning document-level audio-text representations f</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16247 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16247v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16247.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">JumpLoRA: 稀疏适配器用于大型语言模型的持续学习</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">基于适配器的方法已成为大型语言模型（LLM）持续学习（CL）中一种经济有效的方法，通过为每个任务顺序学习低秩更新矩阵来适应模型。为缓解灾难性遗忘问题，最先进的方法通过针对子空间或坐标级干扰，对新适配器相对于先前适配器施加约束。本文提出JumpLoRA，这是一种新颖的框架，能够在低秩适配（LoRA）中自适应地诱导稀疏性。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16171 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16171v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16171.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">Beyond Surface Statistics: Robust Conformal Prediction for LLMs via Internal Representations</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">大型语言模型正被越来越广泛地部署在可靠性至关重要的应用场景中。然而，输出层面的不确定性信号——如token概率、熵和自一致性——在校准与部署不匹配的情况下可能变得脆弱。共形预测虽然在可交换性假设下提供有限样本的有效性保证</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16217 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16217v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16217.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">Learning to Reason with Insight for Informal Theorem Proving</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">尽管大多数自动化定理证明方法依赖于形式化证明系统，但非形式化定理证明能够更好地发挥大语言模型（LLM）在自然语言处理方面的优势。在这项工作中，我们识别出非形式化定理证明的一个主要瓶颈——缺乏洞察力，即在解决复杂问题时难以识别所需的核心技术。为解决这一问题，我们提出了一种新颖的框架，旨在培养这一关键的推理能力。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16278 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16278v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16278.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">止损！学习早期剪枝路径以实现高效并行推理</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">Parallel reasoning enhances Large Reasoning Models (LRMs) but incurs prohibitive costs due to futile paths caused by early errors. To mitigate this, path pruning at the prefix level is essential, yet </div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16029 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16029v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16029.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">MARCH：多智能体放射学临床层级CT报告生成</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">自动化的3D放射学报告生成常常面临临床幻觉问题，且缺乏人类实践中常见的迭代验证机制。尽管近期的视觉-语言模型（VLMs）推动了领域发展，但它们通常作为整体式的“黑箱”系统运行，缺乏临床工作流程中应有的协作监督。为解决这些挑战，我们提出了MARCH（多智能体放射学临床层级）框架，这是一种多智能体系统，旨在模拟专业临床环境中的层级协作模式。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16175 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16175v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16175.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">通过Token剪枝优化以韩语为中心的大型语言模型</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">本文对通过token剪枝技术适配的最先进多语言大语言模型进行了系统性基准测试。Token剪枝是一种压缩技术，可以消除与目标应用无关语言的token和嵌入参数。以韩语为中心的自然语言处理任务为研究重点，我们评估了Qwen3、Gemma-3、Llama-3和Aya等模型架构，测试了三种词汇配置：原始配置、英韩配置（EnKo）和英韩-C配置。实验结果表明，token剪枝在保持模型性能的同时显著降低了模型</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16235 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16235v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16235.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">Rethinking the Necessity of Adaptive Retrieval-Augmented Generation through the Lens of Adaptive Listwise Ranking</div>
+                    <span class="paper-category">rec</span>
+                </div>
+                <div class="paper-summary">自适应检索增强生成旨在通过动态判断是否需要检索补充段落来减轻外部噪声的干扰。然而，随着大型语言模型对噪声的鲁棒性不断增强，自适应检索的必要性值得重新评估。本文重新审视了这一必要性，并提出了一种新颖的自适应检索框架AdaRankLLM。为了有效验证自适应列表式重排序的必要性，我们首先开发了一种基</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15621 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15621v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15621.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">No Universal Courtesy: A Cross-Linguistic, Multi-Model Study of Politeness Effects on LLMs Using the PLUM Corpus</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">本文探讨了大语言模型（LLMs）对不同礼貌与不礼貌程度用户提示的响应机制。实验以布朗和莱文森的礼貌理论与库尔佩珀的不礼貌理论框架为基础，涵盖三种语言（英语、印地语、西班牙语）、五个模型（Gemini-Pro、GPT-4o Mini、Claude 3.7 Sonnet、DeepSeek-Chat和Llama 3）以及三种用户交互历史（原始、粗鲁和礼貌表达）。我们的样本包含22个实验条件。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16275 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16275v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16275.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">SIMMER: Cross-Modal Food Image--Recipe Retrieval via MLLM-Based Embedding</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">Cross-modal retrieval between food images and recipe texts is an important task with applications in nutritional management, dietary logging, and cooking assistance. Existing methods predominantly rel</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15628 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15628v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15628.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">vstash: Local-First Hybrid Retrieval with Adaptive Fusion for LLM Agents</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">We present **vstash**, a local-first document memory system that combines vector similarity search with full-text keyword matching via Reciprocal Rank Fusion (RRF) and adaptive per-query IDF weighting</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15484 · 2026-04-16</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15484v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15484.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">On the Equivalence Between Auto-Regressive Next Token Prediction and Full-Item-Vocabulary Maximum Likelihood Estimation in Generative Recommendation--A Short Note</div>
+                    <span class="paper-category">rec</span>
+                </div>
+                <div class="paper-summary">生成式推荐（GR）已成为工业级序列推荐系统中广泛采用的范式。当前的GR系统通常遵循相似的流程：首先对项目进行标记化处理以建立索引，然后采用下一标记预测作为训练目标，最后通过自回归解码方式来生成下一个推荐项目。然而，现有的GR研究主要聚焦于架构设计和经验性能优化方面，对于自回归下一标记预测工作机制的理论解释仍显不足。该领域仍有待更深入的系统性理论探索。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15739 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15739v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15739.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">Do Vision-Language Models Truly Perform Vision Reasoning? A Rigorous Study of the Modality Gap</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">视觉语言模型（VLMs）的推理能力近年来因其广泛的下游任务应用前景而备受关注。然而，VLMs卓越性能的来源尚不明确：究竟是源于真正的视觉基础推理，还是主要依赖于其文本骨干模型的推理能力？为系统测量这一差异，我们提出CrossMath——一个专为可控跨模态比较设计的新型多模态推理基准。Specific</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16256 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16256v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16256.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">AgentV-RL: Scaling Reward Modeling with Agentic Verifier</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">验证器已被证明能够通过测试时扩展（TTS）提升大语言模型（LLM）的推理能力。然而，它们在复杂领域面临重大挑战。错误传播导致不正确的中间推理可能产生假阳性，使得看似合理的解决方案被错误判定为正确。同时，缺乏外部接地使得验证器在计算密集型或知识密集型任务上表现不可靠。为解决这些挑战，我们提出智能体验证器框架，该框架将奖励建模转变为多轮、工具增强的过程。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16004 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16004v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16004.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">Collaborative Filtering Through Weighted Similarities of User and Item Embeddings</div>
+                    <span class="paper-category">rec</span>
+                </div>
+                <div class="paper-summary">In recent years, neural networks and other complex models have dominated recommender systems, often setting new benchmarks for state-of-the-art performance. Yet, despite these advancements, award-winn</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15573 · 2026-04-16</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15573v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15573.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">ASMR-Bench: Auditing for Sabotage in ML Research</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">As AI systems are increasingly used to conduct research autonomously, misaligned systems could introduce subtle flaws that produce misleading results while evading detection. We introduce ASMR-Bench (</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16286 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16286v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16286.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">ChemGraph-XANES: An Agentic Framework for XANES Simulation and Analysis</div>
+                    <span class="paper-category">rec</span>
+                </div>
+                <div class="paper-summary">计算X射线吸收近边结构（XANES）被广泛用于探测化学复杂体系中的局部配位环境、氧化态和电子结构。然而，计算XANES在大规模应用中的主要限制因素是工作流程的复杂性，而非底层模拟方法本身。为解决这一挑战，我们提出了ChemGraph-XANES，这是一个用于自动化XANES模拟和分析的智能代理框架，它将自然语言任务规范统一起来，实现了工作流程的自动化和简化。该框架能够自动执行从数据准备到结果分析的</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16205 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16205v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16205.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">迈向大型语言模型的内在可解释性：设计原则与架构综述</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">虽然大型语言模型（LLMs）在众多自然语言处理任务中已展现出卓越的性能，但其不透明的内部机制严重阻碍了模型的可信度评估与安全部署。现有的可解释人工智能综述研究主要聚焦于事后解释方法，即通过外部近似技术对已训练模型进行事后解读。相较之下，内生可解释性作为一种新兴的有前景的替代方案，直接将透明性构建于模型架构与计算过程之中。本文旨在…</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16042 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16042v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16042.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">超越分布锐化：任务奖励的重要性</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">请提供完整的英文摘要，以便我进行翻译。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16259 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16259v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16259.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">SwanNLP at SemEval-2026 Task 5: An LLM-based Framework for Plausibility Scoring in Narrative Word Sense Disambiguation</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">近年来，语言模型的快速发展显著提升了自然语言理解能力。尽管广泛使用的基准测试表明，大型语言模型能够有效消除歧义，但它们在真实世界叙事语境中的实际适用性仍缺乏充分探索。SemEval-2026任务5通过引入一项预测单词含义在短篇故事中人类感知合理性的任务来填补这一空白。在本研究中，我们提出了一个基于大型语言模型的可信度评估框架。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16262 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16262v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16262.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">Sketching the Readout of Large Language Models for Scalable Data Attribution and Valuation</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">Data attribution and valuation are critical for understanding data-model synergy for Large Language Models (LLMs), yet existing gradient-based methods suffer from scalability challenges on LLMs. Inspi</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16197 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16197v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16197.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">LLMSniffer: 基于 GraphCodeBERT 和监督对比学习检测 LLM 生成的代码</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">The rapid proliferation of Large Language Models (LLMs) in software development has made distinguishing AI-generated code from human-written code a critical challenge with implications for academic in</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16058 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16058v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16058.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">The Relic Condition: When Published Scholarship Becomes Material for Its Own Replacement</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">We extracted the scholarly reasoning systems of two internationally prominent humanities and social science scholars from their published corpora alone, converted those systems into structured inferen</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16116 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16116v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16116.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">AtManRL：通过可微注意力显著性实现忠实推理</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">请您提供完整的英文摘要文本，以便我进行准确的中文翻译（150‑200字）。目前提供的摘要似乎被截断。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16158 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16158v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16158.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">Sample Is Feature: Beyond Item-Level, Toward Sample-Level Tokens for Unified Large Recommender Models</div>
+                    <span class="paper-category">rec</span>
+                </div>
+                <div class="paper-summary">Scaling industrial recommender models has followed two parallel paradigms: \textbf{sample information scaling} -- enriching the information content of each training sample through deeper and longer be</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15650 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15650v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15650.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">默认极化：审计基于大语言模型的内容策展中的推荐偏差</div>
+                    <span class="paper-category">rec</span>
+                </div>
+                <div class="paper-summary">大型语言模型（LLMs）正越来越多地被部署用于策划和排名人类创作的内容，然而这些任务中偏见的性质和结构仍然缺乏深入理解：哪些偏见在不同提供商和平台间保持稳健，哪些可以通过提示设计加以缓解？我们采用受控模拟研究方法，基于来自Twitter/X、Bluesky和Reddit的真实社交媒体数据集，系统绘制了三大主要LLM提供商（OpenAI、Anthropic、Google）的内容选择偏见图谱。研究深入</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15937 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15937v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15937.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">关于基于代理的测试时对齐的拒绝准则</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">最近的工作提出了测试时对齐方法，这些方法依赖一个小型对齐模型作为代理来引导大型基础（未对齐）模型的生成。隐式奖励方法使大型模型的分布产生偏移，而推动方法则在大型基础模型对其输出缺乏信心时，将下一个标记的生成决策交给小型对齐模型。在本工作中，我们首先证明了两种方法都可以归约为从相似的图模型中进行采样，其中它们...</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16146 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16146v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16146.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">Learning Behaviorally Grounded Item Embeddings via Personalized Temporal Contexts</div>
+                    <span class="paper-category">rec</span>
+                </div>
+                <div class="paper-summary">Effective user modeling requires distinguishing between short-term and long-term preference evolution. While item embeddings have become a key component of recommender systems, standard approaches lik</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15581 · 2026-04-16</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15581v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15581.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">德语手语童话的情感分析</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">我们提出了一个用于德语手语（DGS）童话情感分析的数据集和模型。首先，我们使用四个大型语言模型（LLM）和多数投票方法，对德语童话文本片段进行三个情感级别的情感分析（负面、中性、正面），达到了0.781的Krippendorff's alpha注释者间一致性。其次，我们使用MediaPipe从每个对应的DGS视频片段中提取面部和身体运动特征。最后，我们训练了一个可解释的情感分类模型。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16138 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16138v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16138.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">评估大型语言模型在小型分子药物设计中的能力进展</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">大型语言模型（LLMs）因其能够整合来自不同来源和格式的信息进行推理，具有加速小分子药物设计的潜力。然而，由于缺乏反映真实场景的基准测试，其实际效用仍不明确。在这项工作中，我们引入了一套基于化学的任务，涵盖分子性质预测、分子表示转换和分子设计。重要的是，我们将这些任务表述为强化学习问题，旨在评估模型在真实药物发现场景中的表现。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16279 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16279v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16279.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">RAG 流水线中匿名化影响的案例研究</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">Despite the considerable promise of Retrieval-Augmented Generation (RAG), many real-world use cases may create privacy concerns, where the purported utility of RAG-enabled insights comes at the risk o</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15958 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15958v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15958.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">RAGognizer：基于检测头整合的幻觉感知微调</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">Retrieval-Augmented Generation (RAG) is widely used to augment the input to Large Language Models (LLMs) with external information, such as recent or domain-specific knowledge. Nonetheless, current mo</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15945 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15945v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15945.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">How Hypocritical Is Your LLM judge? Listener-Speaker Asymmetries in the Pragmatic Competence of Large Language Models</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">大语言模型（LLMs）正越来越多地被研究作为语言知识的储存库。在这一研究方向中，研究者通常既将模型作为语言生成器来评估，又将其作为语言输出的评判者来考察，但这两个角色之间很少被直接联系起来研究。因此，我们尚不清楚在一个角色上取得成功是否与在另一个角色上的成功相一致。在本文中，我们通过比较LLMs作为语用听者与作为语用说话者的表现来回答关于语用能力的问题。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15873 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15873v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15873.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">超越“一刀切”：面向序列推荐的自适应测试时增强</div>
+                    <span class="paper-category">rec</span>
+                </div>
+                <div class="paper-summary">测试时数据增强（TTA）已成为缓解序列推荐系统中数据稀疏问题的一种有前途的方法，它能够在无需进行昂贵的模型再训练的情况下提升推理准确性。然而，现有的TTA方法通常依赖于统一的、用户无关的增强策略。我们表明，这种“一刀切”的设计本质上是次优的，因为它忽视了用户之间显著的行为异质性，并实证证明，最优的增强算子会因用户而异。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16121 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16121v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16121.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">SWNet：跨光谱网络用于伪装杂草检测</div>
+                    <span class="paper-category">rec</span>
+                </div>
+                <div class="paper-summary">This paper presents SWNet, a bimodal end-to-end cross-spectral network specifically engineered for the detection of camouflaged weeds in dense agricultural environments. Plant camouflage, characterize</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16147 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16147v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16147.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">后训练中输出多样性在哪里崩溃？</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">后训练语言模型产生的输出多样性低于其基础模型。这种输出多样性崩溃破坏了依赖多样样本的推理时扩展方法，并可能在创意和价值导向任务中导致模型输出同质化。先前工作将崩溃归因于特定的训练后方法，但没有区分训练数据组成与方法、生成格式与模型权重的作用。我们追溯了通过三个并行因素对输出多样性的影响。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16027 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16027v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16027.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">AEGIS：锚点强制梯度隔离用于知识保留的视觉-语言-动作微调</div>
+                    <span class="paper-category">rec</span>
+                </div>
+                <div class="paper-summary">Adapting pre-trained vision-language models (VLMs) for robotic control requires injecting high-magnitude continuous gradients from a flow-matching action expert into a backbone trained exclusively wit</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16067 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16067v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16067.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">意图传播对比协同过滤</div>
+                    <span class="paper-category">rec</span>
+                </div>
+                <div class="paper-summary">Disentanglement techniques used in collaborative filtering uncover interaction intents between nodes, improving the interpretability of node representations and enhancing recommendation performance. H</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15704 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15704v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15704.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">BAGEL：语言模型动物知识专长的基准测试</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">Large language models have shown strong performance on broad-domain knowledge and reasoning benchmarks, but it remains unclear how well language models handle specialized animal-related knowledge unde</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16241 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16241v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16241.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">生成模型下随机最短路径的样本复杂度界</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">We study the sample complexity of learning an $ε$-optimal policy in the Stochastic Shortest Path (SSP) problem. We first derive sample complexity bounds when the learner has access to a generative mod</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16111 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16111v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16111.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">用于开放式事件预测的分散假设生成</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">Despite the importance of open-ended event forecasting for risk management, current LLM-based methods predominantly target only the most probable outcomes, neglecting the intrinsic uncertainty of real</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.15788 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.15788v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_15788.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">表征大型语言模型生成的能力问题：基于开放式和封闭式模型的跨领域实证研究</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">能力问题（CQs）是本体工程需求获取的基石。CQs将需求表示为一组本体应满足的自然语言问题；传统上，它们由本体工程师与领域专家共同建模，作为以人为中心的手动获取过程的一部分。生成式人工智能的使用使能力问题的创建实现了规模化自动化，因此使生成过程民主化，扩大了利益相关者的参与，并最终扩大了本体工程的范围和影响。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16258 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16258v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16258.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">大型语言模型能否理解创伤的影响？大型语言模型编码枪支暴力幸存者访谈的成本与收益</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">Firearm violence is a pressing public health issue, yet research into survivors' lived experiences remains underfunded and difficult to scale. Qualitative research, including in-depth interviews, is a</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16132 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16132v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16132.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">随机性在分词中提升鲁棒性</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">大型语言模型（LLM）的广泛应用引发人们对其鲁棒性的担忧。输入分词扰动中的漏洞表明，使用确定性规范分词训练的模型可能对对抗性攻击很脆弱。最近的研究表明，随机分词可以产生对扰动不那么敏感的内部表征。本文分析了随机分词如何影响模型对对抗性攻击的鲁棒性。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16037 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16037v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16037.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">利用大型语言模型和知识图谱提升制造业中机器学习模型的可解释性</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">Explaining Machine Learning (ML) results in a transparent and user-friendly manner remains a challenging task of Explainable Artificial Intelligence (XAI). In this paper, we present a method to enhanc</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16280 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16280v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16280.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">Detecting and Suppressing Reward Hacking with Gradient Fingerprints</div>
+                    <span class="paper-category">agent</span>
+                </div>
+                <div class="paper-summary">Reinforcement learning with verifiable rewards (RLVR) typically optimizes for outcome rewards without imposing constraints on intermediate reasoning. This leaves training susceptible to reward hacking</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16242 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16242v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16242.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-header">
+                    <div class="paper-title">信息路由器：缓解视觉-语言模型中的模态主导问题</div>
+                    <span class="paper-category">llm</span>
+                </div>
+                <div class="paper-summary">视觉语言模型（VLMs）在各种基准测试中展现出卓越的性能，但它们经常受到模态主导问题的困扰，即预测结果过度依赖单一模态。之前的方法主要通过引导模型的注意力分配来解决这个问题，隐含地假设所有模态都提供充分的信息。然而，注意力只能决定模型关注的位置，无法丰富缺失或模糊的信息。</div>
+                <div class="paper-meta">
+                    <span class="paper-id"><i class="fas fa-hashtag"></i> 2604.16264 · 2026-04-17</span>
+                    <div class="paper-links">
+                        <a href="http://arxiv.org/abs/2604.16264v1" target="_blank" class="paper-link"><i class="fas fa-external-link-alt"></i> 原文</a>
+                        <a href="docs/insights/2026-04-21_2604_16264.html" class="paper-link"><i class="fas fa-book-open"></i> 解读</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </body>
 </html>

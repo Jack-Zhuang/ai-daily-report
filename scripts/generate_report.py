@@ -1496,7 +1496,7 @@ class ReportGenerator:
                 `;
             }}
             
-            const footerHtml = `<a href="${{item.url || '#'}}" target="_blank" class="detail-link"><i class="fab fa-github"></i> 访问 GitHub</a>`;
+            const footerHtml = `<a href="${{item.link || item.url || '#'}}" target="_blank" class="detail-link"><i class="fab fa-github"></i> 访问 GitHub</a>`;
             
             document.getElementById('detail-modal-title').innerHTML = `💻 ${{cnTitle}}`;
             document.getElementById('detail-modal-body').innerHTML = detailHtml;
@@ -1601,7 +1601,10 @@ class ReportGenerator:
             const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
             
             // 论文弹窗只显示解读按钮，不显示原文链接
-            const footerHtml = `<a href="${{insightUrl}}" class="detail-link"><i class="fas fa-book-open"></i> 查看论文解读</a>`;
+            const footerHtml = `
+                <a href="${{item.link || '#'}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 阅读原文</a>
+                <a href="${{insightUrl}}" class="detail-link" style="margin-left: 10px;"><i class="fas fa-book-open"></i> 查看解读</a>
+            `;
             
             document.getElementById('detail-modal-title').innerHTML = `📄 ${{cnTitle}}`;
             document.getElementById('detail-modal-body').innerHTML = detailHtml;
