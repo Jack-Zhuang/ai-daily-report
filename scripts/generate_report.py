@@ -1287,37 +1287,35 @@ class ReportGenerator:
         function renderHotArticles(filter = 'all') {{
             const container = document.getElementById('hot-list');
             
-            // 筛选逻辑：确保每个子tab至少有1篇
+            // 只保留 llm, agent, rec 分类的文章
+            const validCategories = ['llm', 'agent', 'rec'];
+            const categorizedArticles = hotArticles.filter(a => validCategories.includes(a.category));
+            
+            // 筛选逻辑：全部8篇，每个分类至少1篇
             let filtered = [];
             if (filter === 'all') {{
-                // 全部：显示15篇，确保每个分类都有
-                const categories = ['rec', 'agent', 'llm'];
-                const byCategory = {{}};
-                categories.forEach(cat => byCategory[cat] = []);
-                const others = [];
-                
-                hotArticles.forEach(a => {{
-                    if (categories.includes(a.category)) {{
+                // 按分类分组
+                const byCategory = {{ llm: [], agent: [], rec: [] }};
+                categorizedArticles.forEach(a => {{
+                    if (byCategory[a.category]) {{
                         byCategory[a.category].push(a);
-                    }} else {{
-                        others.push(a);
                     }}
                 }});
                 
                 // 每个分类至少取1篇
-                categories.forEach(cat => {{
+                validCategories.forEach(cat => {{
                     if (byCategory[cat].length > 0) {{
                         filtered.push(byCategory[cat].shift());
                     }}
                 }});
                 
-                // 补充剩余文章
-                const remaining = [...byCategory.rec, ...byCategory.agent, ...byCategory.llm, ...others]
+                // 补充剩余文章，总共8篇
+                const remaining = [...byCategory.llm, ...byCategory.agent, ...byCategory.rec]
                     .sort((a, b) => (b.views || 0) - (a.views || 0));
-                filtered = [...filtered, ...remaining].slice(0, 15);
+                filtered = [...filtered, ...remaining].slice(0, 8);
             }} else {{
                 // 按分类筛选
-                filtered = hotArticles.filter(a => a.category === filter).slice(0, 15);
+                filtered = categorizedArticles.filter(a => a.category === filter).slice(0, 8);
             }}
             
             const categoryEmoji = {{ rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭', wechat: '📱', zhihu: '💬', opensource: '💻', tech: '🔧' }};
