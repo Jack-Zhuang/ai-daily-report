@@ -880,10 +880,10 @@ class ReportGenerator:
                 <p class="section-subtitle">基于热度综合排序</p>
             </div>
             <div class="tabs">
-                <button class="tab active" data-tab="all">全部</button>
-                <button class="tab" data-tab="rec">推荐</button>
-                <button class="tab" data-tab="agent">Agent</button>
-                <button class="tab" data-tab="llm">LLM</button>
+                <button class="tab active" data-tab="all">全部 (${{hotArticles.length}})</button>
+                <button class="tab" data-tab="rec">推荐 (${{hotArticles.filter(a=>a.category==='rec').length}})</button>
+                <button class="tab" data-tab="agent">Agent (${{hotArticles.filter(a=>a.category==='agent').length}})</button>
+                <button class="tab" data-tab="llm">LLM (${{hotArticles.filter(a=>a.category==='llm').length}})</button>
             </div>
             <div id="hot-list"></div>
         </section>
@@ -1269,7 +1269,7 @@ class ReportGenerator:
                 }}
                 
                 // 添加"查看全部论文"按钮 - 跳转到会议页面
-                const confPageUrl = 'conferences/' + confName.replace(/ /g, '_') + '.html';
+                const confPageUrl = 'docs/conferences/' + confName.replace(/ /g, '_') + '.html';
                 html += `
                     <a href="${{confPageUrl}}" class="conf-view-all">
                         <span>查看全部论文</span>
