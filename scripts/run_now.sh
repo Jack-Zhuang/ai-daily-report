@@ -78,7 +78,10 @@ log "生成日报 HTML..."
 python3 "$SCRIPTS_DIR/generate_report.py" >> "$LOG_FILE" 2>&1 || log "⚠️ 报告生成失败"
 
 log "生成论文解读..."
-python3 "$SCRIPTS_DIR/generate_insights.py" >> "$LOG_FILE" 2>&1 || log "⚠️ 解读生成失败"
+python3 "$SCRIPTS_DIR/generate_paper_insights.py" >> "$LOG_FILE" 2>&1 || log "⚠️ 论文解读生成失败"
+
+log "生成解读 HTML 页面..."
+python3 "$SCRIPTS_DIR/generate_insights.py" >> "$LOG_FILE" 2>&1 || log "⚠️ 解读页面生成失败"
 
 # 步骤5: 检查
 log ""

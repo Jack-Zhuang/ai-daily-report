@@ -114,7 +114,8 @@ class DailyScheduler:
         
         steps = [
             ("生成日报 HTML", f"python3 {self.scripts_dir / 'generate_report.py'}", 300),
-            ("生成论文解读", f"python3 {self.scripts_dir / 'generate_insights.py'}", 600),
+            ("生成论文深度解读", f"python3 {self.scripts_dir / 'generate_paper_insights.py'}", 1800),
+            ("生成解读 HTML 页面", f"python3 {self.scripts_dir / 'generate_insights.py'}", 600),
         ]
         
         for name, cmd, timeout in steps:
