@@ -116,6 +116,16 @@ if __name__ == "__main__":
     # 加载数据
     today = datetime.now().strftime("%Y-%m-%d")
     input_file = sys.argv[1] if len(sys.argv) > 1 else f'daily_data/{today}.json'
+    
+    # 检查文件是否存在，如果不存在则使用前一天
+    if not Path(input_file).exists():
+        from datetime import timedelta
+        yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+        input_file_yesterday = f'daily_data/{yesterday}.json'
+        if Path(input_file_yesterday).exists():
+            input_file = input_file_yesterday
+            print(f"⚠️ 使用前一天的数据: {yesterday}")
+    
     with open(input_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
     

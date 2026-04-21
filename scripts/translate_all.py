@@ -14,6 +14,16 @@ class FullTranslator:
         self.base_dir = Path(__file__).parent.parent
         self.data_dir = self.base_dir / "daily_data"
         self.today = datetime.now().strftime("%Y-%m-%d")
+        
+        # 检查今日数据是否存在，如果不存在则使用昨天的
+        data_file = self.base_dir / "daily_data" / f"{self.today}.json"
+        if not data_file.exists():
+            from datetime import timedelta
+            yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+            data_file_yesterday = self.base_dir / "daily_data" / f"{yesterday}.json"
+            if data_file_yesterday.exists():
+                self.today = yesterday
+                print(f"⚠️ 使用前一天的数据: {yesterday}")
         self.data_file = self.data_dir / f"{self.today}.json"
         
         # 加载翻译器

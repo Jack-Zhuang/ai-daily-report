@@ -23,6 +23,16 @@ class PaperInsightGenerator:
         self.images_dir.mkdir(exist_ok=True)
         self.today = datetime.now().strftime("%Y-%m-%d")
         
+        # 检查今日数据是否存在，如果不存在则使用昨天的
+        data_file = self.base_dir / "daily_data" / f"{self.today}.json"
+        if not data_file.exists():
+            from datetime import timedelta
+            yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+            data_file_yesterday = self.base_dir / "daily_data" / f"{yesterday}.json"
+            if data_file_yesterday.exists():
+                self.today = yesterday
+                print(f"⚠️ 使用前一天的数据: {yesterday}")
+        
         # MiniMax API 配置
         self.api_url = "https://api.minimax.chat/v1/text/chatcompletion_v2"
         self.api_key = self._load_api_key()
