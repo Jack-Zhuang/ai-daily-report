@@ -61,6 +61,9 @@ DATA_FILE="$BASE_DIR/daily_data/$TODAY.json"
 log "构建每日精选..."
 python3 "$SCRIPTS_DIR/build_daily_pick.py" "$DATA_FILE" >> "$LOG_FILE" 2>&1 || log "⚠️ 构建精选失败"
 
+log "功能增强（翻译、分类统计、会议页面）..."
+python3 "$SCRIPTS_DIR/enhance_features.py" >> "$LOG_FILE" 2>&1 || log "⚠️ 功能增强失败"
+
 # 步骤3: 封面
 log ""
 log "🎨 步骤3: 封面生成"
