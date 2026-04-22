@@ -1266,9 +1266,15 @@ class ReportGenerator:
                         }}
                         if (!paperId) paperId = 'unknown_' + i;
                         paperId = paperId.replace('/', '_').replace('.', '_');
-                        const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
+                        
+                        // 根据 has_insight 决定跳转目标
+                        const hasInsight = paper.has_insight || false;
+                        const insightUrl = hasInsight 
+                            ? `docs/insights/${{data.date}}_${{paperId}}.html`
+                            : (paper.link || '#');
+                        
                         html += `
-                            <a href="${{insightUrl}}" class="conf-paper-item">
+                            <a href="${{insightUrl}}" class="conf-paper-item" ${{!hasInsight && paper.link ? 'target="_blank"' : ''}}>
                                 <div class="conf-paper-rank">${{i + 1}}</div>
                                 <div class="conf-paper-content">
                                     <div class="conf-paper-title">${{paper.title}}</div>
