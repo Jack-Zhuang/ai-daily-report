@@ -1172,10 +1172,17 @@ class ReportGenerator:
             // 生成按钮HTML
             let footerHtml = '';
             if (pickType === 'paper') {{
-                // 论文：必须先跳转到解读页面，不能直接跳转原文
+                // 论文：根据 has_insight 决定跳转目标
                 const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
                 const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
-                footerHtml = `<a href="${{insightUrl}}" class="detail-link"><i class="fas fa-book-reader"></i> 查看论文解读</a>`;
+                
+                if (item.has_insight) {{
+                    // 有解读：跳转到解读页
+                    footerHtml = `<a href="${{insightUrl}}" class="detail-link"><i class="fas fa-book-reader"></i> 查看论文解读</a>`;
+                }} else {{
+                    // 无解读：跳转到 arXiv 原文
+                    footerHtml = `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 查看 arXiv 原文</a>`;
+                }}
             }} else {{
                 footerHtml = `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> ${{pickType === 'github' ? '访问 GitHub' : '阅读原文'}}</a>`;
             }}
@@ -1525,8 +1532,13 @@ class ReportGenerator:
                 // 论文解读页面链接
                 const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
                 const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
+                
+                // 根据 has_insight 决定跳转目标和按钮文案
+                const clickTarget = item.has_insight ? insightUrl : (item.link || '#');
+                const buttonText = item.has_insight ? '查看解读' : '查看原文';
+                
                 return `
-                    <div class="card" onclick="window.location.href='${{insightUrl}}'">
+                    <div class="card" onclick="window.location.href='${{clickTarget}}'">
                         <div class="card-image ${{item.cover_image ? '' : (categoryImages[item.category] || 'card-image-paper')}}" style="${{item.cover_image ? `background-image: url('${{item.cover_image}}')` : ''}}">
                             <div class="card-image-icon">${{item.cover_image ? '' : '📄'}}</div>
                             <div class="card-image-badge">arXiv</div>
@@ -1545,7 +1557,7 @@ class ReportGenerator:
                                 <div class="card-stats">
                                     <span class="card-stat"><i class="fas fa-calendar" style="color:#10b981"></i> ${{item.published}}</span>
                                 </div>
-                                <span class="card-link">查看解读 <i class="fas fa-chevron-right"></i></span>
+                                <span class="card-link">${{buttonText}} <i class="fas fa-chevron-right"></i></span>
                             </div>
                         </div>
                     </div>
@@ -1608,11 +1620,11 @@ class ReportGenerator:
             const paperId = (item.id || '').replace('/', '_').replace('.', '_');
             const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
             
-            // 论文弹窗只显示解读按钮，不显示原文链接
-            const footerHtml = `
-                <a href="${{item.link || '#'}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 阅读原文</a>
-                <a href="${{insightUrl}}" class="detail-link" style="margin-left: 10px;"><i class="fas fa-book-open"></i> 查看解读</a>
-            `;
+            // 根据 has_insight 决定按钮显示
+            let footerHtml = `<a href="${{item.link || '#'}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 阅读 arXiv 原文</a>`;
+            if (item.has_insight) {{
+                footerHtml += `<a href="${{insightUrl}}" class="detail-link" style="margin-left: 10px;"><i class="fas fa-book-open"></i> 查看解读</a>`;
+            }}
             
             document.getElementById('detail-modal-title').innerHTML = `📄 ${{cnTitle}}`;
             document.getElementById('detail-modal-body').innerHTML = detailHtml;

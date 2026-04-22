@@ -456,8 +456,9 @@ def process_all_insights():
         # 生成 HTML
         html = generate_insight_page(md_content, arxiv_id, title)
         
-        # 保存
-        output_file = output_dir / f"{md_file.stem}.html"
+        # 保存 - 文件名中的点替换为下划线，与前端链接格式一致
+        safe_filename = md_file.stem.replace('.', '_')
+        output_file = output_dir / f"{safe_filename}.html"
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(html)
         
