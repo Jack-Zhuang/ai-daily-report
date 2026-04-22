@@ -1427,7 +1427,7 @@
                 const buttonText = item.has_insight ? '查看解读' : '查看原文';
                 
                 return `
-                    <div class="card" onclick="window.location.href='${clickTarget}'">
+                    <div class="card paper-card" data-url="${clickTarget}">
                         <div class="card-image ${item.cover_image ? '' : (categoryImages[item.category] || 'card-image-paper')}" style="${item.cover_image ? `background-image: url('${item.cover_image}')` : ''}">
                             <div class="card-image-icon">${item.cover_image ? '' : '📄'}</div>
                             <div class="card-image-badge">arXiv</div>
@@ -1452,6 +1452,16 @@
                     </div>
                 `;
             }).join('');
+            
+            // 添加点击事件
+            container.querySelectorAll('.paper-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const url = card.dataset.url;
+                    if (url && url !== '#') {
+                        window.location.href = url;
+                    }
+                });
+            });
             
             // 添加"查看更多"按钮（如果有超过5篇）
             if (arxivPapers.length > 5) {
