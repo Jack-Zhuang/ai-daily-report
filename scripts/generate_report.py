@@ -90,7 +90,9 @@ class ReportGenerator:
         # 使用 articles 字段（30篇），而不是 hot_articles
         hot_articles = data.get('articles', data.get('hot_articles', []))
         hot_articles = [item for item in hot_articles if item.get('cn_title', item.get('title', '')) not in pick_titles]
-        # 不截断，保留所有文章
+        
+        # 智能分类和过滤文章
+        hot_articles = self.classify_and_filter_articles(hot_articles)
         
         # 5. 检查摘要是否为中文
         for item in daily_pick:
@@ -2037,6 +2039,51 @@ class ReportGenerator:
 </html>'''
         
         return html
+    
+    def classify_and_filter_articles(self, articles: list) -> list:
+        """智能分类和过滤文章"""
+        # 广告关键词
+        ad_keywords = ["招聘", "内推", "求职", "简历", "面试", "课程", "培训", "报名",
+                       "优惠", "促销", "购买", "订阅", "会员", "付费", "广告", "限时",
+                       "免费领取", "扫码", "关注公众号"]
+        
+        # AI 相关关键词
+        ai_keywords = ["AI", "人工智能", "大模型", "LLM", "GPT", "Claude", "OpenAI", "DeepSeek",
+                       "Agent", "智能体", "推荐系统", "机器学习", "深度学习", "神经网络",
+                       "Transformer", "RAG", "多模态", "计算机视觉", "NLP", "自然语言",
+                       "强化学习", "知识图谱", "向量数据库", "Embedding", "微调", "训练",
+                       "推理", "模型", "算法", "论文", "arXiv", "GitHub", "开源",
+                       "机器人", "自动化", "自动驾驶", "AIGC", "生成式", "ChatGPT",
+                       "diffusion", "stable", "midjourney", "huggingface"]
+        
+        filtered = []
+        for article in articles:
+            title = article.get("title", "") or article.get("cn_title", "")
+            summary = article.get("summary", "") or article.get("cn_summary", "")
+            text = (title + " " + summary).lower()
+            
+            # 检查是否广告
+            is_ad = any(kw in title for kw in ad_keywords)
+            if is_ad:
+                continue
+            
+            # 检查是否 AI 相关
+            is_ai = any(kw.lower() in text for kw in ai_keywords)
+            if not is_ai:
+                continue
+            
+            # 分类（强制覆盖旧分类）
+            if any(kw in text for kw in ["agent", "智能体", "多智能体", "autonomous", "自主"]):
+                article["category"] = "agent"
+            elif any(kw in text for kw in ["llm", "大模型", "gpt", "claude", "llama", 
+                                            "transformer", "语言模型", "chat", "对话", "prompt", "rag"]):
+                article["category"] = "llm"
+            else:
+                article["category"] = "rec"
+            
+            filtered.append(article)
+        
+        return filtered
     
     def save_to_archive(self, data: dict, html: str):
         """保存到归档"""
