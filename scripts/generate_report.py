@@ -1353,7 +1353,7 @@ class ReportGenerator:
                 const cnTitle = item.cn_title || item.title;
                 const cnSummary = item.cn_summary || item.summary || '';
                 return `
-                    <div class="card" onclick="showArticleDetail(${{i}}, '${{filter}}')">
+                    <div class="card" onclick="showArticleDetail('${{item.id}}')">
                         <div class="card-image ${{item.cover_image ? '' : (categoryImages[item.category] || 'card-image-article')}}" style="${{item.cover_image ? `background-image: url('${{item.cover_image}}')` : ''}}">
                             <div class="card-image-icon">${{item.cover_image ? '' : (categoryEmoji[item.category] || '🔥')}}</div>
                             <div class="card-image-badge">HOT</div>
@@ -1391,9 +1391,8 @@ class ReportGenerator:
         }}
         
         // 显示文章详情弹窗
-        function showArticleDetail(index, filter) {{
-            const filtered = filter === 'all' ? hotArticles : hotArticles.filter(a => a.category === filter);
-            const item = filtered[index];
+        function showArticleDetail(articleId) {{
+            const item = hotArticles.find(a => a.id === articleId);
             if (!item) return;
             
             const cnTitle = item.cn_title || item.title || '未知标题';
