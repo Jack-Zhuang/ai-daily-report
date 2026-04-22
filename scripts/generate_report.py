@@ -94,7 +94,10 @@ class ReportGenerator:
         # 智能分类和过滤文章
         hot_articles = self.classify_and_filter_articles(hot_articles)
         
-        # 5. 检查摘要是否为中文
+        # 5. 添加封面图
+        self.add_cover_images(daily_pick, hot_articles, github_projects, arxiv_papers)
+        
+        # 6. 检查摘要是否为中文
         for item in daily_pick:
             cn_summary = item.get('cn_summary', '')
             if not cn_summary:
@@ -2084,6 +2087,40 @@ class ReportGenerator:
             filtered.append(article)
         
         return filtered
+    
+    def add_cover_images(self, daily_pick, articles, github_projects, arxiv_papers):
+        """为内容添加封面图"""
+        covers_dir = self.base_dir / "covers"
+        if not covers_dir.exists():
+            return
+        
+        cover_files = set(f.name for f in covers_dir.glob("*.jpg"))
+        
+        # 每日精选
+        for i, item in enumerate(daily_pick):
+            cover_name = f"article_{i+1}.jpg"
+            if cover_name in cover_files:
+                item["cover_image"] = f"covers/{cover_name}"
+        
+        # 热门文章
+        for i, item in enumerate(articles):
+            item_type = item.get("type", "article")
+            cover_name = f"{item_type}_{i+1}.jpg"
+            if cover_name in cover_files:
+                item["cover_image"] = f"covers/{cover_name}"
+        
+        # GitHub 项目
+        for i, item in enumerate(github_projects):
+            cover_name = f"github_{i+1}.jpg"
+            if cover_name in cover_files:
+                item["cover_image"] = f"covers/{cover_name}"
+        
+        # arXiv 论文
+        for i, item in enumerate(arxiv_papers):
+            arxiv_id = item.get("arxiv_id", item.get("id", "")).replace("/", "_").replace(".", "_")
+            cover_name = f"paper_{arxiv_id}.jpg"
+            if cover_name in cover_files:
+                item["cover_image"] = f"covers/{cover_name}"
     
     def save_to_archive(self, data: dict, html: str):
         """保存到归档"""
