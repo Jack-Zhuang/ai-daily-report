@@ -25,8 +25,8 @@ __pycache__/
 .Python
 
 # 生成的封面图（太大）
-covers/*.jpg
-covers/*.png
+# covers/*.jpg
+# covers/*.png
 !covers/.gitkeep
 
 # 生成的解读文件
