@@ -1536,7 +1536,7 @@ class ReportGenerator:
             const categoryImages = {{ rec: 'card-image-rec', agent: 'card-image-agent', llm: 'card-image-llm', industry: 'card-image-paper' }};
             
             // 展示前5篇
-            container.innerHTML = arxivPapers.slice(0, 5).map((item, i) => {{
+            arxivPapers.slice(0, 5).forEach((item, i) => {{
                 const cnTitle = item.cn_title || (item.title ? item.title.slice(0, 40) + '...' : '论文');
                 const cnSummary = item.cn_summary || '本文在推荐系统相关领域做出了创新研究，提出了新的方法和见解。';
                 // 论文解读页面链接
@@ -1547,39 +1547,41 @@ class ReportGenerator:
                 const clickTarget = item.has_insight ? insightUrl : (item.link || '#');
                 const buttonText = item.has_insight ? '查看解读' : '查看原文';
                 
-                return `
-                    <div class="card paper-card" data-url="${{clickTarget}}">
-                        <div class="card-image ${{item.cover_image ? '' : (categoryImages[item.category] || 'card-image-paper')}}" style="${{item.cover_image ? `background-image: url('${{item.cover_image}}')` : ''}}">
-                            <div class="card-image-icon">${{item.cover_image ? '' : '📄'}}</div>
-                            <div class="card-image-badge">arXiv</div>
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-image ${{item.cover_image ? '' : (categoryImages[item.category] || 'card-image-paper')}}" style="${{item.cover_image ? `background-image: url('${{item.cover_image}}')` : ''}}">
+                        <div class="card-image-icon">${{item.cover_image ? '' : '📄'}}</div>
+                        <div class="card-image-badge">arXiv</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="card-rank ${{i < 3 ? ['gold', 'silver', 'bronze'][i] : 'normal'}}">${{i + 1}}</div>
+                            <div class="card-meta">
+                                <span class="card-category ${{item.category}}">${{categoryEmoji[item.category] || '📄'}} ${{categoryLabels[item.category] || '论文'}}</span>
+                                <h3 class="card-title">${{cnTitle}}</h3>
+                                <div class="card-source"><i class="fas fa-users"></i> ${{item.authors ? item.authors.slice(0,2).join(', ') : 'Unknown'}}</div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div class="card-header">
-                                <div class="card-rank ${{i < 3 ? ['gold', 'silver', 'bronze'][i] : 'normal'}}">${{i + 1}}</div>
-                                <div class="card-meta">
-                                    <span class="card-category ${{item.category}}">${{categoryEmoji[item.category] || '📄'}} ${{categoryLabels[item.category] || '论文'}}</span>
-                                    <h3 class="card-title">${{cnTitle}}</h3>
-                                    <div class="card-source"><i class="fas fa-users"></i> ${{item.authors ? item.authors.slice(0,2).join(', ') : 'Unknown'}}</div>
-                                </div>
+                        <p class="card-summary">${{cnSummary}}</p>
+                        <div class="card-footer">
+                            <div class="card-stats">
+                                <span class="card-stat"><i class="fas fa-calendar" style="color:#10b981"></i> ${{item.published}}</span>
                             </div>
-                            <p class="card-summary">${{cnSummary}}</p>
-                            <div class="card-footer">
-                                <div class="card-stats">
-                                    <span class="card-stat"><i class="fas fa-calendar" style="color:#10b981"></i> ${{item.published}}</span>
-                                </div>
-                                <span class="card-link">${{buttonText}} <i class="fas fa-chevron-right"></i></span>
-                            </div>
+                            <span class="card-link">${{buttonText}} <i class="fas fa-chevron-right"></i></span>
                         </div>
                     </div>
                 `;
-            }}).join('');
-            
-            // 添加点击事件
-            container.querySelectorAll('.paper-card').forEach(card => {{
+                
+                card.style.cursor = 'pointer';
                 card.addEventListener('click', () => {{
-                    const url = card.dataset.url;
-                    if (url && url !== '#') {{
-                        window.location.href = url;
+                    if (clickTarget && clickTarget !== '#') {{
+                        window.location.href = clickTarget;
+                    }}
+                }});
+                
+                container.appendChild(card);
+            }});
                     }}
                 }});
             }});
