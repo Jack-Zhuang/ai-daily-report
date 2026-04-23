@@ -1920,13 +1920,30 @@
             document.getElementById('count-llm').textContent = `(${hotArticles.filter(a=>a.category==='llm').length})`;
         }
         
-        // 初始化
-        updateCategoryCounts();
-        renderDailyPick();
-        renderConferences();
-        renderHotArticles();
-        renderGithub();
-        renderPapers();
+        // 初始化 - 确保 DOM 加载完成后再执行
+        function init() {
+            console.log('AI日报初始化开始...');
+            console.log('dailyPick数量:', dailyPick.length);
+            console.log('hotArticles数量:', hotArticles.length);
+            console.log('githubProjects数量:', githubProjects.length);
+            console.log('arxivPapers数量:', arxivPapers.length);
+            
+            updateCategoryCounts();
+            renderDailyPick();
+            renderConferences();
+            renderHotArticles();
+            renderGithub();
+            renderPapers();
+            
+            console.log('AI日报初始化完成');
+        }
+        
+        // 如果 DOM 已经加载完成，直接执行；否则等待 DOMContentLoaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
 </body>
 </html>
