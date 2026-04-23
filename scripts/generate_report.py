@@ -1582,9 +1582,6 @@ class ReportGenerator:
                 
                 container.appendChild(card);
             }});
-                    }}
-                }});
-            }});
             
             // 添加"查看更多"按钮（如果有超过5篇）
             if (arxivPapers.length > 5) {{
