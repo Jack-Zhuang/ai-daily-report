@@ -32,18 +32,6 @@
         "url": "https://rsshub.rssforever.com/meituan/tech",
         "priority": 1,
         "keywords": ["推荐", "算法", "搜索", "广告"]
-      },
-      {
-        "name": "阿里技术",
-        "url": "https://rsshub.rssforever.com/alibaba/tech",
-        "priority": 2,
-        "keywords": ["推荐", "算法", "搜索"]
-      },
-      {
-        "name": "腾讯技术",
-        "url": "https://rsshub.rssforever.com/tencent/tech",
-        "priority": 2,
-        "keywords": ["推荐", "算法", "AI"]
       }
     ],
     "tech_media": [
@@ -70,6 +58,38 @@
         "url": "https://rsshub.rssforever.com/infoq/recommend",
         "priority": 1,
         "keywords": ["AI", "架构", "推荐"]
+      },
+      {
+        "name": "虎嗅",
+        "url": "https://rsshub.rssforever.com/huxiu/article",
+        "priority": 2,
+        "keywords": ["AI", "科技", "商业"]
+      },
+      {
+        "name": "少数派",
+        "url": "https://rsshub.rssforever.com/sspai/index",
+        "priority": 2,
+        "keywords": ["AI", "效率", "工具"]
+      }
+    ],
+    "community": [
+      {
+        "name": "V2EX最新",
+        "url": "https://rsshub.rssforever.com/v2ex/topics/latest",
+        "priority": 2,
+        "keywords": ["AI", "编程", "技术"]
+      },
+      {
+        "name": "知乎日报",
+        "url": "https://rsshub.rssforever.com/zhihu/daily",
+        "priority": 2,
+        "keywords": ["AI", "推荐"]
+      },
+      {
+        "name": "Hacker News",
+        "url": "https://rsshub.rssforever.com/hackernews/best",
+        "priority": 1,
+        "keywords": ["AI", "LLM", "programming"]
       }
     ],
     "academic": [
@@ -95,27 +115,31 @@
     "github": [
       {
         "name": "GitHub Trending",
-        "url": "https://api.github.com/repos",
+        "url": "https://github.com/trending",
         "priority": 1,
         "keywords": ["AI", "ML", "recommendation"]
       }
+    ]
+  },
+  "status": {
+    "updated": "2026-04-23",
+    "working_sources": [
+      "机器之心", "量子位", "新智元", "PaperWeekly",
+      "美团技术团队", "36氪快讯", "IT之家热榜", "开源中国资讯", "InfoQ技术文章",
+      "虎嗅", "少数派", "V2EX最新", "知乎日报", "Hacker News"
     ],
-    "zhihu": [
-      {
-        "name": "知乎日报",
-        "url": "https://rsshub.rssforever.com/zhihu/daily",
-        "priority": 2,
-        "keywords": ["AI", "推荐"]
-      }
+    "failed_sources": [
+      "阿里技术 (503)", "腾讯技术 (503)", "掘金 (503)", "CSDN (503)", "即刻 (503)"
     ]
   },
   "notes": {
-    "byteDance": "字节跳动技术博客 RSS 暂时不可用，可尝试：1. 官网直接抓取 2. 掘金搜索 3. 微信公众号",
-    "dataFunTalk": "DataFunTalk 公众号需在 wechat2rss.xlab.app 手动搜索添加",
-    "alternative_sources": [
-      "https://juejin.cn/tag/推荐算法",
-      "https://www.csdn.net/tags/MtTaMg5sMjY2MDYtYmxvZwO0O0OO0O0O.html",
-      "https://zhuanlan.zhihu.com/p/推荐系统"
+    "rsshub_limitation": "部分 RSSHub 源返回 503，可能是服务限流或路由失效",
+    "wechat2rss": "微信公众号 RSS 需要在 wechat2rss.xlab.app 手动搜索添加",
+    "future_sources": [
+      "DataFunTalk (需手动添加微信RSS)",
+      "字节跳动技术 (官网抓取)",
+      "DeepLearning.ai (newsletter)",
+      "TheSequence (newsletter)"
     ]
   }
 }

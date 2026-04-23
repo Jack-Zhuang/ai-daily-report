@@ -147,6 +147,35 @@ class ArticleCollector:
                 'keywords': ['AI', '大模型', '推荐', '算法', '机器学习', 'LLM', 'Agent'],
                 'category': 'tech',
                 'priority': 2
+            },
+            # ===== 新增高质量源 =====
+            {
+                'name': '虎嗅',
+                'rss_url': f'{self.rsshub_base}/huxiu/article',
+                'keywords': ['AI', '大模型', '科技', '商业', 'LLM', 'Agent', '智能体'],
+                'category': 'industry',
+                'priority': 2
+            },
+            {
+                'name': '少数派',
+                'rss_url': f'{self.rsshub_base}/sspai/index',
+                'keywords': ['AI', '效率', '工具', '大模型', 'LLM', 'Agent'],
+                'category': 'tech',
+                'priority': 2
+            },
+            {
+                'name': 'V2EX最新',
+                'rss_url': f'{self.rsshub_base}/v2ex/topics/latest',
+                'keywords': ['AI', '编程', '技术', '大模型', 'LLM', 'Agent'],
+                'category': 'community',
+                'priority': 2
+            },
+            {
+                'name': 'Hacker News',
+                'rss_url': f'{self.rsshub_base}/hackernews/best',
+                'keywords': ['AI', 'LLM', 'agent', 'machine learning', 'recommendation'],
+                'category': 'tech',
+                'priority': 1
             }
         ]
     
