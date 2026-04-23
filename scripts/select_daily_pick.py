@@ -321,14 +321,33 @@ class DailyPickSelector:
         
         # 更新数据文件
         data["daily_pick"] = daily_pick
-        with open(data_file, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
         
-        print(f"\n✅ 已保存到: {data_file}")
+        # 使用绝对路径确保写入正确
+        abs_data_file = data_file.resolve()
+        with open(abs_data_file, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+            f.flush()  # 强制刷新缓冲区
+            import os
+            os.fsync(f.fileno())  # 强制同步到磁盘
+        
+        print(f"\n✅ 已保存到: {abs_data_file}")
         
         return daily_pick
 
 
 if __name__ == "__main__":
     selector = DailyPickSelector()
-    selector.run()
+    result = selector.run()
+    
+    # 验证写入是否成功
+    if result:
+        print(f"\n🔍 验证写入结果...")
+        data_file = selector.base_dir / "daily_data" / f"{selector.today}.json"
+        with open(data_file, "r", encoding="utf-8") as f:
+            verify_data = json.load(f)
+        verify_pick = verify_data.get("daily_pick", [])
+        print(f"   文件中 daily_pick 数量: {len(verify_pick)}")
+        if len(verify_pick) == 5:
+            print(f"   ✅ 验证通过！")
+        else:
+            print(f"   ❌ 验证失败！期望5篇，实际{len(verify_pick)}篇")
