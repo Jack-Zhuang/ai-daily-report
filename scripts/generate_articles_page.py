@@ -9,11 +9,17 @@ from datetime import datetime
 
 def generate_articles_page():
     base_dir = Path(__file__).parent.parent
-    data_file = base_dir / "daily_data" / f"{datetime.now().strftime('%Y-%m-%d')}.json"
     
-    if not data_file.exists():
-        print("❌ 数据文件不存在")
+    # 查找最新的数据文件
+    data_dir = base_dir / "daily_data"
+    data_files = sorted(data_dir.glob("*.json"), reverse=True)
+    
+    if not data_files:
+        print("❌ 没有找到数据文件")
         return
+    
+    data_file = data_files[0]
+    print(f"📂 使用数据文件: {data_file.name}")
     
     with open(data_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
@@ -37,17 +43,16 @@ def generate_articles_page():
         .header p {{ opacity: 0.9; }}
         .back-link {{ display: inline-block; margin-top: 15px; color: white; text-decoration: none; }}
         .back-link:hover {{ text-decoration: underline; }}
-        .articles-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }}
-        .article-card {{ background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; }}
+        .articles-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr)); gap: 20px; }}
+        .article-card {{ background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; text-decoration: none; display: block; }}
         .article-card:hover {{ transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }}
-        .card-image {{ width: 100%; height: 160px; background-size: cover; background-position: center; }}
+        .card-image {{ width: 100%; height: 160px; background-size: cover; background-position: center; background-color: #f1f5f9; }}
         .card-body {{ padding: 16px; }}
-        .card-title {{ font-size: 16px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }}
+        .card-title {{ font-size: 16px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; color: #1e293b; }}
         .card-summary {{ font-size: 14px; color: #64748b; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }}
         .card-meta {{ display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #94a3b8; }}
         .card-source {{ display: flex; align-items: center; gap: 4px; }}
-        .card-link {{ color: #667eea; text-decoration: none; font-weight: 500; }}
-        .card-link:hover {{ text-decoration: underline; }}
+        .card-date {{ color: #94a3b8; }}
     </style>
 </head>
 <body>
@@ -69,18 +74,24 @@ def generate_articles_page():
         cover = article.get('cover_image', '')
         published = article.get('published', '')
         
+        # 如果没有封面图，使用渐变背景
+        if not cover or cover == '':
+            cover_style = 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);'
+        else:
+            cover_style = f"background-image: url('{cover}');"
+        
         html += f'''
-            <div class="article-card">
-                <div class="card-image" style="background-image: url('{cover}')"></div>
+            <a href="{link}" target="_blank" class="article-card">
+                <div class="card-image" style="{cover_style}"></div>
                 <div class="card-body">
                     <div class="card-title">{title}</div>
                     <div class="card-summary">{summary}</div>
                     <div class="card-meta">
                         <span class="card-source"><i class="fas fa-rss"></i> {source}</span>
-                        <a href="{link}" target="_blank" class="card-link">阅读原文 <i class="fas fa-external-link-alt"></i></a>
+                        <span class="card-date">{published}</span>
                     </div>
                 </div>
-            </div>
+            </a>
 '''
     
     html += '''
