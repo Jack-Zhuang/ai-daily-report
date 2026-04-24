@@ -1058,7 +1058,7 @@
             if (pickType === 'paper') {
                 // 论文：根据 has_insight 决定跳转目标
                 const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
-                const insightUrl = `docs/insights/2026-04-20_${paperId}.html`;
+                const insightUrl = `docs/insights/2026-04-24_${paperId}.html`;
                 
                 if (item.has_insight) {
                     // 有解读：跳转到解读页
@@ -1154,7 +1154,7 @@
                         // 根据 has_insight 决定跳转目标
                         const hasInsight = paper.has_insight || false;
                         const insightUrl = hasInsight 
-                            ? `docs/insights/2026-04-20_${paperId}.html`
+                            ? `docs/insights/2026-04-24_${paperId}.html`
                             : (paper.link || '#');
                         
                         html += `
@@ -1420,7 +1420,7 @@
                 const cnSummary = item.cn_summary || '本文在推荐系统相关领域做出了创新研究，提出了新的方法和见解。';
                 // 论文解读页面链接
                 const paperId = (item.id || item.arxiv_id || '').replace('/', '_').replace('.', '_');
-                const insightUrl = `docs/insights/2026-04-20_${paperId}.html`;
+                const insightUrl = `docs/insights/2026-04-24_${paperId}.html`;
                 
                 // 根据 has_insight 决定跳转目标和按钮文案
                 const clickTarget = item.has_insight ? insightUrl : (item.link || '#');
@@ -1516,7 +1516,7 @@
             
             // 论文解读页面链接
             const paperId = (item.id || '').replace('/', '_').replace('.', '_');
-            const insightUrl = `docs/insights/2026-04-20_${paperId}.html`;
+            const insightUrl = `docs/insights/2026-04-24_${paperId}.html`;
             
             // 根据 has_insight 决定按钮显示
             let footerHtml = `<a href="${item.link || '#'}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 阅读 arXiv 原文</a>`;
