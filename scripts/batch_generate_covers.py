@@ -289,6 +289,14 @@ class BatchCoverGenerator:
             self.process_other_item(item, 'article', i, progress)
             time.sleep(0.5)
 
+        # 2.5 处理所有文章
+        print("\n📰 所有文章:")
+        items = data.get('articles', [])
+        items_to_process = items[:limit_per_category] if limit_per_category else items
+        for i, item in enumerate(items_to_process, 1):
+            self.process_other_item(item, 'article', i, progress)
+            time.sleep(0.5)
+
         # 3. 处理 arXiv 论文（使用 arxiv_id 命名）
         print("\n📄 arXiv 论文:")
         items = data.get('arxiv_papers', [])
