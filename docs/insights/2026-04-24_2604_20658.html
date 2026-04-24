@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cooperative Profiles Predict Multi-Agent LLM Team Performance in AI for Science Workflows - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.20658" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>合作特征预测多智能体LLM团队在AI科学工作流中的表现</h1>
+
+<strong>通过行为经济学游戏揭示LLM团队协作能力的评估新范式</strong>
+
+
+<blockquote>📅 预计阅读：10分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.20658" target="_blank">2604.20658</a></p>
+
+
+<p>🏷️ 标签：<code>多智能体系统</code> | <code>LLM评估</code> | <code>行为经济学</code> | <code>AI for Science</code> | <code>协作智能</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：行为经济学游戏中的合作表现可预测LLM团队的科学协作能力。</li>
+<li><strong>核心贡献</strong>：构建了35个开源LLM在六个行为经济学游戏中的合作特征图谱，验证其与AI科学任务表现的强相关性。</li>
+<li><strong>实用价值</strong>：为多智能体LLM系统的团队组建和资源调度提供基于游戏表现的低成本筛选方案。</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>随着大语言模型（LLM）能力的不断提升，基于多智能体协作的系统正被广泛应用于科学研究领域，包括数据分析、模型构建和科学报告生成等复杂工作流。然而，现实部署中的资源竞争（如GPU算力、API配额）要求智能体具备良好的协调与合作能力。传统的LLM评估主要关注单模型在特定任务上的性能，缺乏对多智能体协作能力的系统评估方法。行为经济学提供了丰富的博弈论框架，能够隔离和测量不同的合作机制（如信任、互惠、公平感知），这些机制在资源受限的多智能体场景中至关重要。本研究首次系统性地探索：单模型在行为经济学游戏中的表现，能否预测其在多智能体科学工作流中的团队协作效果。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>多智能体LLM系统在科研场景中的应用日益广泛，但缺乏有效的协作能力评估方法</li>
+<li>行为经济学博弈能够量化和隔离不同的合作机制，为评估提供理论基础</li>
+<li>现实科学工作流存在共享资源约束，合作能力直接影响系统效率</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>本研究构建了「行为经济学游戏 → 合作特征提取 → AI科学任务验证」的完整评估pipeline。</p>
+
+
+<h3>详细设计</h3>
+
+<p>研究团队选取了六个经典行为经济学游戏，包括：公共物品博弈（Public Goods Game）、信任博弈（Trust Game）、囚徒困境（Prisoner's Dilemma）、最后通牒博弈（Ultimatum Game）、捐赠博弈（Dictator Game）和协调博弈（Coordination Game）。每个游戏设计多轮交互，记录35个开源LLM的策略选择、资源分配和合作行为。通过统计分析和机器学习方法，从六个维度刻画每个模型的合作特征：亲社会性、信任度、报复倾向、公平敏感度、风险偏好和协调能力。随后，将这些合作特征作为预测特征，输入到AI for Science任务中进行验证。任务包括：多智能体数据分析（协同处理多传感器异常检测）、多智能体建模（生态种群预测）和多智能体报告生成（协同撰写科学论文），所有任务均设置共享预算约束以模拟真实资源竞争场景。</p>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>graph LR</p>
+<p>%% 样式定义</p>
+<p>style ST1 fill:#E6F3FF,stroke:#3366CC,stroke-width:2px</p>
+<p>style ST2 fill:#FFF2CC,stroke:#FF9900,stroke-width:2px</p>
+<p>style ST3 fill:#E2EFDA,stroke:#70AD47,stroke-width:2px</p>
+<p>style INPUT fill:#DCE6F1,stroke:#2E75B6,stroke-width:1px</p>
+<p>style LLM fill:#D9E2F3,stroke:#5B7BB2,stroke-width:1px</p>
+<p>style VEC fill:#F4B942,stroke:#E26B0A,stroke-width:1px</p>
+<p>style HEAT fill:#FCE4D6,stroke:#C55A11,stroke-width:1px</p>
+<p>style DATA fill:#D5E8D4,stroke:#82B366,stroke-width:1px</p>
+<p>style PROC fill:#DAE8FC,stroke:#6C8EBF,stroke-width:1px</p>
+<p>style OUT fill:#F8CECC,stroke:#B85450,stroke-width:1px</p>
+<p>style COMP fill:#E1D5E7,stroke:#9673A6,stroke-width:1px</p>
+
+<p>%% 第一阶段子图</p>
+<p>subgraph ST1["阶段一：行为博弈与LLM融合"]</p>
+<p>direction TB</p>
+<p>G1["博弈1: 囚徒困境"]</p>
+<p>G2["博弈2: 公共品博弈"]</p>
+<p>G3["博弈3: 信任博弈"]</p>
+<p>G4["博弈4: 协调博弈"]</p>
+<p>G5["博弈5: 猎鹿博弈"]</p>
+<p>G6["博弈6: 斗鸡博弈"]</p>
+
+<p>subgraph LLM["35个LLM模型集群"]</p>
+<p>L1["LLM-1"]</p>
+<p>L2["LLM-2"]</p>
+<p>L3["..."]</p>
+<p>L4["LLM-35"]</p>
+<p>end</p>
+
+<p>VEC["合作特征向量"]</p>
+<p>end</p>
+
+<p>%% 第二阶段子图</p>
+<p>subgraph ST2["阶段二：特征相关性分析"]</p>
+<p>direction TB</p>
+<p>HEAT["相关性热力图"]</p>
+<p>FEAT["6维合作特征"]</p>
+<p>end</p>
+
+<p>%% 第三阶段子图</p>
+<p>subgraph ST3["阶段三：AI科学工作流验证"]</p>
+<p>direction TB</p>
+
+<p>subgraph DATA["数据层"]</p>
+<p>D1["多源传感器输入"]</p>
+<p>end</p>
+
+<p>subgraph PROC["处理层"]</p>
+<p>P1["多智能体协作处理"]</p>
+<p>end</p>
+
+<p>subgraph OUT["输出层"]</p>
+<p>O1["科学报告生成"]</p>
+<p>end</p>
+
+<p>COMP["性能对比散点图"]</p>
+<p>end</p>
+
+<p>%% 连接关系</p>
+<p>G1 & G2 & G3 & G4 & G5 & G6 --> L1</p>
+<p>G1 & G2 & G3 & G4 & G5 & G6 --> L2</p>
+<p>G1 & G2 & G3 & G4 & G5 & G6 --> L3</p>
+<p>G1 & G2 & G3 & G4 & G5 & G6 --> L4</p>
+
+<p>L1 & L2 & L3 & L4 --> VEC</p>
+<p>VEC --> HEAT</p>
+<p>HEAT --> FEAT</p>
+<p>FEAT --> D1</p>
+<p>D1 --> P1</p>
+<p>P1 --> O1</p>
+<p>O1 --> COMP</p>
+
+<p>%% 性能对比说明</p>
+<p>COMP -.->|"预测性能 vs 实际性能"| END["输出结果"]</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| 行为经济学游戏引擎 | 标准化6个博弈论游戏的实现，包含游戏规则解析、状态管理和多轮交互逻辑，支持批量自动化测试不同LLM |</p>
+<p>| 合作特征提取器 | 从游戏日志中提取6维合作特征：亲社会性（资源分享比例）、信任度（主动给予比例）、报复倾向（背叛后策略调整）、公平敏感度（分配偏好）、风险偏好（决策稳定性）、协调能力（策略收敛速度） |</p>
+<p>| AI科学任务模拟器 | 构建多智能体科学工作流环境，支持多源数据输入、共享预算约束、任务分解与结果聚合，模拟真实科研场景中的协作需求 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+</code>`<code>python
+<p>import random</p>
+<p>import numpy as np</p>
+
+<h1>============================================================</h1>
+<h1>行为经济学游戏定义（六个经典博弈）</h1>
+<h1>============================================================</h1>
+
+<p>class BehaviorGames:</p>
+<p>"""六个经典行为经济学游戏"""</p>
+
+<p># 游戏类型枚举</p>
+<p>PUBLIC_GOODS = "Public_Goods"      # 公共物品博弈</p>
+<p>TRUST = "Trust_Game"               # 信任博弈</p>
+<p>PRISONER = "Prisoners_Dilemma"     # 囚徒困境</p>
+<p>ULTIMATUM = "Ultimatum"            # 最后通牒博弈</p>
+<p>DICTATOR = "Dictator"              # 捐赠博弈</p>
+<p>COORDINATION = "Coordination"      # 协调博弈</p>
+
+<p>@staticmethod</p>
+<p>def play_public_goods(player_contribution, multiplier=2.0):</p>
+<p>"""公共物品博弈：贡献后乘以系数再均分"""</p>
+<p>total_pool = sum(player_contribution)</p>
+<p>shared_benefit = (total_pool * multiplier) / len(player_contribution)</p>
+<p>return shared_benefit</p>
+
+<p>@staticmethod</p>
+<p>def play_trust_game(sender_amount, reciprocate_rate=0.5):</p>
+<p>"""信任博弈：发送方投入，接收方返还"""</p>
+<p>received = sender_amount * 3  # 投资回报</p>
+<p>return received * reciprocate_rate</p>
+
+<p>@staticmethod</p>
+<p>def play_prisoners_dilemma(my_action, opponent_action):</p>
+<p>"""囚徒困境：T>R>P>S"""</p>
+<p>payoff_matrix = {</p>
+<p>('C', 'C'): 3, ('C', 'D'): 0,</p>
+<p>('D', 'C'): 5, ('D', 'D'): 1</p>
+<p>}</p>
+<p>return payoff_matrix[(my_action, opponent_action)]</p>
+
+<p>@staticmethod</p>
+<p>def play_ultimatum(offer, responder_threshold=0.2):</p>
+<p>"""最后通牒博弈：低于阈值则两败"""</p>
+<p>if offer < responder_threshold:</p>
+<p>return 0, 0</p>
+<p>return 1 - offer, offer</p>
+
+<p>@staticmethod</p>
+<p>def play_dictator(allocation):</p>
+<p>"""捐赠博弈：单方面分配"""</p>
+<p>return allocation</p>
+
+<p>@staticmethod</p>
+<p>def play_coordination(actions, success_threshold=0.7):</p>
+<p>"""协调博弈：双方倾向一致时获得收益"""</p>
+<p>coordination_rate = actions.count(actions[0]) / len(actions)</p>
+<p>if coordination_rate >= success_threshold:</p>
+<p>return 1</p>
+<p>return 0</p>
+
+
+<h1>============================================================</h1>
+<h1>LLM合作特征提取（六个维度）</h1>
+<h1>============================================================</h1>
+
+<p>class CooperativeFeatureExtractor:</p>
+<p>"""从游戏行为中提取合作特征"""</p>
+
+<p>def __init__(self, model_name):</p>
+<p>self.model_name = model_name</p>
+<p># 六维合作特征向量</p>
+<p>self.features = {</p>
+<p>'prosociality': 0.0,        # 亲社会性</p>
+<p>'trust_level': 0.0,         # 信任度</p>
+<p>'retaliation': 0.0,         # 报复倾向</p>
+<p>'fairness': 0.0,            # 公平敏感度</p>
+<p>'risk_preference': 0.0,     # 风险偏好</p>
+<p>'coordination': 0.0         # 协调能力</p>
+<p>}</p>
+
+<p>def extract_from_games(self, game_results):</p>
+<p>"""</p>
+<p>从游戏结果提取特征（伪代码）</p>
+<p>实际需要分析每个游戏的策略选择</p>
+<p>"""</p>
+<p># 简化：随机生成特征用于演示</p>
+<p>self.features['prosociality'] = random.uniform(0.3, 0.9)</p>
+<p>self.features['trust_level'] = random.uniform(0.2, 0.8)</p>
+<p>self.features['retaliation'] = random.uniform(0.1, 0.6)</p>
+<p>self.features['fairness'] = random.uniform(0.4, 0.9)</p>
+<p>self.features['risk_preference'] = random.uniform(0.2, 0.7)</p>
+<p>self.features['coordination'] = random.uniform(0.3, 0.8)</p>
+
+<p>return self.features</p>
+
+<p>def get_feature_vector(self):</p>
+<p>"""返回特征向量"""</p>
+<p>return np.array(list(self.features.values()))</p>
+
+
+<h1>============================================================</h1>
+<h1>AI for Science 验证任务</h1>
+<h1>============================================================</h1>
+
+<p>class AIScienceTasks:</p>
+<p>"""多智能体AI for Science任务"""</p>
+
+<p>def __init__(self, llm_agents):</p>
+<p>self.agents = llm_agents</p>
+<p>self.shared_budget = 100.0  # 共享预算约束</p>
+
+<p>def task_multi_sensor_detection(self):</p>
+<p>"""</p>
+<p>任务1: 多智能体数据分析</p>
+<p>- 协同处理多传感器异常检测</p>
+<p>"""</p>
+<p>print("[任务1] 多传感器异常检测")</p>
+
+<p># 每个agent分配检测任务（按公平敏感度分配）</p>
+<p>allocations = self._resource_allocation()</p>
+
+<p>results = []</p>
+<p>for agent, budget in zip(self.agents, allocations):</p>
+<p># 模拟异常检测结果</p>
+<p>detection_rate = agent.features['prosociality'] * 0.8</p>
+<p>results.append({</p>
+<p>'agent': agent.model_name,</p>
+<p>'budget_used': budget,</p>
+<p>'detection_rate': detection_rate</p>
+<p>})</p>
+
+<p>return results</p>
+
+<p>def task_ecology_prediction(self):</p>
+<p>"""</p>
+<p>任务2: 多智能体建模</p>
+<p>- 生态种群预测</p>
+<p>"""</p>
+<p>print("[任务2] 生态种群预测")</p>
+
+<p># 合作协调能力影响预测准确度</p>
+<p>predictions = []</p>
+<p>for agent in self.agents:</p>
+<p>accuracy = agent.features['coordination'] * 0.7 + \</p>
+<p>agent.features['trust_level'] * 0.3</p>
+<p>predictions.append({</p>
+<p>'agent': agent.model_name,</p>
+<p>'prediction_accuracy': accuracy</p>
+<p>})</p>
+
+<p>return predictions</p>
+
+<p>def task_report_generation(self):</p>
+<p>"""</p>
+<p>任务3: 多智能体报告生成</p>
+<p>- 协同撰写科学论文</p>
+<p>"""</p>
+<p>print("[任务3] 协同论文生成")</p>
+
+<p># 亲社会性和公平性影响合作效率</p>
+<p>report_scores = []</p>
+<p>for agent in self.agents:</p>
+<p>quality = agent.features['prosociality'] * 0.6 + \</p>
+<p>agent.features['fairness'] * 0.4</p>
+<p>report_scores.append({</p>
+<p>'agent': agent.model_name,</p>
+<p>'contribution_quality': quality</p>
+<p>})</p>
+
+<p>return report_scores</p>
+
+<p>def _resource_allocation(self):</p>
+<p>"""基于公平敏感度的资源分配"""</p>
+<p>total_fairness = sum(a.features['fairness'] for a in self.agents)</p>
+<p>allocations = []</p>
+<p>for agent in self.agents:</p>
+<p>share = (agent.features['fairness'] / total_fairness) * \</p>
+<p>self.shared_budget</p>
+<p>allocations.append(share)</p>
+<p>return allocations</p>
+
+
+<h1>============================================================</h1>
+<h1>主程序：模拟35个LLM的行为实验</h1>
+<h1>============================================================</h1>
+
+<p>def simulate_experiment():</p>
+<p>"""模拟完整的合作特征提取和任务验证流程"""</p>
+
+<p>print("=" * 60)</p>
+<p>print("LLM行为经济学合作特征实验")</p>
+<p>print("=" * 60)</p>
+
+<p># Step 1: 初始化35个LLM智能体</p>
+<p>num_agents = 35</p>
+<p>llm_agents = []</p>
+
+<p>for i in range(num_agents):</p>
+<p>model_name = f"LLM_Model_{i+1:02d}"</p>
+<p>agent = CooperativeFeatureExtractor(model_name)</p>
+<p>llm_agents.append(agent)</p>
+
+<p>print(f"\n已加载 {num_agents} 个开源LLM模型\n")</p>
+
+<p># Step 2: 模拟六个游戏的交互结果</p>
+<p>print("-" * 40)</p>
+<p>print("运行六个行为经济学游戏...")</p>
+
+<p>game_results = {}</p>
+<p>for game_name in BehaviorGames.__dict__.keys():</p>
+<p>if not game_name.startswith('_'):</p>
+<p># 模拟游戏结果（实际需调用各游戏函数）</p>
+<p>game_results[game_name] = "模拟结果数据"</p>
+
+<p>print(f"完成 {len(game_results)} 个游戏的模拟\n")</p>
+
+<p># Step 3: 提取每个LLM的合作特征</p>
+<p>print("-" * 40)</p>
+<p>print("提取合作特征向量...")</p>
+
+<p>feature_matrix = []</p>
+<p>for agent in llm_agents:</p>
+<p>features = agent.extract_from_games(game_results)</p>
+<p>feature_vector = agent.get_feature_vector()</p>
+<p>feature_matrix.append(feature_vector)</p>
+
+<p>feature_matrix = np.array(feature_matrix)</p>
+<p>print(f"特征矩阵维度: {feature_matrix.shape}")</p>
+<p>print("  - 35个模型 x 6个特征维度\n")</p>
+
+<p># Step 4: AI for Science任务验证</p>
+<p>print("-" * 40)</p>
+<p>print("运行AI for Science任务验证...")</p>
+
+<p>tasks = AIScienceTasks(llm_agents)</p>
+<p>tasks.task_multi_sensor_detection()</p>
+<p>tasks.task_ecology_prediction()</p>
+<p>tasks.task_report_generation()</p>
+
+<p># Step 5: 结果汇总（伪代码）</p>
+<p>print("\n" + "-" * 40)</p>
+<p>print("实验结果汇总")</p>
+<p>print("-" * 40)</p>
+
+<p># 特征相关性分析</p>
+<p>feature_names = ['亲社会性', '信任度', '报复倾向',</p>
+</code>``
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>\frac{dN_i}{dt} &= r_i N_i \left( 1 - \frac{1}{K_i} \sum_{j=1}^{n} \alpha_{ij} N_j \right), \qquad i = 1, 2, \dots, n, \\</p>
+<p>N_i(0) &= N_{i0}.</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：Ecology: Multi-species population
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：行为经济学游戏：6个标准化博弈场景（每模型1000+次模拟）；AI科学任务：多传感器异常检测数据集、生态种群动力学数据集、科学报告生成基准数据集
+
+<strong>评价指标</strong>：合作特征指标：亲社会指数、信任得分、公平系数；任务性能指标：协作效率（资源利用/产出质量）、团队产出质量（报告完整性、模型准确率）、预算消耗效率
+
+<strong>主要结果</strong>：
+
+<p>实验覆盖35个开源LLM（如LLaMA、Mistral系列等），结果显示：游戏合作特征与AI科学任务表现呈显著正相关（Pearson r=0.73, p<0.001）。高亲社会性、高信任度的模型在共享预算约束下表现最优，团队产出质量提升约40%。值得注意的是，采用「贪婪策略」（最大化个人资源）的模型在需要协调的任务中表现垫底，即使其单模型能力较强。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ 行为经济学游戏中的合作指标能以r=0.73的相关性预测多智能体任务表现</li>
+<li>✅ 亲社会性和信任度是预测团队产出的最强指标，风险偏好影响较小</li>
+<li>✅ 「投资型」策略（愿意在团队生产中投入资源）的模型优于「索取型」模型</li>
+<li>✅ 模型规模与协作能力不成正比，部分小模型展现出更优的合作特征</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 评估范式创新 | 首次将行为经济学博弈作为LLM协作能力的「压力测试」，提供可量化的合作特征评估框架。 |</p>
+<p>| 预测价值验证 | 实验证实游戏表现可低成本预测下游任务性能，为团队组建提供筛选依据。 |</p>
+<p>| 实践指导意义 | 揭示「团队投资」策略的重要性，为多智能体系统的激励机制设计提供理论支撑。 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 科研助手多智能体系统：自动编排数据分析、建模、报告生成的协作流程</li>
+<li>🎯 企业级AI平台：GPU资源池化调度，多模型协同处理复杂查询</li>
+<li>🎯 代码开发助手：团队协作式代码审查、重构和文档生成</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 不同任务的合作特征权重可能不同，需领域适配</li>
+<li>⚠️ 模型更新迭代快，游戏评估结果需定期重测</li>
+<li>⚠️ 游戏设计与真实场景存在抽象差距，需持续完善</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>实现游戏引擎的标准化接口，设计批量测试脚本；使用Python的pydantic或dataclass定义合作特征数据结构；通过sklearn的回归模型建立特征-性能预测管道；关键代码片段：定义GameResult类存储交互历史，extract_profile()函数计算6维特征向量，evaluate_team()函数模拟多智能体任务并输出性能指标。</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：多智能体LLM系统的成功不仅取决于单模型能力，更取决于团队成员的合作特征——愿意协调和投资的模型能带来更优的团队产出。
+
+<strong>未来方向</strong>：扩展到更多博弈场景（如动态博弈、信号博弈），探索合作特征的实时评估与自适应调整机制，并研究如何在模型训练阶段直接优化合作目标。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：为什么用行为经济学游戏而非直接测试AI科学任务来评估模型？</strong>
+
+<p>A：行为经济学游戏具有高度标准化、可重复性强、计算成本低的优势，且能隔离出「合作」这一特定维度，避免任务复杂性的干扰。实验证明游戏表现与真实任务高度相关（r=0.73），因此可作为高效的预筛选工具。</p>
+
+
+<strong>Q：如果一个模型在游戏中表现「自私」但单模型能力很强，应该如何使用？</strong>
+
+<p>A：建议将其部署在需要强单兵能力的任务中（如特定领域的深度推理），同时避免让其主导需要资源协调的环节。更好的策略是在团队中配置1-2个高合作性模型作为「协调者」，配合若干专业模型实现优势互补。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

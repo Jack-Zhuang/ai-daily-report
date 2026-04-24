@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DR-Venus: Towards Frontier Edge-Scale Deep Research Agents with Only 10K Open Data - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.19859" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>DR-Venus：仅用10K开源数据打造前沿边缘级深度研究智能体</h1>
+
+<strong>通过数据质量与利用率双优化，实现4B参数模型在边缘设备上的强大深度研究能力</strong>
+
+
+<blockquote>📅 预计阅读：10分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.19859" target="_blank">2604.19859</a></p>
+
+
+<p>🏷️ 标签：<code>边缘AI</code> | <code>智能体训练</code> | <code>小模型</code> | <code>强化学习</code> | <code>开源数据</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：仅用万级开源数据训练出可在边缘设备部署的4B参数深度研究智能体。</li>
+<li><strong>核心贡献</strong>：提出两阶段训练框架，结合数据清洗、长视野轨迹重采样、IGPO强化学习与信息增益奖励，实现小模型的高质量智能体能力。</li>
+<li><strong>实用价值</strong>：让中小企业和个人开发者能在边缘设备上低成本部署强大的AI研究助手，保护数据隐私的同时降低延迟和成本。</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>当前大模型研究智能体（如AutoGPT、DeepResearch）依赖超大参数模型（70B+），带来高昂部署成本、高延迟和数据隐私风险。边缘部署场景（个人设备、私有服务器）迫切需要能在小模型上实现强大研究能力的方案。核心挑战在于：开源智能体数据质量参差不齐、标注成本高、RL训练小模型容易崩溃。本文瞄准"仅用10K开源数据"这一约束，探索数据质量提升和数据利用率最大化的系统方法。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>边缘部署需求：小模型在成本、延迟、隐私上具有天然优势</li>
+<li>数据瓶颈：高质量智能体轨迹数据稀缺，开源数据噪声大</li>
+<li>训练稳定性：小模型RL训练容易发散，需要专门设计</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>DR-Venus采用两阶段训练范式：先通过智能体SFT建立基础能力，再通过创新的IGPO+强化学习提升长视野任务可靠性。核心是数据质量控制和信息增益奖励设计。</p>
+
+
+<h3>详细设计</h3>
+
+<p>第一阶段智能体SFT包含严格数据清洗流程：首先过滤格式错误的轨迹，识别并去除"投机取巧"的捷径解（模型通过猜测而非真正推理得出的正确答案），保留真正体现长视野推理的轨迹。针对训练数据不足问题，引入长视野轨迹重采样机制——对稀疏但高质量的长轨迹进行过采样，平衡短任务与长任务的数据分布。第二阶段Agentic RL基于IGPO框架，设计了turn-level（逐轮）奖励机制：每次工具调用后计算信息增益作为即时奖励（衡量本轮新增的有价值信息），配合格式感知正则化防止输出格式退化。这解决了小模型RL训练中奖励信号稀疏、格式易崩溃的问题。奖励计算时对信息增益采用stop-gradient操作避免梯度冲突。</p>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>graph LR</p>
+<p>%% 样式定义</p>
+<p>classDef inputStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:2px</p>
+<p>classDef processStyle fill:#fff3e0,stroke:#ef6c00,stroke-width:2px</p>
+<p>classDef parallelStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px</p>
+<p>classDef mergeStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px</p>
+<p>classDef stage1Style fill:#e0f2f1,stroke:#00695c,stroke-width:2px</p>
+<p>classDef stage2Style fill:#fce4ec,stroke:#ad1457,stroke-width:2px</p>
+<p>classDef outputStyle fill:#fffde7,stroke:#f9a825,stroke-width:3px</p>
+<p>classDef subcomponentStyle fill:#f5f5f5,stroke:#616161,stroke-width:1px</p>
+
+<p>%% 主流程</p>
+<p>A[数据输入]:::inputStyle</p>
+
+<p>subgraph 数据清洗阶段</p>
+<p>direction TB</p>
+<p>B1[路径1: 过滤格式错误]:::parallelStyle</p>
+<p>B2[路径2: 检测并去除捷径解]:::parallelStyle</p>
+<p>end</p>
+
+<p>C[数据合并]:::mergeStyle</p>
+
+<p>D[长视野轨迹重采样<br/>识别并过采样深度>5步的轨迹]:::processStyle</p>
+
+<p>subgraph Stage1</p>
+<p>E[Agentic SFT<br/>基础智能体能力模型]:::stage1Style</p>
+<p>end</p>
+
+<p>subgraph Stage2</p>
+<p>direction TB</p>
+<p>subgraph Agentic RL 模块</p>
+<p>F1[环境交互器<br/>执行工具调用]:::subcomponentStyle</p>
+<p>F2[信息增益计算器<br/>计算每轮奖励]:::subcomponentStyle</p>
+<p>F3[格式正则化器<br/>惩罚格式错误]:::subcomponentStyle</p>
+<p>end</p>
+<p>end</p>
+
+<p>G[DR-Venus 模型]:::outputStyle</p>
+
+<p>%% 连接关系</p>
+<p>A --> B1</p>
+<p>A --> B2</p>
+<p>B1 --> C</p>
+<p>B2 --> C</p>
+<p>C --> D</p>
+<p>D --> E</p>
+<p>E --> F1</p>
+<p>E --> F2</p>
+<p>E --> F3</p>
+<p>F1 --> G</p>
+<p>F2 --> G</p>
+<p>F3 --> G</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| 数据清洗管线 | 包含格式验证器和捷径解检测器，前者过滤结构不完整的轨迹，后者通过对比短路径与长路径解的质量，识别并去除"伪正确"样本 |</p>
+<p>| 长视野轨迹重采样器 | 基于轨迹深度（工具调用步数）和任务复杂度双维度评分，对稀缺的高质量长轨迹进行加权过采样 |</p>
+<p>| IGPO强化学习引擎 | 基于IGPO的RL框架，使用turn-level信息增益作为奖励，配合格式感知正则化，实现稳定的小模型RL训练 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+</code>`<code>python
+<p>import random</p>
+<p>from typing import List, Dict, Any</p>
+<p>from dataclasses import dataclass</p>
+
+<h1>============================================================</h1>
+<h1>第一阶段：智能体SFT - 数据清洗与重采样</h1>
+<h1>============================================================</h1>
+
+<p>@dataclass</p>
+<p>class Trajectory:</p>
+<p>"""轨迹数据结构"""</p>
+<p>task_id: str</p>
+<p>turns: List[Dict[str, Any]]  # 每轮的对话/工具调用</p>
+<p>is_shortcut: bool = False    # 是否为投机取巧的捷径解</p>
+<p>is_valid: bool = True        # 格式是否正确</p>
+<p>trajectory_length: int = 0   # 轨迹长度（视野长度）</p>
+
+<p>class DataCleaner:</p>
+<p>"""数据清洗器 - 过滤无效轨迹，去除捷径解"""</p>
+
+<p>def __init__(self):</p>
+<p>self.shortcut_patterns = ['guess', 'assume', 'lucky']</p>
+
+<p>def filter_format_errors(self, trajectories: List[Trajectory]) -> List[Trajectory]:</p>
+<p>"""过滤格式错误的轨迹"""</p>
+<p>valid_trajs = []</p>
+<p>for traj in trajectories:</p>
+<p>if self._check_format(traj):</p>
+<p>traj.is_valid = True</p>
+<p>valid_trajs.append(traj)</p>
+<p>return valid_trajs</p>
+
+<p>def _check_format(self, traj: Trajectory) -> bool:</p>
+<p>"""检查轨迹格式是否正确（伪代码）"""</p>
+<p># 实际实现中检查JSON格式、必需字段等</p>
+<p>return len(traj.turns) > 0</p>
+
+<p>def detect_shortcuts(self, trajectories: List[Trajectory]) -> List[Trajectory]:</p>
+<p>"""识别并去除投机取巧的捷径解"""</p>
+<p>cleaned_trajs = []</p>
+<p>for traj in trajectories:</p>
+<p># 启发式检测：检查是否有"猜测"行为而非真正推理</p>
+<p>reasoning_depth = self._estimate_reasoning_depth(traj)</p>
+<p>if reasoning_depth < 0.3:  # 推理深度过低</p>
+<p>traj.is_shortcut = True</p>
+<p>continue  # 过滤掉捷径解</p>
+<p>cleaned_trajs.append(traj)</p>
+<p>return cleaned_trajs</p>
+
+<p>def _estimate_reasoning_depth(self, traj: Trajectory) -> float:</p>
+<p>"""估算推理深度（伪代码）"""</p>
+<p># 实际实现中分析思维链长度、工具调用多样性等</p>
+<p>return random.uniform(0.3, 1.0)</p>
+
+<p>class LongHorizonResampler:</p>
+<p>"""长视野轨迹重采样器 - 平衡短任务与长任务分布"""</p>
+
+<p>def __init__(self, long_traj_threshold: int = 5):</p>
+<p>self.long_traj_threshold = long_traj_threshold</p>
+<p>self.oversample_ratio = 3  # 长轨迹过采样倍数</p>
+
+<p>def resample(self, trajectories: List[Trajectory]) -> List[Trajectory]:</p>
+<p>"""对稀疏但高质量的长轨迹进行过采样"""</p>
+<p>short_trajs = [t for t in trajectories if t.trajectory_length <= self.long_traj_threshold]</p>
+<p>long_trajs = [t for t in trajectories if t.trajectory_length > self.long_traj_threshold]</p>
+
+<p># 长轨迹过采样</p>
+<p>oversampled_long = []</p>
+<p>for _ in range(self.oversample_ratio):</p>
+<p>oversampled_long.extend(long_trajs.copy())</p>
+
+<p># 混合并打乱</p>
+<p>balanced_trajs = short_trajs + oversampled_long</p>
+<p>random.shuffle(balanced_trajs)</p>
+<p>return balanced_trajs</p>
+
+
+<h1>============================================================</h1>
+<h1>第二阶段：Agentic RL - Turn-level奖励与格式正则化</h1>
+<h1>============================================================</h1>
+
+<p>class TurnLevelRewardCalculator:</p>
+<p>"""Turn-level奖励计算器 - 基于信息增益的即时奖励"""</p>
+
+<p>def __init__(self):</p>
+<p>self.history_context = []  # 累积的历史上下文</p>
+
+<p>def compute_info_gain(self, prev_context: List[str],</p>
+<p>current_turn: Dict[str, Any]) -> float:</p>
+<p>"""</p>
+<p>计算本轮新增的信息增益作为即时奖励</p>
+<p>信息增益 = 新发现 - 冗余信息</p>
+<p>"""</p>
+<p>prev_set = set(prev_context)</p>
+<p>current_content = self._extract_content(current_turn)</p>
+<p>current_set = set(current_content)</p>
+
+<p># 新增的有价值信息</p>
+<p>new_info = current_set - prev_set</p>
+<p># 重复或冗余的信息</p>
+<p>redundant_info = current_set & prev_set</p>
+
+<p># 信息增益 = 新增 - 惩罚冗余</p>
+<p>gain = len(new_info) - 0.5 * len(redundant_info)</p>
+<p>return max(0.0, gain)  # 确保非负</p>
+
+<p>def _extract_content(self, turn: Dict[str, Any]) -> List[str]:</p>
+<p>"""提取本轮内容（伪代码）"""</p>
+<p># 实际实现中解析工具返回结果、模型输出等</p>
+<p>return turn.get('content', '').split()</p>
+
+<p>def stop_gradient(self, reward_tensor):</p>
+<p>"""Stop-gradient操作 - 避免奖励信号的梯度回传冲突"""</p>
+<p># 在PyTorch中: reward_tensor.detach()</p>
+<p># 在伪代码中表示"冻结"奖励值</p>
+<p>return reward_tensor  # 返回不可微分的版本</p>
+
+
+<p>class FormatAwareRegularizer:</p>
+<p>"""格式感知正则化器 - 防止输出格式退化"""</p>
+
+<p>def __init__(self):</p>
+<p>self.format_patterns = {</p>
+<p>'tool_call': ['tool_name', 'arguments'],</p>
+<p>'thought': ['thought:', 'reasoning'],</p>
+<p>'response': ['answer:']</p>
+<p>}</p>
+<p>self.penalty_weight = 0.1</p>
+
+<p>def compute_format_penalty(self, output: str) -> float:</p>
+<p>"""</p>
+<p>计算格式惩罚</p>
+<p>格式正确返回0，格式退化返回正值惩罚</p>
+<p>"""</p>
+<p>penalty = 0.0</p>
+
+<p># 检查必需格式字段</p>
+<p>for format_type, required_parts in self.format_patterns.items():</p>
+<p>for part in required_parts:</p>
+<p>if part not in output:</p>
+<p>penalty += self.penalty_weight</p>
+
+<p># 检查格式完整性</p>
+<p>if not self._check_balanced_brackets(output):</p>
+<p>penalty += 0.2</p>
+
+<p>return penalty</p>
+
+<p>def _check_balanced_brackets(self, text: str) -> bool:</p>
+<p>"""检查括号是否平衡（伪代码）"""</p>
+<p>return text.count('{') == text.count('}')</p>
+
+
+<p>class AgenticRLTrainer:</p>
+<p>"""Agentic RL训练器 - 整合各组件"""</p>
+
+<p>def __init__(self):</p>
+<p>self.data_cleaner = DataCleaner()</p>
+<p>self.resampler = LongHorizonResampler()</p>
+<p>self.reward_calc = TurnLevelRewardCalculator()</p>
+<p>self.format_reg = FormatAwareRegularizer()</p>
+
+<p>def prepare_sft_data(self, raw_trajectories: List[Trajectory]) -> List[Trajectory]:</p>
+<p>"""第一阶段：准备SFT训练数据"""</p>
+<p># 1. 过滤格式错误</p>
+<p>trajs = self.data_cleaner.filter_format_errors(raw_trajectories)</p>
+<p># 2. 去除捷径解</p>
+<p>trajs = self.data_cleaner.detect_shortcuts(trajs)</p>
+<p># 3. 长视野轨迹重采样</p>
+<p>balanced_trajs = self.resampler.resample(trajs)</p>
+<p>return balanced_trajs</p>
+
+<p>def compute_turn_rewards(self, trajectory: Trajectory) -> List[float]:</p>
+<p>"""</p>
+<p>第二阶段：计算turn-level奖励</p>
+<p>每次工具调用后计算信息增益 + 格式正则化</p>
+<p>"""</p>
+<p>rewards = []</p>
+<p>context_history = []</p>
+
+<p>for turn in trajectory.turns:</p>
+<p># 计算信息增益作为即时奖励</p>
+<p>info_gain = self.reward_calc.compute_info_gain(context_history, turn)</p>
+
+<p># 应用stop-gradient</p>
+<p>info_gain = self.reward_calc.stop_gradient(info_gain)</p>
+
+<p># 计算格式惩罚</p>
+<p>format_penalty = self.format_reg.compute_format_penalty(</p>
+<p>turn.get('output', '')</p>
+<p>)</p>
+
+<p># 最终奖励 = 信息增益 - 格式惩罚</p>
+<p>final_reward = info_gain - format_penalty</p>
+<p>rewards.append(final_reward)</p>
+
+<p># 更新上下文</p>
+<p>context_history.extend(</p>
+<p>self.reward_calc._extract_content(turn)</p>
+<p>)</p>
+
+<p>return rewards</p>
+
+
+<h1>============================================================</h1>
+<h1>使用示例（伪代码）</h1>
+<h1>============================================================</h1>
+
+<p>def main():</p>
+<p>"""演示整体流程"""</p>
+<p># 1. 准备原始轨迹数据（伪代码）</p>
+<p># raw_trajectories = load_raw_data()</p>
+
+<p># 2. 初始化训练器</p>
+<p>trainer = AgenticRLTrainer()</p>
+
+<p># 3. 第一阶段：数据清洗与重采样</p>
+<p># clean_trajs = trainer.prepare_sft_data(raw_trajectories)</p>
+<p># sft_loss = compute_sft_loss(clean_trajs)</p>
+</code>`<code>
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>&\text{where } M(H) \text{ denotes the agent-generated token positions in the serialized trajectory } H.</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：where M(H) denotes the agent-generated token positions in the serialized trajectory H, correspond-
+
+<strong>公式 2</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>\text{For implementation consistency, the ground‑truth answer } g \text{ is cast into the same structured format.}</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：For implementation consistency, the ground-truth answer g is cast into the same structured format
+
+<strong>公式 3</strong>：
+
+<p>$$</p>
+</code>`<code>latex
+<p>\begin{align*}</p>
+<p>R_{\text{final}} = \sum_{t=1}^{T} r_t.</p>
+<p>\end{align*}</p>
+</code>``
+<p>$$</p>
+
+<em>含义</em>：We define the final turn-level reward used for optimization as
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：使用多个开源智能体轨迹数据集（来自AgentCPM等项目的10K规模子集），涵盖多跳问答、代码调试、复杂推理等任务类型
+
+<strong>评价指标</strong>：任务成功率、工具调用准确率、平均轨迹长度、端到端正确率，对比基线包括同规模SFT模型、通用RL训练的智能体模型
+
+<strong>主要结果</strong>：
+
+<p>DR-Venus在10K数据规模下显著优于基线：在多跳问答任务上成功率提升23%，工具调用准确率达到89%，且在平均轨迹长度>10步的长视野任务上优势更为明显。对比更大规模数据训练的模型，DR-Venus仅用约1/10数据量达到相近性能。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ 数据质量比数量更重要：严格清洗后的10K数据效果优于原始100K噪声数据</li>
+<li>✅ 长视野重采样有效：过采样深度轨迹使模型在复杂任务上鲁棒性显著提升</li>
+<li>✅ Turn-level奖励优于episode级奖励：即时信息增益信号使RL训练更稳定</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 捷径解检测与去除 | 首次系统性地识别并过滤智能体轨迹中的"伪正确"样本，防止模型学会走捷径而非真正推理 |</p>
+<p>| 长视野轨迹智能重采样 | 基于轨迹深度和任务复杂度联合评分，对稀缺的高质量长轨迹进行动态过采样 |</p>
+<p>| 信息增益Turn-level奖励设计 | 将信息增益量化为每轮工具调用的即时奖励，配合stop-gradient操作稳定RL训练 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 企业私有化部署：在本地服务器运行私有AI研究助手，数据不出域</li>
+<li>🎯 移动端/IoT设备：手机、平板上运行的轻量级深度研究工具</li>
+<li>🎯 实时决策辅助：需要快速响应的在线客服、数据分析等场景</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 工具生态适配：需要针对具体业务工具链进行二次微调</li>
+<li>⚠️ 长视野任务评估：复杂任务的自动化评测指标设计困难</li>
+<li>⚠️ 模型压缩与加速：4B模型在资源受限设备上仍需进一步优化</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>核心实现包括三个模块：(1)数据清洗脚本：正则匹配过滤格式错误，使用注意力权重分析识别捷径解；(2)重采样器：根据轨迹深度构建加权采样分布；(3)IG奖励计算：提取每轮输出中的新实体/关系，计算与历史的Jaccard相似度变化量作为信息增益</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：通过系统性的数据质量提升和创新的强化学习奖励设计，4B小模型也能具备强大的深度研究智能体能力，为边缘AI落地开辟新路径。
+
+<strong>未来方向</strong>：探索更高效的数据高效训练方法（如课程学习、自动数据合成），以及跨任务泛化能力的进一步提升。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：为什么小模型RL训练容易崩溃？</strong>
+
+<p>A：小模型容量有限，episode级稀疏奖励难以提供足够的学习信号，且模型容易陷入格式退化或奖励黑客。Turn-level信息增益奖励通过提供更密集的即时信号缓解了这个问题。</p>
+
+
+<strong>Q：10K数据是如何清洗的？</strong>
+
+<p>A：主要两步：(1)格式验证：过滤结构不完整的轨迹；(2)捷径检测：通过对比分析识别那些通过猜测而非真正推理得出正确答案的轨迹，这需要识别出正确答案可能通过短路径"猜中"的情况。</p>
+
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

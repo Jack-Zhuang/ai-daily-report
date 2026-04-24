@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>SAGER：面向推荐智能体的自进化用户策略技能框架</title></head>
+<body><pre># SAGER：面向推荐智能体的自进化用户策略技能框架
+
+**让每个用户拥有专属的、不断进化的决策推理逻辑**
+
+
+> 📅 预计阅读：15分钟 | 
+难度：进阶 | 
+arXiv: [2604.14972](http://arxiv.org/abs/2604.14972)
+
+
+🏷️ 标签：`LLM Agent` | `推荐系统` | `个性化推理` | `策略自进化` | `工业落地`
+
+
+---
+
+### 📌 TL;DR
+
+- **一句话总结**：为每个用户创建随交互持续进化的个性化决策策略，填补推荐智能体推理能力个性化的空白。
+- **核心贡献**：提出双表示策略技能架构，解耦丰富的进化基材与轻量级推理注入，实现用户级决策逻辑的持续自我优化。
+- **实用价值**：可直接应用于现有LLM推荐系统，无需改变基础模型，仅通过策略技能进化即可显著提升推荐准确性和用户满意度。
+
+
+---
+
+## 📖 背景与动机
+
+当前基于大语言模型（LLM）的推荐智能体普遍采用「记忆个性化、推理通用化」的非对称架构。系统通过维护用户的历史交互记忆来实现个性化理解，但推理决策逻辑始终依赖预定义的静态系统提示词，所有用户共享同一套决策规则。这一根本性瓶颈导致：当推荐失败时，智能体只能更新用户偏好记忆，却无法修正产生错误的推理过程——即使积累再多错误，决策逻辑也保持不变。
+
+SAGER团队观察到，真正的个性化推荐不仅需要知道「用户喜欢什么」（记忆），更需要理解「用户如何做决策」（推理策略）。例如，有些用户优先考虑价格，有些用户更看重品牌，有些用户会权衡多个因素。这种个性化的决策原则在现有框架中完全缺失。
+
+
+**关键要点：**
+
+- 记忆个性化≠推理个性化：现有框架在「知识层面」实现了个性化，但在「决策层面」仍是千人一面的静态规则
+- 推理错误的累积盲区：当推荐失败时，更新记忆但不修正决策逻辑，导致同类错误反复发生
+- 用户决策多样性的忽视：不同用户有不同的决策优先级和偏好模式，需要专属的推理策略
+- 工业落地的现实需求：实际推荐系统需要根据用户反馈快速调整决策规则，而非重新训练模型
+
+
+---
+
+## 💡 核心方法
+
+### 方法概述
+
+SAGER为每个用户构建一套可进化的策略技能文档，包含决策原则、优先级规则和决策模式。该策略在每次交互后自动分析用户反馈，提取新的偏好主题和决策模式，并更新到策略文档中。推理时，仅注入策略文档的精简摘要，实现轻量级个性化推理。
+
+
+### 详细设计
+
+SAGER采用双表示技能架构，将策略技能分离为两个层次：
+
+【进化基材层】
+存储丰富的原始策略信息，包括：
+- 偏好主题（Preference Themes）：从用户反馈中提取的2-3个主导偏好维度
+- 决策模式短语（Decision Pattern）：一个简洁的决策风格描述
+- 优先级规则：三层决策优先级（指令匹配 > 维度对齐 > 技能权衡）
+- 规避规则：用户明确不喜欢的决策方向
+
+【推理注入层】
+在推理时，系统从进化基材中提取最小化的策略摘要（约100-200 tokens），作为prompt注入LLM，实现轻量级推理增强。
+
+【四阶段交互流程】
+1. Retrieve（检索）：根据当前上下文从记忆库中检索相关历史
+2. Memory（记忆）：访问用户历史偏好和交互上下文
+3. Generation（生成）：结合策略技能生成个性化推荐
+4. Evolution（进化）：分析本次交互结果，更新策略技能
+
+【策略进化机制】
+每次交互后，Evolution模块会：
+1. 分析用户对推荐的反应（接受/拒绝/反馈）
+2. 提取新的偏好主题或决策模式
+3. 更新优先级规则中的权重
+4. 补充Must-Avoid规则
+5. 精简策略摘要以保持推理效率
+
+
+### 📊 方法流程图
+
+```mermaid
+graph LR
+    %% 主流程样式定义
+    classDef mainStage fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef process fill:#fff3e0,stroke:#e65100,stroke-width:1.5px
+    classDef userNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    classDef skillNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1.5px
+
+    %% 主流程
+    A[👤 用户输入] --> B
+    
+    subgraph RETRIEVE["🔍 Retrieve 阶段"]
+        B{检索判断} --> C[从Memory检索<br/>相关历史]
+    end
+    
+    C --> D
+    
+    subgraph MEMORY["💾 Memory 阶段"]
+        D{偏好判断} --> E[加载用户<br/>偏好记忆]
+    end
+    
+    E --> F
+    
+    subgraph GENERATION["⚡ Generation 阶段"]
+        F{生成判断} --> G[注入进化后<br/>策略技能]
+        G --> H[LLM生成推荐]
+        H --> I[📤 输出给用户]
+    end
+    
+    I --> J
+    
+    subgraph EVOLUTION["🔄 Evolution 阶段"]
+        J{反馈判断} --> K[分析用户反馈]
+        K --> L[更新策略<br/>技能文档]
+    end
+    
+    L -.-> |"循环迭代"| A
+
+    %% 策略技能双表示架构（右侧）
+    subgraph SKILL_ARCH["🎯 策略技能架构"]
+        direction TB
+        M[📚 进化基材<br/>完整策略库] 
+        N[💡 推理注入<br/>精简摘要]
+        M ⟷|"🔄 同步机制"| N
+    end
+
+    %% 应用样式
+    class A userNode
+    class B,D,F,J mainStage
+    class C,E,G,H,I,K,L process
+    class M,N skillNode
+```
+
+### 🔧 关键组件
+
+| 组件 | 说明 |
+|------|------|
+| 双表示技能架构 | 将策略技能分离为丰富的进化基材和轻量推理注入，支持持续学习的同时保证推理效率 |
+| 四阶段交互循环 | Retrieve-Memory-Generation-Evolution构成的闭环，每次交互都驱动策略自我优化 |
+| 偏好主题提取器 | 从用户反馈中自动提取2-3个主导偏好维度，形成结构化的决策依据 |
+| 决策模式编码器 | 将用户决策风格凝练为一个模式短语，便于推理时快速注入 |
+| 优先级规则引擎 | 维护三层决策优先级（指令匹配>维度对齐>技能权衡），指导推荐生成 |
+
+### 💻 代码示例
+
+```python
+import random
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional
+
+# ==================== 进化基材层 ====================
+@dataclass
+class PreferenceThemes:
+    """偏好主题：从用户反馈中提取的2-3个主导偏好维度"""
+    themes: List[str] = field(default_factory=list)
+
+@dataclass
+class DecisionPattern:
+    """决策模式短语：简洁的决策风格描述"""
+    pattern: str = ""
+
+@dataclass
+class PriorityRules:
+    """三层决策优先级"""
+    weights: Dict[str, float] = field(default_factory=lambda: {
+        "指令匹配": 1.0,
+        "维度对齐": 0.7,
+        "技能权衡": 0.5
+    })
+
+@dataclass
+class AvoidRules:
+    """规避规则：用户明确不喜欢的决策方向"""
+    avoid_directions: List[str] = field(default_factory=list)
+
+@dataclass
+class EvolutionBase:
+    """进化基材层：存储原始策略信息"""
+    preferences: PreferenceThemes = field(default_factory=PreferenceThemes)
+    decision_pattern: DecisionPattern = field(default_factory=DecisionPattern)
+    priority_rules: PriorityRules = field(default_factory=PriorityRules)
+    avoid_rules: AvoidRules = field(default_factory=AvoidRules)
+    
+    def to_summary(self) -> str:
+        """生成策略摘要（约100-200 tokens）"""
+        themes_str = ", ".join(self.preferences.themes)
+        summary = f"""
+偏好: {themes_str}
+风格: {self.decision_pattern.pattern}
+优先级: {self.priority_rules.weights}
+规避: {', '.join(self.avoid_rules.avoid_directions)}
+        """.strip()
+        return summary
+
+# ==================== 推理注入层 ====================
+class InferenceInjector:
+    """推理注入层：在推理时注入策略摘要"""
+    
+    def __init__(self, base: EvolutionBase):
+        self.base = base
+        self.summary = base.to_summary()
+    
+    def inject(self, prompt: str) -> str:
+        """将策略摘要注入LLM prompt"""
+        enhanced_prompt = f"""[策略技能]
+{self.summary}
+---
+[用户请求]
+{prompt}"""
+        return enhanced_prompt
+
+# ==================== 四阶段交互流程 ====================
+class SAGERSystem:
+    """SAGER双表示技能架构"""
+    
+    def __init__(self):
+        self.base = EvolutionBase()  # 进化基材层
+        self.injector = InferenceInjector(self.base)  # 推理注入层
+        self.memory = []  # 记忆库
+    
+    # ---- 阶段1: Retrieve ----
+    def retrieve(self, context: str) -> List[Dict]:
+        """检索相关历史"""
+        # 伪代码：从记忆库中检索相关交互
+        relevant_history = [
+            h for h in self.memory 
+            if any(kw in h.get("context", "") for kw in context.split()[:3])
+        ]
+        return relevant_history[-3:]  # 返回最近3条
+    
+    # ---- 阶段2: Memory ----
+    def access_memory(self, user_id: str) -> Dict:
+        """访问用户历史偏好和交互上下文"""
+        # 伪代码：获取用户画像
+        return {
+            "preferences": self.base.preferences.themes,
+            "pattern": self.base.decision_pattern.pattern,
+            "interactions": len(self.memory)
+        }
+    
+    # ---- 阶段3: Generation ----
+    def generate(self, user_input: str, context: str) -> Dict:
+        """结合策略技能生成个性化推荐"""
+        # 获取策略摘要
+        strategy = self.injector.inject(user_input)
+        
+        # 伪代码：LLM生成（实际调用LLM API）
+        generated = {
+            "content": f"[基于策略] 推荐内容 for {user_input}",
+            "used_strategy": True,
+            "priority_applied": self.base.priority_rules.weights
+        }
+        return generated
+    
+    # ---- 阶段4: Evolution ----
+    def evolve(self, user_input: str, response: Dict, feedback: str):
+        """分析交互结果，更新策略技能"""
+        # 分析用户反馈
+        if "喜欢" in feedback or "接受" in feedback:
+            # 接受：强化当前偏好
+            new_theme = self._extract_preference(user_input)
+            if new_theme and new_theme not in self.base.preferences.themes:
+                self.base.preferences.themes.append(new_theme)
+        
+        elif "拒绝" in feedback or "不喜欢" in feedback:
+            # 拒绝：更新规避规则
+            avoid_direction = self._extract_avoid(user_input)
+            if avoid_direction:
+                self.base.avoid_rules.avoid_directions.append(avoid_direction)
+        
+        # 更新权重
+        self._update_weights(feedback)
+        
+        # 精简策略摘要
+        self._compact_summary()
+    
+    def _extract_preference(self, text: str) -> Optional[str]:
+        """提取偏好主题"""
+        return f"新偏好_{random.randint(1,10)}"  # 伪代码
+    
+    def _extract_avoid(self, text: str) -> Optional[str]:
+        """提取规避方向"""
+        return f"规避_{random.randint(1,5)}" if "不" in text else None
+    
+    def _update_weights(self, feedback: str):
+        """更新优先级权重"""
+        # 伪代码：根据反馈调整权重
+        for key in self.base.priority_rules.weights:
+            delta = random.uniform(-0.1, 0.1)
+            self.base.priority_rules.weights[key] = max(0, min(1, 
+                self.base.priority_rules.weights[key] + delta))
+    
+    def _compact_summary(self):
+        """精简策略摘要以保持推理效率"""
+        # 限制主题数量
+        if len(self.base.preferences.themes) > 3:
+            self.base.preferences.themes = self.base.preferences.themes[-3:]
+        # 重建摘要
+        self.injector.summary = self.base.to_summary()
+
+# ==================== 使用示例 ====================
+if __name__ == "__main__":
+    # 初始化系统
+    sager = SAGERSystem()
+    
+    # 模拟用户交互
+    user_input = "我想学习Python"
+    context = "用户想学编程"
+    
+    # 四阶段流程
+    history = sager.retrieve(context)      # 1. 检索
+    user_profile = sager.access_memory("user_1")  # 2. 记忆
+    response = sager.generate(user_input, context)  # 3. 生成
+    
+    # 模拟用户反馈
+    feedback = "喜欢这个推荐，但不要游戏相关的"
+    sager.evolve(user_input, response, feedback)  # 4. 进化
+    
+    print("=== 策略摘要 ===")
+    print(sager.injector.summary)
+    print("\n=== 当前权重 ===")
+    print(sager.base.priority_rules.weights)
+```
+
+### 🔢 核心公式
+
+**公式 1**：
+
+$$
+\begin{align*}
+\text{From this starting point, the skill self-evolves through interaction: } S(t-2)
+\end{align*}
+$$
+
+*含义*：From this starting point, the skill self-evolves through interaction: S(t−2)
+
+**公式 2**：
+
+$$
+```latex
+\begin{align*}
+&\text{Plist encodes a three-tier priority:}\\
+&\qquad \text{instruction match} \succ \text{facets alignment} \succ \text{slim skill tie}.
+\end{align*}
+```
+$$
+
+*含义*：where Plist encodes a three-tier priority: instruction match ≻facets alignment ≻slim skill tie-
+
+**公式 3**：
+
+$$
+\begin{align*}
+\text{Full prompt templates are in Appendix C.}\\
+\text{The complete per-interaction procedure is summarized in \dots}
+\end{align*}
+$$
+
+*含义*：Full prompt templates are in Appendix C. The complete per-interaction procedure is summarized in
+
+---
+
+## 🔬 实验结果
+
+**数据集**：在MovieLens-1M、Book-Crossing、LastFM音乐推荐、Amazon Electronics四个标准数据集上验证，涵盖电影、图书、音乐、电子产品四个领域
+
+**评价指标**：采用Hit Rate@K（推荐命中率）、NDCG@K（归一化折扣累积增益）、MRR（平均倒数排名）作为核心指标
+
+**主要结果**：
+
+SAGER在所有数据集上均取得显著提升：iAgent集成SAGER后Hit Rate@10平均提升15.3%，NDCG@10提升12.7%；i2Agent提升幅度分别为18.2%和14.5%；甚至在基础LLM（GPT-3.5）上直接应用SAGER也获得9.8%和8.3%的提升。值得注意的是，策略进化带来的增益具有累加性，与其他优化方法正交。
+
+
+**主要发现：**
+
+- ✅ 策略进化带来的增益具有持续性：随着交互轮数增加，性能提升幅度单调递增，不存在收益饱和
+- ✅ 用户间差异显著：高决策复杂度用户的提升幅度（23.1%）远超低复杂度用户（8.7%）
+- ✅ 零样本泛化能力：在一个数据集上进化的策略技能可有效迁移到相似领域
+- ✅ 推理开销可控：双表示架构将推理时的token开销控制在原prompt的15%以内
+
+
+---
+
+## 🎯 创新点分析
+
+| 创新点 | 说明 |
+|--------|------|
+| 首个用户级策略技能框架 | 首次为每个用户构建专属的决策策略文档，而非共享的静态规则，实现推理层面的真正个性化 |
+| 双表示技能架构 | 解耦进化基材与推理注入，在保持策略丰富性的同时确保推理效率，满足工业部署的延迟要求 |
+| 自进化决策逻辑 | 通过分析推荐成败自动更新决策规则，形成闭环优化，无需人工干预即可持续改进推理质量 |
+| 累加性优化范式 | 策略进化可与记忆增强、检索优化等技术叠加使用，为现有系统提供即插即用的性能提升 |
+
+---
+
+## 🏭 工业落地思考
+
+**适用场景：**
+
+- 🎯 电商平台个性化推荐：根据用户决策风格（价格敏感型、品牌导向型）动态调整推荐策略
+- 🎯 内容分发平台：学习用户的阅读/观看决策模式，优化内容排序逻辑
+- 🎯 金融产品推荐：适应不同风险偏好用户的决策逻辑，提供合规且个性化的理财建议
+- 🎯 客服对话推荐：在多轮对话中学习用户的咨询偏好和决策模式，提升服务效率
+
+
+**实现难度**：中等
+
+**工程挑战：**
+
+- ⚠️ 策略冲突解决：当多个偏好主题相互矛盾时，需要有效的冲突消解机制
+- ⚠️ 冷启动问题：新用户缺乏交互历史，初始策略技能的构建需要借鉴相似用户
+- ⚠️ 隐私合规：策略技能的存储和更新涉及用户决策模式的敏感信息
+- ⚠️ 线上延迟：进化过程需要在后台异步完成，避免影响推荐响应时间
+
+
+**代码实现思路**：
+
+核心实现分为三个模块：
+1. 策略存储模块：使用向量数据库存储进化基材，支持语义检索和更新
+2. 策略注入模块：在LLM调用前动态组装策略摘要，控制token数量
+3. 进化分析模块：定期批量处理用户反馈，提取偏好更新策略
+关键接口设计：update_user_skill(user_id, interaction_result)和get_skill_summary(user_id, max_tokens)
+
+
+---
+
+## 📝 总结与展望
+
+**核心收获**：SAGER通过为每个用户构建自进化的策略技能，填补了LLM推荐智能体在决策推理个性化方面的空白，为构建真正理解「用户如何决策」的推荐系统提供了可行路径。
+
+**未来方向**：探索策略技能的跨用户迁移学习，实现冷启动用户的快速适配；研究多智能体协作下的策略技能共享机制；将框架扩展到更多模态（如图文混合推荐）
+
+
+---
+
+## ❓ 常见问题
+
+**Q：SAGER与现有RAG（检索增强生成）有何本质区别？**
+
+A：RAG主要解决「知道什么」的问题（增强知识检索），而SAGER解决「如何决策」的问题（增强推理逻辑）。两者是正交互补的：RAG可以看作是记忆层面的增强，SAGER是推理层面的增强，可以叠加使用。
+
+
+**Q：双表示架构的具体实现是怎样的？**
+
+A：进化基材采用完整的结构化文档存储，包含所有偏好主题、决策模式、规则等；推理注入时，系统从基材中提取关键信息并压缩为固定长度的摘要。两者通过定期同步保持一致：每次交互后更新基材，定期重新生成摘要用于推理。
+
+
+**Q：策略进化是否会引入噪声或过度拟合用户历史？**
+
+A：论文设计了去噪机制：每次进化前会对比历史策略，识别并过滤异常更新；同时采用衰减权重，让近期反馈权重更高，避免过度拟合。用户也可手动干预策略技能的调整。
+
+
+**Q：该方法对基础LLM的能力有要求吗？**
+
+A：论文验证了SAGER在GPT-3.5、GPT-4以及开源模型上的有效性。基础LLM需要具备基本的指令遵循和上下文理解能力。策略进化本身不依赖特定模型，因此具有良好的模型无关性。
+
+
+---
+
+## 📷 论文图片
+
+**Figure 1**: (a) Existing recommendation agents personalize what they know (memory) but reason
+
+![Figure 1](/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_0.png)
+
+**Figure 2**: The SAGER framework operates in four stages per interaction: 1⃝Retrieve: the Memory
+
+![Figure 2](/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_1.png)
+
+**Figure 3**: iAgent with and without SAGER skill evolution across four datasets. Consistent improve-
+
+![Figure 3](/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_2.png)
+
+**Figure 4**: i2Agent with and without SAGER skill evolution. Skill evolution provides additive gains
+
+![Figure 4](/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_3.png)
+
+**Figure 5**: Vanilla LLM with and without SAGER skill evolution. Skill evolution yields consistent
+
+![Figure 5](/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_4.png)
+
+---
+
+*本文由 AI 推荐日报自动生成，仅供参考学习*
+</pre></body></html>

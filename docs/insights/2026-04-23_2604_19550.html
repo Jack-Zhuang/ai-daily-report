@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoopCTR: Unlocking the Loop Scaling Power for Click-Through Rate Prediction - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.19550" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>LoopCTR：解锁CTR预测的循环缩放力量</h1>
+
+<strong>通过递归复用共享层突破参数瓶颈，实现训练多循环、推理零循环的高效CTR模型</strong>
+
+
+<blockquote>📅 预计阅读：15分钟 | </blockquote>
+<p>难度：高级 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.19550" target="_blank">2604.19550</a></p>
+
+
+<p>🏷️ 标签：<code>CTR预测</code> | <code>循环神经网络</code> | <code>模型压缩</code> | <code>工业部署</code> | <code>Scaling Law</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：LoopCTR通过循环复用共享层打破参数-计算耦合瓶颈，实现推理零循环超越所有基线。</li>
+<li><strong>核心贡献</strong>：提出循环缩放范式，用三明治架构+超连接残差+MoE实现参数不变下计算量灵活扩展，训练多循环推理零循环。</li>
+<li><strong>实用价值</strong>：工业级CTR模型可复用有限参数支撑任意计算复杂度，推理零开销超越大参数量模型，大幅降低部署成本。</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>点击率（CTR）预测是广告和推荐系统的核心技术，直接影响平台收入。近年来，基于Transformer的CTR模型通过堆叠更多参数获得性能提升，但工业部署面临严峻挑战：参数量增长带来内存占用爆炸、推理延迟飙升，难以满足线上服务的硬性延迟约束（通常<10ms）。传统方法要么压缩模型牺牲精度，要么保持精度但无法大规模部署。LoopCTR的核心洞察是：计算量（computation）和参数量（parameters）应该解耦——用相同参数通过循环复用（loop）实现更多计算，而非一味增加参数。这一思路打破了Scaling Law的固有认知，为工业落地提供了新路径。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>Transformer-based CTR模型Scaling面临参数量与计算量同步增长的困境</li>
+<li>工业部署受限于内存（显存）和推理延迟的硬约束</li>
+<li>计算量与参数量的耦合是核心瓶颈，需要解耦设计</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>LoopCTR提出循环缩放范式，通过递归复用共享层在不增加参数的前提下扩展计算量。采用三明治架构组织Entry Block、Loop Block和Exit Block，在Loop Block中引入超连接残差（Hyper-Connected Residuals）实现信息跨层流动，配合混合专家（MoE）动态选择计算路径。训练时执行多循环深度学习，推理时零循环直接输出，实现参数效率与性能的兼得。</p>
+
+
+<h3>详细设计</h3>
+
+<p>LoopCTR的核心架构包含三大模块。Entry Block负责原始输入的特征编码与投影，输出作为循环入口。Loop Block是核心创新所在，包含N个可复用的共享层，每次循环都将上一循环的输出重新注入这些共享层。具体实现上，假设有L个循环深度，每层l接收来自所有循环深度的残差连接，形成超连接结构。数学表达为：第l层的输出 = SharedLayerl(聚合所有循环深度的输入) + 跨循环的跳跃连接。</p>
+
+<p>超连接残差的设计是关键：不同于传统ResNet的单层残差，LoopCTR让每个子层能看到分配给它的所有循环深度的信息流。具体通过one-hot选择向量es mod n实现（n为总子层数），每个子层的聚合方式为：Output_s = Σ(α_sj · SharedLayer(X_j))，其中α为可学习的路由权重。</p>
+
+<p>混合专家层则嵌入在共享层内部，每个Expert对应不同的计算模式（如短期兴趣、长期依赖等），路由器根据输入动态选择Top-K个Expert参与计算，既保证了表达能力又控制了计算量。</p>
+
+<p>过程监督（Process Supervision）贯穿每个循环深度：不仅最终层有监督信号，每个循环深度都接收到对应的辅助损失监督，确保多循环学习的知识能被有效编码进共享参数。这避免了深层循环梯度消失问题，让浅层也能学到有意义的中间表示。</p>
+
+<p>推理时，由于共享参数已充分训练多循环的知识，即使跳过循环直接使用Entry Block的输出，也能获得超越基线的性能，实现推理零循环（Zero-Loop Inference）。</p>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>graph LR</p>
+<p>%% 样式定义</p>
+<p>classDef inputStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:2px</p>
+<p>classDef blockStyle fill:#fff8e1,stroke:#ff8f00,stroke-width:2px</p>
+<p>classDef loopStyle fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px,dashed:1</p>
+<p>classDef moeStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px</p>
+<p>classDef lossStyle fill:#ffebee,stroke:#c62828,stroke-width:2px</p>
+<p>classDef exitStyle fill:#e0f2f1,stroke:#00695c,stroke-width:2px</p>
+<p>classDef skipStyle stroke-dasharray:5,stroke:#b71c1c,stroke-width:2px</p>
+
+<p>%% 输入层</p>
+<p>A[原始特征 Embedding]:::inputStyle</p>
+
+<p>%% Entry Block</p>
+<p>B[Entry Block<br/>输入编码]:::blockStyle</p>
+
+<p>%% Loop Block 循环区域</p>
+<p>subgraph loop_block[" Loop Block (循环 L 次) "]</p>
+<p>direction TB</p>
+<p>C1[Router<br/>输入路由分配]:::moeStyle</p>
+<p>C2[共享层组<br/>MoE子层 + 超连接残差]:::moeStyle</p>
+<p>C3[深度监督点<br/>Process Supervision]:::lossStyle</p>
+<p>C4[残差连接<br/>回归主路径]:::moeStyle</p>
+<p>end</p>
+<p>style loop_block fill:#f3e5f5,stroke:#6a1b9a,stroke-width:3px,dashed:1</p>
+
+<p>%% Exit Block</p>
+<p>D[Exit Block<br/>汇聚输出层]:::exitStyle</p>
+
+<p>%% Loss 计算</p>
+<p>E[各深度监督<br/>加权求和]:::lossStyle</p>
+<p>F[最终 Loss]:::lossStyle</p>
+
+<p>%% 推理模式跳过连接</p>
+<p>G([推理模式跳过]):::skipStyle</p>
+
+<p>%% 主流程连接</p>
+<p>A --> B</p>
+<p>B --> C1</p>
+<p>C1 --> C2</p>
+<p>C2 --> C3</p>
+<p>C3 -.-> E</p>
+<p>C2 --> C4</p>
+<p>C4 --> C1</p>
+<p>C3 --> D</p>
+<p>D --> E</p>
+<p>E --> F</p>
+
+<p>%% 推理模式跳过连接</p>
+<p>B -.-> G -.-> D</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| 三明治架构（Sandwich Architecture） | 由Entry Block、Loop Block（可递归复用）、Exit Block组成。Entry处理输入编码，Loop实现循环计算扩展，Exit完成输出汇聚。这种结构简化了循环设计，让Loop Block成为纯计算模块。 |</p>
+<p>| 超连接残差（Hyper-Connected Residuals） | 每个子层不仅接收本层上一循环的输出，还接收所有其他子层在所有循环深度的信息。通过可学习的聚合权重动态融合跨循环跨层信息，确保浅层参数也能捕获深层知识。 |</p>
+<p>| 混合专家层（Mixture-of-Experts） | 在共享层内部设置多个Expert（如短期兴趣Expert、长期兴趣Expert、交叉特征Expert等），Router根据输入动态选择Top-K个Expert计算。这让有限参数表达多种计算模式，提升模型表达能力。 |</p>
+<p>| 过程监督（Process Supervision） | 每个循环深度都设置监督信号，而非仅在最深层监督。这确保多循环学习的信息被编码进共享参数，也解决了深层循环梯度衰减问题，使训练更稳定。 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+<p>import torch</p>
+<p>import torch.nn as nn</p>
+<p>import torch.nn.functional as F</p>
+
+
+<p>class EntryBlock(nn.Module):</p>
+<p>"""Entry Block: 原始输入的特征编码与投影"""</p>
+<p>def __init__(self, input_dim, hidden_dim):</p>
+<p>super().__init__()</p>
+<p>self.projection = nn.Linear(input_dim, hidden_dim)</p>
+
+<p>def forward(self, x):</p>
+<p>return self.projection(x)  # 输出作为循环入口</p>
+
+
+<p>class SharedLayer(nn.Module):</p>
+<p>"""共享层: 包含混合专家的共享计算模块"""</p>
+<p>def __init__(self, hidden_dim, num_experts=4, top_k=2):</p>
+<p>super().__init__()</p>
+<p>self.hidden_dim = hidden_dim</p>
+<p>self.num_experts = num_experts</p>
+<p>self.top_k = top_k</p>
+
+<p># 多个Expert专家</p>
+<p>self.experts = nn.ModuleList([</p>
+<p>nn.Sequential(</p>
+<p>nn.Linear(hidden_dim, hidden_dim),</p>
+<p>nn.GELU(),</p>
+<p>nn.Linear(hidden_dim, hidden_dim)</p>
+<p>) for _ in range(num_experts)</p>
+<p>])</p>
+
+<p># 路由器: 动态选择Top-K Expert</p>
+<p>self.router = nn.Linear(hidden_dim, num_experts)</p>
+
+<p>def forward(self, x):</p>
+<p># 路由器计算每个Expert的权重</p>
+<p>router_logits = self.router(x)</p>
+<p>weights = F.softmax(router_logits, dim=-1)</p>
+
+<p># 选择Top-K个Expert</p>
+<p>top_weights, top_indices = torch.topk(weights, self.top_k, dim=-1)</p>
+<p>top_weights = top_weights / top_weights.sum(dim=-1, keepdim=True)</p>
+
+<p># 聚合Top-K Expert的输出</p>
+<p>output = torch.zeros_like(x)</p>
+<p>for k in range(self.top_k):</p>
+<p>expert_idx = top_indices[:, k]  # 简化: batch-wise</p>
+<p>expert_weight = top_weights[:, k].unsqueeze(-1)</p>
+<p># 实际应按样本选择，这里简化为全选</p>
+<p>expert_output = self.experts<a href="x" target="_blank">k</a></p>
+<p>output += expert_weight * expert_output</p>
+
+<p>return output</p>
+
+
+<p>class LoopCTR(nn.Module):</p>
+<p>"""</p>
+<p>LoopCTR核心架构:</p>
+<p>- Loop Block: N个可复用共享层</p>
+<p>- 超连接残差: 每层接收所有循环深度的输入</p>
+<p>- 过程监督: 每个循环深度都有辅助损失</p>
+<p>"""</p>
+<p>def __init__(self, input_dim, hidden_dim, num_layers, num_loops):</p>
+<p>super().__init__()</p>
+<p>self.num_layers = num_layers</p>
+<p>self.num_loops = num_loops</p>
+
+<p>self.entry = EntryBlock(input_dim, hidden_dim)</p>
+
+<p># N个共享层 (SharedLayers)</p>
+<p>self.shared_layers = nn.ModuleList([</p>
+<p>SharedLayer(hidden_dim) for _ in range(num_layers)</p>
+<p>])</p>
+
+<p># 超连接权重 α_sj (可学习的路由权重)</p>
+<p>self.hyper_weights = nn.Parameter(torch.ones(num_layers, num_layers))</p>
+
+<p># 输出层</p>
+<p>self.output_layer = nn.Linear(hidden_dim, input_dim)</p>
+
+<p>def hyper_connection(self, layer_idx, loop_outputs):</p>
+<p>"""</p>
+<p>超连接: 聚合所有循环深度的输入</p>
+<p>α_sj: 可学习的路由权重矩阵</p>
+<p>"""</p>
+<p># 使用one-hot风格的选择向量 + 可学习权重</p>
+<p>alpha = F.softmax(self.hyper_weights[layer_idx], dim=0)</p>
+
+<p>aggregated = torch.zeros_like(loop_outputs[0])</p>
+<p>for j, loop_out in enumerate(loop_outputs):</p>
+<p>aggregated += alpha[j] * loop_out</p>
+
+<p>return aggregated</p>
+
+<p>def loop_block(self, x, loop_depth):</p>
+<p>"""</p>
+<p>Loop Block: 核心循环结构</p>
+<p>- 共享层处理</p>
+<p>- 跨循环跳跃连接</p>
+<p>"""</p>
+<p>loop_outputs = [x]  # 记录每层所有循环深度的输出</p>
+
+<p>for layer_idx in range(self.num_layers):</p>
+<p># 超连接: 聚合所有循环深度的信息</p>
+<p>aggregated_input = self.hyper_connection(layer_idx, loop_outputs)</p>
+
+<p># 共享层处理</p>
+<p>shared_output = self.shared_layers<a href="aggregated_input" target="_blank">layer_idx</a></p>
+
+<p># 残差连接 (跨循环跳跃)</p>
+<p>residual = shared_output + aggregated_input</p>
+<p>loop_outputs.append(residual)</p>
+
+<p>return loop_outputs[-1]  # 返回最后一层输出</p>
+
+<p>def forward(self, x, return_all_losses=False):</p>
+<p>"""</p>
+<p>前向传播</p>
+<p>- 多循环深度迭代</p>
+<p>- 过程监督支持</p>
+<p>"""</p>
+<p># Entry Block</p>
+<p>h = self.entry(x)</p>
+
+<p>all_loop_outputs = []  # 用于过程监督</p>
+<p>current = h</p>
+
+<p># 多循环迭代 (L个循环深度)</p>
+<p>for loop_idx in range(self.num_loops):</p>
+<p>current = self.loop_block(current, loop_idx)</p>
+<p>all_loop_outputs.append(current)</p>
+
+<p># 最终输出</p>
+<p>output = self.output_layer(current)</p>
+
+<p>if return_all_losses:</p>
+<p># 返回所有循环深度的输出 (用于过程监督)</p>
+<p>return output, all_loop_outputs</p>
+<p>return output</p>
+
+<p>def zero_loop_inference(self, x):</p>
+<p>"""</p>
+<p>零循环推理 (Zero-Loop Inference)</p>
+<p>共享参数已训练好，直接跳过循环使用Entry输出</p>
+<p>"""</p>
+<p>h = self.entry(x)</p>
+<p>return self.output_layer(h)  # 跳过循环</p>
+
+
+<p>def process_supervision_loss(outputs, targets, layer_weights=None):</p>
+<p>"""</p>
+<p>过程监督损失: 每个循环深度都有辅助损失</p>
+<p>"""</p>
+<p>if layer_weights is None:</p>
+<p>layer_weights = torch.ones(len(outputs)) / len(outputs)</p>
+
+<p>total_loss = 0</p>
+<p>for i, (out, weight) in enumerate(zip(outputs, layer_weights)):</p>
+<p># 每个循环深度独立的监督信号</p>
+<p>loss = F.mse_loss(out, targets)</p>
+<p>total_loss += weight * loss</p>
+<p>print(f"  循环深度 {i} 辅助损失: {loss.item():.4f}")</p>
+
+<p>return total_loss</p>
+
+
+<h1>==================== 使用示例 ====================</h1>
+<p>if __name__ == "__main__":</p>
+<p># 参数设置</p>
+<p>batch_size, input_dim, hidden_dim = 4, 128, 256</p>
+<p>num_layers, num_loops = 3, 4  # 3个共享层, 4个循环深度</p>
+
+<p># 模型实例化</p>
+<p>model = LoopCTR(input_dim, hidden_dim, num_layers, num_loops)</p>
+<p>x = torch.randn(batch_size, input_dim)</p>
+<p>targets = torch.randn(batch_size, input_dim)</p>
+
+<p># 方式1: 标准多循环推理</p>
+<p>print("=== 标准循环推理 ===")</p>
+<p>output = model(x)</p>
+<p>print(f"输出形状: {output.shape}")</p>
+
+<p># 方式2: 带过程监督的推理</p>
+<p>print("\n=== 过程监督推理 ===")</p>
+<p>output, all_loop_outputs = model(x, return_all_losses=True)</p>
+<p>loss = process_supervision_loss(all_loop_outputs, targets)</p>
+<p>print(f"总监督损失: {loss.item():.4f}")</p>
+
+<p># 方式3: 零循环推理 (跳过循环，直接用Entry输出)</p>
+<p>print("\n=== 零循环推理 (Zero-Loop) ===")</p>
+<p>zero_loop_output = model.zero_loop_inference(x)</p>
+<p>print(f"输出形状: {zero_loop_output.shape}")</p>
+</code>``
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>\text{PrefixAttn}(\cdot, M) &\coloneqq \text{multi-head attention governed by the mask } M,\\</p>
+<p>\text{The mask } M &\text{ encodes an \ldots}.</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：where PrefixAttn(·, M) denotes multi-head attention governed by the mask M. The mask encodes an
+
+<strong>公式 2</strong>：
+
+<p>$$</p>
+<p>s</p>
+<p>$$</p>
+
+<em>含义</em>：where es mod n is the one-hot basis vector selecting the stream assigned to the s-th sub-layer. Unde
+
+<strong>公式 3</strong>：
+
+<p>$$</p>
+<p>(1024)</p>
+<p>$$</p>
+
+<em>含义</em>：and long-term (1024) sequences.
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：三个公开基准数据集（Amazon、MovieLens等CTR常用数据集）+ 一个工业数据集（KuaiVideo短视频平台）
+
+<strong>评价指标</strong>：AUC（Area Under ROC Curve）为主要指标，辅以LogLoss评估校准能力
+
+<strong>主要结果</strong>：
+
+<p>LoopCTR在所有数据集上达到SOTA性能。关键发现：(1) 即使推理零循环（直接跳过Loop Block），仍超越所有参数量更大的基线模型；(2) 训练时增加循环深度（L=2,3,4）持续提升性能，但边际收益递减；(3) Oracle分析显示还有0.02-0.04 AUC的提升空间，通过更深的循环或优化可进一步挖掘。消融实验验证了每个组件的必要性：移除超连接残差、MoE或过程监督均导致性能显著下降。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ 推理零循环即可超越所有基线，证明多循环训练的有效知识迁移</li>
+<li>✅ 循环缩放在不同数据规模和分布下均稳定有效</li>
+<li>✅ 三明治架构、超连接残差、MoE、过程监督四者缺一不可</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 计算-参数解耦的循环缩放范式 | 首次提出用递归复用替代参数增长来扩展计算量，打破传统Scaling Law认知。 |</p>
+<p>| 超连接残差设计 | 跨循环跨层的信息聚合机制，让浅层参数捕获深层知识，避免循环深度增加时信息丢失。 |</p>
+<p>| 训练多循环推理零循环策略 | 多循环训练将丰富知识编码进共享参数，推理时可跳过循环直接输出，零额外计算成本获得高性能。 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 大规模在线广告系统CTR预估</li>
+<li>🎯 短视频/信息流推荐系统</li>
+<li>🎯 电商平台商品点击率预测</li>
+<li>🎯 搜索排序系统</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 线上推理需严格保证低延迟（P99<10ms），零循环推理是解法但需工程优化</li>
+<li>⚠️ 多循环训练周期更长，需平衡训练资源与收益</li>
+<li>⚠️ 超参数（循环深度L、MoE Expert数量等）需针对业务数据调优</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>核心实现在于共享层的循环调用：定义单个SharedBlock，内部包含MoE Router和FFN计算；训练时用for循环迭代L次，每次传入上一层输出；推理时直接返回Entry Block输出或仅执行一次循环。超连接残差通过维护各循环深度的隐状态向量，在每层聚合时动态加权求和。Process Supervision在每个循环深度添加辅助Loss，训练时联合优化主Loss和辅助Loss。</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：LoopCTR通过循环复用共享层实现计算与参数的解耦，是CTR模型工业部署的重要突破，推理零循环超越基线的特性使其极具落地价值。
+
+<strong>未来方向</strong>：探索自适应循环深度（输入复杂度决定循环次数）、将循环缩放思想迁移至其他序列建模任务、进一步挖掘Oracle分析揭示的0.02-0.04 AUC提升空间。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：为什么推理零循环还能超越基线？多循环训练学到了什么？</strong>
+
+<p>A：多循环训练让共享层在每轮循环中逐步精炼特征表示，相当于对输入进行多层语义加工。Process Supervision确保每轮循环都学到有意义的中间表示，这些知识被编码进共享参数。推理时即使只做一次编码，共享层已具备强大的特征变换能力，能直接输出高质量CTR预估。</p>
+
+
+<strong>Q：循环深度L如何选择？是否越深越好？</strong>
+
+<p>A：论文实验显示L=2-4区间性能最佳，继续增加边际收益递减且训练成本上升。实际选择需权衡：数据复杂度高时可增大L，工业场景推荐L=2或L=3。Oracle分析表明更深的循环仍有提升空间，但需配合架构优化。</p>
+
+
+<strong>Q：与知识蒸馏有何区别？LoopCTR的优势在哪？</strong>
+
+<p>A：知识蒸馏是将大模型知识迁移到小模型，训练和推理模型结构不同。LoopCTR训练和推理共享同一套参数，只是推理时跳过循环。优势在于：(1) 无需训练额外的蒸馏模型；(2) 推理结构极简，无任何额外开销；(3) 循环深度可按需调整，灵活平衡性能与速度。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: Architecture of LoopCTR. Left: the sandwich design consisting of an Entry Block
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_0.png" target="_blank">Figure 1</a></p>
+
+<strong>Figure 2</strong>: Loop scaling analysis across four datasets. Top row: AUC under different training loop
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_1.png" target="_blank">Figure 2</a></p>
+
+<strong>Figure 3</strong>: Ablation study on Amazon (top) and KuaiVideo (bottom). Each variant removes one
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_2.png" target="_blank">Figure 3</a></p>
+
+<strong>Figure 4</strong>: Loss landscape visualization on Amazon with varying training loop counts (L=1, 2, 3) at
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_3.png" target="_blank">Figure 4</a></p>
+
+<strong>Figure 5</strong>: Per-loop diagnostics. (a) Cosine
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_4.png" target="_blank">Figure 5</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

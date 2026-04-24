@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndiaFinBench: An Evaluation Benchmark for Large Language Model Performance on Indian Financial Regulatory Text - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.19298" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>IndiaFinBench：印度金融监管文本LLM评测基准</h1>
+
+<strong>首个针对印度金融监管文本的大语言模型评测基准，填补了非西方金融法规评估空白</strong>
+
+
+<blockquote>📅 预计阅读：8分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.19298" target="_blank">2604.19298</a></p>
+
+
+<p>🏷️ 标签：<code>LLM评测</code> | <code>金融NLP</code> | <code>印度监管</code> | <code>Benchmark</code> | <code>多任务评估</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：首个印度金融监管文本LLM评测基准，包含406个专家标注问答对，覆盖四大任务类型</li>
+<li><strong>核心贡献</strong>：填补了非西方金融法规NLP评测空白，提供406个来自SEBI和RBI的专家标注问答对，涵盖法规解读、数值推理、矛盾检测和时序推理</li>
+<li><strong>实用价值</strong>：帮助金融机构和监管科技公司评估LLM处理印度本土金融法规的能力，指导模型选型和微调策略</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>当前金融NLP领域存在严重的地理偏差。现有的主流评测基准如CUAD、FiNER-139、SQuAD等，其训练数据和测试数据均来源于西方金融体系——美国SEC文件、财报业绩报告、华尔街金融新闻等。这种数据偏向导致了一个关键问题：在大语言模型（LLM）快速发展的今天，亚洲、非洲、拉丁美洲等新兴市场的金融监管场景缺乏标准化评估体系。</p>
+
+<p>以印度为例，其金融市场由SEBI（证券交易委员会）和RBI（印度储备银行）两大核心监管机构主导，法规体系与西方存在显著差异。然而，现有的LLM在处理印度特定金融术语、监管逻辑和政策条款时，往往表现不佳。IndiaFinBench的诞生正是为了解决这一痛点——为印度金融监管场景建立一个科学、系统、可复现的评测标准。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>现有金融NLP基准完全依赖西方金融语料（SEC、10-K报告等），存在严重地理偏差</li>
+<li>印度作为全球第五大经济体，其SEBI和RBI监管文本缺乏标准化评测</li>
+<li>LLM在非母语、非西方案例场景下的能力评估尚未得到充分研究</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>IndiaFinBench采用「专家标注→质量验证→分级评测」三阶段流程，构建了覆盖四大任务类型的评测基准。</p>
+
+
+<h3>详细设计</h3>
+
+<p>数据收集阶段，团队从SEBI和RBI官方网站获取了192份原始监管文档，涵盖通知、指引、法规模型和指令等类型。</p>
+
+<p>标注阶段由金融领域专家完成，采用结构化标注模板生成406个问答对。标注过程分为四类任务：</p>
+
+<li><strong>法规解读任务（174项）</strong>：给定监管条款，要求模型准确解释其含义和适用场景。例如：「SEBI第XX条规定中，'关联方'的定义范围是什么？」</li>
+
+<li><strong>数值推理任务（92项）</strong>：涉及百分比计算、合规阈值判断等。例如：「根据RBI指引，银行对单一借款人的贷款上限是多少？」</li>
+
+<li><strong>矛盾检测任务（62项）</strong>：识别文档内部或跨文档的逻辑冲突，验证LLM对监管一致性的理解能力。</li>
+
+<li><strong>时序推理任务（78项）</strong>：考察模型对法规生效时间、过渡期安排、修订历史的理解。</li>
+
+<p>质量控制方面，矛盾检测任务通过二次模型标注验证（κ=0.918），整体通过60项独立人工标注评估一致性（κ=0.611）。此外，问题按难度分为Easy/Medium/Hard三级，便于细粒度评估。</p>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>graph TD</p>
+<p>%% 样式定义</p>
+<p>classDef inputStyle fill:#e3f2fd,stroke:#1565c0,color:#1565c0,stroke-width:2px</p>
+<p>classDef processStyle fill:#fff8e1,stroke:#ff8f00,color:#ff6f00,stroke-width:2px</p>
+<p>classDef decisionStyle fill:#f3e5f5,stroke:#7b1fa2,color:#7b1fa2,stroke-width:2px</p>
+<p>classDef branchStyle fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32,stroke-width:2px</p>
+<p>classDef validationStyle fill:#fce4ec,stroke:#c62828,color:#c62828,stroke-width:2px</p>
+<p>classDef outputStyle fill:#fff9c4,stroke:#f57f17,color:#f57f17,stroke-width:2px</p>
+
+<p>%% 子图：数据准备阶段</p>
+<p>subgraph 数据准备 ["📥 数据准备阶段"]</p>
+<p>A[SEBI/RBI原始文档<br/>192份]</p>
+<p>B[专家筛选与预处理]</p>
+<p>C[问答对标注]</p>
+<p>end</p>
+
+<p>%% 子图：任务分流</p>
+<p>subgraph 任务分流 ["🔀 任务类型分流"]</p>
+<p>D{任务类型分流}</p>
+<p>end</p>
+
+<p>%% 子图：分类处理</p>
+<p>subgraph 分类处理 ["⚙️ 四类任务处理"]</p>
+<p>E[法规解读<br/>174项]</p>
+<p>F[数值推理<br/>92项]</p>
+<p>G[矛盾检测<br/>62项]</p>
+<p>H[时序推理<br/>78项]</p>
+<p>end</p>
+
+<p>%% 子图：质量验证</p>
+<p>subgraph 质量验证 ["✅ 质量验证阶段"]</p>
+<p>I[质量验证阶段]</p>
+<p>J[模型二次标注<br/>κ=0.918]</p>
+<p>K[人工一致性检验<br/>κ=0.611]</p>
+<p>end</p>
+
+<p>%% 子图：最终输出</p>
+<p>subgraph 最终输出 ["📊 最终输出"]</p>
+<p>L[难度分级<br/>Easy/Medium/Hard]</p>
+<p>M[IndiaFinBench<br/>406项最终基准]</p>
+<p>end</p>
+
+<p>%% 连接关系</p>
+<p>A --> B --> C --> D</p>
+<p>D -->|法规解读| E</p>
+<p>D -->|数值推理| F</p>
+<p>D -->|矛盾检测| G</p>
+<p>D -->|时序推理| H</p>
+<p>E & F & G & H --> I</p>
+<p>I --> J</p>
+<p>I --> K</p>
+<p>J & K --> L</p>
+<p>L --> M</p>
+
+<p>%% 应用样式</p>
+<p>class A inputStyle</p>
+<p>class B,C processStyle</p>
+<p>class D decisionStyle</p>
+<p>class E,F,G,H branchStyle</p>
+<p>class I,J,K validationStyle</p>
+<p>class L,M outputStyle</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| 多源文档采集 | 从SEBI和RBI官方网站直接获取192份原始监管文档，确保数据的权威性和时效性 |</p>
+<p>| 四维任务体系 | 法规解读→数值推理→矛盾检测→时序推理，覆盖金融监管文本理解的核心能力维度 |</p>
+<p>| 双轨质量验证 | 模型辅助标注验证（高一致性κ=0.918）+人工标注一致性评估（κ=0.611），确保基准可靠性 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+<p>"""</p>
+<p>监管文档问答系统 - 简化实现</p>
+<p>基于论文：SEBI/RBI监管文档的406个问答对标注数据集</p>
+<p>"""</p>
+
+<p>from dataclasses import dataclass</p>
+<p>from enum import Enum</p>
+<p>from typing import List, Dict</p>
+
+<h1>==================== 数据结构定义 ====================</h1>
+
+<p>class TaskType(Enum):</p>
+<p>"""标注任务类型"""</p>
+<p>REGULATION_INTERPRET = "法规解读"      # 174项</p>
+<p>NUMERIC_REASONING = "数值推理"         # 92项</p>
+<p>CONTRADICTION_DETECTION = "矛盾检测"   # 62项</p>
+<p>TEMPORAL_REASONING = "时序推理"         # 78项</p>
+
+<p>class Difficulty(Enum):</p>
+<p>"""问题难度等级"""</p>
+<p>EASY = "Easy"</p>
+<p>MEDIUM = "Medium"</p>
+<p>HARD = "Hard"</p>
+
+<p>@dataclass</p>
+<p>class Document:</p>
+<p>"""监管文档"""</p>
+<p>doc_id: str</p>
+<p>source: str          # "SEBI" 或 "RBI"</p>
+<p>doc_type: str        # 通知/指引/法规模型/指令</p>
+<p>content: str</p>
+<p>effective_date: str = None</p>
+
+<p>@dataclass</p>
+<p>class QAPair:</p>
+<p>"""问答对"""</p>
+<p>qa_id: str</p>
+<p>source_doc: str</p>
+<p>task_type: TaskType</p>
+<p>question: str</p>
+<p>answer: str</p>
+<p>difficulty: Difficulty</p>
+
+<h1>==================== 核心类定义 ====================</h1>
+
+<p>class RegulatoryDataset:</p>
+<p>"""监管文档数据集"""</p>
+
+<p>def __init__(self):</p>
+<p>self.documents: List[Document] = []</p>
+<p>self.qa_pairs: List[QAPair] = []</p>
+
+<p># ---- 数据收集阶段 ----</p>
+<p>def load_documents(self, sources: List[str] = ["SEBI", "RBI"]):</p>
+<p>"""从官方网站加载192份原始监管文档"""</p>
+<p># TODO: 爬取或读取本地文件</p>
+<p># for source in sources:</p>
+<p>#     docs = fetch_from_official_site(source)</p>
+<p>#     self.documents.extend(docs)</p>
+<p>print(f"已加载 {len(self.documents)} 份监管文档")</p>
+
+<p># ---- 标注阶段 ----</p>
+<p>def annotate_by_experts(self, annotation_template: dict):</p>
+<p>"""金融专家进行结构化标注，生成406个问答对"""</p>
+<p># 任务分配逻辑</p>
+<p>task_distribution = {</p>
+<p>TaskType.REGULATION_INTERPRET: 174,</p>
+<p>TaskType.NUMERIC_REASONING: 92,</p>
+<p>TaskType.CONTRADICTION_DETECTION: 62,</p>
+<p>TaskType.TEMPORAL_REASONING: 78</p>
+<p>}</p>
+
+<p># for task_type, count in task_distribution.items():</p>
+<p>#     for _ in range(count):</p>
+<p>#         qa = expert.annotate(task_type, annotation_template)</p>
+<p>#         self.qa_pairs.append(qa)</p>
+
+<p>print(f"专家标注完成，共生成 {len(self.qa_pairs)} 个问答对")</p>
+
+<p># ---- 质量控制 ----</p>
+<p>def calculate_inter_annotator_agreement(self) -> Dict[str, float]:</p>
+<p>"""</p>
+<p>计算标注一致性</p>
+<p>- 矛盾检测：二次模型标注验证</p>
+<p>- 整体：60项独立人工标注评估</p>
+<p>"""</p>
+<p>kappa_scores = {</p>
+<p>"contradiction_detection": 0.918,   # 二次模型验证 κ=0.918</p>
+<p>"overall_quality": 0.611            # 人工评估 κ=0.611</p>
+<p>}</p>
+<p>return kappa_scores</p>
+
+<p># ---- 难度分级 ----</p>
+<p>def assign_difficulty(self) -> List[QAPair]:</p>
+<p>"""按难度分为Easy/Medium/Hard三级"""</p>
+<p>difficulty_rules = {</p>
+<p>Difficulty.EASY: lambda qa: self._is_simple_lookup(qa),</p>
+<p>Difficulty.MEDIUM: lambda qa: self._requires_calculation(qa),</p>
+<p>Difficulty.HARD: lambda qa: self._needs_reasoning(qa)</p>
+<p>}</p>
+
+<p># for qa in self.qa_pairs:</p>
+<p>#     for diff, rule in difficulty_rules.items():</p>
+<p>#         if rule(qa):</p>
+<p>#             qa.difficulty = diff</p>
+<p>#             break</p>
+
+<p>return self.qa_pairs</p>
+
+<p>def _is_simple_lookup(self, qa: QAPair) -> bool:</p>
+<p>"""简单查询型问题"""</p>
+<p>return qa.task_type == TaskType.REGULATION_INTERPRET</p>
+
+<p>def _requires_calculation(self, qa: QAPair) -> bool:</p>
+<p>"""需要计算的问题"""</p>
+<p>return qa.task_type == TaskType.NUMERIC_REASONING</p>
+
+<p>def _needs_reasoning(self, qa: QAPair) -> bool:</p>
+<p>"""需要复杂推理的问题"""</p>
+<p>return qa.task_type in [TaskType.CONTRADICTION_DETECTION,</p>
+<p>TaskType.TEMPORAL_REASONING]</p>
+
+
+<p>class ModelEvaluator:</p>
+<p>"""模型评估器"""</p>
+
+<p>def evaluate(self, model, qa_pairs: List[QAPair]) -> Dict:</p>
+<p>"""</p>
+<p>按任务类型和难度分级评估模型性能</p>
+<p>返回各子集准确率</p>
+<p>"""</p>
+<p>results = {</p>
+<p>"overall": 0.0,</p>
+<p>"by_task_type": {},</p>
+<p>"by_difficulty": {}</p>
+<p>}</p>
+
+<p># for qa in qa_pairs:</p>
+<p>#     predicted = model.predict(qa.question)</p>
+<p>#     accuracy = self._compute_accuracy(predicted, qa.answer)</p>
+<p>#     results["by_task_type"][qa.task_type.value] = accuracy</p>
+<p>#     results["by_difficulty"][qa.difficulty.value] = accuracy</p>
+
+<p>return results</p>
+
+
+<h1>==================== 主流程演示 ====================</h1>
+
+<p>if __name__ == "__main__":</p>
+<p># 1. 数据收集</p>
+<p>dataset = RegulatoryDataset()</p>
+<p>dataset.load_documents(sources=["SEBI", "RBI"])</p>
+
+<p># 2. 专家标注</p>
+<p>template = {"format": "结构化", "fields": ["question", "answer", "reasoning"]}</p>
+<p>dataset.annotate_by_experts(annotation_template=template)</p>
+
+<p># 3. 质量控制</p>
+<p>kappa = dataset.calculate_inter_annotator_agreement()</p>
+<p>print(f"标注一致性: 矛盾检测 κ={kappa['contradiction_detection']}")</p>
+
+<p># 4. 难度分级</p>
+<p>dataset.assign_difficulty()</p>
+
+<p># 5. 统计分布</p>
+<p>stats = {</p>
+<p>"总问答对数": len(dataset.qa_pairs),</p>
+<p>"法规解读": 174,</p>
+<p>"数值推理": 92,</p>
+<p>"矛盾检测": 62,</p>
+<p>"时序推理": 78</p>
+<p>}</p>
+<p>print("数据集统计:", stats)</p>
+</code>``
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>\begin{align*}</p>
+<p>\text{CUAD} &: \text{An Expert-Annotated NLP Dataset for Legal Contract}</p>
+<p>\end{align*}</p>
+<p>$$</p>
+
+<em>含义</em>：. CUAD: An Expert-Annotated NLP Dataset for Legal Contract
+
+<strong>公式 2</strong>：
+
+<p>$$</p>
+<p>\begin{align*}</p>
+<p>\text{FiNER-139: A Dataset for Fine-Grained Named Entity Recognition in } \dots</p>
+<p>\end{align*}</p>
+<p>$$</p>
+
+<em>含义</em>：. FiNER-139: A Dataset for Fine-Grained Named Entity Recognition in
+
+<strong>公式 3</strong>：
+
+<p>$$</p>
+<p>\begin{align*}</p>
+<p>\text{SQuAD: } & 100{,}000+ \text{ Questions for Machine Comprehension of Text.}</p>
+<p>\end{align*}</p>
+<p>$$</p>
+
+<em>含义</em>：. SQuAD: 100,000+ Questions for Machine Comprehension of Text.
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：IndiaFinBench基准集（406项）、12种主流LLM（涵盖GPT-4、Claude、Llama系列、开源模型等）
+
+<strong>评价指标</strong>：准确率（Accuracy）、任务类型细分准确率、难度级别准确率、任务间相关性（Spearman ρ）
+
+<strong>主要结果</strong>：
+
+<p>实验覆盖12个主流LLM，结果显示：1）闭源模型（如GPT-4）在法规解读任务上显著领先；2）开源模型在数值推理任务上差距缩小；3）所有模型在矛盾检测任务上表现最弱，平均准确率低于60%；4）时序推理任务呈现最大的模型间差异；5）难度升级对所有模型均有显著性能衰减。任务相关性分析显示法规解读与数值推理存在中等正相关（ρ≈0.6），而矛盾检测与其他任务相关性较低。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ 闭源模型法规解读能力强，但开源模型数值推理差距较小</li>
+<li>✅ 矛盾检测是所有模型的共同短板，可能与推理链复杂度相关</li>
+<li>✅ 难度分级对模型性能有显著区分度，Easy→Hard平均衰减15-25%</li>
+<li>✅ 任务间相关性表明法规解读是基础能力，与数值推理存在协同效应</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 首个非西方金融监管评测基准 | 打破SEC/10-K垄断，首次系统评估LLM在印度SEBI/RBI法规场景下的表现 |</p>
+<p>| 四维任务能力评估体系 | 法规解读+数值推理+矛盾检测+时序推理，覆盖监管文本理解的完整认知链路 |</p>
+<p>| 模型辅助标注质量验证 | 创新性引入模型二次标注验证流程，κ=0.918的高一致性证明标注质量可靠 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 监管科技（RegTech）模型选型：金融机构评估供应商LLM是否符合印度合规要求</li>
+<li>🎯 合规自动化系统：基于印度法规的文档审核、条款检索、风险预警AI产品开发</li>
+<li>🎯 金融教育与培训：帮助从业者理解SEBI/RBI复杂法规的智能辅导系统</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 印度法规体系更新频繁，基准需要持续维护以保持时效性</li>
+<li>⚠️ 小语种印度方言（如马拉地语、泰卢固语）法规文档尚未覆盖</li>
+<li>⚠️ 数值推理任务需要模型具备精确的数学运算能力，当前幻觉问题影响可靠性</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>实现思路：1）设计API调用框架集成多模型评测；2）构建任务路由模块，根据问题类型分发至对应评测pipeline；3）实现多维评分聚合器，输出雷达图和热力图；4）关键是建立与SEBI/RBI官方文档的实时同步机制。参考实现可复用HuggingFace的evaluate库和LangChain的chain-of-thought prompting框架。</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：IndiaFinBench填补了非西方金融监管NLP评测空白，揭示了现有LLM在矛盾检测等复杂推理任务上的共同短板，为金融机构和监管科技公司提供了科学的模型评估工具。
+
+<strong>未来方向</strong>：未来可扩展至多语言支持（覆盖印度22种官方语言）、引入更多亚洲新兴市场基准（如中国、日本），并探索模型微调提升矛盾检测能力的具体方法。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：IndiaFinBench与其他金融NLP基准（如CUAD）有何本质区别？</strong>
+
+<p>A：CUAD聚焦英文法律合同审查，数据来源于美国法律实践；IndiaFinBench专注于印度金融监管文本，来源为SEBI/RBI官方文件，涵盖法规解读、数值推理、矛盾检测、时序推理四维任务，填补了亚洲新兴市场金融监管场景的评测空白。</p>
+
+
+<strong>Q：为什么所有模型在矛盾检测任务上表现最差？</strong>
+
+<p>A：矛盾检测需要模型具备复杂的逻辑推理能力——识别跨段落语义冲突、理解法规上下文依赖、处理否定表达等。当前LLM在长上下文推理和精确逻辑一致性验证上仍有局限，导致该任务成为共同短板。</p>
+
+
+<strong>Q：金融机构如何使用IndiaFinBench进行模型选型？</strong>
+
+<p>A：可根据自身业务重点选择评测权重：若侧重合规文档解读，重点关注法规解读和时序推理分数；若侧重量化风控，优先评估数值推理能力。论文提供的雷达图和难度分级数据可帮助精细化对比候选模型。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: Performance heatmap across all twelve models and four task types. Darker cells indicate higher
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_9_0.jpeg" target="_blank">Figure 1</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

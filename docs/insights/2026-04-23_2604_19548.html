@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taming Actor-Observer Asymmetry in Agents via Dialectical Alignment - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.19548" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>驯服智能体中的行动者-观察者偏差：辩证对齐方法</h1>
+
+<strong>通过Thesis-Antithesis-Synthesis结构化推理，让多智能体摆脱认知偏见的困扰</strong>
+
+
+<blockquote>📅 预计阅读：15分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.19548" target="_blank">2604.19548</a></p>
+
+
+<p>🏷️ 标签：<code>多智能体系统</code> | <code>认知偏差</code> | <code>大语言模型</code> | <code>辩证对齐</code> | <code>自我反思机制</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：揭示多智能体中类似人类的归因偏差，提出结构化辩证推理框架ReTAS进行矫正</li>
+<li><strong>核心贡献</strong>：发现多智能体角色分工引入的AOA认知偏差，创建Ambiguous Failure Benchmark量化该问题，并提出基于辩证对齐的ReTAS训练方法</li>
+<li><strong>实用价值</strong>：提升多智能体系统的可靠性和决策一致性，使自我反思和相互审核机制真正发挥预期作用</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>多智能体系统通过角色分工（如执行者、审核者）提升可靠性，但这也引入了类似人类的认知偏差——行动者-观察者偏差(AOA)。执行者倾向于将失败归因于外部环境，而审核者则倾向于归咎于内部推理错误。这种偏差导致自我反思失效、相互审核失去意义。论文首次系统性地揭示并量化了这一问题，为构建更可靠的多智能体系统奠定了理论基础。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>多智能体系统中，执行者(Actor)与审核者(Observer)的角色分工引入认知偏差</li>
+<li>行动者-观察者偏差(AOA)导致归因错误，影响系统可靠性</li>
+<li>简单切换视角即可触发超过20%案例中的AOA效应</li>
+<li>传统prompt工程无法根本解决这类社会认知偏见</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>ReTAS通过结构化的Thesis-Antithesis-Synthesis三元组格式，引导模型在辩证推理过程中整合多元视角，从根本上消除AOA偏差。</p>
+
+
+<h3>详细设计</h3>
+
+<p>ReTAS采用三阶段训练流程：(1)归因数据构建：基于FinQA和Spider数据集，设计Ambiguous Failure场景，标注External(外部归因)、Internal(内部归因)、Correct(正确归因)三类；(2)TAS微调：采用Thesis-Antithesis-Synthesis结构化格式，强制模型同时考虑内外部因素；(3)GRPO强化学习：三个奖励分量R1(归因准确性)、R2(双视角反射)、R3(任务性能)协同优化。TAS格式要求模型先提出初始观点(Thesis)，再呈现对立观点(Antithesis)，最终综合形成平衡结论(Synthesis)，确保决策经过充分辩证考量。</p>
+
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| Ambiguous Failure Benchmark (AFB) | 包含8,281个FinQA样本和8,034个Spider样本，专门设计用于量化AOA偏差的诊断测试集 |</p>
+<p>| TAS (Thesis-Antithesis-Synthesis) 格式 | 结构化推理模板，强制模型同时表达对立观点并综合形成平衡结论 |</p>
+<p>| GRPO训练目标 | 三重奖励机制：R1奖励正确归因、R2奖励双视角反思、R3奖励任务性能，三者缺一不可 |</p>
+
+<h3>💻 代码示例</h3>
+
+<p>``<code>python</p>
+<p>"""</p>
+<p>ReTAS (Thesis-Antithesis-Synthesis) 简化实现示例</p>
+<p>三阶段训练流程：归因数据构建 -> TAS微调 -> GRPO强化学习</p>
+<p>"""</p>
+
+<p>import random</p>
+
+<h1>============================================================</h1>
+<h1>阶段1: 归因数据构建</h1>
+<h1>============================================================</h1>
+
+<p>class AttributionDataBuilder:</p>
+<p>"""基于FinQA和Spider数据集构建Ambiguous Failure场景"""</p>
+
+<p>def __init__(self):</p>
+<p>self.datasets = ['FinQA', 'Spider']</p>
+<p>self.attribution_types = ['External', 'Internal', 'Correct']</p>
+
+<p>def build_ambiguous_failure_sample(self, original_sample):</p>
+<p>"""</p>
+<p>构建模糊失败样本，标注归因类型</p>
+
+<p>Args:</p>
+<p>original_sample: 原始问答样本</p>
+
+<p>Returns:</p>
+<p>ambiguous_sample: 带归因标注的样本</p>
+<p>"""</p>
+<p># 模拟数据标注过程</p>
+<p>attribution = random.choice(self.attribution_types)</p>
+
+<p>ambiguous_sample = {</p>
+<p>'question': original_sample['question'],</p>
+<p>'context': original_sample['context'],</p>
+<p>'predicted_answer': original_sample['predicted_answer'],  # 可能错误</p>
+<p>'ground_truth': original_sample['ground_truth'],</p>
+<p>'attribution': attribution,</p>
+<p># 归因类型决定失败原因来源</p>
+<p>'failure_source': {</p>
+<p>'External': '外部环境/工具错误',</p>
+<p>'Internal': '模型内部推理错误',</p>
+<p>'Correct': '正确答案，需谨慎判断'</p>
+<p>}[attribution]</p>
+<p>}</p>
+<p>return ambiguous_sample</p>
+
+
+<h1>============================================================</h1>
+<h1>阶段2: TAS微调 (Thesis-Antithesis-Synthesis)</h1>
+<h1>============================================================</h1>
+
+<p>class TASTrainer:</p>
+<p>"""</p>
+<p>Thesis-Antithesis-Synthesis 结构化微调</p>
+<p>强制模型进行辩证思考</p>
+<p>"""</p>
+
+<p>def __init__(self, model):</p>
+<p>self.model = model</p>
+
+<p>def format_tas_prompt(self, question, context, attribution_hint=None):</p>
+<p>"""</p>
+<p>构建TAS格式提示</p>
+
+<p>结构:</p>
+<p>1. Thesis (正题): 初始观点</p>
+<p>2. Antithesis (反题): 对立观点</p>
+<p>3. Synthesis (合题): 综合结论</p>
+<p>"""</p>
+<p>tas_prompt = f"""问题: {question}</p>
+<p>上下文: {context}</p>
+
+<p>[Thesis 阶段]</p>
+<p>请提出您的初始观点和推理过程：</p>
+
+<p>[Antithesis 阶段]</p>
+<p>请从相反角度分析，指出初始观点可能的问题：</p>
+
+<p>[Synthesis 阶段]</p>
+<p>综合内外部因素，形成平衡结论："""</p>
+<p>return tas_prompt</p>
+
+<p>def generate_tas_response(self, prompt):</p>
+<p>"""</p>
+<p>生成TAS格式响应</p>
+<p>"""</p>
+<p># 伪代码：实际使用LLM生成</p>
+<p>response = {</p>
+<p>'thesis': '初始观点和推理...',</p>
+<p>'antithesis': '对立观点和反思...',</p>
+<p>'synthesis': '综合后的平衡结论...'</p>
+<p>}</p>
+<p>return response</p>
+
+
+<h1>============================================================</h1>
+<h1>阶段3: GRPO强化学习</h1>
+<h1>============================================================</h1>
+
+<p>class GRPORewards:</p>
+<p>"""</p>
+<p>GRPO奖励函数设计</p>
+<p>三个奖励分量协同优化</p>
+<p>"""</p>
+
+<p>def __init__(self):</p>
+<p>self.weights = {'R1': 1.0, 'R2': 0.8, 'R3': 1.2}</p>
+
+<p>def compute_r1_attribution_accuracy(self, response, ground_truth):</p>
+<p>"""</p>
+<p>R1: 归因准确性奖励</p>
+<p>判断模型是否正确识别失败原因来源</p>
+<p>"""</p>
+<p># 简化的准确度计算</p>
+<p>predicted_attr = self.extract_attribution(response)</p>
+<p>correct = (predicted_attr == ground_truth['attribution'])</p>
+<p>return 1.0 if correct else 0.0</p>
+
+<p>def compute_r2_dual_perspective(self, response):</p>
+<p>"""</p>
+<p>R2: 双视角反射奖励</p>
+<p>鼓励模型同时考虑内外部因素</p>
+<p>"""</p>
+<p>thesis = response.get('thesis', '')</p>
+<p>antithesis = response.get('antithesis', '')</p>
+
+<p># 检查是否同时讨论了内部和外部因素</p>
+<p>internal_keywords = ['模型', '推理', '理解', '知识']</p>
+<p>external_keywords = ['工具', '环境', '数据', '外部']</p>
+
+<p>has_internal = any(kw in thesis + antithesis for kw in internal_keywords)</p>
+<p>has_external = any(kw in thesis + antithesis for kw in external_keywords)</p>
+
+<p># 双视角都存在时给奖励</p>
+<p>return 1.0 if (has_internal and has_external) else 0.3</p>
+
+<p>def compute_r3_task_performance(self, response, ground_truth):</p>
+<p>"""</p>
+<p>R3: 任务性能奖励</p>
+<p>最终答案的正确性</p>
+<p>"""</p>
+<p>final_answer = response.get('synthesis', {}).get('answer', '')</p>
+<p>correct = (final_answer == ground_truth['ground_truth'])</p>
+<p>return 1.0 if correct else 0.0</p>
+
+<p>def compute_total_reward(self, response, ground_truth):</p>
+<p>"""综合三个奖励分量"""</p>
+<p>r1 = self.compute_r1_attribution_accuracy(response, ground_truth)</p>
+<p>r2 = self.compute_r2_dual_perspective(response)</p>
+<p>r3 = self.compute_r3_task_performance(response, ground_truth)</p>
+
+<p>total = (self.weights['R1'] * r1 +</p>
+<p>self.weights['R2'] * r2 +</p>
+<p>self.weights['R3'] * r3)</p>
+
+<p>return {</p>
+<p>'R1_attribution': r1,</p>
+<p>'R2_dual_perspective': r2,</p>
+<p>'R3_task_performance': r3,</p>
+<p>'total_reward': total</p>
+<p>}</p>
+
+
+<h1>============================================================</h1>
+<h1>完整训练流程 (伪代码)</h1>
+<h1>============================================================</h1>
+
+<p>def retas_training_pipeline():</p>
+<p>"""</p>
+<p>ReTAS 三阶段训练流程</p>
+
+<p>Stage 1: 归因数据构建</p>
+<p>Stage 2: TAS微调</p>
+<p>Stage 3: GRPO强化学习</p>
+<p>"""</p>
+
+<p>print("=" * 50)</p>
+<p>print("ReTAS 训练流程开始")</p>
+<p>print("=" * 50)</p>
+
+<p># Stage 1: 构建归因数据</p>
+<p>print("\n[Stage 1] 构建归因数据...")</p>
+<p>data_builder = AttributionDataBuilder()</p>
+<p># 模拟数据加载</p>
+<p>raw_samples = [{'question': '...', 'context': '...'}]</p>
+<p>attributed_data = [data_builder.build_ambiguous_failure_sample(s)</p>
+<p>for s in raw_samples]</p>
+
+<p># Stage 2: TAS格式微调</p>
+<p>print("\n[Stage 2] TAS格式微调...")</p>
+<p># model = load_base_model()</p>
+<p># tas_trainer = TASTrainer(model)</p>
+<p># tas_trainer.fine_tune(attributed_data)</p>
+
+<p># Stage 3: GRPO强化学习</p>
+<p>print("\n[Stage 3] GRPO强化学习...")</p>
+<p>rewards_calculator = GRPORewards()</p>
+
+<p># 模拟强化学习迭代</p>
+<p>for iteration in range(3):</p>
+<p># 采样响应</p>
+<p># response = model.sample(prompt)</p>
+<p># 计算奖励</p>
+<p># reward = rewards_calculator.compute_total_reward(response, ground_truth)</p>
+<p># 更新模型</p>
+<p># grpo_update(reward)</p>
+<p>print(f"  迭代 {iteration + 1}: 奖励计算完成")</p>
+
+<p>print("\n" + "=" * 50)</p>
+<p>print("ReTAS 训练流程完成")</p>
+<p>print("=" * 50)</p>
+
+
+<h1>运行示例</h1>
+<p>if __name__ == "__main__":</p>
+<p>retas_training_pipeline()</p>
+</code>`<code>
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>\text{Program Synthesis}</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：Program Synthe-
+
+<strong>公式 2</strong>：
+
+<p>$$</p>
+</code>`<code>latex
+<p>\begin{align*}</p>
+<p>135 &< \operatorname{ReflectionProfit}, \\</p>
+<p>\operatorname{ReflectionProfit} &> 135.</p>
+<p>\end{align*}</p>
+</code>``
+<p>$$</p>
+
+<em>含义</em>：135, performing worse than
+<p>Reflection</p>
+<p>Profit(</p>
+
+<strong>公式 3</strong>：
+
+<p>$$</p>
+<p>\uparrow</p>
+<p>$$</p>
+
+<em>含义</em>：)↑
+<p>Avg Turns ↓</p>
+<p>NONE</p>
+<p>157</p>
+<p>1.96</p>
+<p>4.21</p>
+<p>Reflection_SOLO</p>
+<p>164</p>
+<p>2.05</p>
+<p>5.08</p>
+<p>Reflection_Dual</p>
+<p>135</p>
+<p>1.69</p>
+<p>5.16</p>
+<p>Reflec</p>
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：FinQA(金融推理)、Spider(text-to-SQL)、Sales Arena(自建多轮谈判环境)
+
+<strong>评价指标</strong>：归因准确率(F1)、谈判利润(Average Profit)、谈判轮次(Avg Turns)
+
+<strong>主要结果</strong>：
+
+<p>ReTAS在FinQA上达到72.1% F1分数，显著优于Reflection_SOLO(68.3%)和Reflection_Dual(69.4%)。在Sales Arena中，ReTAS实现最高利润168(对比基础157)，同时减少谈判轮次至4.81(基础4.21)，展现更高效的战略决策能力。消融实验证实三个奖励分量任一缺失都会导致性能下降。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ TAS结构使归因准确率提升约4个百分点，验证辩证推理的有效性</li>
+<li>✅ ReTAS在谈判中展现自适应行为，避免基础方法中的'逐渐让步'模式</li>
+<li>✅ 模型规模增大无法消除AOA偏差，必须通过结构化推理流程解决</li>
+<li>✅ 奖励权重1:2:4配置最优，但任意单一奖励缺失均导致显著性能退化</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 首次系统揭示AOA认知偏差 | 发现多智能体角色分工引入类似人类的归因偏见，超过20%案例受影响 |</p>
+<p>| 提出辩证对齐框架 | 通过TAS结构化推理，将哲学辩证法转化为可训练的神经过程 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 金融风控系统中的多智能体审计</li>
+<li>🎯 自动化代码审核与Bug定位</li>
+<li>🎯 智能客服中的质量监控与自我纠错</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 需要高质量的模糊失败场景标注数据</li>
+<li>⚠️ TAS格式的推理开销可能增加响应延迟</li>
+<li>⚠️ 特定领域需要适配的归因标准和奖励设计</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>实现时需设计TAS解析器提取三元组结构，计算R1时对比预测与真实归因标签，R2通过双向prompt验证一致性，R3监控下游任务指标。训练采用GRPO算法，权重建议R1:R2:R3=1:2:4。</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：多智能体系统中的角色分工虽提升专业能力，却引入AOA认知偏差。ReTAS通过结构化辩证推理，从根本上驯服这一偏见，为构建可靠的多智能体系统提供了新范式。
+
+<strong>未来方向</strong>：探索长时序规划和创意生成任务中的归因问题，以及将ReTAS扩展到真实世界的复杂谈判场景。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：为什么单纯增加模型规模无法解决AOA问题？</strong>
+
+<p>A：AOA是一种社会认知偏差，源于角色的功能性定位而非模型容量不足。即使是最强大的模型，在扮演执行者时也会自发地外部化失败原因，这需要从推理结构层面进行约束。</p>
+
+
+<strong>Q：TAS格式相比Chain-of-Thought有何本质区别？</strong>
+
+<p>A：CoT强调线性推理链，而TAS强制模型同时考虑对立观点并综合。这种结构确保决策经过'正-反-合'的辩证审视，特别适合需要平衡多元利益或视角的场景。</p>
+
+
+<strong>Q：ReTAS如何平衡推理质量与效率？</strong>
+
+<p>A：论文实验显示ReTAS在提升质量的同时减少了谈判轮次，说明结构化推理避免了无效的来回拉锯。但TAS确实增加了单次推理的计算量，实际部署时需评估延迟敏感度。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: Mirror Effect of Actor-Observer Asymmetry.
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_0_0.png" target="_blank">Figure 1</a></p>
+
+<strong>Figure 1</strong>: when faced with a timeout exception, the execu-
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_6_1.png" target="_blank">Figure 1</a></p>
+
+<strong>Figure 2</strong>: Overview of our approach for taming Actor-Observer Asymmetry, with three stages: (a) Attribution Data
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_6_2.png" target="_blank">Figure 2</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

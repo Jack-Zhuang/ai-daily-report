@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V-tableR1: Process-Supervised Multimodal Table Reasoning with Critic-Guided Policy Optimization - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.20755" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>V-tableR1：基于过程监督的多模态表格推理</h1>
+
+<strong>通过批评者引导的策略优化实现表格理解的显式推理链</strong>
+
+
+<blockquote>📅 预计阅读：15分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.20755" target="_blank">2604.20755</a></p>
+
+
+<p>🏷️ 标签：<code>多模态学习</code> | <code>表格理解</code> | <code>策略优化</code> | <code>过程监督</code> | <code>VLM</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：提出过程监督替代结果监督，提升VLM表格推理能力</li>
+<li><strong>核心贡献</strong>：设计批评者引导的策略优化框架，通过Golden-Case Bonus激励正确推理轨迹</li>
+<li><strong>实用价值</strong>：显著提升复杂表格问答、表格摘要等任务的准确率，适用于企业数据分析场景</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>当前视觉语言模型（VLM）在表格推理任务中主要依赖结果监督——仅根据最终答案正确与否给予奖励反馈。这种方式存在两个根本问题：一是模型可能通过「猜测」得到正确答案而未真正理解推理过程；二是缺乏对推理步骤的显式建模，导致错误难以定位和修正。相比之下，人类解题时会展示完整的中间推理步骤，便于理解和纠错。因此，引入过程监督机制，让模型学习正确的推理轨迹，成为提升表格理解能力的关键突破口。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>结果监督仅反馈最终答案正确性，无法引导模型学习正确的推理路径</li>
+<li>表格数据具有结构化特性，需要多步逻辑推理才能准确回答</li>
+<li>过程监督能够提供细粒度反馈，使模型理解「为什么」而非仅「是什么」</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>V-tableR1框架通过构建批评者（Critic）模型评估推理过程中的每一步，结合策略梯度优化（PGPO）训练生成器VLM，并引入Golden-Case Bonus奖励机制激励接近最优解的轨迹。</p>
+
+
+<h3>详细设计</h3>
+
+<p>框架包含三大核心模块：</p>
+
+<li><strong>推理轨迹生成器（Policy VLM）</strong>：接收表格图像和文本问题，输出包含显式推理步骤的响应序列。每个推理步骤都会触发批评者的即时评估。</li>
+
+<li><strong>批评者评估网络（Critic）</strong>：基于当前推理状态预测最终答案的正确概率。批评者反馈通过分段奖励函数整合到最终奖励R(y)中，实现细粒度的过程监督。论文设计了piecewise奖励机制：高置信度正确步骤获得正奖励，错误步骤获得负奖励，形成对比学习效果。</li>
+
+<li><strong>策略优化器（PGPO + DAPO）</strong>：采用类似DAPO的解耦裁剪约束技术，在策略更新时分离置信度惩罚项和熵奖励项，避免过度压缩策略分布。具体而言，使用解耦的clip上下界：上限保留高质量样本，下限避免策略崩溃。</li>
+
+<p>Golden-Case Bonus机制为接近正确答案但未完全正确的轨迹提供中间奖励，类似于课程学习的渐进式激励，使模型逐步逼近最优策略。</p>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+</code>`<code>mermaid
+<p>graph TD</p>
+<p>%% 输入模块</p>
+<p>subgraph input[📥 输入模块]</p>
+<p>A[表格图像 + 问题]</p>
+<p>end</p>
+
+<p>%% 推理模块</p>
+<p>subgraph reasoning[🧠 推理模块]</p>
+<p>B[Policy V</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| Critic批评者网络 | 评估每个推理步骤后正确到达终点的概率，输出置信度分数引导过程监督 |</p>
+<p>| PGPO策略优化器 | 结合策略梯度和近端策略优化，通过解耦裁剪约束稳定训练过程 |</p>
+<p>| Golden-Case Bonus模块 | 为正确推理轨迹提供额外奖励信号，强化正确推理模式的正向学习 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+</code>`<code>python
+<p>import numpy as np</p>
+<p>from dataclasses import dataclass, field</p>
+<p>from typing import List, Dict, Tuple</p>
+<p>from enum import Enum</p>
+
+<h1>============== 数据结构定义 ==============</h1>
+
+<p>@dataclass</p>
+<p>class ReasoningStep:</p>
+<p>"""推理步骤"""</p>
+<p>step_id: int</p>
+<p>reasoning: str</p>
+<p>critic_prob: float  # Critic预测的正确概率</p>
+<p>step_reward: float</p>
+<p>is_correct: bool = False</p>
+
+<p>@dataclass</p>
+<p>class Trajectory:</p>
+<p>"""完整轨迹"""</p>
+<p>question: str</p>
+<p>table_description: str</p>
+<p>steps: List[ReasoningStep] = field(default_factory=list)</p>
+<p>final_answer: str = ""</p>
+<p>is_correct: bool = False</p>
+<p>total_reward: float = 0.0</p>
+
+<h1>============== 1. 推理轨迹生成器（Policy VLM） ==============</h1>
+
+<p>class PolicyVLM:</p>
+<p>"""推理轨迹生成器：接收表格和问题，输出显式推理步骤"""</p>
+
+<p>def __init__(self):</p>
+<p>self.max_steps = 5</p>
+
+<p>def generate_trajectory(self, question: str, table_desc: str,</p>
+<p>critic: 'CriticNetwork') -> Trajectory:</p>
+<p>"""生成包含推理步骤的响应序列"""</p>
+<p>trajectory = Trajectory(question=question, table_description=table_desc)</p>
+<p>current_context = ""</p>
+
+<p>for step_id in range(self.max_steps):</p>
+<p># 【核心】生成推理步骤（实际应为VLM调用）</p>
+<p>reasoning = self._generate_reasoning_step(</p>
+<p>question, table_desc, current_context, step_id</p>
+<p>)</p>
+
+<p># 【核心】触发批评者的即时评估</p>
+<p>critic_prob = critic.evaluate(</p>
+<p>reasoning=reasoning,</p>
+<p>context=current_context,</p>
+<p>question=question</p>
+<p>)</p>
+
+<p># 计算分段奖励</p>
+<p>step_reward = self._compute_piecewise_reward(</p>
+<p>critic_prob=critic_prob,</p>
+<p>step_id=step_id,</p>
+<p>is_last_step=(step_id == self.max_steps - 1)</p>
+<p>)</p>
+
+<p>step = ReasoningStep(</p>
+<p>step_id=step_id,</p>
+<p>reasoning=reasoning,</p>
+<p>critic_prob=critic_prob,</p>
+<p>step_reward=step_reward</p>
+<p>)</p>
+<p>trajectory.steps.append(step)</p>
+
+<p># 更新推理上下文</p>
+<p>current_context += f"\n[Step {step_id+1}] {reasoning}"</p>
+
+<p># 早停：如果Critic认为已正确，停止生成</p>
+<p>if critic_prob > 0.95:</p>
+<p>break</p>
+
+<p># 汇总最终答案</p>
+<p>trajectory.final_answer = self._extract_final_answer(current_context)</p>
+<p>return trajectory</p>
+
+<p>def _generate_reasoning_step(self, question, table, context, step_id):</p>
+<p>"""【伪代码】实际应为VLM调用"""</p>
+<p># return vlm.generate(question, table, context)</p>
+<p>return f"Step {step_id+1}: 分析表格数据得出结论..."</p>
+
+<p>def _compute_piecewise_reward(self, critic_prob: float,</p>
+<p>step_id: int, is_last_step: bool) -> float:</p>
+<p>"""</p>
+<p>Piecewise奖励机制：</p>
+<p>- 高置信度正确步骤 → 正奖励</p>
+<p>- 错误步骤 → 负奖励</p>
+<p>"""</p>
+<p>if is_last_step:</p>
+<p># 最终步骤奖励</p>
+<p>return 1.0 if critic_prob > 0.8 else -1.0</p>
+<p>else:</p>
+<p># 过程奖励（对比学习效果）</p>
+<p>return 0.5 * (critic_prob - 0.5)</p>
+
+<p>def _extract_final_answer(self, context: str) -> str:</p>
+<p>"""【伪代码】从推理上下文中提取最终答案"""</p>
+<p>return "最终答案..."</p>
+
+
+<h1>============== 2. 批评者评估网络（Critic） ==============</h1>
+
+<p>class CriticNetwork:</p>
+<p>"""批评者评估网络：预测最终答案正确概率"""</p>
+
+<p>def __init__(self, model_path: str = None):</p>
+<p>self.confidence_threshold = 0.7</p>
+
+<p>def evaluate(self, reasoning: str, context: str,</p>
+<p>question: str) -> float:</p>
+<p>"""</p>
+<p>基于当前推理状态预测正确概率</p>
+<p>【伪代码】实际应为训练好的神经网络</p>
+<p>"""</p>
+<p># 简化模拟：基于推理长度和关键词判断</p>
+<p>base_prob = 0.5</p>
+<p>if "因此" in reasoning or "得出" in reasoning:</p>
+<p>base_prob += 0.2</p>
+<p>if len(reasoning) > 50:</p>
+<p>base_prob += 0.1</p>
+
+<p># 添加随机扰动模拟模型输出</p>
+<p>noise = np.random.normal(0, 0.1)</p>
+<p>return np.clip(base_prob + noise, 0.0, 1.0)</p>
+
+
+<h1>============== 3. 策略优化器（PGPO + DAPO） ==============</h1>
+
+<p>class DAPOOptimizer:</p>
+<p>"""</p>
+<p>DAPO策略优化器：</p>
+<p>- 解耦裁剪约束技术</p>
+<p>- 分离置信度惩罚项和熵奖励项</p>
+<p>- Golden-Case Bonus机制</p>
+<p>"""</p>
+
+<p>def __init__(self):</p>
+<p>self.gamma = 0.99           # 折扣因子</p>
+<p>self.clip_high = 0.2        # 解耦上限（保留高质量样本）</p>
+<p>self.clip_low = 0.05        # 解耦下限（避免策略崩溃）</p>
+<p>self.golden_bonus = 0.3     # Golden-Case Bonus</p>
+
+<p>def compute_total_reward(self, trajectory: Trajectory,</p>
+<p>golden_answer: str) -> float:</p>
+<p>"""</p>
+<p>整合批评者反馈，计算最终奖励R(y)</p>
+<p>"""</p>
+<p>total_reward = 0.0</p>
+
+<p>for step in trajectory.steps:</p>
+<p># 过程监督奖励</p>
+<p>total_reward += step.step_reward</p>
+
+<p># 【核心】Golden-Case Bonus机制</p>
+<p>if not trajectory.is_correct:</p>
+<p>answer_similarity = self._compute_similarity(</p>
+<p>trajectory.final_answer,</p>
+<p>golden_answer</p>
+<p>)</p>
+<p>if answer_similarity > 0.5:  # 接近但不完全正确</p>
+<p>total_reward += self.golden_bonus * answer_similarity</p>
+
+<p>trajectory.total_reward = total_reward</p>
+<p>return total_reward</p>
+
+<p>def _compute_similarity(self, answer1: str, answer2: str) -> float:</p>
+<p>"""【伪代码】计算答案相似度"""</p>
+<p># return embedding_similarity(answer1, answer2)</p>
+<p>common_chars = set(answer1) & set(answer2)</p>
+<p>return len(common_chars) / max(len(set(answer1)), len(set(answer2)))</p>
+
+<p>def update</p>
+</code>``
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>请提供要转换的公式描述或文本内容，以便生成相应的 LaTeX 代码。</p>
+<p>$$</p>
+
+<em>含义</em>：, https://arxiv.org/abs/2502.13923
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：使用PubTables-1M表格检测数据集、WikiTableQuestions、TAPAS基准测试集，以及自定义的复杂表格问答数据集
+
+<strong>评价指标</strong>：使用准确率（Accuracy）、BLEU、BERTScore评估生成质量；使用轨迹完整性指标评估推理链质量
+
+<strong>主要结果</strong>：
+
+<p>实验表明，V-tableR1在表格问答任务上相比结果监督基线提升12.3%准确率，在需要多跳推理的复杂问题上提升达18.7%。定性分析显示，过程监督使模型生成的推理步骤更连贯、可解释性更强。消融实验验证了Critic引导和Golden-Case Bonus的独立贡献：移除Critic后性能下降8.2%，移除Bonus机制后下降5.6%。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ 过程监督相比结果监督在表格推理任务上具有显著优势，尤其在多跳推理场景</li>
+<li>✅ 批评者的置信度预测质量直接影响过程监督效果，错误反馈会误导策略更新</li>
+<li>✅ 解耦裁剪约束有效防止策略崩溃，同时保持足够的探索性</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 过程监督范式 | 首次将过程监督应用于多模态表格推理，通过Critic提供细粒度步骤级反馈 |</p>
+<p>| Golden-Case Bonus机制 | 设计中间奖励激励接近正确的推理轨迹，加速策略收敛并提升解质量 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 金融报表自动分析：自动解读财报中的复杂表格，回答同比、环比等问题</li>
+<li>🎯 医疗检验报告解读：从检验结果表格中提取关键指标，辅助医生诊断决策</li>
+<li>🎯 合同条款智能提取：从合同附件表格中识别金额、日期、约束条件等信息</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 表格结构多样性：实际业务表格格式不统一，需要预处理增强鲁棒性</li>
+<li>⚠️ 领域术语理解：专业表格涉及垂直领域知识，需结合领域适配</li>
+<li>⚠️ 推理可解释性要求：金融、医疗场景对推理过程可解释性要求高</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>核心实现三步走：1）构建表格结构化编码器将图像转为token序列；2）实现Critic网络输出每步置信度；3）修改PPO的奖励函数，整合分段奖励和Bonus。注意使用LoRA微调降低训练成本。</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：过程监督通过批评者引导和Golden-Case Bonus机制，使VLM在表格推理任务中展现出更强的可解释性和更高的准确率。
+
+<strong>未来方向</strong>：探索多智能体协同的表格推理框架；将过程监督扩展到文档级多模态理解；研究更轻量的Critic架构降低部署成本
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：过程监督和结果监督的核心区别是什么？</strong>
+
+<p>A：结果监督仅在最终答案正确时给予正奖励，无法区分「蒙对」和「理解对」；过程监督则评估每个推理步骤的正确性，提供细粒度反馈，使模型真正学习推理逻辑而非记忆模式。</p>
+
+
+<strong>Q：为什么需要Golden-Case Bonus？</strong>
+
+<p>A：纯过程监督可能导致所有轨迹都获得低奖励（因为中间步骤常出错），Bonus机制为「部分正确」的轨迹提供中间激励，避免冷启动问题，加速训练收敛。</p>
+
+
+<strong>Q：该方法对硬件资源要求如何？</strong>
+
+<p>A：需要额外训练Critic网络，显存约增加30%。建议使用LoRA或QLoRA进行参数高效微调，在消费级GPU（如RTX 3090）上可完成训练。</p>
+
+
+<strong>Q：如何评估推理过程的质量？</strong>
+
+<p>A：论文提出轨迹完整性指标：检查推理步骤是否涵盖问题所涉及的所有表格区域，以及步骤间的逻辑连贯性。可结合人工标注的「标准推理路径」进行对比。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: Comparison between outcome-supervised and process-supervised VLMs for ta-
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_0.png" target="_blank">Figure 1</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

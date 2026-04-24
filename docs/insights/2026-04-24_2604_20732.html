@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anchor-and-Resume Concession Under Dynamic Pricing for LLM-Augmented Freight Negotiation - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.20732" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>货运谈判中的动态定价适应：两指标锚点-恢复让步框架</h1>
+
+<strong>通过spread驱动的自适应让步参数与单调报价机制解决LLM货运谈判的可信度与效率问题</strong>
+
+
+<blockquote>📅 预计阅读：15分钟 | </blockquote>
+<p>难度：高级 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.20732" target="_blank">2604.20732</a></p>
+
+
+<p>🏷️ 标签：<code>大语言模型</code> | <code>博弈论</code> | <code>货运定价</code> | <code>动态谈判</code> | <code>自动化决策</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：提出两指标锚点-恢复框架解决LLM货运谈判中动态定价导致报价回退的难题</li>
+<li><strong>核心贡献</strong>：基于价差(spread)实时推导让步参数β，并设计锚点-恢复机制保证报价单调性，实现LLM级别谈判效果但无需LLM</li>
+<li><strong>实用价值</strong>：货运经纪商可在10万+次/日的谈判规模下，以确定性规则替代昂贵LLM，同时避免报价回退损害商业信誉</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>货运经纪行业面临规模化谈判的严峻挑战：每日需处理数千承运商报价，传统时间依赖让步框架（Time-Dependent Concession）预设固定形状参数β，在动态定价环境中目标价频繁调整时，该参数无法自适应更新。更关键的是，当目标价下降时（如市场波动），基于原目标的让步路径会要求恢复已发出的让步，形成报价回退（Retraction），这在商业实践中意味着「出尔反尔」，严重损害经纪商信誉。此外，虽然LLM驱动的智能谈判代理展现了灵活性，但其依赖昂贵推理模型、决策不确定性、以及对prompt injection攻击的脆弱性，制约了工业部署。论文核心问题：在保持谈判效率的同时，如何在目标价动态变化时保证报价的严格单调性？</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>货运谈判规模大（每日数千次）、动态定价环境导致目标价频繁更新</li>
+<li>传统让步框架β参数固定，无法适应目标价变化，导致报价回退</li>
+<li>LLM方案虽灵活，但成本高、不确定性强、安全风险大</li>
+<li>核心挑战：找到既自适应又确定性的谈判策略</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>论文提出两指标（Two-Index）锚点-恢复框架，通过spread推导自适应让步参数β，并设计锚点机制保存谈判历史报价，确保任何目标价更新都不会导致报价回退，同时保持谈判效率。</p>
+
+
+<h3>详细设计</h3>
+
+<p>框架包含两个核心机制：第一，Spread-Derived β计算模块。定义s = (r_target - r_min) / r_min为相对价差，其中r_target是当前目标价，r_min是最低可接受价。β值通过c·(1+s)计算（c为校准常数），使价差越大β越小，让步曲线越激进，价差越小β越大，让步越保守。这实现了两方面自适应：（a）不同货物的利润空间差异自动映射到谈判策略；（b）同一货物随目标价更新，β动态重算。第二，锚点-恢复（Anchor-and-Resume）机制。引入「锚点价格」概念——每当目标价发生显著变化时，记录当前最优报价作为锚点。后续让步路径以此锚点为下界，而非新的r_min，保证报价永远不会低于锚点。具体实现上，当检测到目标价从r_t^old变为r_t^new时，若r_t^new < r_t^old（降价），系统将锚点设置为r_anchor = max(r_current_offer, r_t^new + ε)，然后让步函数变为α(t) = max(r_anchor, t^(1/β))，确保任何时刻报价≥r_anchor。框架设计为LLM-Agnostic，所有决策基于确定性规则，无需LLM参与推理，仅需简单数值计算即可部署。</p>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>flowchart TD</p>
+<p>%% 样式定义</p>
+<p>classDef startEnd fill:#e1f5fe,stroke:#01579b,stroke-width:3px</p>
+<p>classDef decision fill:#fff9c4,stroke:#f57f17,stroke-width:2px</p>
+<p>classDef process fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px</p>
+<p>classDef io fill:#ffccbc,stroke:#bf360c,stroke-width:2px</p>
+<p>classDef subgraphBox fill:#fafafa,stroke:#9e9e9e,stroke-width:1px,stroke-dasharray:5 5</p>
+
+<p>%% 子图分组</p>
+<p>subgraph init["📥 初始阶段"]</p>
+<p>A1[接收承运商初始报价]</p>
+<p>A2{检测目标价变化}</p>
+<p>end</p>
+
+<p>subgraph decision["⚖️ 决策阶段"]</p>
+<p>B1[使用当前β计算让步]</p>
+<p>B2[更新锚点价格]</p>
+<p>B3[保存锚点到历史记录]</p>
+<p>end</p>
+
+<p>subgraph calculation["🔢 计算阶段"]</p>
+<p>C1[应用让步函数 α(t)]</p>
+<p>C2{报价≥锚点?}</p>
+<p>end</p>
+
+<p>subgraph response["📤 响应阶段"]</p>
+<p>D1[发送报价给承运商]</p>
+<p>D2[使用锚点价格报价]</p>
+<p>end</p>
+
+<p>subgraph interaction["🔄 交互阶段"]</p>
+<p>E1[等待承运商响应]</p>
+<p>E2{谈判是否终止?}</p>
+<p>E3[记录谈判结果]</p>
+<p>end</p>
+
+<p>%% 连接关系</p>
+<p>A1 --> A2</p>
+<p>A2 -->|无变化| B1</p>
+<p>A2 -->|降价Δ| B2</p>
+<p>B2 --> B3</p>
+<p>B1 --> C1</p>
+<p>B3 --> C1</p>
+<p>C1 --> C2</p>
+<p>C2 -->|是| D1</p>
+<p>C2 -->|否| D2</p>
+<p>D1 --> E1</p>
+<p>D2 --> E1</p>
+<p>E1 --> E2</p>
+<p>E2 -->|否| A2</p>
+<p>E2 -->|是| E3</p>
+
+<p>%% 应用样式</p>
+<p>class A1,E3 startEnd</p>
+<p>class A2,E2,C2 decision</p>
+<p>class B1,B2,B3,C1,D1,D2,E1 process</p>
+<p>class A1,E3 io</p>
+<p>class init,decision,calculation,response,interaction subgraphBox</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| Spread-Derived β Calculator | 根据实时价差s=(r_target-r_min)/r_min计算让步参数β=c·(1+s)，实现不同货物和动态价格下的自适应让步策略 |</p>
+<p>| Anchor Price Manager | 维护锚点价格集合，当目标价下降时更新锚点，保证后续报价以锚点为下界，防止回退 |</p>
+<p>| Monotonic Offer Engine | 结合让步函数α(t)=t^(1/β)和锚点约束，输出单调非递减的最终报价序列 |</p>
+<p>| Carrier Archetype Classifier | 将承运商分为强硬型(Hardliner)、策略型(Tit-for-Tat)、温和型等，辅助策略调优 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+<h1>简化模拟：Spread-Derived β + Anchor-and-Resume 机制</h1>
+
+<h1>参数初始化</h1>
+<p>r_min = 100      # 最低可接受价</p>
+<p>r_target = 150   # 当前目标价</p>
+<p>c = 0.5          # 校准常数</p>
+<p>epsilon = 1e-3   # 锚点偏移量</p>
+
+<h1>锚点初始化（初始无锚点，可设为 None）</h1>
+<p>anchor_price = None</p>
+
+<h1>模拟让步进度 t ∈ [0, 1]</h1>
+<p>t = 0.5</p>
+
+<h1>========== 机制1：计算 β ==========</h1>
+<p>s = (r_target - r_min) / r_min  # 相对价差</p>
+<p>beta = c * (1 + s)              # β值（校准常数乘以1+价差）</p>
+<p>print(f"相对价差 s = {s:.2f}, β = {beta:.2f}")</p>
+
+<h1>让步函数（无锚点时）</h1>
+<p>def concession_func(t, beta, r_min):</p>
+<p>return t ** (1 / beta)  # 示例：基于时间的让步曲线</p>
+
+<h1>应用锚点约束</h1>
+<p>if anchor_price is not None:</p>
+<p>offer = max(anchor_price, concession_func(t, beta, r_min))</p>
+<p>else:</p>
+<p>offer = concession_func(t, beta, r_min)</p>
+<p>print(f"当前报价（无锚点）= {offer:.2f}")</p>
+
+<h1>========== 机制2：锚点-恢复 ==========</h1>
+<h1>模拟目标价下降</h1>
+<p>r_target_old = r_target</p>
+<p>r_target_new = 130  # 新目标价（降价）</p>
+
+<p>if r_target_new < r_target_old:  # 检测到目标价下降</p>
+<p>r_current_offer = offer  # 假设当前最优报价</p>
+<p>anchor_price = max(r_current_offer, r_target_new + epsilon)</p>
+<p>print(f"锚点设置: r_anchor = {anchor_price:.2f}")</p>
+
+<p># 更新后的让步函数（带锚点约束）</p>
+<p>offer_with_anchor = max(anchor_price, concession_func(t, beta, r_min))</p>
+<p>print(f"应用锚点后报价 = {offer_with_anchor:.2f}")</p>
+</code>``
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>\begin{align*}</p>
+<p>\text{LLM-agnostic architecture} &: \mathcal{A} = (M, D, S) \\</p>
+<p>\text{Deterministic strategy} &: S(x) = f(x; \theta)</p>
+<p>\end{align*}</p>
+<p>$$</p>
+
+<em>含义</em>：LLM-agnostic architecture. The deterministic strat-
+
+<strong>公式 2</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>\alpha(t) &= t^{1/\beta} \\</p>
+<p>r_{\text{target}} &= \cdots</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：where 𝛼(𝑡) = 𝑡1/𝛽is the concession function and 𝑟target is the
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：基于真实货运数据的模拟数据集，包含不同价差区间(12种spread regime)和承运商类型(5种archetype)的105,000次谈判（每策略21,000次）
+
+<strong>评价指标</strong>：主要指标：（1）谈判成功率（Agreement Rate）；（2）平均成交价格偏离目标的程度；（3）报价单调性违规率（Retraction Rate）；（4）计算延迟（ms per negotiation）
+
+<strong>主要结果</strong>：
+
+<p>两指标框架在所有价差区间内将报价回退率降至0%，同时保持与LLM代理相当的谈判成功率（约85%）。相比LLM方案，计算延迟从平均320ms降至2.3ms，降低99%以上。在高价差场景下，两指标框架的成交价甚至优于LLM代理3.2%，因LLM在高波动下更易产生决策震荡。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ Spread-derived β有效捕捉货物利润结构，让利空间大的货物采取更激进让步策略</li>
+<li>✅ 锚点-恢复机制100%消除报价回退，且对不同承运商类型均有效</li>
+<li>✅ 规则框架在效率上显著优于LLM，适合实时大规模部署</li>
+<li>✅ 校准常数c=3为最优选择，在各spread regime下表现稳健</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| Spread-Derived β自适应参数 | 首次将价差（spread）作为让步参数β的直接驱动因子，实现谈判策略与货物利润结构的自动映射 |</p>
+<p>| 锚点-恢复（Anchor-and-Resume）机制 | 通过锚点价格保存谈判历史报价空间，数学证明可保证任意目标价更新下报价的严格单调性 |</p>
+<p>| LLM-Agnostic架构设计 | 证明在货运谈判场景下，规则驱动的确定性策略可达到甚至超越LLM效果，同时消除安全风险与高计算成本 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 大型货运经纪平台的实时批量谈判（如C.H. Robinson、DBSchenker等）</li>
+<li>🎯 多式联运定价引擎中的承运商选择与报价博弈</li>
+<li>🎯 供应链协同平台的价格自动协商</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 需要准确获取r_min（最低可接受价），这涉及商业机密与成本核算</li>
+<li>⚠️ 锚点机制需要维护状态，对高频短谈判场景需优化存储</li>
+<li>⚠️ 跨货类（整车、零担、集装箱）的价差定义需统一基准</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>核心实现为三步：(1)初始化时设定r_target、r_min、c参数；(2)每次目标价变化时计算β=s·(1+c)并更新锚点；(3)让步函数为max(anchor, t^(1/β))。示例代码：beta = (1 + (r_target - r_min)/r_min) * c; offer = max(anchor_price, pow(time_step, 1.0/beta))</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：通过将让步参数与价差解耦，设计锚点-恢复机制，论文在无需LLM的情况下实现了动态定价环境下的可信、高效货运谈判，为大规模自动化定价提供了可证明安全的规则框架。
+
+<strong>未来方向</strong>：探索多轮多方谈判（多承运商竞争同一货物）、引入强化学习微调c参数、以及将框架扩展至其他动态定价场景（如电商促销、实时竞价广告）。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：为什么锚点机制能100%避免报价回退？</strong>
+
+<p>A：数学上，锚点被设置为目标价变化时的当前最优报价。由于后续报价强制满足offer≥anchor_price，而anchor_price是历史最低报价的记录，因此任何让步路径都在锚点之上，保证单调非递减。目标价的后续变化只会触发新锚点的生成，不会使已有报价失效。</p>
+
+
+<strong>Q：论文的LLM-Agnostic主张是否意味着LLM对货运谈判无价值？</strong>
+
+<p>A：并非否定LLM价值，而是指出在特定约束（实时性、确定性、安全性）下的替代方案。LLM在处理复杂谈判策略、承运商画像分析、异常case决策时仍有优势。框架可作为LLM的『安全兜底层』——常规谈判由规则引擎处理，LLM仅介入边界情况。</p>
+
+
+<strong>Q：c=3是如何确定的？是否需要针对不同市场调优？</strong>
+
+<p>A：c通过图3的敏感性分析确定：在12种spread regime下，c=3时策略在成功率和成交价之间取得最优平衡。论文建议c可随市场特征（如竞争激烈度、货类季节性）做季度级调整，而非实时调优。</p>
+
+
+<strong>Q：框架如何应对prompt injection攻击？</strong>
+
+<p>A：由于采用纯数值计算规则，无需解析自然语言输入，因此天然免疫prompt injection。即使承运商在消息中嵌入恶意指令，框架仅提取结构化数值（报价、货量、时限），不执行任何文本指令。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: Carrier
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_5_0.png" target="_blank">Figure 1</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

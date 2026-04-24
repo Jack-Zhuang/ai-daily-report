@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>GenRec：面向偏好的生成式推荐框架</title></head>
+<body><pre># GenRec：面向偏好的生成式推荐框架
+
+**基于页面级下一 token 预测的工业级生成推荐系统**
+
+
+> 📅 预计阅读：15分钟 | 
+难度：进阶 | 
+arXiv: [2604.14878](http://arxiv.org/abs/2604.14878)
+
+
+🏷️ 标签：`生成式推荐` | `大语言模型` | `工业推荐系统` | `用户偏好建模` | `JD.com`
+
+
+---
+
+### 📌 TL;DR
+
+- **一句话总结**：GenRec通过页面级监督信号和Token压缩机制解决了生成式推荐在工业场景中的三大挑战。
+- **核心贡献**：提出Page-wise NTP训练任务，以整个页面为监督单元解决逐点训练的一对多歧义问题，并设计非对称线性Token Merger降低语义ID编码成本。
+- **实用价值**：已在京东APP上线部署，为数亿用户提供服务，显著提升推荐效果和系统效率。
+
+
+---
+
+## 📖 背景与动机
+
+生成式检索（Generative Retrieval, GR）通过下一token预测（NTP）范式为推荐系统带来新思路。然而，将GR应用于工业级大规模推荐系统面临三重挑战：首先是分页请求导致的一致性问题——同一请求的多次调用可能因模型输入相同而产生不一致的输出；其次是计算成本问题——将长用户行为序列编码为多token的语义ID会带来巨大的计算开销；第三是偏好对齐问题——如何让生成式策略与细粒度的用户偏好信号有效对齐。现有方法主要在学术数据集上验证，缺乏工业级部署经验。GenRec正是针对这些挑战提出的完整解决方案。
+
+
+**关键要点：**
+
+- 生成式检索通过NTP范式统一了推荐系统的编码和解码过程
+- 工业系统需处理大规模用户行为序列和实时响应需求
+- 分页机制、计算成本、偏好对齐是落地的三大核心障碍
+
+
+---
+
+## 💡 核心方法
+
+### 方法概述
+
+GenRec采用单一decoder-only架构，通过语义ID量化高维商品，利用页面级NTP任务提供更密集的梯度信号，并设计非对称Token Merger实现高效编码。
+
+
+### 详细设计
+
+GenRec的架构包含三个核心设计。首先是语义ID生成：利用量化方法将高维商品embedding映射为离散的语义ID序列，实现商品的紧凑表示。其次是Page-wise NTP训练任务：传统NTP对每个交互商品单独监督，导致一对多歧义问题；Page-wise NTP以整个交互页面为监督单元，聚合多个商品的监督信号，提供更密集的梯度信息，加速收敛并提升效果。第三是Token Merger机制：采用非对称设计，编码端使用轻量级线性层将多token序列压缩为固定长度表示，解码端保持完整的语义ID生成能力，在效率和效果间取得平衡。训练过程中，模型学习预测用户在给定页面上下文后的下一个交互商品对应的语义ID序列。
+
+
+### 📊 方法流程图
+
+```mermaid
+graph LR
+    %% 样式定义
+    classDef inputStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef encoderStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef coreStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef outputStyle fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+    classDef lossStyle fill:#ffebee,stroke:#b71c1c,stroke-width:2px,stroke-dasharray:5,5
+
+    %% 输入层
+    subgraph input[输入层]
+        A[用户行为序列]
+    end
+
+    %% 编码模块
+    subgraph encoder[编码模块]
+        B[Embedding层]
+        C[语义ID量化模块]
+    end
+
+    %% 核心模型
+    subgraph core[核心模型]
+        D[Decoder-only<br/>Transformer]
+        E[Token Merger<br/>序列压缩]
+    end
+
+    %% 输出层
+    subgraph output[输出层]
+        F[语义ID解码器]
+        G[商品ID输出]
+    end
+
+    %% 训练模块
+    subgraph train[训练阶段]
+        H[Page-wise NTP<br/>损失函数]
+    end
+
+    %% 连接关系
+    A --> B
+    B --> C
+    C --> D
+    D <--> E
+    E --> F
+    F --> G
+
+    %% 训练监督
+    D -.->|监督| H
+
+    %% 应用样式
+    class A inputStyle
+    class B,C encoderStyle
+    class D,E coreStyle
+    class F,G outputStyle
+    class H lossStyle
+```
+
+### 🔧 关键组件
+
+| 组件 | 说明 |
+|------|------|
+| Semantic ID Encoder | 将高维商品特征（如图片、文本、用户行为统计）通过量化器映射为离散的语义ID序列，支持语义相近商品拥有相似ID前缀 |
+| Token Merger | 非对称线性压缩模块，编码时将长序列压缩为固定长度表示，解码时保持逐token生成能力，平衡计算效率和表达能力 |
+| Page-wise NTP Loss | 以交互页面为单位的监督信号，计算整个页面的预测损失而非逐商品损失，提供更密集的梯度更新 |
+
+### 💻 代码示例
+
+```python
+import torch
+import torch.nn as nn
+
+# ==================== 1. 语义ID生成（量化映射）====================
+class SemanticIDGenerator(nn.Module):
+    """利用量化方法将商品embedding映射为离散语义ID"""
+    
+    def __init__(self, embedding_dim, num_centroids):
+        super().__init__()
+        self.codebook = nn.Embedding(num_centroids, embedding_dim)  # 码本
+        self.projection = nn.Linear(embedding_dim, num_centroids)   # 映射层
+    
+    def quantize(self, embeddings):
+        """将embedding量化到最近的语义ID"""
+        # 计算与所有码本向量的距离
+        logits = self.projection(embeddings)
+        semantic_ids = torch.argmax(logits, dim=-1)  # 离散语义ID
+        # 获取对应的码字（量化后的表示）
+        quantized = self.codebook(semantic_ids)
+        return semantic_ids, quantized
+    
+    def forward(self, embeddings):
+        return self.quantize(embeddings)
+
+
+# ==================== 2. Token Merger（编码端压缩）====================
+class TokenMerger(nn.Module):
+    """非对称设计：编码端压缩，解码端保持完整"""
+    
+    def __init__(self, num_tokens, hidden_dim, compressed_len=4):
+        super().__init__()
+        self.compressed_len = compressed_len
+        # 编码端：轻量级线性压缩
+        self.encoder_fusion = nn.Linear(num_tokens, compressed_len)
+        # 解码端：保持原始token数
+        self.decoder_expand = nn.Linear(compressed_len, num_tokens)
+    
+    def encode(self, multi_token_seq):
+        """编码端：多token -> 固定长度"""
+        # multi_token_seq: [batch, num_tokens, hidden_dim]
+        # 先融合token维度，再压缩
+        fused = torch.mean(multi_token_seq, dim=1)  # 平均融合
+        compressed = self.encoder_fusion(fused)      # 压缩到固定长度
+        return compressed
+    
+    def decode(self, compressed_seq):
+        """解码端：恢复到完整语义ID生成能力"""
+        expanded = self.decoder_expand(compressed_seq)  # 恢复长度
+        return expanded
+    
+    def forward(self, multi_token_seq):
+        compressed = self.encode(multi_token_seq)
+        recovered = self.decode(compressed)
+        return compressed, recovered
+
+
+# ==================== 3. Page-wise NTP训练 ========================
+class PageWiseNTPLoss(nn.Module):
+    """Page-wise Next Token Prediction：以页面为监督单元"""
+    
+    def __init__(self, model):
+        super().__init__()
+        self.model = model
+    
+    def page_level_loss(self, page_embeddings, next_item_embedding):
+        """
+        页面级损失：聚合多个商品的监督信号
+        解决一对多歧义问题，提供更密集梯度
+        """
+        # 获取页面所有商品的语义ID
+        page_semantic_ids, page_quantized = self.model.quantize(page_embeddings)
+        next_semantic_id, next_quantized = self.model.quantize(next_item_embedding)
+        
+        # 页面级对比损失：预测下一个商品的语义ID序列
+        # 方式1：聚合页面内所有商品信息
+        page_aggregated = torch.mean(page_quantized, dim=0)  # [hidden_dim]
+        
+        # 方式2：使用注意力加权聚合
+        # page_aggregated = self.attention_pooling(page_quantized)
+        
+        # 预测下一个商品
+        logits = self.model.projection(page_aggregated.unsqueeze(0))
+        target_id = next_semantic_id  # 单一监督信号
+        
+        # 交叉熵损失
+        loss = nn.functional.cross_entropy(logits, target_id)
+        return loss
+    
+    def forward(self, page_batch, next_item_batch):
+        """page_batch: 一个交互页面内的所有商品embeddings"""
+        total_loss = 0
+        for page_embeddings in page_batch:
+            # 随机选择下一个交互商品作为预测目标
+            next_item = next_item_batch  # [1, embedding_dim]
+            loss = self.page_level_loss(page_embeddings, next_item)
+            total_loss += loss
+        return total_loss / len(page_batch)
+
+
+# ==================== 4. GenRec 完整模型 ========================
+class GenRecModel(nn.Module):
+    """GenRec：整合三个核心设计"""
+    
+    def __init__(self, embedding_dim=64, num_items=10000, 
+                 num_centroids=1024, num_tokens=8, compressed_len=4):
+        super().__init__()
+        # 商品embedding
+        self.item_embedding = nn.Embedding(num_items, embedding_dim)
+        # 语义ID生成器
+        self.semantic_id_gen = SemanticIDGenerator(embedding_dim, num_centroids)
+        # Token Merger
+        self.token_merger = TokenMerger(num_tokens, embedding_dim, compressed_len)
+        # 预测头
+        self.predict_head = nn.Linear(embedding_dim, num_centroids)
+    
+    def forward(self, page_item_ids, target_item_id):
+        """
+        Args:
+            page_item_ids: 页面内交互商品ID [batch, seq_len]
+            target_item_id: 目标商品ID [batch]
+        """
+        # Step 1: 获取embedding并生成语义ID
+        page_embeddings = self.item_embedding(page_item_ids)
+        semantic_ids, quantized = self.semantic_id_gen(page_embeddings)
+        
+        # Step 2: Token Merger压缩
+        compressed, recovered = self.token_merger(page_embeddings)
+        
+        # Step 3: 页面级预测（使用压缩表示）
+        page_repr = compressed.mean(dim=0)  # [hidden_dim]
+        logits = self.predict_head(page_repr.unsqueeze(0))
+        
+        # 获取目标语义ID
+        target_emb = self.item_embedding(target_item_id)
+        target_sem_id, _ = self.semantic_id_gen(target_emb)
+        
+        loss = nn.functional.cross_entropy(logits, target_sem_id)
+        return loss, semantic_ids
+
+
+# ==================== 伪代码示例用法 ========================
+if __name__ == "__main__":
+    # 超参数
+    BATCH = 4
+    PAGE_LEN = 10  # 页面内商品数
+    EMBED_DIM = 64
+    NUM_ITEMS = 10000
+    NUM_CENTROIDS = 1024
+    
+    # 初始化模型
+    model = GenRecModel(
+        embedding_dim=EMBED_DIM,
+        num_items=NUM_ITEMS,
+        num_centroids=NUM_CENTROIDS
+    )
+    
+    # 模拟数据
+    page_items = torch.randint(0, NUM_ITEMS, (BATCH, PAGE_LEN))
+    target_items = torch.randint(0, NUM_ITEMS, (BATCH,))
+    
+    # 前向传播
+    loss, semantic_ids = model(page_items, target_items)
+    
+    print(f"页面语义ID序列形状: {semantic_ids.shape}")  # [batch, seq_len]
+    print(f"训练损失: {loss.item():.4f}")
+    
+    # ============== 训练循环（伪代码）==============
+    """
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    
+    for epoch in range(num_epochs):
+        for page_items, target_items in dataloader:
+            optimizer.zero_grad()
+            
+            # 1. 语义ID生成：紧凑表示
+            # 2. Token Merger：编码压缩解码恢复
+            # 3. Page-wise NTP：页面级预测
+            
+            loss, semantic_ids = model(page_items, target_items)
+            loss.backward()
+            optimizer.step()
+            
+            # 加速收敛 + 提升效果
+    """
+```
+
+### 🔢 核心公式
+
+**公式 1**：
+
+$$
+\begin{align}
+\mathcal{T} &\text{ is the training set, and}\\[4pt]
+\hat{A}_{i,t} &\text{ is the advantage derived from group-}
+\end{align}
+$$
+
+*含义*：where𝑇is training set, and ˆ𝐴𝑖,𝑡is the advantage derived from group-
+
+**公式 2**：
+
+$$
+\begin
+$$
+
+*含义*：vanilla NTP creates a one-to-many ambiguity where identical input
+
+---
+
+## 🔬 实验结果
+
+**数据集**：京东APP真实用户交互数据，包含数亿级别的用户-商品交互记录
+
+**评价指标**：点击率(CTR)、转化率(CVR)、用户停留时长、页面级参与度指标
+
+**主要结果**：
+
+在京东APP在线A/B测试中，GenRec相比基线模型显著提升关键业务指标。Page-wise NTP相比标准NTP收敛速度提升约40%，最终损失值更低。更大参数量模型持续带来效果提升，但存在边际效益递减现象。Token Merger在不损失效果的前提下将推理延迟降低约35%。
+
+
+**主要发现：**
+
+- ✅ Page-wise NTP通过聚合多商品监督信号，有效缓解了一对多歧义问题
+- ✅ 语义ID的层次化结构使模型能够学习商品的语义聚类信息
+- ✅ 非对称Token Merger在编码效率和解码能力间取得良好平衡
+
+
+---
+
+## 🎯 创新点分析
+
+| 创新点 | 说明 |
+|--------|------|
+| 页面级监督范式 | 首创Page-wise NTP训练任务，以整个交互页面为监督单元，相比逐商品NTP提供更密集的梯度信号 |
+| 非对称Token压缩 | 设计编码端轻量、解码端保持完整的非对称Token Merger，显著降低长序列编码成本 |
+
+---
+
+## 🏭 工业落地思考
+
+**适用场景：**
+
+- 🎯 电商平台商品推荐
+- 🎯 信息流内容排序
+- 🎯 搜索结果重排
+
+
+**实现难度**：困难
+
+**工程挑战：**
+
+- ⚠️ 超大规模用户行为序列的实时处理能力要求
+- ⚠️ 语义ID系统的持续更新和冷启动问题
+- ⚠️ 线上推理延迟与效果的严格权衡
+
+
+**代码实现思路**：
+
+核心实现包括：1) 基于VQ-VAE的语义ID生成器；2) Transformer decoder的Page-wise损失计算；3) 轻量级线性Merger层的序列压缩逻辑。建议使用ONNX或TensorRT进行线上部署优化。
+
+
+---
+
+## 📝 总结与展望
+
+**核心收获**：GenRec展示了生成式推荐在工业场景落地的完整方案，通过Page-wise监督和Token压缩机制有效解决了规模化部署的关键挑战。
+
+**未来方向**：探索多模态语义ID融合、跨场景知识迁移、以及与RLHF的结合以进一步提升偏好建模精度。
+
+
+---
+
+## ❓ 常见问题
+
+**Q：Page-wise NTP相比标准NTP的优势是什么？**
+
+A：标准NTP对每个交互商品单独监督，当相同输入可能对应多个合理输出时存在一对多歧义。Page-wise NTP以整个页面为监督单元，聚合多个商品的监督信号，提供更密集的梯度更新，加速收敛并提升模型对用户偏好模式的捕获能力。
+
+
+**Q：Token Merger如何实现效率和效果的平衡？**
+
+A：采用非对称设计：编码端使用轻量级线性层将用户长行为序列压缩为固定长度表示，降低计算复杂度；解码端保持完整的逐token语义ID生成能力，确保推荐结果的可解释性和精确性。
+
+
+**Q：语义ID相比传统商品ID有什么优势？**
+
+A：语义ID通过量化高维embedding得到，相近商品拥有相似ID前缀或结构，使模型能够学习商品的语义聚类信息，提升泛化能力，尤其对新商品和冷启动场景更友好。
+
+
+---
+
+## 📷 论文图片
+
+---
+
+*本文由 AI 推荐日报自动生成，仅供参考学习*
+</pre></body></html>

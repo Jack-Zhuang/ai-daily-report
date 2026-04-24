@@ -33,10 +33,10 @@ __pycache__/
 insights_enhanced/*.md
 !insights_enhanced/.gitkeep
 
-# 部署文件
-docs/insights/*.html
-docs/covers/
-docs/index.html
+# 部署文件（已取消忽略，允许推送到GitHub）
+# docs/insights/*.html
+# docs/covers/
+# docs/index.html
 
 # 归档文件
 archive/*/

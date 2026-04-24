@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOMO: A framework for seamless physical, verbal, and graphical robot skill learning and adaptation - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.20468" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>MOMO：物理、言语与图形三模态无缝融合的机器人技能学习框架</h1>
+
+<strong>通过多模态自然交互实现机器人运动技能的便捷获取与灵活在线适应</strong>
+
+
+<blockquote>📅 预计阅读：12分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.20468" target="_blank">2604.20468</a></p>
+
+
+<p>🏷️ 标签：<code>机器人技能学习</code> | <code>多模态人机交互</code> | <code>运动基元</code> | <code>虚拟夹具</code> | <code>轨迹适应</code> | <code>数字孪生</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：一种融合物理示教、语音指令、图形操作三种交互模态的机器人技能学习与在线适应框架</li>
+<li><strong>核心贡献</strong>：提出MOMO框架，首次实现物理（力触觉示教）、言语（自然语言指令）、图形（拖拽可视化）三种模态的无缝融合，通过概率Virtual Fixtures提供触觉引导，基于KMP实现轨迹的在线灵活适应</li>
+<li><strong>实用价值</strong>：让非专业用户能直观便捷地教会机器人新技能，并支持任务环境变化时的快速在线调整，大幅降低机器人部署与调试的人力成本</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>在工业和服务机器人领域，如何让机器人快速学习新技能、适应新任务一直是核心挑战。传统工业机器人依赖工程师编写精确的运动代码，编程门槛高、周期长；后来的物理示教（kinesthetic teaching）允许操作员直接拖动机器人演示动作，降低了学习门槛，但交互方式单一，难以表达复杂的空间约束或语义偏好。近年来，研究者开始探索将自然语言作为指令接口，以及利用可视化工具进行交互式编程。然而，现有方法往往只支持单一或两种模态，缺乏统一的框架来融合物理、言语、图形三种最自然的交互方式，导致用户在示教、约束指定、在线修正等不同阶段需要在多个工具间切换，体验割裂。MOMO论文正是针对这一痛点，提出一个端到端的多模态融合框架，实现从技能学习到在线适应的全流程无缝交互体验。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>工业机器人部署周期长、成本高，迫切需要更便捷的技能获取方式</li>
+<li>物理示教直观但缺乏灵活性，单独使用时难以指定空间约束或语义目标</li>
+<li>自然语言适合表达高层意图，但难以精确描述空间几何约束</li>
+<li>现有方法多为单模态或双模态融合，缺乏三模态无缝集成的系统性方案</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>MOMO框架采用模块化设计，核心由三大子系统构成：多模态感知模块负责接收和处理物理示教力/位姿数据、语音指令、图形交互信号；技能表示模块采用KMP（核运动基元）作为统一的任务先验，将示教轨迹编码为概率分布；交互执行模块通过Virtual Fixtures在物理示教时提供触觉引导，在执行时支持用户通过拖拽路径点进行在线适应。系统以数字孪生形式在虚拟界面中实时呈现机器人状态，用户可以在可视化界面中观察、学习和修正机器人行为。</p>
+
+
+<h3>详细设计</h3>
+
+<p>从论文补充材料中可以推断，MOMO框架的物理示教模块支持通过力控接口采集人类操作员的示教轨迹，并在示教过程中叠加概率Virtual Fixtures——这些以半透明绿色椭球体形式可视化在轨迹上的虚拟约束区域，能够在操作员拖动机器人时提供方向性的触觉推力，引导其按照期望的方式完成示教，同时保持一定的自由度。示教轨迹通过KMP进行建模：KMP是一种基于核函数的条件密度估计方法，能够在保留轨迹统计特性的同时，支持在指定路径点（via-point）处进行条件插值和外推。具体而言，给定一个包含N个示范轨迹的数据集，KMP通过高斯过程回归的框架学习轨迹的均值函数和协方差函数；当用户通过图形界面拖拽某个轨迹点到新位置时（Drag-and-drop via-point creation），系统会生成新的路径点约束，结合原始KMP模型进行重新推理，生成适配后的新轨迹Mean和协方差（可参考Fig. S10中蓝色显示原始KMP、橙色显示适应后轨迹的对比）。数据可视化界面（Data Visualization tab）提供了关节配置选项，以蓝色机器人全息投影显示当前选定时间步的机器人姿态；模型可视化模块（Model Visualization tab）则在轨迹执行时显示数字孪生和执行进度条。值得注意的是，公式中出现的γ=10^(-8)和λ₁作为正则化因子，表明系统在处理核矩阵时采用了数值稳定性优化。</p>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>graph TD</p>
+<p>%% 输入层样式</p>
+<p>classDef inputStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px</p>
+<p>classDef processStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px</p>
+<p>classDef coreStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:3px</p>
+<p>classDef outputStyle fill:#fce4ec,stroke:#c2185b,stroke-width:2px</p>
+
+<p>%% 子图：输入交互层</p>
+<p>subgraph 输入交互层</p>
+<p>direction TB</p>
+
+<p>subgraph 物理示教</p>
+<p>A1[操作员握住机器人演示]</p>
+<p>A2[采集力/位姿数据]</p>
+<p>A3[叠加Virtual Fixtures引导]</p>
+<p>A1 --> A2 --> A3</p>
+<p>end</p>
+
+<p>subgraph 语音指令</p>
+<p>B1[自然语言命令输入]</p>
+<p>B2[语音信号解析]</p>
+<p>B3[语义约束生成]</p>
+<p>B1 --> B2 --> B3</p>
+<p>end</p>
+
+<p>subgraph 图形操作</p>
+<p>C1[可视化界面操作]</p>
+<p>C2[拖拽轨迹路径点]</p>
+<p>C3[调整参数设置]</p>
+<p>C4[数字孪生预览]</p>
+<p>C1 --> C2 --> C3 --> C4</p>
+<p>end</p>
+<p>end</p>
+
+<p>%% 子图：核心处理层</p>
+<p>subgraph 核心处理层</p>
+<p>direction TB</p>
+<p>KMP[KMP技能模型]</p>
+<p>SE[状态估计]</p>
+<p>TG[轨迹生成]</p>
+<p>KMP --> SE --> TG</p>
+<p>end</p>
+
+<p>%% 子图：输出应用层</p>
+<p>subgraph 输出应用层</p>
+<p>direction TB</p>
+
+<p>VF[Virtual Fixtures<br/>触觉引导反馈]</p>
+<p>Robot[机器人运动执行]</p>
+<p>DT[数字孪生<br/>可视化监控]</p>
+<p>end</p>
+
+<p>%% 连接关系</p>
+<p>A3 -->|力/位姿数据| KMP</p>
+<p>B3 -->|语义约束| KMP</p>
+<p>C2 -->|轨迹点信息| KMP</p>
+<p>C3 -->|参数配置| KMP</p>
+
+<p>TG -->|生成轨迹| VF</p>
+<p>TG -->|运动指令| Robot</p>
+<p>TG -->|执行数据| DT</p>
+
+<p>VF -->|实时引导| A1</p>
+<p>DT -->|可视化反馈| C1</p>
+
+<p>%% 应用样式</p>
+<p>class A1,A2,A3 inputStyle</p>
+<p>class B1,B2,B3 inputStyle</p>
+<p>class C1,C2,C3,C4 inputStyle</p>
+<p>class KMP,SE,TG coreStyle</p>
+<p>class VF,Robot,DT outputStyle</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| 多模态感知与融合模块 | 负责从物理示教接口采集力和位置数据、从语音识别系统获取自然语言指令、从图形界面捕获用户的拖拽操作。系统将异构的多模态信号转换为统一的内部表示，支持异步和同步的混合输入方式。 |</p>
+<p>| KMP轨迹建模与适应引擎 | 基于核运动基元对示教数据进行概率建模。KMP通过核函数度量轨迹片段的相似性，学习动作的统计先验分布。核心能力是在给定新约束（如用户指定的via-point）时，通过贝叶斯条件化生成适配后的轨迹分布，同时保持与原始示教的一致性。 |</p>
+<p>| 概率Virtual Fixtures触觉引导系统 | 在物理示教阶段，将空间约束以概率分布的形式渲染为触觉力场。绿色半透明椭球体表示允许的安全区域，系统计算出指向该区域中心的引导力叠加到机器人末端，实现'软约束'——既引导用户按期望方式示教，又保留一定的操作自由度。 |</p>
+<p>| 数字孪生可视化界面 | 提供实时的机器人状态可视化，包括关节配置视角的蓝色机器人全息投影、轨迹执行进度条、原始KMP与适应后轨迹的对比显示。用户可以通过图形界面直观地理解机器人当前状态和学习效果。 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+</code>`<code>python
+<p>"""</p>
+<p>MOMO框架物理示教模块 - 简化示例</p>
+<p>核心功能：KMP轨迹建模与via-point适应</p>
+<p>"""</p>
+
+<p>import numpy as np</p>
+<p>from typing import List, Tuple</p>
+
+<h1>============== 1. 虚拟约束区域 (Virtual Fixtures) ==============</h1>
+<p>class VirtualFixtures:</p>
+<p>"""概率Virtual Fixtures - 半透明绿色椭球体约束"""</p>
+
+<p>def __init__(self):</p>
+<p>self.center = None      # 椭球体中心</p>
+<p>self.covariance = None  # 协方差矩阵</p>
+<p>self.orientation = None # 旋转矩阵</p>
+<p>self.alpha = 0.3        # 半透明度</p>
+
+<p>def generate_guidance_force(self, position: np.ndarray) -> np.ndarray:</p>
+<p>"""计算方向性触觉推力"""</p>
+<p># 计算到椭球体表面的距离</p>
+<p>diff = position - self.center</p>
+<p># 计算推力方向（引导向期望方向）</p>
+<p>guidance = self.covariance @ diff</p>
+<p>return guidance / (np.linalg.norm(guidance) + 1e-9)</p>
+
+
+<h1>============== 2. 示教轨迹数据 ==============</h1>
+<p>class DemonstrationData:</p>
+<p>"""存储N条示教轨迹"""</p>
+
+<p>def __init__(self, trajectories: List[np.ndarray]):</p>
+<p># trajectories: List of [T x D] arrays, T=时间步, D=维度</p>
+<p>self.trajectories = trajectories</p>
+<p>self.N_demos = len(trajectories)</p>
+<p>self.dim = trajectories[0].shape[1]</p>
+
+
+<h1>============== 3. KMP核心实现 ==============</h1>
+<p>class KernelMovementPrimitives:</p>
+<p>"""</p>
+<p>KMP - Kernel Movement Primitives</p>
+<p>基于核函数的条件密度估计方法</p>
+<p>"""</p>
+
+<p>def __init__(self, gamma: float = 1e-8, lambda_1: float = 0.01):</p>
+<p>self.gamma = gamma      # 正则化因子（数值稳定性）</p>
+<p>self.lambda_1 = lambda_1</p>
+<p>self.K = None           # 核矩阵</p>
+<p>self.K_y = None         # 输出核矩阵</p>
+<p>self.tau = None         # 原始时间点</p>
+<p>self.mean = None        # 轨迹均值</p>
+<p>self.covariance = None  # 轨迹协方差</p>
+
+<p>def fit(self, demos: DemonstrationData):</p>
+<p>"""从示教数据学习KMP模型"""</p>
+
+<p># 1. 时间对齐所有轨迹到统一时间点</p>
+<p>self.tau = np.linspace(0, 1, 100)  # 归一化时间</p>
+
+<p># 2. 计算轨迹统计特性</p>
+<p>all_trajs = np.array([self._interpolate(t, traj)</p>
+<p>for traj in demos.trajectories])</p>
+<p>self.mean = np.mean(all_trajs, axis=0)</p>
+<p>self.covariance = np.cov(all_trajs.reshape(demos.N_demos, -1))</p>
+
+<p># 3. 构建核矩阵 (高斯核)</p>
+<p>self.K = self._compute_kernel_matrix(self.tau, self.tau)</p>
+<p>self.K_y = self._compute_output_kernel(all_trajs)</p>
+
+<p>def _gaussian_kernel(self, t1: np.ndarray, t2: np.ndarray) -> np.ndarray:</p>
+<p>"""高斯核函数"""</p>
+<p>sq_dist = (t1[:, None] - t2[None, :]) ** 2</p>
+<p>return np.exp(-sq_dist / (2 <em> 0.1 </em>* 2))</p>
+
+<p>def _compute_kernel_matrix(self, t1: np.ndarray, t2: np.ndarray) -> np.ndarray:</p>
+<p>return self._gaussian_kernel(t1, t2)</p>
+
+<p>def _compute_output_kernel(self, trajectories: np.ndarray) -> np.ndarray:</p>
+<p>"""计算输出空间核矩阵"""</p>
+<p># 简化为轨迹的协方差</p>
+<p>return np.kron(self.K, np.eye(trajectories[0].shape[1]))</p>
+
+<p>def _interpolate(self, t: np.ndarray, traj: np.ndarray) -> np.ndarray:</p>
+<p>"""时间插值"""</p>
+<p># 线性插值到归一化时间点</p>
+<p>from scipy.interpolate import interp1d</p>
+<p>t_orig = np.linspace(0, 1, traj.shape[0])</p>
+<p>f = interp1d(t_orig, traj, axis=0)</p>
+<p>return f(t)</p>
+
+<p>def condition_on_viapoint(self,</p>
+<p>via_point_time: float,</p>
+<p>via_point_value: np.ndarray,</p>
+<p>via_point_idx: int) -> Tuple[np.ndarray, np.ndarray]:</p>
+<p>"""</p>
+<p>条件约束：在指定via-point处重推理轨迹</p>
+
+<p>Args:</p>
+<p>via_point_time: via-point的时间位置</p>
+<p>via_point_value: via-point的空间位置 (Drag-and-drop的新位置)</p>
+<p>via_point_idx: via-point的索引</p>
+
+<p>Returns:</p>
+<p>new_mean: 适应后的轨迹均值</p>
+<p>new_cov: 适应后的协方差</p>
+<p>"""</p>
+<p># 1. 构造约束条件</p>
+<p>K_star = self._gaussian_kernel(self.tau, [via_point_time])</p>
+<p>K_ss = self._gaussian_kernel([via_point_time], [via_point_time])</p>
+
+<p># 2. 条件均值计算（简化版）</p>
+<p># μ_new = μ + K_* @ K^{-1} @ (y_viapoint - μ_viapoint)</p>
+<p>mu_viapoint = np.interp(via_point_time, self.tau, self.mean[:, via_point_idx])</p>
+<p>residual = via_point_value - mu_viapoint</p>
+
+<p># 3. 应用高斯过程回归条件公式</p>
+<p>K_inv = np.linalg.inv(self.K + self.gamma * np.eye(len(self.tau)))</p>
+<p>adjustment = K_star.T @ K_inv * residual</p>
+
+<p>new_mean = self.mean.copy()</p>
+<p>new_mean[:, via_point_idx] += adjustment.flatten()</p>
+
+<p># 4. 更新协方差（条件协方差）</p>
+<p>new_cov = self.covariance - K_star.T @ K_inv @ K_star * self.lambda_1</p>
+
+<p>return new_mean, new_cov</p>
+
+<p>def sample_trajectory(self, new_mean: np.ndarray,</p>
+<p>new_cov: np.ndarray) -> np.ndarray:</p>
+<p>"""从更新后的分布采样轨迹"""</p>
+<p># 添加噪声生成多样本</p>
+<p>noise = np.random.multivariate_normal(</p>
+<p>mean=np.zeros(new_mean.flatten().shape),</p>
+<p>cov=new_cov</p>
+<p>).reshape(new_mean.shape)</p>
+<p>return new_mean + 0.1 * noise</p>
+
+
+<h1>============== 4. 主程序流程 ==============</h1>
+<p>def main():</p>
+<p>"""MOMO框架物理示教主流程"""</p>
+
+<p># --- 模拟示教数据采集 ---</p>
+<p>print("1. 采集示教轨迹...")</p>
+<p>num_demos = 5</p>
+<p>traj_length = 100</p>
+<p>traj_dim = 7  # 7-DOF机器人</p>
+
+<p># 模拟示教轨迹（Sinusoidal + noise）</p>
+<p>demos_data = []</p>
+<p>for i in range(num_demos):</p>
+<p>t = np.linspace(0, 1, traj_length)</p>
+<p>noise = np.random.randn(traj_length, traj_dim) * 0.05</p>
+<p>traj = np.column_stack([</p>
+<p>np.sin(2 <em> np.pi </em> t + i * 0.5) + noise[:, j]</p>
+<p>for j in range(traj_dim)</p>
+<p>])</p>
+<p>demos_data.append(traj)</p>
+
+<p>demonstrations = DemonstrationData(demos_data)</p>
+
+<p># --- 构建KMP模型 ---</p>
+<p>print("2. 构建KMP模型...")</p>
+<p>kmp = KernelMovementPrimitives(gamma=1e-8, lambda_1=0.01)</p>
+<p>kmp.fit(demonstrations)</p>
+
+<p># --- 应用Virtual Fixtures ---</p>
+<p>print("3. 应用概率Virtual Fixtures...")</p>
+<p>vf = VirtualFixtures()</p>
+<p>vf.center = np.array([0.5, 0.0, 0.0])  # 假设3D空间</p>
+<p>vf.covariance = np.eye(3) * 0.1</p>
+
+<p># 施加引导力</p>
+<p>current_pos = np.array([0.4, 0.1, 0.2])</p>
+<p>guidance = vf.generate_guidance_force(current_pos)</p>
+<p>print(f"   引导力: {guidance}")</p>
+
+<p># --- Drag-and-drop via-point ---</p>
+<p>print("4. Drag-and-drop创建via-point...")</p>
+
+<p># 用户拖拽到新位置</p>
+<p>new_via_position = np.array([0.3, 0.5, 0.2, 0.1, 0.1, 0.1, 0.1])</p>
+<p>new_mean, new_cov = kmp.condition_on_viapoint(</p>
+<p>via_point_time=0.5,</p>
+<p>via_point_value=new_via_position,</p>
+<p>via_point_idx=0  # 第一个关节</p>
+<p>)</p>
+
+<p>print(f"   原始均值[50]: {kmp.mean[50]}")</p>
+<p>print(f"   适应后均值[50]: {</p>
+</code>`<code>
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+</code>`<code>latex
+<p>\begin{align}</p>
+<p>&\text{where } \lambda_{1} \text{ is a small regularization factor, }</p>
+<p>K \text{ and } k^{\ast} \text{ are } \dots</p>
+<p>\end{align}</p>
+</code>``
+<p>$$</p>
+
+<em>含义</em>：where λ1 is a small regularization factor, K and k∗are
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：论文展示了Bearing ring insertion（轴承环装配）任务的实验案例，这是一个典型的精密装配任务，需要精确的位置和姿态对准。此外从界面描述看，系统还支持多种工业装配和操作任务的泛化测试。
+
+<strong>评价指标</strong>：从论文结构推断，评价指标可能包括：①技能学习效率——用户完成任务示教所需时间和交互次数；②轨迹适应精度——via-point适应后轨迹与目标点的偏差；③物理约束遵从度——Virtual Fixtures引导下的示教轨迹与理想约束的符合程度；④用户满意度——主观评分问卷。
+
+<strong>主要结果</strong>：
+
+<p>基于补充材料中的可视化结果可以看出，Bearing ring insertion任务中，原始KMP轨迹和Virtual Fixtures引导下的示教轨迹形成了良好的互补——前者提供统计先验，后者提供实时触觉约束。Via-point适应实验（Fig. S10）显示，当用户通过拖拽修改目标点后，系统生成的适应轨迹能够在保持整体运动模式的同时精确通过新的约束点，且协方差带合理地反映了适应后的不确定性变化。数字孪生界面清晰地呈现了执行过程中机器人姿态的连续变化，证明系统具有良好的实时性。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ Virtual Fixtures能够有效引导操作员完成示教，同时不牺牲自然性</li>
+<li>✅ KMP的贝叶斯条件化机制能够灵活处理多约束情况，生成物理可行的适应轨迹</li>
+<li>✅ 图形界面的drag-and-drop via-point操作直观高效，非专业用户也能快速上手</li>
+<li>✅ 三种模态的融合不是简单的叠加，而是根据任务阶段和用户意图进行智能切换</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 三模态无缝融合的交互范式 | 首次在机器人技能学习框架中系统性地融合物理示教、语音指令、图形操作三种交互模态，实现从示教到适应全流程的体验一致性，用户可根据需要在不同模态间自由切换而不丢失上下文信息。 |</p>
+<p>| 概率Virtual Fixtures的示教引导 | 将传统的确定性虚拟夹具升级为概率版本，以协方差椭球表示约束边界的不确定性，在示教阶段提供方向性触觉引导，既保证约束遵从又保留操作灵活性，这是对'物理模态'的深度增强。 |</p>
+<p>| 直观的via-point拖拽适应机制 | 提供所见即所得的图形交互方式，用户直接在数字孪生可视化中点击并拖拽轨迹点到新位置，系统自动调用KMP的条件化推理生成新的运动策略，大幅降低了轨迹修调的认知门槛。 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 小批量多品种的柔性生产线——需要频繁切换产品规格和装配工艺的场景</li>
+<li>🎯 人机协作的装配工位——工人需要快速示教机器人辅助完成特定操作步骤</li>
+<li>🎯 服务机器人的个性化定制——根据用户偏好调整运动风格和交互行为</li>
+<li>🎯 科研和教育培训——让学生和新手工程师快速验证机器人控制算法和任务逻辑</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 多模态输入的实时融合与冲突消解——当物理示教、语音指令、图形操作给出不一致的信号时，系统需要合理的仲裁策略</li>
+<li>⚠️ Virtual Fixtures的力场计算需要精确的机器人动力学模型和低延迟的力控响应</li>
+<li>⚠️ KMP的计算复杂度随示教数据量增长，需要在实时性和模型精度间取得平衡</li>
+<li>⚠️ 从实验室演示到工业现场部署，需要解决安全认证、系统可靠性等工程化问题</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>实现思路：①KMP模块可基于GPflow或GPyTorch构建高斯过程回归模型，核函数选用RBF或ARD核以处理多维轨迹数据；②Virtual Fixtures力场可采用梯度下降势场法，椭球体参数由任务约束学习得到；③语音接口可集成Whisper进行语音识别，结合规则或LLM解析语义约束；④可视化模块推荐使用PyBullet或RViz的数字孪生，支持URDF格式的机器人模型导入；⑤整体框架建议采用ROS2进行模块间通信，确保实时性和可扩展性。</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：MOMO通过物理、言语、图形三模态的无缝融合，配合概率Virtual Fixtures触觉引导和KMP轨迹适应两大核心技术，为机器人技能学习提供了一套自然、高效、可解释的交互范式，显著降低了机器人部署和调试的门槛。
+
+<strong>未来方向</strong>：探索将大语言模型（LLM）深度整合到语音理解环节，实现更复杂的自然语言约束解析；将MOMO框架扩展到多机器人协作场景；研究基于强化学习的后续优化模块，在示教数据基础上进一步提升技能性能；以及在真实工业环境中的长期部署验证。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：MOMO和传统的编程示教（Lead-through programming）有什么本质区别？</strong>
+
+<p>A：传统示教需要操作员完整执行整个轨迹，系统仅记录点位信息；而MOMO在示教过程中实时叠加Virtual Fixtures触觉引导，将操作员的自然动作与隐式的任务约束（如安全区域、装配对准要求）融合记录。示教结束后，系统通过KMP将轨迹建模为概率分布，支持后续的在线适应，而不仅是简单的点位回放。</p>
+
+
+<strong>Q：如果语音指令和物理示教给出的约束相互矛盾，系统会如何处理？</strong>
+
+<p>A：从论文的框架设计推测，系统应该采用加权融合或优先级策略来处理多模态冲突。例如，物理示教的力/位姿数据具有最高的实时优先级（确保操作安全），语音指令作为高层语义约束被解析为空间或时间参数传递给KMP模块，而图形界面的via-point操作可能触发重新推理并询问用户确认。具体的冲突消解策略可能取决于任务的约束类型和用户的显式指示。</p>
+
+
+<strong>Q：KMP相比DMP（动态运动基元）有什么优势？</strong>
+
+<p>A：DMP通过非线性项（recurrent term）实现轨迹的调制和泛化，适合周期性和点到点运动；KMP则基于核函数的条件密度估计，能够更自然地处理多约束插值问题——当给定多个via-point时，KMP通过贝叶斯推理直接计算条件均值和协方差，而DMP通常需要逐点叠加修正项。此外，KMP输出的概率分布形式（均值+协方差带）便于不确定性量化和主动学习，但计算复杂度通常高于DMP。</p>
+
+
+<strong>Q：这套系统对硬件有什么要求？</strong>
+
+<p>A：从系统描述推断，MOMO需要：①支持力控的协作机器人本体（如UR、KUKA LBR iiwa、或Franka Emika Panda）；②6轴或更高精度的关节力矩传感器；③实时控制器（通常为EtherCAT或类似实时总线）；④语音交互设备（麦克风和语音处理模块）；⑤图形显示设备。对于工业部署，建议使用通过安全认证的协作机器人，并配备外部安全传感器。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: Overview of the framework. The three interaction modalities
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_0_0.png" target="_blank">Figure 1</a></p>
+
+<strong>Figure 2</strong>: (a) Bearing ring insertion task: the transparent robot shows original
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_0_1.png" target="_blank">Figure 2</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
