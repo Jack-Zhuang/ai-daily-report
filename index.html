@@ -912,7 +912,7 @@
             container.innerHTML = dailyPick.map((item, i) => {
                 const rankClass = i < 3 ? ['gold', 'silver', 'bronze'][i] : 'normal';
                 const category = item.type === 'github' ? 'github' : item.category;
-                const pickType = item.pick_type || 'paper';
+                const pickType = item.pick_type || item.type || 'paper';
                 const typeIcon = typeIcons[pickType] || '📄';
                 const imageClass = item.type === 'github' ? 'card-image-github' : (categoryImages[category] || 'card-image-paper');
                 const itemId = item.id || item.name || 'pick-' + i;
@@ -972,7 +972,7 @@
             const item = dailyPick[index];
             if (!item) return;
             
-            const pickType = item.pick_type || 'paper';
+            const pickType = item.pick_type || item.type || 'paper';
             const typeIcon = { paper: '📄', article: '📰', github: '💻' }[pickType] || '📄';
             const cnTitle = item.cn_title || item.title || item.name || '未知标题';
             const cnSummary = item.cn_summary || item.summary || item.description || '暂无简介';
