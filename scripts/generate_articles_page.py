@@ -74,7 +74,19 @@ def generate_articles_page():
         cover = article.get('cover_image', '')
         published = article.get('published', '')
         
-        # 如果没有封面图，使用渐变背景
+        # 如果没有封面图，尝试使用序号对应的封面图
+        if not cover or cover == '':
+            # 尝试多种可能的封面图命名
+            possible_covers = [
+                f"covers/article_{i}.jpg",
+                f"covers/article_{i}.png",
+            ]
+            for pc in possible_covers:
+                if (base_dir / pc).exists():
+                    cover = pc
+                    break
+        
+        # 如果还是没有封面图，使用渐变背景
         if not cover or cover == '':
             cover_style = 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);'
         else:
