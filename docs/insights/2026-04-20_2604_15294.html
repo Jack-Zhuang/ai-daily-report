@@ -62,50 +62,7 @@ arXiv: [2604.15294](http://arxiv.org/abs/2604.15294)
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    subgraph 输入层["📥 输入处理"]
-        A[文本描述] --> B[初始观察]
-        A --> C[旋转序列]
-        B & C --> D[文本输入]
-    end
-
-    subgraph 编码阶段["🔄 编码阶段"]
-        D --> E[LLM/VLM编码]
-        E --> F[中间层表示]
-    end
-
-    subgraph 探测阶段["🔍 逐层探测"]
-        F --> G{方向检测}
-        F --> H{角度检测}
-        F --> I{方向分类器}
-        G & H & I --> J[探测结果聚合]
-    end
-
-    subgraph 因果验证["⚡ 因果追踪验证"]
-        J --> K[关键层识别]
-        J --> L[注意力头分析]
-        K & L --> M[因果验证结果]
-    end
-
-    subgraph 输出层["📤 输出"]
-        M --> N[预测最终视角]
-        N --> O[结果输出]
-    end
-
-    %% 样式定义
-    classDef inputStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef encodeStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef probeStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef causalStyle fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-    classDef outputStyle fill:#fce4ec,stroke:#ad1457,stroke-width:2px
-
-    class A,B,C,D inputStyle
-    class E,F encodeStyle
-    class G,H,I,J probeStyle
-    class K,L,M causalStyle
-    class N,O outputStyle
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 

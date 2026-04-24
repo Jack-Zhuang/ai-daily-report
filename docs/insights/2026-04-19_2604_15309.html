@@ -53,90 +53,7 @@ MM-WebAgent提出一种分层多模态Web智能体框架，通过「全局规划
 
 ### 📊 方法流程图
 
-```mermaid
-graph LR
-    %% 样式定义
-    classDef inputLayer fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef encoder fill:#b3e5fc,stroke:#0277bd,stroke-width:2px
-    classDef planner fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
-    classDef generator fill:#fff9c4,stroke:#f9a825,stroke-width:2px
-    classDef verifier fill:#ffccbc,stroke:#d84315,stroke-width:2px
-    classDef output fill:#d1c4e9,stroke:#512da8,stroke-width:2px
-
-    %% 输入层
-    subgraph 输入层
-        A1[设计稿图像<br/>PNG/Screenshot]
-        A2[自然语言需求描述]
-    end
-
-    %% 编码器
-    subgraph 感知层
-        B[多模态感知编码器]
-        B1[视觉特征向量]
-    end
-
-    %% 层次化规划器
-    subgraph 规划层["层次化规划器"]
-        subgraph 全局规划
-            C1[全局规划器<br/>Global Planner]
-            C2[任务分解树]
-        end
-        subgraph 局部规划
-            C3[局部规划器<br/>Local Planner]
-            C4[子模块生成指令]
-        end
-    end
-
-    %% 代码生成与验证层
-    subgraph 生成验证层["代码生成与验证层"]
-        D[代码生成器<br/>Code Generator]
-        D1[HTML代码]
-        D2[CSS代码]
-        D3[JS代码]
-        E[验证器<br/>Verifier]
-    end
-
-    %% 输出层
-    subgraph 输出层
-        F[网页代码文件<br/>HTML/CSS/JS]
-    end
-
-    %% 连接关系
-    A1 --> B
-    A2 --> B
-    B --> B1
-    B1 --> C1
-    B1 --> C3
-    
-    C1 --> |"迭代优化"| C3
-    C3 --> |"迭代优化"| C1
-    
-    C1 --> C2
-    C3 --> C4
-    
-    C4 --> D
-    
-    D --> D1
-    D --> D2
-    D --> D3
-    
-    D1 --> E
-    D2 --> E
-    D3 --> E
-    
-    E --> |"纠错反馈"| C1
-    E --> |"纠错反馈"| C3
-    
-    E --> F
-
-    %% 应用样式
-    class A1,A2 inputLayer
-    class B,B1 encoder
-    class C1,C2,C3,C4 planner
-    class D,D1,D2,D3 generator
-    class E verifier
-    class F output
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -265,9 +182,7 @@ if __name__ == '__main__':
 **公式 1**：
 
 $$
-\begin{align*}
-\text{We present } \textit{MM-WebGEN-Bench} \text{ to } \dots
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：we present MM-WebGEN-Bench to-
@@ -275,9 +190,7 @@ $$
 **公式 2**：
 
 $$
-\begin{align*}
-\texttt{a standard code-only}
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：a standard code-only

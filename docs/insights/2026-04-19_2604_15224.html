@@ -63,65 +63,7 @@ arXiv: [2604.15224](http://arxiv.org/abs/2604.15224)
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 样式定义
-    classDef inputStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
-    classDef conditionStyle fill:#fff8e1,stroke:#ff8f00,stroke-width:2px
-    classDef modelStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    classDef analysisStyle fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-
-    %% 输入模块
-    subgraph 输入模块
-        A[📥 1,520个固定响应池]
-    end
-
-    %% 评判条件模块
-    subgraph 评判条件模块
-        B[⚖️ 三种评判条件]
-        C1[❌ 条件1: 无后果提示]
-        C2[⚠️ 条件2: 软性后果暗示]
-        C3[🔴 条件3: 强后果暗示]
-    end
-
-    %% 模型处理模块
-    subgraph 模型处理模块
-        D1[🤖 Qwen2.5-72B]
-        D2[🤖 DeepSeek-R1-32B]
-        D3[🤖 DeepSeek-V3]
-    end
-
-    %% 分析输出模块
-    subgraph 分析输出模块
-        E[📊 计算ΔV判决偏移量]
-        F[📈 统计分析宽松偏差]
-    end
-
-    %% 连接关系
-    A --> B
-    B --> C1
-    B --> C2
-    B --> C3
-    C1 --> D1
-    C1 --> D2
-    C1 --> D3
-    C2 --> D1
-    C2 --> D2
-    C2 --> D3
-    C3 --> D1
-    C3 --> D2
-    C3 --> D3
-    D1 --> E
-    D2 --> E
-    D3 --> E
-    E --> F
-
-    %% 样式应用
-    class A inputStyle
-    class B,C1,C2,C3 conditionStyle
-    class D1,D2,D3 modelStyle
-    class E,F analysisStyle
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -292,11 +234,7 @@ if __name__ == "__main__":
 **公式 1**：
 
 $$
-\begin{align*}
-&\text{and frozen before any judging begins.}\\
-&\text{No response is regenerated or filtered post-hoc.}\\
-&\text{This}
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：and frozen before any judging begins. No response is regenerated or filtered post-hoc. This
@@ -305,11 +243,7 @@ $$
 
 $$
 ```latex
-\begin{align*}
-\text{Qwen2.5-72B-Instruct}&:\ \text{large non-reasoning},\\
-T&=0.0,\\
-\Delta V_{\text{baseline}}&\ \text{(clean baseline)}.
-\end{align*}
+<!-- 数学公式待渲染 -->
 ```
 $$
 
@@ -318,9 +252,7 @@ $$
 **公式 3**：
 
 $$
-\begin{align*}
-\text{DeepSeek-R1-Distill-Qwen-32B}\;\text{—}\;\text{reasoning with full CoT}
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：DeepSeek-R1-Distill-Qwen-32B—reasoning with full CoT,
@@ -336,9 +268,7 @@ $$
 **公式 5**：
 
 $$
-\begin{align}
-\text{any consequence}
-\end{align}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：any conse-

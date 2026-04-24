@@ -65,64 +65,7 @@ arXiv: [2604.18469](http://arxiv.org/abs/2604.18469)
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 样式定义
-    classDef inputNode fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef processNode fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef outputNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    classDef loopNode fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-
-    %% 输入层
-    subgraph INPUT[输入层]
-        I1["50栋建筑负荷数据"]
-        I2["外生特征日历变量"]
-    end
-
-    %% 处理层
-    subgraph PROCESS[处理层]
-        P1["SCM权重估计"]
-        P2["动态特征增强"]
-        P3["正则化优化"]
-    end
-
-    %% 输出层
-    subgraph OUTPUT[输出层]
-        O1["基线预测值"]
-    end
-
-    %% 核心循环
-    subgraph LOOP[核心循环]
-        L1["历史负荷"]
-        L2["特征构建"]
-        L3["权重优化"]
-        L4["Counterfactual预测"]
-        L5["误差反馈"]
-        L6["权重更新"]
-    end
-
-    %% 连接边
-    I1 --> P1
-    I2 --> P2
-    P1 --> P2
-    P2 --> P3
-    
-    P3 --> L1
-    L1 --> L2
-    L2 --> L3
-    L3 --> L4
-    L4 --> L5
-    L5 --> L6
-    L6 --> L3
-    
-    P3 --> O1
-
-    %% 应用样式
-    class I1,I2 inputNode
-    class P1,P2,P3 processNode
-    class O1 outputNode
-    class L1,L2,L3,L4,L5,L6 loopNode
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -278,10 +221,7 @@ if __name__ == "__main__":
 **公式 1**：
 
 $$
-\begin{align*}
-D &= J + M + L + J,\\
-\hat{\beta} &= (X_0^\top X_0)^{-1} X_0^\top D \quad \text{(4)}.
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：where D = J + M + L + J. The synthetic control coefficients are estimated using (4) with X0
@@ -289,9 +229,7 @@ $$
 **公式 2**：
 
 $$
-\begin{align}
-\text{Flexibility}\,\delta^{+}
-\end{align}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：Flexibility δ+
@@ -300,9 +238,7 @@ $$
 
 $$
 ```latex
-\begin{align}
-\text{SOC}_{t+1} &= \text{SOC}_{t} - \eta_{s}\, s_{t}
-\end{align}
+<!-- 数学公式待渲染 -->
 ```
 $$
 

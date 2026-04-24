@@ -56,48 +56,7 @@ arXiv: [2604.15280](http://arxiv.org/abs/2604.15280)
 
 ### 📊 方法流程图
 
-```mermaid
-graph LR
-    %% 样式定义
-    classDef inputStyle fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1
-    classDef stage1Style fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100
-    classDef stage2Style fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20
-    classDef outputStyle fill:#FCE4EC,stroke:#C2185B,stroke-width:2px,color:#880E4F
-
-    %% 输入阶段子图
-    subgraph IN[输入阶段]
-        direction TB
-        IN1[视频帧序列]
-        IN2[上下文数据库]
-    end
-
-    %% 第一阶段推理子图
-    subgraph S1[第一阶段推理]
-        direction TB
-        S1_1[VLM初步预测]
-        S1_2[置信度标记]
-    end
-
-    %% 第二阶段推理子图
-    subgraph S2[第二阶段推理]
-        direction TB
-        S2_1[上下文丰富模块]
-        S2_2[最终预测]
-    end
-
-    %% 数据流向
-    IN1 --> S1_1
-    IN2 --> S1_1
-    S1_1 --> S1_2
-    S1_2 -.虚线.-> S2_1
-    S2_1 --> S2_2
-
-    %% 应用样式
-    class IN1,IN2 inputStyle
-    class S1_1,S1_2 stage1Style
-    class S2_1,S2_2 stage2Style
-    class S2_2 outputStyle
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 

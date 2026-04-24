@@ -69,70 +69,7 @@ ECL作为模型侧监管层，核心功能包括：
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 输入层
-    A[用户输入]
-    
-    %% 人类脚手架层
-    B[人类脚手架层]
-    subgraph 脚手架层
-        C[不确定性检测]
-        D[冲突识别]
-        E[意图解析]
-    end
-    
-    %% ART生成层
-    F[ART生成]
-    
-    %% 模型端ECL
-    G[模型端ECL]
-    
-    %% 认知与冲突处理
-    subgraph 认知处理
-        H[认知状态监控]
-        I[内部冲突检测]
-        J[解码调节模块]
-    end
-    
-    %% 一致性检查
-    K[跨轮一致性检查]
-    
-    %% 输出层
-    L[稳定输出]
-    M[ART记录更新]
-    N[用户响应+审计追踪]
-    
-    %% 连接关系
-    A --> B
-    B --> C
-    B --> D
-    B --> E
-    C --> F
-    D --> F
-    E --> F
-    F --> G
-    G --> H
-    G --> I
-    G --> J
-    H --> K
-    I --> J
-    J --> L
-    K --> L
-    L --> M
-    M --> N
-    
-    %% 样式定义
-    classDef scaffold fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    classDef art fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    classDef ecl fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
-    classDef output fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
-    
-    class B,C,D,E scaffold
-    class F art
-    class G,H,I,J ecl
-    class L,M,N output
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 

@@ -64,67 +64,7 @@ TokenFormer的核心设计包含三个关键组件：
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 输入层
-    subgraph 输入层
-        F1["多字段特征 F"]
-        T1["用户行为序列 T<br/>(最近N次点击物品)"]
-        E1["Embedding 层"]
-        E2["Embedding 层"]
-        F2["特征 Token"]
-        T2["行为 Token 序列"]
-    end
-
-    %% BFTS 块
-    subgraph BFTS块_4层["BFTS 块 (4层)"]
-        subgraph 全量交互层["全量交互 (底层)"]
-            B1["BFTS Block 1<br/>Full Attention"]
-            B2["BFTS Block 2<br/>Full Attention"]
-        end
-        subgraph 局部聚焦层["局部聚焦 (顶层)"]
-            B3["BFTS Block 3<br/>Sliding Attention"]
-            B4["BFTS Block 4<br/>Sliding Attention"]
-        end
-    end
-
-    %% 输出层
-    subgraph 输出层
-        Concat["特征融合"]
-        MLP["MLP 预测器"]
-        Score["点击率分数<br/>CTR Score"]
-    end
-
-    %% 连接关系
-    F1 --> E1
-    T1 --> E2
-    E1 --> F2
-    E2 --> T2
-    
-    F2 --> B1
-    T2 --> B1
-    B1 --> B2
-    B2 --> B3
-    B3 --> B4
-    
-    B4 --> Concat
-    Concat --> MLP
-    MLP --> Score
-
-    %% 样式定义
-    classDef input fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef bfts fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef fullAtt fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    classDef slidingAtt fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    classDef output fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef fusion fill:#fff9c4,stroke:#f9a825,stroke-width:2px
-
-    class F1,T1,F2,T2,E1,E2 input
-    class B1,B2 fullAtt
-    class B3,B4 slidingAtt
-    class MLP,Score output
-    class Concat fusion
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -282,9 +222,7 @@ class TokenFormer(nn.Module):
 **公式 1**：
 
 $$
-\begin{align*}
-\text{Notably, we dispense with explicit type embeddings, instead, em-}
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：Notably, we dispense with explicit type embeddings, instead, em-

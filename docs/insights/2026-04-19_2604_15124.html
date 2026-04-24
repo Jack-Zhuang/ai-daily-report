@@ -52,78 +52,7 @@ arXiv: [2604.15124](http://arxiv.org/abs/2604.15124)
 
 ### 📊 方法流程图
 
-```mermaid
-graph LR
-    %% 定义样式类
-    classDef caseModule fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
-    classDef coreModule fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef evalModule fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    classDef inputModule fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
-    classDef ragModule fill:#e0f7fa,stroke:#00838f,stroke-width:1px
-    classDef llmModule fill:#fce4ec,stroke:#c2185b,stroke-width:1px
-    classDef qualityModule fill:#f1f8e9,stroke:#558b2f,stroke-width:1px
-
-    %% ============ 左侧：案例构建模块 ============
-    subgraph 案例构建["📋 案例构建模块"]
-        A1["真实临床数据"] --> A2["抽取CGM场景"]
-        A2 --> A3["构建标准化咨询问题"]
-    end
-    class A1,A2,A3 caseModule
-
-    %% ============ 中部：CA系统核心 ============
-    subgraph CA核心["⚙️ CA系统核心"]
-        %% 用户输入
-        B1["用户查询输入"]
-        
-        %% RAG检索层
-        subgraph RAG["RAG检索层"]
-            B2a["查询重写"] --> B2b["向量检索"]
-            B2b --> B2c["排名重排"]
-        end
-        
-        %% LLM生成层
-        subgraph LLM["LLM生成层"]
-            B3a["提示工程"] --> B3b["响应生成"]
-        end
-        
-        %% 质量控制层
-        subgraph QC["质量控制层"]
-            B4["质量评估与反馈"]
-        end
-        
-        %% 连接关系
-        B1 --> B2a
-        B2c --> B3a
-        B3b --> B4
-    end
-    class B1 inputModule
-    class B2a,B2b,B2c ragModule
-    class B3a,B3b llmModule
-    class B4 qualityModule
-
-    %% ============ 右侧：评估流程 ============
-    subgraph 评估流程["📊 评估流程"]
-        C1["收集回复<br/>(临床医生+CA)"] --> C2["随机编号"]
-        C2 --> C3["分发给盲评估者"]
-        C3 --> C4["多维度评分"]
-        
-        subgraph 评分维度["评分维度"]
-            C4a["临床领域<br/>准确性、完整性"]
-            C4b["沟通维度<br/>清晰度、同理心、可操作性"]
-            C4 --> C4a
-            C4 --> C4b
-        end
-        
-        C4a --> C5["7分制评分"]
-        C4b --> C5
-        C5 --> C6["统计分析"]
-    end
-    class C1,C2,C3,C4,C4a,C4b,C5,C6 evalModule
-
-    %% ============ 流程连接 ============
-    A3 -.->|"咨询问题"| B1
-    B4 -.->|"CA回复"| C1
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -294,20 +223,7 @@ if __name__ == "__main__":
 **公式 1**：
 
 $$
-\begin{align*}
-\text{Relevant guideline excerpts} &\gets \operatorname{RAG}\bigl
-$$
-
-*含义*：relevant guideline excerpts retrieved through RAG using a domain-specific corpus
-
-**公式 2**：
-
-$$
-\begin{align*}
-\text{Pages} &= 611\text{--}620 \\
-\text{DOI}   &= 10.3949/ccjm.91a.23090 \\
-\text{PMID}  &= 39353661
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：:611-620. doi:10.3949/ccjm.91a.23090. PMID:39353661.
@@ -315,9 +231,7 @@ $$
 **公式 3**：
 
 $$
-\begin{align*}
-\text{pp. 1048--1069}
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：:1048-1069.

@@ -71,70 +71,7 @@ IG(s) = P(a*|q, D_s) - E[P(a*|q, D_random)]
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 样式定义
-    classDef inputStyle fill:#e3f2fd,stroke:#1976d2,color:#000
-    classDef modelStyle fill:#bbdefb,stroke:#1565c0,color:#000
-    classDef searchStyle fill:#e1f5fe,stroke:#0288d1,color:#000
-    classDef rewardStyle fill:#fff3e0,stroke:#f57c00,color:#000
-    classDef updateStyle fill:#fce4ec,stroke:#c2185b,color:#000
-    classDef subgraphStyle fill:transparent,stroke:transparent,color:#333
-
-    %% 左侧Rollout阶段
-    subgraph rollout["🔄 Rollout 阶段"]
-        direction TB
-        A1[问题输入]:::inputStyle
-        A2[策略模型]:::modelStyle
-        A3{Token类型?}:::searchStyle
-        A4[思考链Token]:::searchStyle
-        A5[搜索查询Token]:::searchStyle
-        A6[检索器]:::searchStyle
-        A7[Wikipedia Top-3文档]:::searchStyle
-        A8[上下文拼接]:::searchStyle
-        
-        A1 --> A2
-        A2 --> A3
-        A3 -->|思考链| A4
-        A3 -->|搜索查询| A5
-        A5 --> A6
-        A6 --> A7
-        A7 --> A8
-        A8 --> A2
-        A4 --> A2
-    end
-
-    %% 右侧训练阶段
-    subgraph training["🎯 训练阶段"]
-        direction TB
-        B1[轨迹集合]:::rewardStyle
-        B2[轨迹级奖励<br/>F1分数]:::rewardStyle
-        B3[步骤级IG奖励]:::rewardStyle
-        B4[GRPO优势估计]:::rewardStyle
-        B5[奖励塑形]:::rewardStyle
-        B6[反向传播]:::updateStyle
-        B7[更新策略模型]:::updateStyle
-        
-        B1 --> B2
-        B1 --> B3
-        B2 --> B4
-        B3 --> B4
-        B4 --> B5
-        B5 --> B6
-        B6 --> B7
-    end
-
-    %% 连接两个阶段
-    rollout -.->|轨迹数据| B1
-    B7 -.->|参数更新| A2
-    
-    %% 添加标题
-    title[生成-检索-评估-更新 迭代闭环]
-    
-    %% 样式应用
-    class A1,A2,A3,A4,A5,A6,A7,A8 subgraphStyle
-    class B1,B2,B3,B4,B5,B6,B7 subgraphStyle
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -289,10 +226,7 @@ if __name__ == "__main__":
 **公式 1**：
 
 $$
-\begin{align*}
-r_{\mathrm{F1}} &= \text{F1 score between the predicted and gold answers},\\
-r_{\mathrm{ret}} &= \text{retrieval metric}.
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：rF1, F1 score between the predicted and gold answers; and (2) rret, a retrieval-
@@ -301,9 +235,7 @@ $$
 
 $$
 ```latex
-\begin{align*}
-&\text{where } a^{\ast} \text{ denotes the gold answer, and } \pi_{\theta_{\text{old}}} \text{ is the rollout policy used to sample the trajectories.}
-\end{align*}
+<!-- 数学公式待渲染 -->
 ```
 $$
 
@@ -313,10 +245,7 @@ $$
 
 $$
 ```latex
-\begin{align*}
-&\text{Because Eq. 3 length-normalizes by } |a^*|,\\
-&\text{all subsequent IG values (including the thresholds } \delta \text{ and } \eta)\text{.}
-\end{align*}
+<!-- 数学公式待渲染 -->
 ```
 $$
 
@@ -326,10 +255,7 @@ $$
 
 $$
 ```latex
-\begin{align*}
-\lambda &= 0.1 \\
-\text{This asymmetry ensures that the optimal strategy is to search and search.}
-\end{align*}
+<!-- 数学公式待渲染 -->
 ```
 $$
 
@@ -338,10 +264,7 @@ $$
 **公式 5**：
 
 $$
-\begin{align*}
-\text{single-hop retrieval} &: \max_{i\in\mathcal{I}} \sum_{j\in\mathcal{J}} R_{ij} \\
-&= \max_{i\in\mathcal{I}} \mathbf{r}_i^\top \mathbf{1}
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：single-hop retrieval:

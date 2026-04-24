@@ -79,58 +79,7 @@ SAGER采用双表示技能架构，将策略技能分离为两个层次：
 
 ### 📊 方法流程图
 
-```mermaid
-graph LR
-    %% 主流程样式定义
-    classDef mainStage fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef process fill:#fff3e0,stroke:#e65100,stroke-width:1.5px
-    classDef userNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    classDef skillNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1.5px
-
-    %% 主流程
-    A[👤 用户输入] --> B
-    
-    subgraph RETRIEVE["🔍 Retrieve 阶段"]
-        B{检索判断} --> C[从Memory检索<br/>相关历史]
-    end
-    
-    C --> D
-    
-    subgraph MEMORY["💾 Memory 阶段"]
-        D{偏好判断} --> E[加载用户<br/>偏好记忆]
-    end
-    
-    E --> F
-    
-    subgraph GENERATION["⚡ Generation 阶段"]
-        F{生成判断} --> G[注入进化后<br/>策略技能]
-        G --> H[LLM生成推荐]
-        H --> I[📤 输出给用户]
-    end
-    
-    I --> J
-    
-    subgraph EVOLUTION["🔄 Evolution 阶段"]
-        J{反馈判断} --> K[分析用户反馈]
-        K --> L[更新策略<br/>技能文档]
-    end
-    
-    L -.-> |"循环迭代"| A
-
-    %% 策略技能双表示架构（右侧）
-    subgraph SKILL_ARCH["🎯 策略技能架构"]
-        direction TB
-        M[📚 进化基材<br/>完整策略库] 
-        N[💡 推理注入<br/>精简摘要]
-        M ⟷|"🔄 同步机制"| N
-    end
-
-    %% 应用样式
-    class A userNode
-    class B,D,F,J mainStage
-    class C,E,G,H,I,K,L process
-    class M,N skillNode
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -328,9 +277,7 @@ if __name__ == "__main__":
 **公式 1**：
 
 $$
-\begin{align*}
-\text{From this starting point, the skill self-evolves through interaction: } S(t-2)
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：From this starting point, the skill self-evolves through interaction: S(t−2)
@@ -339,10 +286,7 @@ $$
 
 $$
 ```latex
-\begin{align*}
-&\text{Plist encodes a three-tier priority:}\\
-&\qquad \text{instruction match} \succ \text{facets alignment} \succ \text{slim skill tie}.
-\end{align*}
+<!-- 数学公式待渲染 -->
 ```
 $$
 
@@ -351,10 +295,7 @@ $$
 **公式 3**：
 
 $$
-\begin{align*}
-\text{Full prompt templates are in Appendix C.}\\
-\text{The complete per-interaction procedure is summarized in \dots}
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：Full prompt templates are in Appendix C. The complete per-interaction procedure is summarized in

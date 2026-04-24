@@ -52,50 +52,7 @@ arXiv: [2604.15202](http://arxiv.org/abs/2604.15202)
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 样式定义
-    classDef inputNode fill:#b3e5fc,stroke:#0277bd,stroke-width:2px,color:#01579b
-    classDef processNode fill:#ffe0b2,stroke:#ef6c00,stroke-width:2px,color:#e65100
-    classDef outputNode fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
-    classDef flowEdge stroke:#455a64,stroke-width:2px
-
-    %% 输入模块子图
-    subgraph INPUT["📥 输入模块"]
-        G["网格生成器<br/>(α参数)"]
-    end
-
-    %% 处理模块子图
-    subgraph PROCESS["⚙️ 处理模块"]
-        C["形态家族分类器"]
-        H["启发式选择器<br/>(EP/TI)"]
-        P["路径构建模块"]
-    end
-
-    %% 评估模块子图
-    subgraph EVAL["📊 评估模块"]
-        E["性能评估器"]
-        R["结果对比表"]
-    end
-
-    %% 数据流向
-    G -->|"网格数据"| C
-    C -->|"家族分类结果"| P
-    H -->|"选择策略"| P
-    P -->|"构建路径"| E
-    E -->|"多维度分析"| R
-
-    %% 应用样式
-    class G inputNode
-    class C,H,P processNode
-    class E,R outputNode
-    class G,C,H,P,E,R flowEdge
-
-    %% 额外注释
-    note1["同时输入"]@{shape: note, side: right}
-    C -.->|"并行"| note1
-    note1 -.-> H
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -335,9 +292,7 @@ def main():
 
 $$
 ```latex
-\begin{align}
-& \in \{\,\text{index},\ \text{distance}\,\},\qquad \text{policy} \in \{\,\text{EP},\ \text{TI}\,\}
-\end{align}
+<!-- 数学公式待渲染 -->
 ```
 $$
 

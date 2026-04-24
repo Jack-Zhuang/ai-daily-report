@@ -56,46 +56,7 @@ GSQ将量化过程建模为参数化过程：给定权重向量x与量化网格G
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 初始化阶段
-    subgraph 初始化
-        A1[设置量化网格 Gb<br/>基数 2^b] --> A2[设置温度参数 τ]
-        A2 --> A3[设置初始尺度 σinit]
-    end
-
-    %% 优化阶段
-    subgraph 优化阶段[优化阶段<br/>迭代 N 次]
-        B1[输入权重 xi] --> B2[计算 logits<br/>xi - μb(g)]
-        B2 --> B3[添加 Gumbel 噪声<br/>G = -log(-log(u))]
-        B3 --> B4[Softmax 计算概率<br/>p_g = exp(logits/τ)/Σ]
-        B4 --> B5[STE 反向传播<br/>更新 μ 和 γ]
-        B5 --> B6[Local-Shift 机制<br/>动态调整坐标分配]
-        B6 --> B7{收敛?}
-    end
-
-    %% 量化阶段
-    subgraph 量化阶段[量化阶段]
-        C1[硬量化<br/>q_i = argmax_g p_g] --> C2[应用组尺度 γ]
-        C2 --> C3[输出量化权重 q]
-    end
-
-    %% 流程连接
-    A3 --> B1
-    B7 --否--> B3
-    B7 --是--> C1
-
-    %% 样式定义
-    classDef init fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef optimize fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef quant fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    classDef decision fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-
-    class A1,A2,A3 init
-    class B1,B2,B3,B4,B5,B6 optimize
-    class C1,C2,C3 quant
-    class B7 decision
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -180,10 +141,7 @@ class GSQQuantizer(nn.Module):
 
 $$
 ```latex
-\begin{align}
-\sigma_{\text{init}} &\in \mathbb{R}, &&\text{sets the overall scale of the logits.}\\[4pt]
-\lim_{\alpha \to 0} \text{initialization reduces to pure ???}
-\end{align}
+<!-- 数学公式待渲染 -->
 ```
 $$
 

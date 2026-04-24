@@ -62,66 +62,7 @@ AC/DC的协同进化机制包含两条主线：
 
 ### 📊 方法流程图
 
-```mermaid
-graph LR
-    %% 样式定义
-    classDef controller fill:#ff6b6b,stroke:#333,color:#fff
-    classDef llm fill:#4ecdc4,stroke:#333,color:#fff
-    classDef task fill:#ffe66d,stroke:#333,color:#333
-    classDef output fill:#95e1d3,stroke:#333,color:#333
-
-    %% 顶部协同控制器
-    subgraph 协同进化控制器["🔄 协同进化控制器"]
-        C1["迭代节奏调控"]
-        C2["双向信息交换"]
-    end
-
-    %% 左侧LLM档案库
-    subgraph LLM档案库["📦 LLM档案库"]
-        L1["初始模型"]
-        L2["模型合并"]
-        L3["新模型"]
-        L4["性能评估"]
-    end
-
-    %% 右侧任务档案库
-    subgraph 任务档案库["📚 任务档案库"]
-        T1["初始任务"]
-        T2["任务变异"]
-        T3["新任务"]
-        T4["难度过滤"]
-    end
-
-    %% 底部输出
-    subgraph 最终输出["🎯 最终输出"]
-        O1["多样化LLM专家集合"]
-    end
-
-    %% LLM档案库流程
-    L1 --> L2 --> L3 --> L4
-
-    %% 任务档案库流程
-    T1 --> T2 --> T3 --> T4
-
-    %% 双向连接箭头
-    L4 <-.->|任务需求/模型反馈| T4
-    L2 <-.->|能力要求/任务适配| T2
-
-    %% 控制器连接
-    C1 --> L1
-    C1 --> T1
-    C2 --> L4
-    C2 --> T4
-
-    %% 输出连接
-    L4 -.->|持续优化| O1
-
-    %% 应用样式
-    class C1,C2 controller
-    class L1,L2,L3,L4 llm
-    class T1,T2,T3,T4 task
-    class O1 output
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 

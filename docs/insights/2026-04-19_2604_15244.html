@@ -61,81 +61,7 @@ SpecGuard框架包含三个核心模块：
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 样式定义
-    classDef draft fill:#90EE90,stroke:#228B22,stroke-width:2px
-    classDef target fill:#87CEEB,stroke:#4169E1,stroke-width:2px
-    classDef verifier fill:#FFB366,stroke:#FF8C00,stroke-width:2px
-    classDef normal fill:#F0F0F0,stroke:#666666,stroke-width:1px
-    classDef decision fill:#FFFACD,stroke:#DAA520,stroke-width:2px
-    
-    %% 输入节点
-    START([输入 Prompt]):::normal
-    
-    %% Draft Model 子图
-    subgraph Draft[Draft Model - 自一致性采样]
-        direction LR
-        DM[Draft Model]:::draft
-        subgraph Sampling[自一致性采样 - K次]
-            S1((采样 1))
-            S2((采样 2))
-            S3((...))
-            SK((采样 K))
-            S1 --- S2 --- S3 --- SK
-        end
-        DM --> S1
-        DM --> S2
-        DM --> SK
-    end
-    
-    %% 投票模块
-    VOTE[投票模块<br/>选择共识答案]:::draft
-    S1 --> VOTE
-    S2 --> VOTE
-    SK --> VOTE
-    
-    %% 验证模块子图
-    subgraph Verify[双信号验证器]
-        VERIFY[验证模块]:::verifier
-        AGS[计算 AGS<br/>注意力归因分数]:::verifier
-        LPS[计算 LPS<br/>对数概率分数]:::verifier
-        VERIFY --> AGS
-        VERIFY --> LPS
-    end
-    
-    VOTE --> VERIFY
-    
-    %% 阈值判断
-    DECISION{AGS + LPS<br/>> threshold?}:::decision
-    
-    %% Target Model
-    TM[Target Model<br/>重算]:::target
-    
-    %% 接受与循环
-    ACCEPT[✓ 接受该Step]:::draft
-    ADD[加入已接受序列]:::draft
-    
-    %% 连接关系
-    START --> DM
-    AGS --> DECISION
-    LPS --> DECISION
-    
-    DECISION -->|是| ACCEPT
-    DECISION -->|否| TM
-    TM -.->|重新计算| DM
-    ACCEPT --> ADD
-    ADD -.->|循环| DM
-    
-    %% 结束判断
-    LOOP{所有Step<br/>生成完成?}:::decision
-    ADD --> LOOP
-    LOOP -->|否| DM
-    LOOP -->|是| END([生成结束]):::normal
-    
-    %% 应用样式类
-    class S1,S2,S3,SK samplingStyle
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -387,10 +313,7 @@ if __name__ == "__main__":
 **公式 1**：
 
 $$
-\begin{align}
-\text{We propose SpecGuard, a novel frame-}\\
-\text{...}
-\end{align}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：We propose SpecGuard, a novel frame-
@@ -398,9 +321,7 @@ $$
 **公式 2**：
 
 $$
-\begin{align*}
-\text{Inference-time compute strategies}
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：Inference-time compute strategies

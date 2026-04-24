@@ -59,45 +59,7 @@ R2A框架包含两个核心组件：混合集成替代路由器（Hybrid Ensembl
 
 ### 📊 方法流程图
 
-```mermaid
-graph LR
-    %% 样式定义
-    classDef attacker fill:#ffcccc,stroke:#cc0000,stroke-width:2px
-    classDef process fill:#cce5ff,stroke:#0066cc,stroke-width:2px
-    classDef result fill:#ccffcc,stroke:#00aa00,stroke-width:2px
-
-    %% 左侧子图：攻击者视角
-    subgraph 攻击者视角
-        A1["👤 攻击者"]
-        A2["🔧 替代路由器<br/>(多个本地模型)"]
-        A1 --> A2
-    end
-
-    %% 中间子图：核心处理流程
-    subgraph 核心处理流程
-        B1["📥 查询预处理"]
-        B2["🔮 替代路由器预测"]
-        B3["⚙️ 反向传播优化后缀"]
-        B1 --> B2 --> B3
-    end
-
-    %% 右侧子图：攻击结果
-    subgraph 攻击结果
-        C1["💉 对抗后缀"]
-        C2["🎯 目标黑盒路由器"]
-        C3["📈 路由决策偏向高价模型"]
-        C1 --> C2 --> C3
-    end
-
-    %% 主流程连接
-    A2 --> B1
-    B3 --> C1
-
-    %% 应用样式
-    class A1,A2 attacker
-    class B1,B2,B3 process
-    class C1,C2,C3 result
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -331,9 +293,7 @@ if __name__ == "__main__":
 **公式 1**：
 
 $$
-\begin{align*}
-\text{With this low-rank decomposition, fewer queries.}
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：With this low-rank decomposition, fewer queries
@@ -341,20 +301,7 @@ $$
 **公式 2**：
 
 $$
-\begin{align}
-\hat{y} &= f(x;\theta) \\
-        &= \beta_0 +
-$$
-
-*含义*：and Eq.(3), we can get the predic-
-
-**公式 3**：
-
-$$
-\begin{align}
-&\alpha_i \ge 0, \qquad i = 1, \dots, n \\[4pt]
-&\sum_{i=1}^{n} \alpha_i = 1
-\end{align}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：where αi are learnable ensemble weights satisfying

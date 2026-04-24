@@ -60,44 +60,7 @@ U-GLAD框架包含三个核心模块：不确定性感知状态编码器、Gauss
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    subgraph 输入层
-        A1[学习者历史交互序列]
-        A2[学习目标 G]
-        A3[高斯噪声]
-    end
-
-    subgraph 编码模块
-        B[不确定性感知状态编码器]
-        C[Gaussian LSTM]
-    end
-
-    subgraph 生成模块
-        D[认知自适应扩散模型]
-        E[迭代细化过程 T次]
-    end
-
-    subgraph 输出层
-        F[下一概念潜在表示]
-        G[推荐路径输出]
-    end
-
-    A1 --> B
-    A2 --> B
-    B --> C
-    C --> D
-    A3 --> D
-    D --> E
-    E --> F
-    F --> G
-
-    classDef encoder fill:#e1f5fe
-    classDef generator fill:#fff3e0
-
-    class B,C encoder
-    class D,E generator
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -344,9 +307,7 @@ class UGLADFramework:
 
 $$
 ```latex
-\begin{align}
-\hat{c}_b = \bigl(\hat{C}_a + G + \operatorname{AvgPool}(\hat{C}_a)\bigr)V
-\end{align}
+<!-- 数学公式待渲染 -->
 ```
 $$
 

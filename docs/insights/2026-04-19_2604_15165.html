@@ -55,66 +55,7 @@ arXiv: [2604.15165](http://arxiv.org/abs/2604.15165)
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 样式定义
-    classDef inputNode fill:#e3f2fd,stroke:#1976d2,color:#0d47a1
-    classDef genNode fill:#bbdefb,stroke:#1565c0,color:#0d47a1
-    classDef detectNode fill:#fff9c4,stroke:#f9a825,color:#f57f17
-    classDef classifyNode fill:#c8e6c9,stroke:#388e3c,color:#1b5e20
-    classDef outputNode fill:#ffccbc,stroke:#e64a19,color:#bf360c
-
-    subgraph 输入层
-        A[📥 原文输入]
-    end
-
-    subgraph 翻译生成模块
-        B[⚙️ LLM翻译引擎]
-        C[📋 多候选译文]
-        A --> B
-        B --> C
-    end
-
-    subgraph 过度生成检测模块
-        D[🔍 过度生成检测]
-        D1[📏 规则引擎]
-        D2[🤖 分类器]
-        D3[🧠 元认知检测]
-        C --> D
-        D --> D1
-        D --> D2
-        D --> D3
-    end
-
-    subgraph 分类评估模块
-        E[🏷️ 分类输出]
-        E1[💬 自我解释]
-        E2[⚠️ 风险虚构]
-        E3[✅ 适当解释]
-        E4[📝 正常翻译]
-        F[⭐ 质量评分]
-        D1 & D2 & D3 --> E
-        E --> E1
-        E --> E2
-        E --> E3
-        E --> E4
-        E1 & E2 & E3 & E4 --> F
-    end
-
-    subgraph 输出层
-        G[🔧 后处理选择]
-        H[📤 最优译文]
-        F --> G
-        G --> H
-    end
-
-    %% 应用样式
-    class A inputNode
-    class B genNode
-    class D detectNode
-    class E,F classifyNode
-    class G,H outputNode
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -283,9 +224,7 @@ if __name__ == "__main__":
 **公式 1**：
 
 $$
-\begin{align}
-\text{Explore detecting hal-}
-\end{align}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：explore detecting hal-

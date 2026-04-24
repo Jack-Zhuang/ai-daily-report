@@ -386,6 +386,7 @@
 
 <p>方法包含三个核心步骤：</p>
 
+<ul>
 <li><strong>层级分析阶段</strong>：对LLM各层表示进行任务相关性分析，计算每层表示与推荐目标的相关性分数。通过探针网络（probe network）评估各层表示的下游性能，确定最优压缩层。</li>
 
 <li><strong>模块化分解</strong>：基于模块化理论，将LLM表示空间分解为任务相关模块和任务无关模块。中间层包含更多可迁移的通用语义模块，而最终层专门化于预训练代理任务（如语言建模）。</li>
@@ -594,9 +595,7 @@
 <strong>公式 1</strong>：
 
 <p>$$</p>
-<p>\begin{align}</p>
-<p>&\text{where LLMs may be pre-trained or fine-tuned models, and pooling}</p>
-<p>\end{align}</p>
+<p><!-- 数学公式待渲染 --></p>
 <p>$$</p>
 
 <em>含义</em>：where LLMs may be pre-trained or fine-tuned models, and pooling
@@ -605,10 +604,7 @@
 
 <p>$$</p>
 </code>`<code>latex
-<p>\begin{align}</p>
-<p>\mathcal{G} &: x_{<t} \;\mapsto\; p_{\theta}(x_{t+1}\mid x_{<t}) \\[4pt]</p>
-<p>p_{\theta}(x_{t+1}\mid x_{<t}) &= \operatorname{softmax}(W\,h_t)</p>
-<p>\end{align}</p>
+<p><!-- 数学公式待渲染 --></p>
 </code>``
 <p>$$</p>
 
@@ -617,9 +613,7 @@
 <strong>公式 3</strong>：
 
 <p>$$</p>
-<p>\begin{align}</p>
-<p>\mathcal{L}_{\text{CL}} = -\log \frac{\exp(\mathbf{z}_i^\top \mathbf{z}_j / \tau)}{\sum_{k=1}^{N} \exp(\mathbf{z}_i^\top \mathbf{z}_k / \tau)} \qquad \text{(in‑batch negative)}</p>
-<p>\end{align}</p>
+<p><!-- 数学公式待渲染 --></p>
 <p>$$</p>
 
 <em>含义</em>：CL uses in-batch nega-
@@ -627,9 +621,7 @@
 <strong>公式 4</strong>：
 
 <p>$$</p>
-<p>\begin{align}</p>
-<p>\text{a compression network to con-}</p>
-<p>\end{align}</p>
+<p><!-- 数学公式待渲染 --></p>
 <p>$$</p>
 
 <em>含义</em>：a compression network to con-

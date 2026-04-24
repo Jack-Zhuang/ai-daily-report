@@ -52,75 +52,7 @@ RadAgent的核心架构包含三个主要组件：首先是3D视觉编码器，�
 
 ### 📊 方法流程图
 
-```mermaid
-graph LR
-    %% 定义样式类
-    classDef inputStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1
-    classDef coreStyle fill:#fff8e1,stroke:#ff8f00,stroke-width:2px,color:#e65100
-    classDef agentStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#4a148c
-    classDef toolStyle fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20
-    classDef outputStyle fill:#fce4ec,stroke:#d81b60,stroke-width:2px,color:#880e4f
-    classDef loopStyle fill:#ffebee,stroke:#c62828,stroke-width:2px,stroke-dash:5px
-    classDef rlStyle fill:#e0f7fa,stroke:#00838f,stroke-width:2px,color:#006064
-
-    %% 输入层子图
-    subgraph 输入层
-        A1[3D CT体数据]
-        A2[用户查询]
-    end
-
-    %% 核心处理层子图
-    subgraph 核心处理层
-        B1[RadAgent智能体]
-        B2[LLM推理引擎]
-        B3[工具选择模块]
-        B4[中间结果存储]
-        B5[工具箱]
-    end
-
-    %% 输出层子图
-    subgraph 输出层
-        C1[诊断报告]
-        C2[完整推理轨迹]
-    end
-
-    %% RL优化模块子图
-    subgraph 强化学习模块
-        D1[RL优化模块]
-    end
-
-    %% 应用输入层样式
-    class A1,A2 inputStyle
-
-    %% 应用核心处理层样式
-    class B1,B2,B3,B4,B5 coreStyle
-
-    %% 应用输出层样式
-    class C1,C2 outputStyle
-
-    %% 应用RL模块样式
-    class D1 rlStyle
-
-    %% 流程连接
-    A1 --> B1
-    A2 --> B1
-    B1 --> B2
-    B2 --> B3
-    B3 --> B5
-    B5 --> B4
-    B4 --> B1
-
-    %% 输出连接
-    B1 --> C1
-    B1 --> C2
-
-    %% RL优化连接
-    D1 -.-> B1
-    D1 -.-> B3
-
-    %% 循环标注
-    B1 -.->|"多次调用工具"| B5
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -411,9 +343,7 @@ class RewardMechanism:
 **公式 1**：
 
 $$
-\begin{align}
-\text{URL: }\url{https://doi.org/10.1038/s41551-025-01599-y}
-\end{align}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：. URL https://doi.org/10.1038/s41551-025-01599-y.
@@ -421,9 +351,7 @@ $$
 **公式 2**：
 
 $$
-\begin{align*}
-\url{https://openreview.net/forum?id=FLiMxTkIeu}
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：. URL https://openreview.net/forum?id=FLiMxTkIeu.

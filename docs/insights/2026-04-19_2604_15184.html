@@ -53,73 +53,7 @@ AADvark采用"视觉-代码-编译-验证"的迭代闭环。用户输入图像�
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 设置样式
-    classDef inputStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef aiStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef cadStyle fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-    classDef renderStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef agentStyle fill:#fce4ec,stroke:#880e4f,stroke-width:2px
-    classDef outputStyle fill:#ffebee,stroke:#b71c1c,stroke-width:2px
-
-    subgraph 输入层["🔵 输入层"]
-        USER([用户输入<br/>图像/文本])
-        USER:::inputStyle
-    end
-
-    subgraph AI处理层["🟣 AI处理层"]
-        VLM[VLM<br/>结构解析]
-        ENGINE[推理引擎<br/>生成CAD代码]
-        VLM:::aiStyle
-        ENGINE:::aiStyle
-    end
-
-    subgraph CAD处理层["🟢 CAD处理层"]
-        CAD[CAD内核<br/>编译模型]
-        MODEL[3D模型]
-        CAD:::cadStyle
-        MODEL:::cadStyle
-    end
-
-    subgraph 渲染层["🟠 渲染可视化层"]
-        RENDER[渲染可视化<br/>模块]
-        FEEDBACK[图像反馈]
-        RENDER:::renderStyle
-        FEEDBACK:::renderStyle
-    end
-
-    subgraph 决策层["🔴 Agent决策层"]
-        AGENT[Agent<br/>分析反馈]
-        DECISION{是否<br/>继续迭代?}
-        AGENT:::agentStyle
-        DECISION:::agentStyle
-    end
-
-    subgraph 输出层["❤️ 输出层"]
-        OUTPUT([带运动约束的<br/>3D装配体模型])
-        OUTPUT:::outputStyle
-    end
-
-    %% 主流程
-    USER --> VLM
-    VLM --> ENGINE
-    ENGINE --> CAD
-    CAD --> MODEL
-    MODEL --> RENDER
-    RENDER --> FEEDBACK
-    FEEDBACK --> AGENT
-    AGENT --> DECISION
-
-    %% 迭代循环
-    DECISION -->|需要优化| MODIFY[修改代码]
-    MODIFY -->|进入下一轮| ENGINE
-    DECISION -->|完成| OUTPUT
-
-    %% 标注迭代路径
-    MODIFY -.- ITERATION["迭代循环"]
-    style ITERATION fill:transparent,stroke:#9e9e9e,stroke-dasharray:5 5
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -369,9 +303,7 @@ if __name__ == "__main__":
 
 $$
 ```latex
-\begin{align*}
-\text{00054-1 Reverse Engineering of Geometric Models}
-\end{align*}
+<!-- 数学公式待渲染 -->
 ```
 $$
 

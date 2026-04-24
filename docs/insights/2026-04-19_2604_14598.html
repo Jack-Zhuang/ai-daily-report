@@ -59,38 +59,7 @@ CPGRec的核心创新在于两个技术支柱。首先是**连接增强的邻居
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    A[用户交互数据] --> B[图构建]
-    B --> C[融入类别和流行度]
-    C --> D1
-    C --> D2
-    C --> D3
-    
-    subgraph 并行分支
-        D1[准确性模块<br/>基于交互的邻居聚合]
-        D2[多样性模块<br/>流行度引导重加权]
-        D3[综合模块<br/>类别连接增强]
-    end
-    
-    D1 --> E[特征融合层]
-    D2 --> E
-    D3 --> E
-    
-    E --> F[最终推荐列表<br/>热门头部+长尾多样化]
-    
-    classDef input fill:#e1f5fe
-    classDef process fill:#fff3e0
-    classDef parallel fill:#f3e5f5
-    classDef fusion fill:#e8f5e9
-    classDef output fill:#ffebee
-    
-    class A input
-    class B,C process
-    class D1,D2,D3 parallel
-    class E fusion
-    class F output
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 

@@ -61,71 +61,7 @@ MASS-RAG采用多智能体协作架构，包含三个核心处理智能体（摘
 
 ### 📊 方法流程图
 
-```mermaid
-graph LR
-
-%% 定义样式类
-classDef stage1 fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef stage2 fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef stage3 fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px
-classDef agent fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px
-classDef feedback fill:#FFEBEE,stroke:#C62828,stroke-width:2px,stroke-dasharray:5
-
-%% ============ 第一阶段：检索 ============
-subgraph Stage1["📥 第一阶段：检索"]
-    Q[Query 输入]
-    R[Retriever 检索]
-    D[📄 最多20个文档]
-end
-
-%% ============ 第二阶段：智能体并行处理 ============
-subgraph Stage2["⚙️ 第二阶段：智能体并行处理"]
-    subgraph Agents["🤖 三个智能体"]
-        S[📝 Summarizer<br/>摘要输出]
-        E[🔍 Extractor<br/>证据片段]
-        Re[🧠 Reasoner<br/>推理结果]
-    end
-end
-
-%% ============ 第三阶段：合成输出 ============
-subgraph Stage3["📤 第三阶段：合成输出"]
-    Sy[🔄 Synthesizer<br/>合成器]
-    A[✅ Final Answer]
-end
-
-%% 主流程连接（实线）
-Q --> R
-R --> D
-D --> S
-D --> E
-D --> Re
-S --> Sy
-E --> Sy
-Re --> Sy
-Sy --> A
-
-%% 智能体间信息共享（虚线）
-S -.->|"🔗 共享"| E
-E -.->|"🔗 共享"| Re
-Re -.->|"🔗 共享"| S
-
-%% 反馈路径（Answer Agent禁用时）
-A -.->|"⚠️ 反馈"| Sy
-Sy -.->|"⚠️ 禁用"| A
-
-%% 应用样式
-class Q,R,D stage1
-class S,E,Re agent
-class Sy stage2
-class A stage3
-class Sy,A feedback
-
-%% 图例
-subgraph Legend["📌 图例"]
-    L1["─── 主流程 ───"]
-    L2["- - - 共享/反馈 - - -"]
-end
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -228,11 +164,7 @@ if __name__ == "__main__":
 **公式 1**：
 
 $$
-\begin{align*}
-&\forall\,e \in \text{Experiments},\\
-&\forall\,q \in \text{Queries},\\
-&\bigl|\text{RetrievedDocs}(e,q)\bigr| \le 20.
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：for all experiments. For each query, up to 20 docu-
@@ -249,10 +181,7 @@ $$
 
 $$
 ```latex
-\begin{align*}
-\text{Soundtrack} &\colon \text{electronic-pop songs}\\
-\text{Film Style} &\colon \text{neo-noir, art house, European art, and ...}
-\end{align*}
+<!-- 数学公式待渲染 -->
 ```
 $$
 

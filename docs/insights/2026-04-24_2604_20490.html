@@ -386,6 +386,7 @@
 
 <p>本研究首先建立了LLM增强推荐系统的优化曲率理论框架。通过对损失函数的海森矩阵进行分析，发现两个关键问题：</p>
 
+<ul>
 <li><strong>范数差异问题（Norm Disparity）</strong>：LLM嵌入通常具有很高的范数（由Transformer架构决定），而随机初始化的协同过滤嵌入范数较小。这种差异导致优化时出现不稳定现象，表现为梯度范数在不同维度上差异巨大。</li>
 
 <li><strong>角度聚类错位问题（Angular Clustering Misalignment）</strong>：LLM嵌入的语义相似性与协同过滤嵌入的协同相似性存在方向性差异。当使用点积作为相似度度量时，两种嵌入的聚类结构不匹配，导致优化过程中出现语义-协同目标的冲突。</li>
@@ -582,9 +583,7 @@
 
 <p>$$</p>
 </code>`<code>latex
-<p>\begin{align}</p>
-<p>\text{equivalently as }(h) &= \cdots</p>
-<p>\end{align}</p>
+<p><!-- 数学公式待渲染 --></p>
 </code>``
 <p>$$</p>
 
@@ -593,10 +592,7 @@
 <strong>公式 2</strong>：
 
 <p>$$</p>
-<p>\begin{align}</p>
-<p>p &= \operatorname{softmax}(s) \\</p>
-<p>\operatorname{Diag}(p) &= \operatorname{diag}(p)</p>
-<p>\end{align}</p>
+<p><!-- 数学公式待渲染 --></p>
 <p>$$</p>
 
 <em>含义</em>：where p = softmax(s) and Diag(p) denotes the diagonal matrix whose values are p
@@ -604,9 +600,7 @@
 <strong>公式 3</strong>：
 
 <p>$$</p>
-<p>\begin{align*}</p>
-<p>\text{Moreover, this upper bound is achievable even when the normalized item embedding is well-conditioned.}</p>
-<p>\end{align*}</p>
+<p><!-- 数学公式待渲染 --></p>
 <p>$$</p>
 
 <em>含义</em>：Moreover, this upper bound is achievable even when the normalized item embedding is well-conditioned

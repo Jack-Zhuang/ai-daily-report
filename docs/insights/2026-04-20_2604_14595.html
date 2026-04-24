@@ -53,48 +53,7 @@ arXiv: [2604.14595](http://arxiv.org/abs/2604.14595)
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    subgraph 数据采集层
-        A1[📥 数据收集<br/>顶会论文+预印本]
-    end
-    
-    subgraph 分析处理层
-        A2[🔍 关键词聚类<br/>定义子领域]
-        A3[👥 人口统计推断<br/>性别+地理]
-        A4[⭐ Top Researcher<br/>筛选]
-        A5[📊 按子领域<br/>分组统计]
-    end
-    
-    subgraph 可视化验证层
-        A6[📈 可视化<br/>Figure 1]
-        A7[💬 访谈补充验证]
-    end
-    
-    subgraph 决策输出层
-        A8[🔎 根因分析]
-        A9[📋 政策建议输出]
-    end
-
-    A1 --> A2
-    A2 --> A3
-    A3 --> A4
-    A4 --> A5
-    A5 --> A6
-    A6 --> A7
-    A7 --> A8
-    A8 --> A9
-
-    classDef dataStage fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef analysisStage fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef vizStage fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef outputStage fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-
-    class A1 dataStage
-    class A2,A3,A4,A5 analysisStage
-    class A6,A7 vizStage
-    class A8,A9 outputStage
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 

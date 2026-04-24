@@ -60,39 +60,7 @@ StepPO的核心创新在于三个层面：
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 样式定义
-    classDef inputStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef mdpStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef optStyle fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-    classDef outputStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
-
-    subgraph Input[输入层]
-        A[环境观察 st] --> B[Step级策略 πθ]
-        class A,B inputStyle
-    end
-
-    subgraph MDP[Step级MDP]
-        B --> C[动作 at]
-        C --> D[环境反馈 rt]
-        D --> E[下一状态 st+1]
-        E --> F[价值估计 V(st)]
-        class C,D,E,F mdpStyle
-    end
-
-    subgraph Optimization[优化层]
-        F --> G[TD误差 δt]
-        G --> H[Step级信用分配]
-        H --> I[策略更新]
-        class G,H,I optStyle
-    end
-
-    subgraph Output[输出层]
-        I --> J[优化策略 πθ']
-        class J outputStyle
-    end
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -267,9 +235,7 @@ if __name__ == "__main__":
 
 $$
 ```latex
-\begin{align}
-\pi_{\theta}(y \mid x) = 
-\end{align}
+<!-- 数学公式待渲染 -->
 ```
 $$
 
@@ -279,9 +245,7 @@ $$
 
 $$
 ```latex
-\begin{align*}
-\pi_{\theta}(a_t \mid s_t)
-\end{align*}
+<!-- 数学公式待渲染 -->
 ```
 $$
 
@@ -291,9 +255,7 @@ $$
 
 $$
 ```latex
-\begin{align}
-\pi_{\theta_{\text{old}}}(a_t \mid s_t) =
-\end{align}
+<!-- 数学公式待渲染 -->
 ```
 $$
 
@@ -302,9 +264,7 @@ $$
 **公式 4**：
 
 $$
-\begin{align}
-\pi_{\theta}(y_{t,i} \mid s_t, y_{t,<i})
-\end{align}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：πθ(yt,i | st, yt,<i)
@@ -312,9 +272,7 @@ $$
 **公式 5**：
 
 $$
-\begin{align}
-\delta_t &= r_t + \gamma V(s_{t+1}) - V(s_t)
-\end{align}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：δt = rt + γV (st+1) −V (st),

@@ -54,38 +54,7 @@ AD4AD基准平台的核心设计理念是「贴近量产需求」。数据集方
 
 ### 📊 方法流程图
 
-```mermaid
-graph LR
-
-    %% 样式定义
-    classDef feature fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef decision fill:#bbf,stroke:#f00,stroke-width:2px;
-    classDef baseline fill:#cfc,stroke:#333,stroke-width:2px;
-
-    %% 特征提取与建模
-    subgraph 特征提取与建模
-        A[驾驶场景图像] --> B[DeiT特征提取器]
-        B --> C[Dinomaly特征分布建模模块<br/>（对比学习）]
-        class A,B,C feature
-    end
-
-    %% 异常判定
-    subgraph 异常判定
-        C --> D[计算马氏距离/能量分数]
-        D --> E[异常阈值判定]
-        E --> F[输出异常热力图<br/>+ 二值分割结果]
-        class D,E,F decision
-    end
-
-    %% 基准评测流程
-    subgraph 基准评测流程
-        G[数据集预处理] --> H[统一输入分辨率]
-        H --> I[VAD模型推理]
-        I --> J[批量计算多指标]
-        J --> K[汇总性能排行榜]
-        class G,H,I,J,K baseline
-    end
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 

@@ -52,68 +52,7 @@ arXiv: [2604.15267](http://arxiv.org/abs/2604.15267)
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 样式定义
-    classDef inputStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef processStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef decisionStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef analysisStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    classDef outputStyle fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    
-    %% 输入模块
-    subgraph 输入模块
-        A["📥 输入层<br/>20+ LLM模型"]:::inputStyle
-    end
-    
-    %% 社会困境模块
-    subgraph 社会困境模块
-        B["🎯 社会困境选择"]:::processStyle
-        B1["4种博弈类型<br/>- 囚徒困境<br/>- 公共品博弈<br/>- 猎鹿博弈<br/>- 雪堆博弈"]:::decisionStyle
-    end
-    
-    %% 机制应用模块
-    subgraph 机制应用模块
-        C["⚙️ 机制应用"]:::processStyle
-        C1["4种合作维持机制<br/>- 惩罚机制<br/>- 奖励机制<br/>- 声誉机制<br/>- 条件策略"]:::decisionStyle
-    end
-    
-    %% 决策模块
-    subgraph 决策模块
-        D["🤖 LLM决策生成"]:::processStyle
-        D1["📝 理由输出"]:::outputStyle
-    end
-    
-    %% 分析模块
-    subgraph 分析模块
-        E["📊 博弈论分析"]:::analysisStyle
-        E1["🔍 行为分析"]:::analysisStyle
-    end
-    
-    %% 评估模块
-    subgraph 评估模块
-        F["📈 机制有效性评估"]:::outputStyle
-    end
-    
-    %% 流程连接
-    A --> B
-    B --> B1
-    B1 --> C
-    C --> C1
-    C1 --> D
-    D --> D1
-    D1 --> E
-    D1 --> E1
-    E --> F
-    E1 --> F
-    
-    %% 添加样式类
-    class A inputStyle
-    class B,C,D processStyle
-    class B1,C1 decisionStyle
-    class E,E1 analysisStyle
-    class D1,F outputStyle
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -349,9 +288,7 @@ if __name__ == "__main__":
 
 $$
 ```latex
-\begin{align*}
-\text{reputation systems},\ (3)\ \text{third-party me-}
-\end{align*}
+<!-- 数学公式待渲染 -->
 ```
 $$
 
@@ -361,9 +298,7 @@ $$
 
 $$
 ```latex
-\begin{align}
-\text{and follow-up studies (\cite{Bendor})}
-\end{align}
+<!-- 数学公式待渲染 -->
 ```
 $$
 

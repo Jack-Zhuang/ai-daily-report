@@ -52,61 +52,7 @@ GenRec的架构包含三个核心设计。首先是语义ID生成：利用量化
 
 ### 📊 方法流程图
 
-```mermaid
-graph LR
-    %% 样式定义
-    classDef inputStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef encoderStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef coreStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef outputStyle fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-    classDef lossStyle fill:#ffebee,stroke:#b71c1c,stroke-width:2px,stroke-dasharray:5,5
-
-    %% 输入层
-    subgraph input[输入层]
-        A[用户行为序列]
-    end
-
-    %% 编码模块
-    subgraph encoder[编码模块]
-        B[Embedding层]
-        C[语义ID量化模块]
-    end
-
-    %% 核心模型
-    subgraph core[核心模型]
-        D[Decoder-only<br/>Transformer]
-        E[Token Merger<br/>序列压缩]
-    end
-
-    %% 输出层
-    subgraph output[输出层]
-        F[语义ID解码器]
-        G[商品ID输出]
-    end
-
-    %% 训练模块
-    subgraph train[训练阶段]
-        H[Page-wise NTP<br/>损失函数]
-    end
-
-    %% 连接关系
-    A --> B
-    B --> C
-    C --> D
-    D <--> E
-    E --> F
-    F --> G
-
-    %% 训练监督
-    D -.->|监督| H
-
-    %% 应用样式
-    class A inputStyle
-    class B,C encoderStyle
-    class D,E coreStyle
-    class F,G outputStyle
-    class H lossStyle
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -310,10 +256,7 @@ if __name__ == "__main__":
 **公式 1**：
 
 $$
-\begin{align}
-\mathcal{T} &\text{ is the training set, and}\\[4pt]
-\hat{A}_{i,t} &\text{ is the advantage derived from group-}
-\end{align}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：where𝑇is training set, and ˆ𝐴𝑖,𝑡is the advantage derived from group-

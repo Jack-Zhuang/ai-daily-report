@@ -52,74 +52,7 @@ arXiv: [2604.15877](http://arxiv.org/abs/2604.15877)
 
 ### 📊 方法流程图
 
-```mermaid
-graph LR
-    %% 样式定义
-    classDef inputStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef processStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef outputStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    classDef conceptStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,stroke-dash:5px
-    
-    %% 输入区域
-    subgraph 输入层["📥 输入层"]
-        A[原始交互轨迹<br/>High Information]
-    end
-    
-    %% 压缩处理区域
-    subgraph 压缩处理["⚙️ 压缩谱映射"]
-        B[多层级压缩映射]
-        B1[层级1: 情景记忆]
-        B2[层级2: 技能]
-        B3[层级3: 规则]
-    end
-    
-    %% 输出区域
-    subgraph 输出层["📤 输出层"]
-        C1[情景记忆<br/>低压缩率 10-20%]
-        C2[技能抽象<br/>中压缩率 30-50%]
-        C3[抽象规则<br/>高压缩率 60-90%]
-    end
-    
-    %% 信息量标注
-    subgraph 信息维度["📊 信息维度"]
-        L1[高信息量]
-        L2[中等信息量]
-        L3[低信息量]
-    end
-    
-    %% 跨层级能力（缺失对角线）
-    subgraph 跨层级能力["🔗 跨层级压缩能力"]
-        D1[层级间跳跃压缩]
-        D2[对角线映射]
-        D3[自适应路由]
-    end
-    
-    %% 主流程连接
-    A --> B
-    B --> B1
-    B --> B2
-    B --> B3
-    B1 --> C1
-    B2 --> C2
-    B3 --> C3
-    
-    %% 跨层级连接（虚线表示）
-    A -.-> D1
-    D1 -.-> C2
-    D2 -.-> C1
-    D3 -.-> A
-    
-    %% 信息量梯度
-    L1 -.-> A
-    L2 -.-> B2
-    L3 -.-> C3
-    
-    %% 应用样式
-    class A inputStyle
-    class B,B1,B2,B3 processStyle
-    class C1,C2,C3 outputStyle
-    class D1,D2,D3 conceptStyle
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 

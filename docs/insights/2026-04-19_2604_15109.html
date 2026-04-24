@@ -59,52 +59,7 @@ IUQ框架包含两个核心维度：样本间一致性（Inter-sample Consistenc
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 样式定义
-    classDef inputStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:3px
-    classDef samplingStyle fill:#fff8e1,stroke:#f9a825,stroke-width:3px
-    classDef processStyle fill:#fce4ec,stroke:#c2185b,stroke-width:3px
-    classDef analysisStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:3px
-    classDef outputStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
-
-    %% 主流程
-    START(("原始问题")):::inputStyle
-    START --> SAMPLING
-
-    subgraph 采样模块
-        SAMPLING["LLM响应采样模块<br/><font size='10'>（扰动提示→多响应）</font>"]:::samplingStyle
-    end
-
-    SAMPLING -->|并行处理| BRANCH1
-    SAMPLING -->|并行处理| BRANCH2
-
-    subgraph 分解分析模块
-        BRANCH1["声明分解器<br/><font size='10'>（响应→原子声明）</font>"]:::processStyle
-        BRANCH2["质疑问题生成器<br/><font size='10'>（声明→N个验证问题）</font>"]:::processStyle
-    end
-
-    BRANCH1 --> CONSISTENCY
-    BRANCH2 --> CONSISTENCY
-
-    subgraph 一致性评估模块
-        CONSISTENCY["一致性测量模块<br/><font size='10'>（计算声明级信念度）</font>"]:::analysisStyle
-    end
-
-    CONSISTENCY --> AGGREGATOR
-
-    subgraph 输出模块
-        AGGREGATOR["聚合器<br/><font size='10'>（整合信念度）</font>"]:::outputStyle
-        AGGREGATOR --> OUTPUT["整体不确定性<br/>声明级可信度热力图"]:::outputStyle
-    end
-
-    %% 流程标注
-    note1["🔄 多响应"]:::samplingStyle
-    note2["📋 原子声明"]:::processStyle
-    note3["❓ 验证问题"]:::processStyle
-    note4["📊 信念度分数"]:::analysisStyle
-    note5["📈 可视化输出"]:::outputStyle
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -305,9 +260,7 @@ if __name__ == "__main__":
 **公式 1**：
 
 $$
-\begin{align}
-n_q &\text{ denotes the number of questions generated.}
-\end{align}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：where nq denotes the number of questions gen-

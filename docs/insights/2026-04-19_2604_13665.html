@@ -53,48 +53,7 @@ RecNextEval采用基于时间窗口的全局时间线评估策略，将数据按
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    subgraph 数据准备阶段
-        A[原始交互日志] --> B[按时间排序]
-        B --> C[划分数据集]
-        C --> D[训练集]
-        C --> E[验证集]
-        C --> F[测试集]
-    end
-
-    subgraph 模型训练阶段
-        D --> G[时间窗口数据]
-        E --> G
-        G --> H[推荐模型训练]
-        H --> I[模型输出]
-    end
-
-    subgraph 评估阶段
-        F --> J[按时间顺序遍历]
-        J --> K[逐窗口评估]
-        K --> L[计算评估指标]
-        L --> M[指标汇总]
-    end
-
-    subgraph 输出阶段
-        M --> N[宏观维度报告]
-        M --> O[微观维度报告]
-        N --> P[可视化图表]
-        O --> P
-        P --> Q[最终评估报告]
-    end
-
-    classDef dataPrep fill:#e1f5fe,stroke:#01579b,color:#01579b
-    classDef train fill:#f3e5f5,stroke:#4a148c,color:#4a148c
-    classDef eval fill:#fff3e0,stroke:#e65100,color:#e65100
-    classDef output fill:#e8f5e9,stroke:#1b5e20,color:#1b5e20
-
-    class A,B,C,D,E,F dataPrep
-    class G,H,I train
-    class J,K,L,M eval
-    class N,O,P,Q output
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 

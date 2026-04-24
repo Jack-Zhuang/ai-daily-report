@@ -52,63 +52,7 @@ arXiv: [2604.14984](http://arxiv.org/abs/2604.14984)
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 定义样式
-    classDef stage1 fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef stage2 fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef stage3 fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-    classDef feedback fill:#fff3e0,stroke:#e65100,stroke-width:2px,stroke-dasharray: 5 5
-
-    %% 阶段1：深度访谈阶段
-    subgraph 阶段1["🔍 深度访谈阶段 (n=10)"]
-        A1[半结构化访谈]
-        A2[录音转录]
-        A3[初步编码]
-    end
-
-    %% 阶段2：主题分析阶段
-    subgraph 阶段2["📊 主题分析阶段"]
-        B1[开放编码]
-        B2[轴心编码]
-        B3[选择性编码]
-        B4[核心主题提炼]
-    end
-
-    %% 阶段3：原型设计阶段
-    subgraph 阶段3["🎨 原型设计阶段"]
-        C1[需求归纳]
-        C2[Agent Card设计]
-        C3[参与者验证]
-        C4[迭代优化]
-    end
-
-    %% 阶段1内部流程
-    A1 --> A2
-    A2 --> A3
-    A3 --> B1
-
-    %% 阶段2内部流程
-    B1 --> B2
-    B2 --> B3
-    B3 --> B4
-    B4 --> C1
-
-    %% 阶段3内部流程
-    C1 --> C2
-    C2 --> C3
-    C3 --> C4
-
-    %% 闭环反馈
-    C4 -->|问题发现| D[补充访谈]
-    D --> A1
-
-    %% 应用样式
-    class A1,A2,A3 stage1
-    class B1,B2,B3,B4 stage2
-    class C1,C2,C3,C4 stage3
-    class D feedback
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 

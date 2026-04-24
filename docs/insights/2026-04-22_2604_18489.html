@@ -52,53 +52,7 @@ arXiv: [2604.18489](http://arxiv.org/abs/2604.18489)
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 设置样式
-    classDef inputStage fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef processStage fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef evaluationStage fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px
-    classDef alignmentStage fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    classDef outputStage fill:#ffebee,stroke:#c62828,stroke-width:2px
-
-    %% 子图：数据准备
-    subgraph 数据准备
-        A[输入歌词] --> B[SFT微调阶段]
-    end
-
-    %% 子图：旋律生成
-    subgraph 旋律生成
-        B --> C[生成候选旋律]
-    end
-
-    %% 子图：评估与标注
-    subgraph 评估与标注
-        C --> D[规则约束评估器]
-        D --> E[自动偏好数据标注]
-    end
-
-    %% 子图：对齐优化
-    subgraph 对齐优化
-        E --> F[DPO优化<br/>配对数据]
-        E --> G[KTO优化<br/>非配对负样本]
-    end
-
-    %% 子图：输出
-    subgraph 最终输出
-        F --> H[最终对齐模型]
-        G --> H
-    end
-
-    %% 应用样式
-    class A inputStage
-    class B processStage
-    class C processStage
-    class D evaluationStage
-    class E evaluationStage
-    class F alignmentStage
-    class G alignmentStage
-    class H outputStage
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -359,9 +313,7 @@ if __name__ == "__main__":
 **公式 1**：
 
 $$
-\begin{align*}
-&\text{where } y_u \text{ is an undesirable (rule‑violating) response.}
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：where yu is an undesirable (rule-violating) response.
@@ -369,9 +321,7 @@ $$
 **公式 2**：
 
 $$
-\begin{align}
-\beta \log \pi_{\theta}(y_{w} \mid x)
-\end{align}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：β log πθ(yw|x)
@@ -379,9 +329,7 @@ $$
 **公式 3**：
 
 $$
-\begin{align*}
-\pi_{\mathrm{ref}}(y_w \mid x)
-\end{align*}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：πref(yw|x)

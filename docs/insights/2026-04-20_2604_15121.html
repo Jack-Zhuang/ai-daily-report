@@ -61,55 +61,7 @@ SRMU的运作分为三个阶段：
 
 ### 📊 方法流程图
 
-```mermaid
-graph TD
-    %% 定义样式类
-    classDef inputStyle fill:#e1f5fe,stroke:#01579b,color:#01579b
-    classDef encoderStyle fill:#fff3e0,stroke:#e65100,color:#e65100
-    classDef detectorStyle fill:#f3e5f5,stroke:#7b1fa2,color:#7b1fa2
-    classDef decisionStyle fill:#fff9c4,stroke:#f9a825,color:#f9a825
-    classDef memoryStyle fill:#e8f5e9,stroke:#2e7d32,color:#2e7d32
-    classDef outputStyle fill:#fce4ec,stroke:#c2185b,color:#c2185b
-
-    %% 输入模块
-    subgraph 输入处理
-        A[观测流 o₁, o₂, o₃...]:::inputStyle
-        B[编码器：将观测转为超维向量]:::encoderStyle
-        A --> B
-    end
-
-    %% 处理模块
-    subgraph 核心处理
-        C[相关性检测器]:::detectorStyle
-        D{sim(M, o) > τ?}:::decisionStyle
-        C --> D
-    end
-
-    %% 记忆模块
-    subgraph 记忆管理
-        E[绑定更新：M = M ⊗ o]:::memoryStyle
-        F[记忆保持：M不变]:::memoryStyle
-        D -->|是| E
-        D -->|否| F
-        E --> G[记忆向量 M]:::memoryStyle
-        F --> G
-    end
-
-    %% 输出模块
-    subgraph 输出处理
-        G --> H[可选择解绑检索]:::outputStyle
-    end
-
-    %% 应用样式
-    class A inputStyle
-    class B encoderStyle
-    class C detectorStyle
-    class D decisionStyle
-    class E memoryStyle
-    class F memoryStyle
-    class G memoryStyle
-    class H outputStyle
-```
+<!-- Mermaid图表待渲染 -->
 
 ### 🔧 关键组件
 
@@ -201,10 +153,7 @@ if __name__ == "__main__":
 
 $$
 ```latex
-\begin{align*}
-&\text{where } \otimes \text{ denotes binding and } + \text{ denotes bundling \cite{12}},\\
-&\text{this update treats every observation as entirely new information.}
-\end{align*}
+<!-- 数学公式待渲染 -->
 ```
 $$
 
@@ -213,9 +162,7 @@ $$
 **公式 2**：
 
 $$
-\begin{align}
-\nolinkurl{doi:10.1145/3538531}
-\end{align}
+<!-- 数学公式待渲染 -->
 $$
 
 *含义*：. doi:10.1145/3538531
