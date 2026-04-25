@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{{title}} - 论文解读</title>
+    <title>{{title}} - 论文解读报告</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         mermaid.initialize({ 
@@ -17,16 +18,16 @@
                 lineColor: '#666',
                 secondaryColor: '#f0f0f0',
                 tertiaryColor: '#fff'
-            }
+            },
+            flowchart: { curve: 'basis', padding: 20 },
+            sequence: { mirrorActors: false }
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
     <script>
         MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-            }
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
         };
     </script>
     <style>
@@ -35,9 +36,8 @@
             --color-text-secondary: #4a4a6a;
             --color-text-muted: #8888a0;
             --color-card: #ffffff;
-            --color-bg: #f8f9fc;
+            --color-bg: #f5f7fa;
             --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --safe-area-top: env(safe-area-inset-top, 0px);
             --safe-area-bottom: env(safe-area-inset-bottom, 0px);
         }
@@ -45,220 +45,329 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: -apple-system, BlinkMacFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
             background: var(--color-bg);
             color: var(--color-text);
-            line-height: 1.7;
+            line-height: 1.8;
             -webkit-font-smoothing: antialiased;
         }
         
         /* 导航栏 */
         .nav {
             position: fixed; top: 0; left: 0; right: 0;
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.98);
             backdrop-filter: blur(12px);
             padding: 12px 16px;
             padding-top: calc(12px + var(--safe-area-top));
             z-index: 100;
             display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
         }
-        .nav-left { display: flex; align-items: center; gap: 8px; }
+        .nav-left { display: flex; align-items: center; gap: 12px; }
         .nav-back {
-            width: 32px; height: 32px;
+            width: 36px; height: 36px;
             background: rgba(102,126,234,0.1);
-            border-radius: 8px;
+            border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
-            color: #667eea; text-decoration: none;
+            color: #667eea; text-decoration: none; font-size: 16px;
         }
-        .nav-title { font-size: 14px; font-weight: 600; }
-        .nav-right { display: flex; gap: 8px; }
+        .nav-title { font-size: 15px; font-weight: 600; }
         .nav-btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
             background: var(--gradient-primary);
             color: white;
-            border-radius: 8px;
-            font-size: 12px; font-weight: 600;
+            border-radius: 10px;
+            font-size: 13px; font-weight: 600;
             text-decoration: none;
+            display: flex; align-items: center; gap: 6px;
         }
         
-        /* Hero 区域 */
+        /* Hero */
         .hero {
             background: var(--gradient-primary);
-            padding: 80px 20px 30px;
-            padding-top: calc(80px + var(--safe-area-top));
+            padding: 90px 20px 40px;
+            padding-top: calc(90px + var(--safe-area-top));
             color: white;
             position: relative;
-            overflow: hidden;
         }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        .hero-content { position: relative; z-index: 1; }
         .hero-badge {
             display: inline-flex; align-items: center; gap: 6px;
             background: rgba(255,255,255,0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px; font-weight: 600;
-            margin-bottom: 12px;
-        }
-        .hero-title {
-            font-size: 20px; font-weight: 700;
-            line-height: 1.4; margin-bottom: 12px;
-        }
-        .hero-subtitle {
-            font-size: 13px; opacity: 0.9;
-            line-height: 1.6; margin-bottom: 16px;
-        }
-        .hero-meta {
-            display: flex; flex-wrap: wrap; gap: 12px;
-            font-size: 12px; opacity: 0.85;
-        }
-        .hero-meta-item {
-            display: flex; align-items: center; gap: 4px;
-        }
-        
-        /* 主内容区 */
-        .main {
-            padding: 20px 16px 100px;
-            padding-bottom: calc(100px + var(--safe-area-bottom));
-        }
-        
-        /* 快速导航 */
-        .quick-nav {
-            display: flex; gap: 8px;
-            padding: 12px 0;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            margin-bottom: 16px;
-        }
-        .quick-nav::-webkit-scrollbar { display: none; }
-        .quick-nav-item {
-            padding: 8px 14px;
-            background: white;
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 12px; font-weight: 600;
-            color: var(--color-text-secondary);
-            white-space: nowrap;
-            text-decoration: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 16px;
         }
-        .quick-nav-item:active {
-            background: var(--gradient-primary);
-            color: white;
+        .hero-title {
+            font-size: 24px; font-weight: 700;
+            line-height: 1.3; margin-bottom: 12px;
+        }
+        .hero-subtitle {
+            font-size: 14px; opacity: 0.9;
+            line-height: 1.6; margin-bottom: 20px;
+        }
+        .hero-meta {
+            display: flex; flex-wrap: wrap; gap: 16px;
+            font-size: 13px; opacity: 0.85;
+        }
+        .hero-meta-item {
+            display: flex; align-items: center; gap: 6px;
         }
         
-        /* 卡片 */
-        .card {
-            background: var(--color-card);
+        /* 主内容 */
+        .main {
+            padding: 20px 16px 120px;
+            padding-bottom: calc(120px + var(--safe-area-bottom));
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* 目录导航 */
+        .toc {
+            background: white;
             border-radius: 16px;
             padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
         }
-        .card-header {
+        .toc-title {
+            font-size: 14px; font-weight: 700;
+            margin-bottom: 12px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .toc-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        .toc-item {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            padding: 8px 12px;
+            background: rgba(102,126,234,0.06);
+            border-radius: 8px;
+            display: flex; align-items: center; gap: 8px;
+            transition: all 0.2s;
+        }
+        .toc-item:hover {
+            background: rgba(102,126,234,0.12);
+            color: #667eea;
+        }
+        .toc-item i { font-size: 12px; width: 16px; }
+        
+        /* 卡片 */
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .section-header {
             display: flex; align-items: center; gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid rgba(102,126,234,0.1);
         }
-        .card-icon {
-            width: 40px; height: 40px;
+        .section-icon {
+            width: 44px; height: 44px;
             border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
             font-size: 20px;
-        }
-        .card-icon.yellow { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
-        .card-icon.blue { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
-        .card-icon.green { background: linear-gradient(135deg, #34d399, #10b981); }
-        .card-icon.purple { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
-        .card-icon.pink { background: linear-gradient(135deg, #f472b6, #ec4899); }
-        .card-icon.orange { background: linear-gradient(135deg, #fb923c, #f97316); }
-        .card-title {
-            font-size: 16px; font-weight: 700;
-        }
-        
-        /* TL;DR 特殊样式 */
-        .tldr {
-            background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08));
-            border-left: 4px solid #667eea;
-        }
-        .tldr-item {
-            display: flex; align-items: flex-start; gap: 10px;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-        .tldr-item:last-child { border-bottom: none; }
-        .tldr-icon {
-            width: 24px; height: 24px;
-            background: var(--gradient-primary);
-            border-radius: 6px;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 12px;
             flex-shrink: 0;
         }
-        .tldr-text {
-            font-size: 14px;
-            color: var(--color-text-secondary);
+        .section-icon.yellow { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .section-icon.blue { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+        .section-icon.green { background: linear-gradient(135deg, #34d399, #10b981); }
+        .section-icon.purple { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
+        .section-icon.pink { background: linear-gradient(135deg, #f472b6, #ec4899); }
+        .section-icon.orange { background: linear-gradient(135deg, #fb923c, #f97316); }
+        .section-icon.cyan { background: linear-gradient(135deg, #22d3ee, #06b6d4); }
+        .section-title {
+            font-size: 18px; font-weight: 700;
         }
-        .tldr-text strong { color: var(--color-text); }
         
-        /* 内容段落 */
+        /* 内容 */
         .content {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--color-text-secondary);
         }
-        .content p { margin-bottom: 12px; }
+        .content p { margin-bottom: 16px; }
+        .content h3 {
+            font-size: 16px; font-weight: 600;
+            color: var(--color-text);
+            margin: 24px 0 12px;
+        }
+        .content h4 {
+            font-size: 14px; font-weight: 600;
+            color: var(--color-text);
+            margin: 20px 0 10px;
+        }
         .content ul, .content ol {
             margin: 12px 0;
-            padding-left: 20px;
+            padding-left: 24px;
         }
         .content li { margin-bottom: 8px; }
         .content strong { color: var(--color-text); }
+        .content a { color: #667eea; text-decoration: none; }
+        .content a:hover { text-decoration: underline; }
         
-        /* 要点高亮 */
+        /* 高亮框 */
         .highlight-box {
-            background: rgba(251,191,36,0.1);
-            border-radius: 12px;
-            padding: 14px;
-            margin: 12px 0;
+            background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(245,158,11,0.08));
+            border-left: 4px solid #f59e0b;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 20px;
+            margin: 16px 0;
         }
-        .highlight-box ul {
-            margin: 0;
-            padding-left: 16px;
-        }
-        .highlight-box li {
-            color: #92400e;
-            font-size: 13px;
-        }
+        .highlight-box ul { margin: 0; padding-left: 20px; }
+        .highlight-box li { color: #92400e; font-size: 14px; }
         
-        /* 流程图容器 */
+        .info-box {
+            background: linear-gradient(135deg, rgba(96,165,250,0.08), rgba(59,130,246,0.08));
+            border-left: 4px solid #3b82f6;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+        .info-box p { margin: 0; color: #1e40af; font-size: 14px; }
+        
+        /* 流程图 */
         .diagram-container {
             background: #fafbfc;
+            border: 1px solid rgba(0,0,0,0.06);
             border-radius: 12px;
-            padding: 16px;
-            margin: 16px 0;
+            padding: 20px;
+            margin: 20px 0;
             overflow-x: auto;
+        }
+        .diagram-title {
+            font-size: 13px; font-weight: 600;
+            color: var(--color-text-muted);
+            margin-bottom: 12px;
+            text-align: center;
         }
         .diagram-container .mermaid {
             display: flex;
             justify-content: center;
         }
         
+        /* 图片 */
+        .figure {
+            background: white;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .figure img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .figure-caption {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            font-style: italic;
+        }
+        .figure-number {
+            font-weight: 600;
+            color: var(--color-text-secondary);
+        }
+        
+        /* 代码块 */
+        .code-block {
+            background: #1e1e2e;
+            border-radius: 12px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+        .code-header {
+            background: rgba(255,255,255,0.05);
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .code-lang {
+            font-size: 12px;
+            color: #a6adc8;
+            font-weight: 600;
+        }
+        .code-copy {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #a6adc8;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .code-block pre {
+            margin: 0;
+            padding: 16px;
+            overflow-x: auto;
+        }
+        .code-block code {
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #cdd6f4;
+        }
+        
+        /* 伪代码 */
+        .pseudo-code {
+            background: #f8f9fa;
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 16px 0;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+        .pseudo-code .keyword { color: #7c3aed; font-weight: 600; }
+        .pseudo-code .function { color: #2563eb; }
+        .pseudo-code .comment { color: #6b7280; font-style: italic; }
+        .pseudo-code .variable { color: #059669; }
+        .pseudo-code .operator { color: #dc2626; }
+        
+        /* 公式 */
+        .formula {
+            background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(139,92,246,0.08));
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .formula-title {
+            font-size: 13px; font-weight: 600;
+            color: var(--color-text-muted);
+            margin-bottom: 12px;
+        }
+        .formula-desc {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin-top: 12px;
+            text-align: left;
+        }
+        
         /* 表格 */
         .table-wrapper {
             overflow-x: auto;
-            margin: 12px 0;
+            margin: 16px 0;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13px;
+            font-size: 14px;
         }
         th, td {
-            padding: 10px 12px;
+            padding: 12px 16px;
             text-align: left;
             border-bottom: 1px solid rgba(0,0,0,0.06);
         }
@@ -268,22 +377,23 @@
             color: var(--color-text);
         }
         td { color: var(--color-text-secondary); }
+        tr:hover td { background: rgba(102,126,234,0.03); }
         
         /* 统计卡片 */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            margin: 16px 0;
+            margin: 20px 0;
         }
         .stat-card {
             background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08));
             border-radius: 12px;
-            padding: 16px;
+            padding: 20px;
             text-align: center;
         }
         .stat-value {
-            font-size: 28px; font-weight: 700;
+            font-size: 32px; font-weight: 700;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -294,109 +404,91 @@
             margin-top: 4px;
         }
         
+        /* 对比表格 */
+        .comparison-table {
+            margin: 20px 0;
+        }
+        .comparison-table th:first-child { background: #f8f9fa; }
+        .comparison-table .highlight { background: rgba(34,197,94,0.1); }
+        .comparison-table .best { 
+            color: #059669; 
+            font-weight: 600;
+        }
+        
         /* 评分 */
-        .rating-row {
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .rating-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 14px 16px;
+            background: rgba(0,0,0,0.02);
+            border-radius: 10px;
         }
-        .rating-row:last-child { border-bottom: none; }
         .rating-label { font-size: 14px; }
-        .rating-stars { color: #fbbf24; font-size: 16px; }
-        
-        /* 代码块 */
-        .code-block {
-            background: #1e1e2e;
-            border-radius: 12px;
-            padding: 16px;
-            margin: 12px 0;
-            overflow-x: auto;
-        }
-        .code-block pre {
-            margin: 0;
-            color: #cdd6f4;
-            font-family: 'SF Mono', 'Monaco', monospace;
-            font-size: 12px;
-            line-height: 1.6;
-        }
-        .code-block .comment { color: #6c7086; }
-        .code-block .keyword { color: #cba6f7; }
-        .code-block .string { color: #a6e3a1; }
-        .code-block .function { color: #89b4fa; }
-        
-        /* 公式 */
-        .formula-box {
-            background: rgba(102,126,234,0.05);
-            border-radius: 12px;
-            padding: 16px;
-            margin: 12px 0;
-            text-align: center;
-            overflow-x: auto;
-        }
-        .formula-desc {
-            font-size: 12px;
-            color: var(--color-text-muted);
-            margin-top: 8px;
-        }
+        .rating-stars { color: #fbbf24; font-size: 18px; letter-spacing: 2px; }
         
         /* FAQ */
         .faq-item {
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding: 14px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            padding: 16px 0;
         }
         .faq-item:last-child { border-bottom: none; }
         .faq-q {
-            font-size: 14px; font-weight: 600;
+            font-size: 15px; font-weight: 600;
             color: var(--color-text);
-            margin-bottom: 8px;
-            display: flex; align-items: flex-start; gap: 8px;
+            margin-bottom: 10px;
+            display: flex; align-items: flex-start; gap: 10px;
         }
         .faq-q::before {
             content: 'Q';
             background: var(--gradient-primary);
             color: white;
-            width: 20px; height: 20px;
-            border-radius: 4px;
+            width: 24px; height: 24px;
+            border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 11px; font-weight: 700;
+            font-size: 12px; font-weight: 700;
             flex-shrink: 0;
         }
         .faq-a {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--color-text-secondary);
-            padding-left: 28px;
+            padding-left: 34px;
+            line-height: 1.7;
         }
         
         /* 标签 */
         .tags {
             display: flex; flex-wrap: wrap; gap: 8px;
-            margin-top: 12px;
+            margin-top: 16px;
         }
         .tag {
             background: rgba(102,126,234,0.1);
             color: #667eea;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px; font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px; font-weight: 600;
         }
         
         /* 底部操作栏 */
         .bottom-bar {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.98);
             backdrop-filter: blur(12px);
             padding: 12px 16px;
             padding-bottom: calc(12px + var(--safe-area-bottom));
-            border-top: 1px solid rgba(0,0,0,0.05);
+            border-top: 1px solid rgba(0,0,0,0.08);
             display: flex; gap: 12px;
         }
         .btn {
             flex: 1;
-            height: 48px;
+            height: 50px;
             border: none; border-radius: 12px;
-            font-size: 14px; font-weight: 600;
+            font-size: 15px; font-weight: 600;
             display: flex; align-items: center; justify-content: center; gap: 8px;
             cursor: pointer; text-decoration: none;
         }
@@ -409,29 +501,53 @@
             color: #667eea;
         }
         
-        /* 图片 */
-        .paper-figure {
-            background: white;
-            border-radius: 12px;
-            padding: 12px;
-            margin: 12px 0;
-            text-align: center;
-        }
-        .paper-figure img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-        .paper-figure-caption {
-            font-size: 12px;
-            color: var(--color-text-muted);
-            margin-top: 8px;
-        }
-        
         /* 分隔线 */
         .divider {
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
             margin: 24px 0;
+        }
+        
+        /* 引用 */
+        .quote {
+            border-left: 4px solid #667eea;
+            padding-left: 16px;
+            margin: 16px 0;
+            font-style: italic;
+            color: var(--color-text-secondary);
+        }
+        
+        /* 步骤列表 */
+        .steps {
+            counter-reset: step;
+            margin: 16px 0;
+        }
+        .step {
+            position: relative;
+            padding-left: 48px;
+            margin-bottom: 20px;
+        }
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 32px; height: 32px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700;
+        }
+        .step-title {
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 6px;
+        }
+        .step-desc {
+            font-size: 14px;
+            color: var(--color-text-secondary);
         }
     </style>
 </head>
@@ -440,225 +556,299 @@
     <nav class="nav">
         <div class="nav-left">
             <a href="javascript:history.back()" class="nav-back">
-                <i class="fas fa-chevron-left"></i>
+                <i class="fas fa-arrow-left"></i>
             </a>
-            <span class="nav-title">论文解读</span>
+            <span class="nav-title">论文解读报告</span>
         </div>
-        <div class="nav-right">
-            <a href="{{arxiv_link}}" target="_blank" class="nav-btn">
-                <i class="fas fa-external-link-alt"></i> 原文
-            </a>
-        </div>
+        <a href="{{arxiv_link}}" target="_blank" class="nav-btn">
+            <i class="fas fa-file-pdf"></i> 原文 PDF
+        </a>
     </nav>
     
     <!-- Hero -->
     <div class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fas fa-file-alt"></i>
-                <span>arXiv:{{arxiv_id}}</span>
+        <div class="hero-badge">
+            <i class="fas fa-file-alt"></i>
+            <span>arXiv:{{arxiv_id}}</span>
+        </div>
+        <h1 class="hero-title">{{title}}</h1>
+        <p class="hero-subtitle">{{subtitle}}</p>
+        <div class="hero-meta">
+            <div class="hero-meta-item">
+                <i class="fas fa-users"></i>
+                <span>{{authors}}</span>
             </div>
-            <h1 class="hero-title">{{title}}</h1>
-            <p class="hero-subtitle">{{subtitle}}</p>
-            <div class="hero-meta">
-                <div class="hero-meta-item">
-                    <i class="fas fa-users"></i>
-                    <span>{{authors}}</span>
-                </div>
-                <div class="hero-meta-item">
-                    <i class="fas fa-calendar"></i>
-                    <span>{{date}}</span>
-                </div>
-                <div class="hero-meta-item">
-                    <i class="fas fa-clock"></i>
-                    <span>阅读 {{read_time}}分钟</span>
-                </div>
+            <div class="hero-meta-item">
+                <i class="fas fa-calendar"></i>
+                <span>{{date}}</span>
+            </div>
+            <div class="hero-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>阅读约 {{read_time}} 分钟</span>
             </div>
         </div>
     </div>
     
     <!-- 主内容 -->
     <main class="main">
-        <!-- 快速导航 -->
-        <div class="quick-nav">
-            <a href="#tldr" class="quick-nav-item">📋 TL;DR</a>
-            <a href="#innovation" class="quick-nav-item">💡 创新点</a>
-            <a href="#method" class="quick-nav-item">⚙️ 方法</a>
-            <a href="#results" class="quick-nav-item">📈 效果</a>
-            <a href="#application" class="quick-nav-item">🏭 应用</a>
-            <a href="#faq" class="quick-nav-item">❓ FAQ</a>
-        </div>
-        
-        <!-- TL;DR -->
-        <div class="card tldr" id="tldr">
-            <div class="card-header">
-                <div class="card-icon yellow">📋</div>
-                <h2 class="card-title">TL;DR · 一分钟速览</h2>
+        <!-- 目录 -->
+        <div class="toc">
+            <div class="toc-title">
+                <i class="fas fa-list"></i> 目录导航
             </div>
-            <div class="tldr-item">
-                <div class="tldr-icon">1</div>
-                <div class="tldr-text"><strong>一句话总结：</strong>{{tldr_summary}}</div>
-            </div>
-            <div class="tldr-item">
-                <div class="tldr-icon">2</div>
-                <div class="tldr-text"><strong>核心贡献：</strong>{{tldr_contribution}}</div>
-            </div>
-            <div class="tldr-item">
-                <div class="tldr-icon">3</div>
-                <div class="tldr-text"><strong>实用价值：</strong>{{tldr_value}}</div>
+            <div class="toc-list">
+                <a href="#abstract" class="toc-item"><i class="fas fa-file-alt"></i> 摘要速览</a>
+                <a href="#background" class="toc-item"><i class="fas fa-book"></i> 研究背景</a>
+                <a href="#method" class="toc-item"><i class="fas fa-cogs"></i> 方法详解</a>
+                <a href="#architecture" class="toc-item"><i class="fas fa-project-diagram"></i> 架构设计</a>
+                <a href="#algorithm" class="toc-item"><i class="fas fa-code"></i> 算法实现</a>
+                <a href="#experiments" class="toc-item"><i class="fas fa-chart-bar"></i> 实验分析</a>
+                <a href="#results" class="toc-item"><i class="fas fa-trophy"></i> 结果对比</a>
+                <a href="#discussion" class="toc-item"><i class="fas fa-comments"></i> 讨论与展望</a>
             </div>
         </div>
         
-        <!-- 背景与动机 -->
-        <div class="card" id="background">
-            <div class="card-header">
-                <div class="card-icon blue">📖</div>
-                <h2 class="card-title">背景与动机</h2>
+        <!-- 摘要速览 -->
+        <div class="section" id="abstract">
+            <div class="section-header">
+                <div class="section-icon yellow">📋</div>
+                <h2 class="section-title">摘要速览</h2>
             </div>
             <div class="content">
-                {{background}}
+                {{abstract}}
             </div>
             <div class="highlight-box">
                 <ul>
-                    {{background_points}}
+                    {{key_points}}
                 </ul>
             </div>
         </div>
         
-        <!-- 核心创新点 -->
-        <div class="card" id="innovation">
-            <div class="card-header">
-                <div class="card-icon yellow">💡</div>
-                <h2 class="card-title">核心创新点</h2>
+        <!-- 研究背景 -->
+        <div class="section" id="background">
+            <div class="section-header">
+                <div class="section-icon blue">📖</div>
+                <h2 class="section-title">研究背景与动机</h2>
             </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>创新点</th>
-                            <th>说明</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{innovation_table}}
-                    </tbody>
-                </table>
+            <div class="content">
+                {{background}}
+            </div>
+            <div class="info-box">
+                <p><strong>核心问题：</strong>{{core_problem}}</p>
             </div>
         </div>
         
-        <!-- 方法概述 -->
-        <div class="card" id="method">
-            <div class="card-header">
-                <div class="card-icon green">⚙️</div>
-                <h2 class="card-title">方法概述</h2>
+        <!-- 方法详解 -->
+        <div class="section" id="method">
+            <div class="section-header">
+                <div class="section-icon green">⚙️</div>
+                <h2 class="section-title">方法详解</h2>
             </div>
             <div class="content">
                 {{method_overview}}
             </div>
             
-            <!-- 流程图 -->
-            {{#if has_diagram}}
-            <div class="diagram-container">
-                <div class="mermaid">
-{{mermaid_code}}
-                </div>
-            </div>
-            {{/if}}
-            
-            <!-- 关键组件 -->
-            <div class="divider"></div>
-            <h3 style="font-size: 14px; margin-bottom: 12px;">🔧 关键组件</h3>
+            <h3>核心创新点</h3>
             <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
-                            <th>组件</th>
-                            <th>作用</th>
+                            <th>创新点</th>
+                            <th>技术方案</th>
+                            <th>解决的问题</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{components_table}}
+                        {{innovations}}
                     </tbody>
                 </table>
             </div>
         </div>
         
-        <!-- 核心公式 -->
-        {{#if has_formula}}
-        <div class="card">
-            <div class="card-header">
-                <div class="card-icon purple">🔢</div>
-                <h2 class="card-title">核心公式</h2>
-            </div>
-            <div class="formula-box">
-                {{formula}}
-            </div>
-            <div class="formula-desc">{{formula_desc}}</div>
-        </div>
-        {{/if}}
-        
-        <!-- 实验结果 -->
-        <div class="card" id="results">
-            <div class="card-header">
-                <div class="card-icon pink">📈</div>
-                <h2 class="card-title">实验效果</h2>
-            </div>
-            <div class="content">
-                <p><strong>数据集：</strong>{{datasets}}</p>
-                <p><strong>评价指标：</strong>{{metrics}}</p>
+        <!-- 架构设计 -->
+        <div class="section" id="architecture">
+            <div class="section-header">
+                <div class="section-icon purple">🏗️</div>
+                <h2 class="section-title">架构设计</h2>
             </div>
             
+            <div class="diagram-container">
+                <div class="diagram-title">图1: 整体架构流程图</div>
+                <div class="mermaid">
+{{architecture_diagram}}
+                </div>
+            </div>
+            
+            <div class="content">
+                <h3>模块说明</h3>
+                {{modules_description}}
+            </div>
+            
+            {{#if has_figure}}
+            <div class="figure">
+                <img src="{{figure_url}}" alt="架构图">
+                <div class="figure-caption">
+                    <span class="figure-number">Figure 1:</span> {{figure_caption}}
+                </div>
+            </div>
+            {{/if}}
+        </div>
+        
+        <!-- 算法实现 -->
+        <div class="section" id="algorithm">
+            <div class="section-header">
+                <div class="section-icon cyan">💻</div>
+                <h2 class="section-title">算法实现</h2>
+            </div>
+            
+            <h3>核心算法流程</h3>
+            <div class="diagram-container">
+                <div class="diagram-title">图2: 算法流程图</div>
+                <div class="mermaid">
+{{algorithm_flowchart}}
+                </div>
+            </div>
+            
+            <h3>伪代码</h3>
+            <div class="pseudo-code">
+{{pseudocode}}
+            </div>
+            
+            <h3>核心公式</h3>
+            <div class="formula">
+                <div class="formula-title">目标函数</div>
+                {{formula}}
+                <div class="formula-desc">
+                    <strong>变量说明：</strong>{{formula_vars}}
+                </div>
+            </div>
+            
+            <h3>代码示例</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="code-copy" onclick="copyCode(this)">复制</button>
+                </div>
+                <pre><code>{{code_example}}</code></pre>
+            </div>
+        </div>
+        
+        <!-- 实验分析 -->
+        <div class="section" id="experiments">
+            <div class="section-header">
+                <div class="section-icon pink">📊</div>
+                <h2 class="section-title">实验分析</h2>
+            </div>
+            
+            <div class="content">
+                <h3>实验设置</h3>
+                <p><strong>数据集：</strong>{{datasets}}</p>
+                <p><strong>评价指标：</strong>{{metrics}}</p>
+                <p><strong>基线方法：</strong>{{baselines}}</p>
+            </div>
+            
+            <h3>主要结果</h3>
             <div class="stats-grid">
                 {{stats_cards}}
             </div>
             
-            <div class="highlight-box">
+            <h3>性能对比</h3>
+            <div class="table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>方法</th>
+                            {{comparison_headers}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{comparison_rows}}
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>消融实验</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>配置</th>
+                            <th>性能</th>
+                            <th>变化</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{ablation_results}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 结果与讨论 -->
+        <div class="section" id="results">
+            <div class="section-header">
+                <div class="section-icon orange">🏆</div>
+                <h2 class="section-title">结果与讨论</h2>
+            </div>
+            
+            <div class="content">
+                <h3>主要发现</h3>
+                <div class="steps">
+                    {{findings}}
+                </div>
+                
+                <h3>局限性</h3>
                 <ul>
-                    {{result_points}}
+                    {{limitations}}
+                </ul>
+                
+                <h3>未来方向</h3>
+                <ul>
+                    {{future_work}}
                 </ul>
             </div>
         </div>
         
-        <!-- 工业应用 -->
-        <div class="card" id="application">
-            <div class="card-header">
-                <div class="card-icon orange">🏭</div>
-                <h2 class="card-title">工业落地</h2>
-            </div>
-            <div class="content">
-                <p><strong>适用场景：</strong></p>
-                <ul>
-                    {{application_scenarios}}
-                </ul>
+        <!-- 讨论与展望 -->
+        <div class="section" id="discussion">
+            <div class="section-header">
+                <div class="section-icon blue">💬</div>
+                <h2 class="section-title">讨论与展望</h2>
             </div>
             
-            <div class="divider"></div>
-            
             <div class="content">
-                <p><strong>实现难度：</strong>{{difficulty}}</p>
-                <p><strong>工程挑战：</strong></p>
+                <h3>工业应用价值</h3>
                 <ul>
-                    {{challenges}}
+                    {{applications}}
                 </ul>
+                
+                <h3>实现建议</h3>
+                <div class="highlight-box">
+                    <ul>
+                        {{implementation_tips}}
+                    </ul>
+                </div>
             </div>
         </div>
         
         <!-- 综合评价 -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-icon purple">⭐</div>
-                <h2 class="card-title">综合评价</h2>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon purple">⭐</div>
+                <h2 class="section-title">综合评价</h2>
             </div>
-            {{rating_section}}
+            <div class="rating-grid">
+                {{ratings}}
+            </div>
         </div>
         
         <!-- FAQ -->
-        <div class="card" id="faq">
-            <div class="card-header">
-                <div class="card-icon blue">❓</div>
-                <h2 class="card-title">常见问题</h2>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon blue">❓</div>
+                <h2 class="section-title">常见问题</h2>
             </div>
-            {{faq_items}}
+            {{faq}}
         </div>
         
         <!-- 标签 -->
@@ -670,12 +860,10 @@
     <!-- 底部操作栏 -->
     <div class="bottom-bar">
         <a href="{{arxiv_link}}" target="_blank" class="btn btn-primary">
-            <i class="fas fa-book-reader"></i>
-            阅读原论文
+            <i class="fas fa-file-pdf"></i> 阅读原论文
         </a>
         <button class="btn btn-secondary" onclick="sharePaper()">
-            <i class="fas fa-share-alt"></i>
-            分享
+            <i class="fas fa-share-alt"></i> 分享
         </button>
     </div>
     
@@ -691,6 +879,13 @@
                 navigator.clipboard.writeText(window.location.href);
                 alert('链接已复制！');
             }
+        }
+        
+        function copyCode(btn) {
+            const code = btn.closest('.code-block').querySelector('code').textContent;
+            navigator.clipboard.writeText(code);
+            btn.textContent = '已复制';
+            setTimeout(() => btn.textContent = '复制', 2000);
         }
     </script>
 </body>
