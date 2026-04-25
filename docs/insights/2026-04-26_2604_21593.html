@@ -572,7 +572,7 @@
             <span>arXiv:2604.21593</span>
         </div>
         <h1 class="hero-title">Language as a Latent Variable for Reasoning Optimization</h1>
-        <p class="hero-subtitle">本论文探索了一个重要发现：随着大语言模型减少英语中心偏见，非英语响应在推理任务中有时反而优于英语响应。研究团队假设语言作为一种潜在变量，结构性地调节模型的内部推理路径，而不仅仅是输出媒介。为此，团队设...</p>
+        <p class="hero-subtitle">本文探讨了语言作为潜在变量在推理优化中的作用。研究发现，随着大语言模型减少英语中心偏见，非英语响应在某些推理任务中反而表现更优。基于这一发现，作者提出语言不仅是输出媒介，而是结构性地调节模型内部推理路...</p>
         <div class="hero-meta">
             <div class="hero-meta-item">
                 <i class="fas fa-users"></i>
@@ -615,11 +615,11 @@
                 <h2 class="section-title">摘要速览</h2>
             </div>
             <div class="content">
-                <p>本论文探索了一个重要发现：随着大语言模型减少英语中心偏见，非英语响应在推理任务中有时反而优于英语响应。研究团队假设语言作为一种潜在变量，结构性地调节模型的内部推理路径，而不仅仅是输出媒介。为此，团队设计了多语言思维实验（Polyglot Thinking Experiment），发现在无语言约束条件下模型表现最佳，表明多语言性拓宽了模型的潜在推理空间。基于此发现，论文提出polyGRPO（多语言分组相对策略优化）框架，将语言变化作为隐式探索信号。该方法仅使用18.1K多语言数学问题训练，无需思维链标注，即在英语推理测试集上提升6.72%，在多语言基准上提升6.89%，且是唯一在英语常识推理任务上超越基础LLM的方法，展现了强大的跨任务泛化能力。</p>
+                <p>本文探讨了语言作为潜在变量在推理优化中的作用。研究发现，随着大语言模型减少英语中心偏见，非英语响应在某些推理任务中反而表现更优。基于这一发现，作者提出语言不仅是输出媒介，而是结构性地调节模型内部推理路径的潜在变量。通过多语言思维实验，作者观察到无约束语言响应往往能获得最佳性能，多语言能力拓宽了模型的潜在推理空间。基于此，作者提出polyGRPO（多语言组相对策略优化）框架，将语言变化作为隐式探索信号，通过在线生成多语言偏好数据进行强化学习训练。在仅使用18.1K多语言数学问题（无链式思维注释）的训练下，polyGRPO在Qwen2.5-7B-Instruct模型上，英语推理测试集准确率提升6.72%，多语言基准提升6.89%，并首次在英语常识推理任务上超越基础模型，展现了强大的跨任务泛化能力。</p>
             </div>
             <div class="highlight-box">
                 <ul>
-                    <li>非英语响应在推理任务中有时可超越英语响应，语言被假设为调节模型内部推理路径的潜在变量</li><li>无约束语言响应条件下的模型表现通常优于单一语言约束条件，表明多语言性扩展了推理空间</li><li>polyGRPO框架将语言多样性作为隐式探索信号，通过强化学习优化推理能力</li><li>仅用18.1K多语言数学数据训练，即实现英语推理+6.72%和多语言推理+6.89%的提升</li>
+                    <li>语言作为潜在变量而非简单输出媒介，结构性地调节模型内部推理路径</li><li>非英语响应在推理任务中可能优于英语，无约束语言响应表现最佳</li><li>polyGRPO框架将语言多样性作为隐式探索信号进行强化学习优化</li><li>仅用18.1K多语言数学数据训练即实现跨任务泛化，在常识推理任务上超越基础模型</li>
                 </ul>
             </div>
         </div>
@@ -631,7 +631,7 @@
                 <h2 class="section-title">研究背景与动机</h2>
             </div>
             <div class="content">
-                <p>大语言模型在各类任务上表现优异，但通常存在英语偏见，在英语输入或输出时表现更强。然而随着训练语料多样化的提升，模型在非英语语言上的推理能力也在增强，甚至在某些任务上超越英语。这引发了一个关键问题：多语言思维能力能否作为推理优化的潜在变量？现有方法如多数投票和自动语言选择在任务复杂性和语言选择上存在局限，而基于强化学习的方法如PPO、DPO和GRPO通常依赖英语中心的偏好数据，未能充分发挥多语言思维的潜力。</p>
+                <p>大语言模型在各类任务尤其是推理任务上表现优异，但通常存在英语中心偏见，在英语输入或响应时表现更强。然而，随着模型在更多样化语料上的训练，非英语语言的推理能力不断提升，甚至在某些任务上超越英语。这引发了一个关键问题：多语言思维能力能否作为推理优化的潜在变量？现有方法如多数投票和自动语言选择在任务复杂度和语言选择上存在局限，而基于强化学习的方法虽在推理改进上展现潜力，但其偏好数据通常以英语为中心，限制了模型充分发挥多语言思维的优势。因此，探索语言多样性与推理能力之间的关系，设计能有效利用多语言思维的优化框架具有重要意义。</p>
             </div>
             <div class="info-box">
                 <p><strong>核心问题：</strong>详见论文原文</p>
@@ -645,7 +645,7 @@
                 <h2 class="section-title">方法详解</h2>
             </div>
             <div class="content">
-                <p>论文提出polyGRPO（多语言分组相对策略优化）框架，将多语言思维作为隐式探索信号来增强LLM推理能力。该框架包含三个核心模块：首先，多语言思维生成模块为每个问题生成一组多样化的响应，包括一个无语言约束的响应和多个随机指定语言的响应；其次，奖励模块采用规则驱动的奖励函数，结合准确率奖励（二值判断最终答案是否正确）和格式奖励（鼓励包含[Thinking]推理过程和####格式的最终答案）；最后，分组相对策略优化模块基于GRPO方法，计算组内相对优势来指导策略更新。训练时使用约18.1K多语言数学样本，推理时保持语言令牌为空让模型自由选择响应语言。</p>
+                <p>polyGRPO是一个基于GRPO的多语言强化学习框架，核心思想是将语言多样性作为隐式探索信号来增强LLM的推理能力。该框架包含三个核心模块：首先，多语言推理生成模块（PRGM）针对每个问题生成一组多语言响应，包括一个无语言约束的响应和多个随机指定语言的响应，从而探索不同的推理轨迹；其次，奖励模块采用规则基础的奖励函数，由准确率奖励（二元判断最终答案是否正确）和格式奖励（鼓励包含推理过程和规范化答案格式）组成，并设置最小长度约束以防止模型走捷径；最后，组相对策略优化模块基于奖励分数计算组相对优势，通过GRPO的裁剪目标函数和KL惩罚来优化策略。这种在线生成偏好数据的方式避免了离线方法的存储开销，能持续探索多语言思维空间，扩展模型的潜在推理能力。</p>
             </div>
             
             <h3>核心创新点</h3>
@@ -660,19 +660,19 @@
                     </thead>
                     <tbody>
                         <tr>
-    <td>语言作为潜在变量假设</td>
-    <td>将语言选择视为调节模型内部推理路径的潜在变量，通过多语言响应生成和组内相对优化，使模型能够在不同语言空间中进行推理探索</td>
-    <td>解决了传统方法将语言仅视为输出媒介的问题，揭示了语言结构性地影响推理过程</td>
+    <td>语言作为潜在变量假说</td>
+    <td>通过多语言思维实验系统验证语言不仅是输出媒介，而是结构性地调节模型内部推理路径的潜在变量，发现无约束语言响应能扩展模型的潜在推理空间</td>
+    <td>传统观点认为语言仅是输入输出的媒介，忽视了语言选择对推理过程的结构性影响</td>
 </tr>
 <tr>
-    <td>无约束与约束语言响应的组合策略</td>
-    <td>在训练时同时生成无语言约束响应和语言约束响应，构建多语言偏好组，通过组间相对优势引导策略优化</td>
-    <td>解决了单语言约束导致的性能不稳定问题，实现了跨不同规模模型的稳健性能提升</td>
+    <td>polyGRPO多语言强化学习框架</td>
+    <td>提出将语言变化作为隐式探索信号的强化学习方法，在线生成多语言偏好数据，结合有约束和无约束语言响应构建组相对优势进行策略优化</td>
+    <td>现有RL方法偏好数据通常以英语为中心，限制了模型充分发挥多语言思维优势</td>
 </tr>
 <tr>
-    <td>在线多语言偏好数据生成</td>
-    <td>在训练过程中实时生成多语言响应，无需预先构建翻译数据或固定语言锚点，减少存储开销并扩大多语言思维空间的探索</td>
-    <td>解决了传统方法依赖监督翻译或固定语言锚点的局限性</td>
+    <td>跨任务泛化能力</td>
+    <td>仅在数学数据上训练，却在英语常识推理任务上实现显著提升（+4.9%），超越所有基线模型</td>
+    <td>数学领域训练的模型难以泛化到其他推理任务</td>
 </tr>
                     </tbody>
                 </table>
@@ -713,7 +713,7 @@ graph TB
             
             <div class="content">
                 <h3>模块说明</h3>
-                <p><strong>Polyglot Reasoning Generation Module (PRGM)：</strong>多语言思维生成模块，为每个输入问题生成一组n=5的多语言响应，包括一个无语言约束的响应和四个随机指定语言的响应。这些响应形成多语言思维集，探索不同语言下的推理轨迹，扩展模型的潜在推理空间。</p><p><strong>Reward Module：</strong>奖励模块由准确率奖励和格式奖励两部分组成。准确率奖励判断最终答案是否与标准答案完全匹配；格式奖励鼓励模型生成结构化的推理过程（包含[Thinking]标记）和规范格式的答案（遵循####分隔符）。奖励值范围为{0,1,2}，同时对正确性和推理规范性进行激励。</p><p><strong>Group Relative Policy Optimization Module：</strong>分组相对策略优化模块继承自GRPO，通过组内奖励归一化计算优势函数，采用PPO风格的裁剪目标函数进行策略优化。该模块包含KL散度正则化项，确保当前策略与参考策略的差异可控，实现稳定的多语言推理能力提升。</p>
+                <p><strong>Polyglot Reasoning Generation Module (PRGM)：</strong>多语言推理生成模块，负责为每个问题生成一组多样化的多语言响应。包含一个无语言约束的响应（让模型自由选择输出语言）和多个随机指定目标语言的响应（从10种预定义语言中随机选择），从而创建涵盖不同推理轨迹的多语言思维集合。这些响应在训练过程中实时生成，支持模型在多语言推理空间中进行广泛探索。</p><p><strong>Reward Module：</strong>奖励模块，采用规则基础的奖励函数评估每个响应质量。准确率奖励（AR）判断最终预测答案是否与标准答案完全匹配，正确得1分否则得0分。格式奖励（FR）检查响应是否包含推理过程标记[Thinking]和遵循####格式的最终答案，满足得1分否则得0分。总奖励范围为0-2分，奖励不仅关注答案正确性，还鼓励生成结构化的推理步骤，同时设置100字符最小长度约束防止模型生成无效内容。</p><p><strong>Group Relative Policy Optimization Module：</strong>组相对策略优化模块，继承自GRPO方法。该模块首先对组内所有响应的奖励进行归一化，计算每个响应的相对优势。具体地，用当前奖励减去组内均值再除以标准差得到优势值Ai。随后采用PPO风格的裁剪目标函数进行策略更新，同时将当前策略与参考策略之间的KL散度惩罚直接集成到损失函数中，从而稳定训练过程并防止策略过度偏离原始模型。</p>
             </div>
             
             
@@ -766,82 +766,6 @@ flowchart TD
             </div>
         </div>
         
-        <!-- 论文图表 -->
-        <div class="figures-section">
-<h3>📊 论文图表</h3>
-<div class="figures-grid">
-
-            <div class="figure-item">
-                <img src="figures/2604_21593/fig_1.jpeg" alt="Figure 1" loading="lazy">
-                <p class="figure-caption">图 1</p>
-            </div>
-
-            <div class="figure-item">
-                <img src="figures/2604_21593/fig_2.jpeg" alt="Figure 2" loading="lazy">
-                <p class="figure-caption">图 2</p>
-            </div>
-
-            <div class="figure-item">
-                <img src="figures/2604_21593/fig_3.jpeg" alt="Figure 3" loading="lazy">
-                <p class="figure-caption">图 3</p>
-            </div>
-
-            <div class="figure-item">
-                <img src="figures/2604_21593/fig_4.jpeg" alt="Figure 4" loading="lazy">
-                <p class="figure-caption">图 4</p>
-            </div>
-
-            <div class="figure-item">
-                <img src="figures/2604_21593/fig_5.jpeg" alt="Figure 5" loading="lazy">
-                <p class="figure-caption">图 5</p>
-            </div>
-
-            <div class="figure-item">
-                <img src="figures/2604_21593/fig_6.jpeg" alt="Figure 6" loading="lazy">
-                <p class="figure-caption">图 6</p>
-            </div>
-</div>
-</div>
-
-<style>
-.figures-section {
-    margin: 2rem 0;
-    padding: 1.5rem;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    border-radius: 12px;
-}
-.figures-section h3 {
-    margin-bottom: 1rem;
-    color: #2c3e50;
-}
-.figures-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
-}
-.figure-item {
-    background: white;
-    border-radius: 8px;
-    padding: 0.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
-}
-.figure-item:hover {
-    transform: translateY(-2px);
-}
-.figure-item img {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-}
-.figure-caption {
-    text-align: center;
-    margin: 0.5rem 0 0;
-    font-size: 0.9rem;
-    color: #666;
-}
-</style>
-        
         <!-- 实验分析 -->
         <div class="section" id="experiments">
             <div class="section-header">
@@ -849,29 +773,134 @@ flowchart TD
                 <h2 class="section-title">实验分析</h2>
             </div>
             
+            <!-- 论文图表（放在实验部分开头） -->
+            
+<div class="figures-inline">
+<h3>📊 论文图表</h3>
+<p class="figures-note">以下图表来自论文原文，展示了方法架构和实验结果：</p>
+<div class="figures-scroll">
+
+            <div class="figure-card">
+                <img src="figures/2604_21593/fig_1.jpeg" alt="Figure 1" loading="lazy" onclick="this.classList.toggle('zoom')">
+                <p class="figure-caption">图1: 方法架构或流程示意</p>
+            </div>
+
+            <div class="figure-card">
+                <img src="figures/2604_21593/fig_2.jpeg" alt="Figure 2" loading="lazy" onclick="this.classList.toggle('zoom')">
+                <p class="figure-caption">图2: 方法架构或流程示意</p>
+            </div>
+
+            <div class="figure-card">
+                <img src="figures/2604_21593/fig_3.jpeg" alt="Figure 3" loading="lazy" onclick="this.classList.toggle('zoom')">
+                <p class="figure-caption">图3: 实验结果对比</p>
+            </div>
+
+            <div class="figure-card">
+                <img src="figures/2604_21593/fig_4.jpeg" alt="Figure 4" loading="lazy" onclick="this.classList.toggle('zoom')">
+                <p class="figure-caption">图4: 实验结果对比</p>
+            </div>
+
+            <div class="figure-card">
+                <img src="figures/2604_21593/fig_5.jpeg" alt="Figure 5" loading="lazy" onclick="this.classList.toggle('zoom')">
+                <p class="figure-caption">图5: 实验结果对比</p>
+            </div>
+
+            <div class="figure-card">
+                <img src="figures/2604_21593/fig_6.jpeg" alt="Figure 6" loading="lazy" onclick="this.classList.toggle('zoom')">
+                <p class="figure-caption">图6: 消融实验或案例分析</p>
+            </div>
+
+            <div class="figure-card">
+                <img src="figures/2604_21593/fig_7.jpeg" alt="Figure 7" loading="lazy" onclick="this.classList.toggle('zoom')">
+                <p class="figure-caption">图7: 消融实验或案例分析</p>
+            </div>
+
+            <div class="figure-card">
+                <img src="figures/2604_21593/fig_8.jpeg" alt="Figure 8" loading="lazy" onclick="this.classList.toggle('zoom')">
+                <p class="figure-caption">图8: 消融实验或案例分析</p>
+            </div>
+</div>
+</div>
+
+<style>
+.figures-inline {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+.figures-inline h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    color: #334155;
+}
+.figures-note {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+.figures-scroll {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x mandatory;
+}
+.figure-card {
+    flex: 0 0 280px;
+    background: white;
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    scroll-snap-align: start;
+    cursor: zoom-in;
+}
+.figure-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    transition: transform 0.2s;
+}
+.figure-card img.zoom {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2);
+    z-index: 1000;
+    cursor: zoom-out;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+.figure-caption {
+    margin: 0.5rem 0 0;
+    font-size: 0.8rem;
+    color: #64748b;
+    text-align: center;
+}
+</style>
+            
             <div class="content">
                 <h3>实验设置</h3>
-                <p><strong>数据集：</strong>MAPO（多语言数学推理数据集，含10种语言共18,140样本）, MGSM（10种语言的数学单词问题）, MATH500（多难度数学问题）, PolyMath-medium（18种语言的高难度数学问题）, X-CSQA（16种语言的常识推理问答）</p>
-                <p><strong>评价指标：</strong>准确率（Accuracy）, 英语推理性能（EN）, 多语言推理性能（ALL）</p>
+                <p><strong>数据集：</strong>MAPO（1,703个英语问题及9种语言翻译版本，共18,140个训练样本）, MGSM（250个GSM8K样本的10种语言翻译版本，测试集）, MATH500（500个多样化数学问题，含6种语言翻译版本）, PolyMath-medium（125个中等难度数学问题）, X-CSQA（16种语言的常识推理问答）</p>
+                <p><strong>评价指标：</strong>准确率（Accuracy）- 主要评估指标, 英语测试集性能（EN）, 多语言测试集性能（ALL）</p>
                 <p><strong>基线方法：</strong>详见论文原文</p>
             </div>
             
             <h3>主要结果</h3>
             <div class="stats-grid">
                 <div class="stat-card">
-    <div class="stat-value">在Qwen2.5-7B-Instruct上，英语推理平均提升6.72%，多语言推理平均提升6.89%</div>
+    <div class="stat-value">Qwen2.5-7B-Instruct: 英语推理测试集平均提升6.72%，多语言基准提升6.89%</div>
     <div class="stat-label">性能提升</div>
 </div>
 <div class="stat-card">
-    <div class="stat-value">在Llama3-8B-Instruct上，英语推理平均提升1.72%，多语言推理平均提升3.53%</div>
+    <div class="stat-value">Llama3-8B-Instruct: 平均提升1.72%（英语）和显著的多语言性能提升</div>
     <div class="stat-label">性能提升</div>
 </div>
 <div class="stat-card">
-    <div class="stat-value">在X-CSQA常识推理任务上，polyGRPO是唯一超越基础LLM的方法，提升4.9%</div>
+    <div class="stat-value">X-CSQA常识推理任务：Qwen2.5-7B唯一超越基础模型的基线方法，提升4.9%</div>
     <div class="stat-label">性能提升</div>
 </div>
 <div class="stat-card">
-    <div class="stat-value">相比GRPO方法，在所有基准上均实现了一致的性能提升</div>
+    <div class="stat-value">相比GRPO基线：MGSM英语性能从90.40%提升至94.00%（Qwen2.5）</div>
     <div class="stat-label">性能提升</div>
 </div>
             </div>
@@ -886,9 +915,9 @@ flowchart TD
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>本文方法</td><td>准确率（Accuracy）</td></tr>
-<tr><td>本文方法</td><td>英语推理性能（EN）</td></tr>
-<tr><td>本文方法</td><td>多语言推理性能（ALL）</td></tr>
+                        <tr><td>本文方法</td><td>准确率（Accuracy）- 主要评估指标</td></tr>
+<tr><td>本文方法</td><td>英语测试集性能（EN）</td></tr>
+<tr><td>本文方法</td><td>多语言测试集性能（ALL）</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1011,7 +1040,7 @@ GRPO, with a peak performan</div>
         
         <!-- 标签 -->
         <div class="tags">
-            <span class="tag">大语言模型推理优化</span><span class="tag">多语言思维</span><span class="tag">强化学习</span><span class="tag">polyGRPO</span><span class="tag">语言作为潜在变量</span>
+            <span class="tag">语言模型</span><span class="tag">推理优化</span><span class="tag">多语言思维</span><span class="tag">强化学习</span><span class="tag">polyGRPO</span><span class="tag">潜在变量</span>
         </div>
     </main>
     
@@ -1030,7 +1059,7 @@ GRPO, with a peak performan</div>
             if (navigator.share) {
                 navigator.share({
                     title: 'Language as a Latent Variable for Reasoning Optimization',
-                    text: '本论文探索了一个重要发现：随着大语言模型减少英语中心偏见，非英语响应在推理任务中有时反而优于英语响应。研究团队假设语言作为一种潜在变量，结构性地调节模型的内部推理路径，而不仅仅是输出媒介。为此，团队设...',
+                    text: '本文探讨了语言作为潜在变量在推理优化中的作用。研究发现，随着大语言模型减少英语中心偏见，非英语响应在某些推理任务中反而表现更优。基于这一发现，作者提出语言不仅是输出媒介，而是结构性地调节模型内部推理路...',
                     url: window.location.href
                 });
             } else {

@@ -540,23 +540,32 @@ class PaperDeepInsightGenerator:
         return self._render_template(template, data)
     
     def _render_figures(self, figure_paths: List[str], arxiv_id: str) -> str:
-        """渲染图表展示区域"""
+        """渲染图表展示区域 - 放在实验分析部分"""
         if not figure_paths:
             return ''
         
-        # 将本地图片路径转换为相对路径（假设图表会被复制到 docs/insights/figures/）
-        html_parts = ['<div class="figures-section">', '<h3>📊 论文图表</h3>', '<div class="figures-grid">']
+        html_parts = ['''
+<div class="figures-inline">
+<h3>📊 论文图表</h3>
+<p class="figures-note">以下图表来自论文原文，展示了方法架构和实验结果：</p>
+<div class="figures-scroll">''']
         
-        for i, path in enumerate(figure_paths[:6], 1):  # 最多展示 6 张
-            # 使用相对路径
+        for i, path in enumerate(figure_paths[:8], 1):
             fig_name = Path(path).name
-            # 图表路径相对于 insights 目录
             relative_path = f"figures/{arxiv_id.replace('.', '_')}/{fig_name}"
             
+            # 根据图表序号推断类型
+            if i <= 2:
+                caption = f"图{i}: 方法架构或流程示意"
+            elif i <= 5:
+                caption = f"图{i}: 实验结果对比"
+            else:
+                caption = f"图{i}: 消融实验或案例分析"
+            
             html_parts.append(f'''
-            <div class="figure-item">
-                <img src="{relative_path}" alt="Figure {i}" loading="lazy">
-                <p class="figure-caption">图 {i}</p>
+            <div class="figure-card">
+                <img src="{relative_path}" alt="Figure {i}" loading="lazy" onclick="this.classList.toggle('zoom')">
+                <p class="figure-caption">{caption}</p>
             </div>''')
         
         html_parts.extend(['</div>', '</div>'])
@@ -564,41 +573,58 @@ class PaperDeepInsightGenerator:
         # 添加样式
         html_parts.append('''
 <style>
-.figures-section {
-    margin: 2rem 0;
-    padding: 1.5rem;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    border-radius: 12px;
+.figures-inline {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
 }
-.figures-section h3 {
+.figures-inline h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    color: #334155;
+}
+.figures-note {
+    font-size: 0.85rem;
+    color: #64748b;
     margin-bottom: 1rem;
-    color: #2c3e50;
 }
-.figures-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+.figures-scroll {
+    display: flex;
     gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x mandatory;
 }
-.figure-item {
+.figure-card {
+    flex: 0 0 280px;
     background: white;
     border-radius: 8px;
     padding: 0.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    scroll-snap-align: start;
+    cursor: zoom-in;
 }
-.figure-item:hover {
-    transform: translateY(-2px);
-}
-.figure-item img {
+.figure-card img {
     width: 100%;
     height: auto;
     border-radius: 4px;
+    transition: transform 0.2s;
+}
+.figure-card img.zoom {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2);
+    z-index: 1000;
+    cursor: zoom-out;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
 }
 .figure-caption {
-    text-align: center;
     margin: 0.5rem 0 0;
-    font-size: 0.9rem;
-    color: #666;
+    font-size: 0.8rem;
+    color: #64748b;
+    text-align: center;
 }
 </style>''')
         
