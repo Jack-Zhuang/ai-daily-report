@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Language as a Latent Variable for Reasoning Optimization - 论文解读报告</title>
+    <title>Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models - 论文解读报告</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
@@ -560,7 +560,7 @@
             </a>
             <span class="nav-title">论文解读报告</span>
         </div>
-        <a href="http://arxiv.org/abs/2604.21593v1" target="_blank" class="nav-btn">
+        <a href="http://arxiv.org/abs/2604.21896v1" target="_blank" class="nav-btn">
             <i class="fas fa-file-pdf"></i> 原文 PDF
         </a>
     </nav>
@@ -569,10 +569,10 @@
     <div class="hero">
         <div class="hero-badge">
             <i class="fas fa-file-alt"></i>
-            <span>arXiv:2604.21593</span>
+            <span>arXiv:2604.21896</span>
         </div>
-        <h1 class="hero-title">Language as a Latent Variable for Reasoning Optimization</h1>
-        <p class="hero-subtitle">提出创新的研究方法</p>
+        <h1 class="hero-title">Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models</h1>
+        <p class="hero-subtitle">—This paper introduces a new paradigm for AI game programming, leveraging large language models (LLM...</p>
         <div class="hero-meta">
             <div class="hero-meta-item">
                 <i class="fas fa-users"></i>
@@ -615,11 +615,12 @@
                 <h2 class="section-title">摘要速览</h2>
             </div>
             <div class="content">
-                <p>As LLMs reduce English-centric bias, a surprising trend emerges: non-English responses sometimes outperform English on reasoning tasks. We hypothesize that language functions as a latent variable that structurally modulates the model's internal inference pathways, rather than merely serving as an output medium. To test this, we conducted a Polyglot Thinking Experiment, in which models were prompted to solve identical problems under language-constrained and language-unconstrained conditions. Resu</p>
+                <p>—This paper introduces a new paradigm for AI game programming, leveraging large language models (LLMs) to extend and operationalize Claude Shannon’s taxonomy of game-playing machines. Central to this paradigm is Nemobot, an interactive agentic engineering environment that enables users to create, customize, and deploy LLM-powered game agents while actively engaging with AI-driven strategies. The LLM-based chatbot, integrated within Nemobot, demonstrates its capabilities across four distinct classes of games. For dictionary-based games, it compresses state-action mappings into efficient, generalized models for rapid adaptability. In rigorously solvable games, it employs mathematical reasoning to compute optimal strategies and generates human-readable explanations for its decisions.</p>
             </div>
             <div class="highlight-box">
                 <ul>
-                    <li>创新方法</li><li>实验验证</li><li>性能提升</li>
+                    <li>This represents a step toward
+the long-term goal of self-programming AI</li>
                 </ul>
             </div>
         </div>
@@ -631,10 +632,10 @@
                 <h2 class="section-title">研究背景与动机</h2>
             </div>
             <div class="content">
-                <p>该研究领域具有重要的理论和实践价值。</p>
+                <p>研究背景详见论文原文。</p>
             </div>
             <div class="info-box">
-                <p><strong>核心问题：</strong>如何提升模型性能</p>
+                <p><strong>核心问题：</strong>详见论文原文</p>
             </div>
         </div>
         
@@ -645,7 +646,7 @@
                 <h2 class="section-title">方法详解</h2>
             </div>
             <div class="content">
-                <p>本文提出了新的方法来解决相关问题。</p>
+                <p>方法详情请参见论文原文。</p>
             </div>
             
             <h3>核心创新点</h3>
@@ -659,11 +660,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-    <td>方法创新</td>
-    <td>新技术</td>
-    <td>性能问题</td>
-</tr>
+                        <tr><td>创新点1</td><td>that lan-
+guage models can be utilized to augment this approach by
+learning patterns from game data</td><td>提升性能</td></tr>
+<tr><td>创新点2</td><td>strategies by interpreting prompts and adjusting its play based
+on real-time feedback</td><td>提升性能</td></tr>
+<tr><td>创新点3</td><td>programming paradigms in strategic AI game
+development, as illustrated in Figure 1</td><td>提升性能</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -679,11 +682,11 @@
             <div class="diagram-container">
                 <div class="diagram-title">图1: 整体架构流程图</div>
                 <div class="mermaid">
-graph LR
-    Input["📥 输入"] --> M0
-    M0["核心模块"]
-
-    M0 --> Output["📤 输出"]
+graph TB
+    Input["📥 输入"] --> Embed["嵌入层"]
+    Embed --> Attn["注意力层"]
+    Attn --> FFN["前馈网络"]
+    FFN --> Output["📤 输出"]
     
     style Input fill:#e3f2fd,stroke:#1565c0
     style Output fill:#e8f5e9,stroke:#2e7d32
@@ -710,34 +713,28 @@ graph LR
                 <div class="diagram-title">图2: 算法流程图</div>
                 <div class="mermaid">
 flowchart TD
-    Start(["开始"])
-    S0["输入处理"]
-    S1["特征提取"]
-    S2["模型计算"]
-    S3["结果输出"]
-    End(["结束"])
-    Start --> S0
-    S0 --> S1
-    S1 --> S2
-    S2 --> S3
-    S3 --> End
+    A[输入数据] --> B[预处理]
+    B --> C[特征提取]
+    C --> D[模型计算]
+    D --> E[后处理]
+    E --> F[输出结果]
     
-    style Start fill:#e8f5e9
-    style End fill:#fce4ec
+    style A fill:#e3f2fd
+    style F fill:#e8f5e9
                 </div>
             </div>
             
             <h3>伪代码</h3>
             <div class="pseudo-code">
-// 算法伪代码<br><span class="keyword">Input</span>: data<br><span class="keyword">Output</span>: result<br>Process(data)
+<span class="comment">// 详见论文原文</span>
             </div>
             
             <h3>核心公式</h3>
             <div class="formula">
                 <div class="formula-title">目标函数</div>
-                $$L = \sum loss$$
+                
                 <div class="formula-desc">
-                    <strong>变量说明：</strong>损失函数
+                    <strong>变量说明：</strong>
                 </div>
             </div>
             
@@ -747,9 +744,7 @@ flowchart TD
                     <span class="code-lang">Python</span>
                     <button class="code-copy" onclick="copyCode(this)">复制</button>
                 </div>
-                <pre><code># 核心代码
-def process(data):
-    return result</code></pre>
+                <pre><code># 详见论文原文</code></pre>
             </div>
         </div>
         
@@ -762,20 +757,28 @@ def process(data):
             
             <div class="content">
                 <h3>实验设置</h3>
-                <p><strong>数据集：</strong>公开数据集</p>
-                <p><strong>评价指标：</strong>Accuracy, F1</p>
-                <p><strong>基线方法：</strong>基线方法</p>
+                <p><strong>数据集：</strong>a, vast</p>
+                <p><strong>评价指标：</strong>accuracy.</p>
+                <p><strong>基线方法：</strong>详见论文原文</p>
             </div>
             
             <h3>主要结果</h3>
             <div class="stats-grid">
                 <div class="stat-card">
-    <div class="stat-value">-</div>
+    <div class="stat-value">性能提升</div>
     <div class="stat-label">性能提升</div>
 </div>
 <div class="stat-card">
     <div class="stat-value">-</div>
-    <div class="stat-label">主要指标</div>
+    <div class="stat-label">详见论文</div>
+</div>
+<div class="stat-card">
+    <div class="stat-value">-</div>
+    <div class="stat-label">详见论文</div>
+</div>
+<div class="stat-card">
+    <div class="stat-value">-</div>
+    <div class="stat-label">详见论文</div>
 </div>
             </div>
             
@@ -785,11 +788,11 @@ def process(data):
                     <thead>
                         <tr>
                             <th>方法</th>
-                            <th>Accuracy</th><th>F1</th>
+                            <th>指标</th><th>数值</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>-</td><td>-</td><td>-</td></tr>
+                        <tr><td>本文方法</td><td>accuracy.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -805,7 +808,7 @@ def process(data):
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>完整模型</td><td>-</td><td>-</td></tr>
+                        <tr><td>详见论文</td><td>-</td><td>-</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -823,18 +826,31 @@ def process(data):
                 <div class="steps">
                     <div class="step">
     <div class="step-title">发现 1</div>
-    <div class="step-desc">方法有效</div>
+    <div class="step-desc">In conclusion, this paper introduces a new approach to
+strategic AI game programming, inspired by Sh</div>
+</div>
+<div class="step">
+    <div class="step-title">发现 2</div>
+    <div class="step-desc">Central to this is
+Nemobot, an interactive platform that allows users to create
+and deploy game agen</div>
+</div>
+<div class="step">
+    <div class="step-title">发现 3</div>
+    <div class="step-desc">By integrating LLMs, Nemobot goes
+beyond static instructions, enabling AI agents to dynamically
+adap</div>
 </div>
                 </div>
                 
                 <h3>局限性</h3>
                 <ul>
-                    <li>有待进一步研究</li>
+                    <li>详见论文原文</li>
                 </ul>
                 
                 <h3>未来方向</h3>
                 <ul>
-                    <li>扩展应用</li>
+                    <li>详见论文原文</li>
                 </ul>
             </div>
         </div>
@@ -855,7 +871,7 @@ def process(data):
                 <h3>实现建议</h3>
                 <div class="highlight-box">
                     <ul>
-                        <li>参考论文实现</li>
+                        <li>参考论文原文实现</li>
                     </ul>
                 </div>
             </div>
@@ -882,7 +898,7 @@ def process(data):
 </div>
 <div class="rating-item">
     <span class="rating-label">可复现性</span>
-    <span class="rating-stars">★★★★☆</span>
+    <span class="rating-stars">★★★☆☆</span>
 </div>
             </div>
         </div>
@@ -894,20 +910,24 @@ def process(data):
                 <h2 class="section-title">常见问题</h2>
             </div>
             <div class="faq-item">
-    <div class="faq-q">方法优势?</div>
-    <div class="faq-a">性能更好</div>
+    <div class="faq-q">该方法的主要贡献是什么？</div>
+    <div class="faq-a">请参考论文原文的摘要和结论部分。</div>
+</div>
+<div class="faq-item">
+    <div class="faq-q">如何复现该方法？</div>
+    <div class="faq-a">请参考论文的方法部分和实验设置，或查看作者提供的代码仓库。</div>
 </div>
         </div>
         
         <!-- 标签 -->
         <div class="tags">
-            <span class="tag">AI</span><span class="tag">机器学习</span>
+            <span class="tag">Transformer</span><span class="tag">注意力机制</span><span class="tag">AI Agent</span><span class="tag">优化</span><span class="tag">嵌入</span><span class="tag">机器学习</span>
         </div>
     </main>
     
     <!-- 底部操作栏 -->
     <div class="bottom-bar">
-        <a href="http://arxiv.org/abs/2604.21593v1" target="_blank" class="btn btn-primary">
+        <a href="http://arxiv.org/abs/2604.21896v1" target="_blank" class="btn btn-primary">
             <i class="fas fa-file-pdf"></i> 阅读原论文
         </a>
         <button class="btn btn-secondary" onclick="sharePaper()">
@@ -919,8 +939,8 @@ def process(data):
         function sharePaper() {
             if (navigator.share) {
                 navigator.share({
-                    title: 'Language as a Latent Variable for Reasoning Optimization',
-                    text: '提出创新的研究方法',
+                    title: 'Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models',
+                    text: '—This paper introduces a new paradigm for AI game programming, leveraging large language models (LLM...',
                     url: window.location.href
                 });
             } else {

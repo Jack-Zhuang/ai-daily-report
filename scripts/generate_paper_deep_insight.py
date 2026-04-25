@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-AI推荐日报 - 论文深度解读生成器
-流程：下载PDF → 解析PDF → MiniMax解读 → 生成HTML
+AI推荐日报 - 论文深度解读生成器（本地版）
+流程：下载PDF → 解析PDF → 规则提取 → 生成HTML
+不依赖外部 LLM API
 """
 
 import json
@@ -10,7 +11,7 @@ import os
 import requests
 from pathlib import Path
 from datetime import datetime
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 
 
 class PaperDeepInsightGenerator:
@@ -23,35 +24,16 @@ class PaperDeepInsightGenerator:
         self.pdf_cache_dir = self.base_dir / "cache" / "pdfs"
         self.pdf_cache_dir.mkdir(parents=True, exist_ok=True)
         self.template_path = self.base_dir / "templates" / "paper_insight_template.html"
-        
-        # MiniMax API 配置
-        self.api_key = os.environ.get('MINIMAX_API_KEY', '')
-        self.group_id = os.environ.get('MINIMAX_GROUP_ID', '')
-        self._load_api_keys()
-    
-    def _load_api_keys(self):
-        """从配置文件加载 API Key"""
-        if not self.api_key:
-            env_file = Path.home() / ".openclaw" / ".xiaoyienv"
-            if env_file.exists():
-                for line in env_file.read_text().splitlines():
-                    if line.startswith('PERSONAL-API-KEY='):
-                        self.api_key = line.split('=', 1)[1].strip().strip('"')
-                    elif line.startswith('PERSONAL-UID='):
-                        self.group_id = line.split('=', 1)[1].strip().strip('"')
     
     def download_pdf(self, arxiv_id: str) -> Optional[Path]:
         """下载 arXiv PDF"""
-        # 清理 arxiv_id
-        arxiv_id = arxiv_id.replace('v1', '').replace('v2', '').strip()
+        arxiv_id = re.sub(r'v\d+$', '', arxiv_id).strip()
         
-        # 检查是否已下载
         pdf_path = self.pdf_cache_dir / f"{arxiv_id}.pdf"
         if pdf_path.exists():
             print(f"  📄 PDF 已存在: {pdf_path}")
             return pdf_path
         
-        # 下载 PDF
         pdf_url = f"https://arxiv.org/pdf/{arxiv_id}.pdf"
         print(f"  📥 下载 PDF: {pdf_url}")
         
@@ -70,7 +52,7 @@ class PaperDeepInsightGenerator:
             return None
     
     def parse_pdf(self, pdf_path: Path) -> str:
-        """使用 markitdown 解析 PDF"""
+        """解析 PDF"""
         try:
             from markitdown import MarkItDown
             md = MarkItDown()
@@ -84,7 +66,7 @@ class PaperDeepInsightGenerator:
             return self._parse_pdf_fallback(pdf_path)
     
     def _parse_pdf_fallback(self, pdf_path: Path) -> str:
-        """备用 PDF 解析方法"""
+        """备用 PDF 解析"""
         try:
             import subprocess
             result = subprocess.run(
@@ -96,7 +78,6 @@ class PaperDeepInsightGenerator:
         except:
             pass
         
-        # 最后尝试用 PyPDF2
         try:
             from pypdf import PdfReader
             reader = PdfReader(str(pdf_path))
@@ -108,182 +89,186 @@ class PaperDeepInsightGenerator:
             print(f"  ❌ PDF 解析失败: {e}")
             return ""
     
-    def analyze_with_llm(self, paper_content: str, paper_info: dict) -> dict:
-        """使用 MiniMax API 深度分析论文"""
+    def extract_content(self, paper_content: str, paper_info: dict) -> dict:
+        """从 PDF 内容中提取关键信息"""
         
-        # 截取内容（避免超出 token 限制）
-        max_chars = 50000
-        if len(paper_content) > max_chars:
-            # 优先保留摘要、方法和实验部分
-            paper_content = paper_content[:max_chars]
+        # 提取摘要
+        abstract = self._extract_abstract(paper_content)
         
-        prompt = f"""你是一位资深的学术论文解读专家。请对以下论文进行深度解读，提取关键信息。
-
-论文标题: {paper_info.get('title', '未知')}
-作者: {paper_info.get('authors', '未知')}
-发表日期: {paper_info.get('published', '未知')}
-
-论文内容:
-{paper_content}
-
-请按照以下 JSON 格式输出解读结果（必须是有效的 JSON）:
-
-{{
-    "subtitle": "一句话概括论文核心贡献（30字以内）",
-    "read_time": "预计阅读时间（分钟）",
-    "abstract": "论文摘要的中文翻译和解读（200-300字）",
-    "key_points": ["关键要点1", "关键要点2", "关键要点3", "关键要点4"],
-    "background": "研究背景和动机（300-500字，包含问题背景、现有方法的局限、本文的切入点）",
-    "core_problem": "论文要解决的核心问题（一句话）",
-    "method_overview": "方法概述（300-500字，描述整体思路和主要模块）",
-    "innovations": [
-        {{"point": "创新点名称", "solution": "技术方案", "problem": "解决的问题"}},
-        {{"point": "创新点名称", "solution": "技术方案", "problem": "解决的问题"}},
-        {{"point": "创新点名称", "solution": "技术方案", "problem": "解决的问题"}}
-    ],
-    "modules": [
-        {{"name": "模块名称", "description": "模块功能描述"}},
-        {{"name": "模块名称", "description": "模块功能描述"}},
-        {{"name": "模块名称", "description": "模块功能描述"}}
-    ],
-    "architecture_description": "架构设计的文字描述（200-300字）",
-    "algorithm_steps": ["步骤1描述", "步骤2描述", "步骤3描述", "步骤4描述"],
-    "pseudocode": "核心算法的伪代码（使用简单的伪代码格式）",
-    "formula": "核心数学公式（LaTeX格式）",
-    "formula_description": "公式中各变量的含义说明",
-    "code_snippet": "核心代码片段（Python格式，30行以内）",
-    "datasets": "使用的数据集",
-    "metrics": "评价指标",
-    "baselines": "对比的基线方法",
-    "main_results": [
-        {{"metric": "指标名", "value": "数值", "improvement": "提升幅度"}},
-        {{"metric": "指标名", "value": "数值", "improvement": "提升幅度"}}
-    ],
-    "comparison": [
-        {{"method": "方法名", "metric1": "值1", "metric2": "值2"}},
-        {{"method": "方法名", "metric1": "值1", "metric2": "值2"}}
-    ],
-    "ablation": [
-        {{"config": "配置描述", "result": "结果", "change": "变化"}},
-        {{"config": "配置描述", "result": "结果", "change": "变化"}}
-    ],
-    "findings": ["主要发现1", "主要发现2", "主要发现3"],
-    "limitations": ["局限性1", "局限性2", "局限性3"],
-    "future_work": ["未来方向1", "未来方向2", "未来方向3"],
-    "applications": ["应用场景1", "应用场景2", "应用场景3"],
-    "implementation_tips": ["实现建议1", "实现建议2", "实现建议3"],
-    "ratings": {{"innovation": 4, "industry": 4, "experiment": 4, "reproducibility": 4}},
-    "faq": [
-        {{"q": "问题1", "a": "回答1"}},
-        {{"q": "问题2", "a": "回答2"}},
-        {{"q": "问题3", "a": "回答3"}}
-    ],
-    "tags": ["标签1", "标签2", "标签3", "标签4"]
-}}
-
-注意：
-1. 所有内容必须基于论文实际内容，不要编造
-2. 如果论文中没有某些信息，可以填写合理的推测但要标注"推测"
-3. 数值结果必须来自论文，如果没有则留空
-4. 输出必须是有效的 JSON 格式"""
-
-        # 调用 MiniMax API
-        try:
-            return self._call_minimax_api(prompt)
-        except Exception as e:
-            print(f"  ⚠️ MiniMax API 调用失败: {e}")
-            return self._generate_fallback_analysis(paper_info)
-    
-    def _call_minimax_api(self, prompt: str) -> dict:
-        """调用 MiniMax API"""
-        if not self.api_key:
-            raise ValueError("MiniMax API Key 未配置")
+        # 提取方法
+        method = self._extract_method(paper_content)
         
-        url = f"https://api.minimax.chat/v1/text/chatcompletion_v2?GroupId={self.group_id}"
+        # 提取实验结果
+        experiments = self._extract_experiments(paper_content)
         
-        headers = {
-            "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json"
-        }
+        # 提取结论
+        conclusion = self._extract_conclusion(paper_content)
         
-        data = {
-            "model": "abab6.5s-chat",
-            "messages": [
-                {"role": "user", "content": prompt}
-            ],
-            "temperature": 0.3,
-            "max_tokens": 8000
-        }
+        # 提取关键术语作为标签
+        tags = self._extract_tags(paper_content, paper_info)
         
-        response = requests.post(url, headers=headers, json=data, timeout=120)
-        
-        if response.status_code == 200:
-            result = response.json()
-            content = result.get('choices', [{}])[0].get('message', {}).get('content', '')
-            
-            # 提取 JSON - 支持多种格式
-            # 尝试直接解析
-            try:
-                return json.loads(content)
-            except:
-                pass
-            
-            # 尝试提取 ```json ... ``` 块
-            json_block = re.search(r'```(?:json)?\s*([\s\S]*?)\s*```', content)
-            if json_block:
-                try:
-                    return json.loads(json_block.group(1))
-                except:
-                    pass
-            
-            # 尝试提取第一个完整的 JSON 对象
-            json_match = re.search(r'\{[\s\S]*\}', content)
-            if json_match:
-                try:
-                    return json.loads(json_match.group())
-                except:
-                    pass
-            
-            # 如果都失败，打印内容用于调试
-            print(f"  ⚠️ 无法解析 API 返回内容，前500字符:")
-            print(f"     {content[:500]}")
-            raise ValueError("API 返回内容不是有效的 JSON")
-        else:
-            raise ValueError(f"API 调用失败: {response.status_code} - {response.text}")
-    
-    def _generate_fallback_analysis(self, paper_info: dict) -> dict:
-        """生成备用的分析结果"""
         return {
-            "subtitle": "提出创新的研究方法",
-            "read_time": "15",
-            "abstract": paper_info.get('summary', '论文摘要暂无'),
-            "key_points": ["创新方法", "实验验证", "性能提升"],
-            "background": "该研究领域具有重要的理论和实践价值。",
-            "core_problem": "如何提升模型性能",
-            "method_overview": "本文提出了新的方法来解决相关问题。",
-            "innovations": [{"point": "方法创新", "solution": "新技术", "problem": "性能问题"}],
-            "modules": [{"name": "核心模块", "description": "实现主要功能"}],
-            "architecture_description": "整体采用端到端架构设计。",
-            "algorithm_steps": ["输入处理", "特征提取", "模型计算", "结果输出"],
-            "pseudocode": "// 算法伪代码\nInput: data\nOutput: result\nProcess(data)",
-            "formula": "L = \\sum loss",
-            "formula_description": "损失函数",
-            "code_snippet": "# 核心代码\ndef process(data):\n    return result",
-            "datasets": "公开数据集",
-            "metrics": "Accuracy, F1",
-            "baselines": "基线方法",
-            "main_results": [],
-            "comparison": [],
-            "ablation": [],
-            "findings": ["方法有效"],
-            "limitations": ["有待进一步研究"],
-            "future_work": ["扩展应用"],
-            "applications": ["相关领域应用"],
-            "implementation_tips": ["参考论文实现"],
-            "ratings": {"innovation": 4, "industry": 4, "experiment": 4, "reproducibility": 4},
-            "faq": [{"q": "方法优势?", "a": "性能更好"}],
-            "tags": ["AI", "机器学习"]
+            'abstract': abstract,
+            'method': method,
+            'experiments': experiments,
+            'conclusion': conclusion,
+            'tags': tags,
         }
+    
+    def _extract_abstract(self, content: str) -> str:
+        """提取摘要"""
+        # 尝试匹配 Abstract 部分
+        patterns = [
+            r'Abstract\s*(.*?)(?:\n\s*\n|\n[A-Z][a-z]+\s)',
+            r'ABSTRACT\s*(.*?)(?:\n\s*\n|\n[A-Z][a-z]+\s)',
+            r'摘要\s*(.*?)(?:\n\s*\n|\n[A-Z])',
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, content, re.DOTALL)
+            if match:
+                abstract = match.group(1).strip()
+                # 清理
+                abstract = re.sub(r'\s+', ' ', abstract)
+                if len(abstract) > 100:
+                    return abstract[:1000]
+        
+        # 如果没找到，返回前 500 字符
+        return content[:500].strip()
+    
+    def _extract_method(self, content: str) -> dict:
+        """提取方法部分"""
+        # 查找 Method/Approach 部分
+        method_patterns = [
+            r'(?:Method|Approach|Methodology)\s*(.*?)(?:\n\s*\n(?:Experiment|Results|Evaluation|Conclusion))',
+            r'(?:方法|模型)\s*(.*?)(?:\n\s*\n(?:实验|结果|结论))',
+        ]
+        
+        method_text = ""
+        for pattern in method_patterns:
+            match = re.search(pattern, content, re.DOTALL | re.IGNORECASE)
+            if match:
+                method_text = match.group(1).strip()
+                break
+        
+        # 提取可能的模块/组件
+        modules = []
+        module_patterns = [
+            r'(?:Module|Component|Layer|Encoder|Decoder|Network)\s*(\d*)\s*[:：]?\s*([^\n]+)',
+            r'(?:模块|组件|层)\s*(\d*)\s*[:：]?\s*([^\n]+)',
+        ]
+        
+        for pattern in module_patterns:
+            for match in re.finditer(pattern, content):
+                name = match.group(2).strip()
+                if name and len(name) < 50:
+                    modules.append({'name': name, 'description': ''})
+        
+        return {
+            'text': method_text[:2000] if method_text else "方法详情请参见论文原文。",
+            'modules': modules[:5] if modules else [{'name': '核心模块', 'description': '实现主要功能'}]
+        }
+    
+    def _extract_experiments(self, content: str) -> dict:
+        """提取实验部分"""
+        # 查找数据集
+        datasets = []
+        dataset_patterns = [
+            r'(?:dataset|Dataset|数据集)[:：]?\s*([A-Za-z0-9\-,\s]+)',
+            r'(?:on|using)\s+([A-Za-z0-9\-]+)\s+(?:dataset|benchmark)',
+        ]
+        
+        for pattern in dataset_patterns:
+            for match in re.finditer(pattern, content):
+                ds = match.group(1).strip()
+                if ds and len(ds) < 30:
+                    datasets.append(ds)
+        
+        # 查找指标
+        metrics = []
+        metric_patterns = [
+            r'(?:Accuracy|Precision|Recall|F1|NDCG|Hit|MRR|BLEU|ROUGE)[:：]?\s*([\d.]+%?)',
+            r'([\d.]+%?)\s*(?:accuracy|precision|recall|F1)',
+        ]
+        
+        for pattern in metric_patterns:
+            for match in re.finditer(pattern, content, re.IGNORECASE):
+                metric = match.group(0).strip()
+                if metric:
+                    metrics.append(metric)
+        
+        # 查找性能提升
+        improvements = []
+        imp_patterns = [
+            r'(\+[\d.]+%)\s*(?:improvement|increase|gain)',
+            r'improve[sd]?\s+(?:by\s+)?([\d.]+%)',
+        ]
+        
+        for pattern in imp_patterns:
+            for match in re.finditer(pattern, content, re.IGNORECASE):
+                imp = match.group(0).strip()
+                if imp:
+                    improvements.append(imp)
+        
+        return {
+            'datasets': list(set(datasets))[:5] or ['公开数据集'],
+            'metrics': list(set(metrics))[:5] or ['Accuracy', 'F1-Score'],
+            'improvements': list(set(improvements))[:3] or ['性能提升'],
+        }
+    
+    def _extract_conclusion(self, content: str) -> str:
+        """提取结论"""
+        patterns = [
+            r'(?:Conclusion|Conclusions)\s*(.*?)(?:\n\s*\n(?:References|Acknowledgment)|$)',
+            r'(?:结论|总结)\s*(.*?)(?:\n\s*\n(?:参考文献|致谢)|$)',
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, content, re.DOTALL | re.IGNORECASE)
+            if match:
+                conclusion = match.group(1).strip()
+                return conclusion[:1000]
+        
+        return "结论详情请参见论文原文。"
+    
+    def _extract_tags(self, content: str, paper_info: dict) -> List[str]:
+        """提取标签"""
+        tags = set()
+        
+        # 从论文分类获取
+        category = paper_info.get('category', '')
+        if category == 'rec':
+            tags.add('推荐系统')
+        elif category == 'agent':
+            tags.add('AI Agent')
+        elif category == 'llm':
+            tags.add('大语言模型')
+        
+        # 从内容中提取关键词
+        keywords = {
+            'deep learning': '深度学习',
+            'machine learning': '机器学习',
+            'neural network': '神经网络',
+            'transformer': 'Transformer',
+            'attention': '注意力机制',
+            'reinforcement learning': '强化学习',
+            'knowledge graph': '知识图谱',
+            'graph neural network': '图神经网络',
+            'recommendation': '推荐',
+            'NLP': 'NLP',
+            'computer vision': '计算机视觉',
+            'optimization': '优化',
+            'embedding': '嵌入',
+            'pre-training': '预训练',
+            'fine-tuning': '微调',
+        }
+        
+        content_lower = content.lower()
+        for en, zh in keywords.items():
+            if en in content_lower:
+                tags.add(zh)
+        
+        return list(tags)[:6] or ['AI', '机器学习']
     
     def generate_insight(self, paper: dict) -> str:
         """生成论文解读页面"""
@@ -304,13 +289,13 @@ class PaperDeepInsightGenerator:
             print(f"  ⚠️ 无法获取 PDF，使用摘要")
             paper_content = paper.get('summary', '')
         
-        # 3. LLM 分析
-        print(f"  🤖 LLM 深度分析...")
-        analysis = self.analyze_with_llm(paper_content, paper)
+        # 3. 提取内容
+        print(f"  🔍 提取关键信息...")
+        extracted = self.extract_content(paper_content, paper)
         
         # 4. 生成 HTML
         print(f"  🎨 生成解读页面...")
-        html = self._render_html(paper, analysis)
+        html = self._render_html(paper, extracted, paper_content)
         
         # 5. 保存
         safe_id = re.sub(r'[^\w\-]', '_', arxiv_id)
@@ -324,7 +309,7 @@ class PaperDeepInsightGenerator:
         print(f"  ✅ 完成: {filepath}")
         return str(filepath)
     
-    def _render_html(self, paper: dict, analysis: dict) -> str:
+    def _render_html(self, paper: dict, extracted: dict, raw_content: str) -> str:
         """渲染 HTML 页面"""
         template = self.load_template()
         
@@ -342,84 +327,126 @@ class PaperDeepInsightGenerator:
         # 渲染变量
         data = {
             'title': title,
-            'subtitle': analysis.get('subtitle', ''),
+            'subtitle': extracted['abstract'][:100] + '...' if len(extracted['abstract']) > 100 else extracted['abstract'],
             'authors': authors_str,
             'date': paper.get('published', ''),
             'arxiv_id': arxiv_id,
             'arxiv_link': paper.get('link', f"https://arxiv.org/abs/{arxiv_id}"),
-            'read_time': analysis.get('read_time', '15'),
-            'abstract': f"<p>{analysis.get('abstract', '')}</p>",
-            'key_points': ''.join(f'<li>{p}</li>' for p in analysis.get('key_points', [])),
-            'background': f"<p>{analysis.get('background', '')}</p>",
-            'core_problem': analysis.get('core_problem', ''),
-            'method_overview': f"<p>{analysis.get('method_overview', '')}</p>",
-            'innovations': self._render_innovations(analysis.get('innovations', [])),
-            'architecture_diagram': self._generate_architecture_diagram(analysis),
-            'modules_description': self._render_modules(analysis.get('modules', [])),
-            'algorithm_flowchart': self._generate_algorithm_flowchart(analysis),
-            'pseudocode': self._render_pseudocode(analysis.get('pseudocode', '')),
-            'formula': f"$${analysis.get('formula', '')}$$" if analysis.get('formula') else '',
-            'formula_vars': analysis.get('formula_description', ''),
-            'code_example': analysis.get('code_snippet', ''),
-            'datasets': analysis.get('datasets', ''),
-            'metrics': analysis.get('metrics', ''),
-            'baselines': analysis.get('baselines', ''),
-            'stats_cards': self._render_stats_cards(analysis.get('main_results', [])),
-            'comparison_headers': self._render_comparison_headers(analysis),
-            'comparison_rows': self._render_comparison_rows(analysis.get('comparison', [])),
-            'ablation_results': self._render_ablation(analysis.get('ablation', [])),
-            'findings': self._render_findings(analysis.get('findings', [])),
-            'limitations': ''.join(f'<li>{l}</li>' for l in analysis.get('limitations', [])),
-            'future_work': ''.join(f'<li>{f}</li>' for f in analysis.get('future_work', [])),
-            'applications': ''.join(f'<li>{a}</li>' for a in analysis.get('applications', [])),
-            'implementation_tips': ''.join(f'<li>{t}</li>' for t in analysis.get('implementation_tips', [])),
-            'ratings': self._render_ratings(analysis.get('ratings', {})),
-            'faq': self._render_faq(analysis.get('faq', [])),
-            'tags': ''.join(f'<span class="tag">{t}</span>' for t in analysis.get('tags', [])),
+            'read_time': '15',
+            'abstract': f"<p>{extracted['abstract']}</p>",
+            'key_points': self._extract_key_points(raw_content),
+            'background': self._extract_background(raw_content),
+            'core_problem': '详见论文原文',
+            'method_overview': f"<p>{extracted['method']['text']}</p>",
+            'innovations': self._render_innovations_from_content(raw_content),
+            'architecture_diagram': self._generate_architecture_from_content(raw_content),
+            'modules_description': self._render_modules(extracted['method']['modules']),
+            'algorithm_flowchart': self._generate_default_flowchart(),
+            'pseudocode': '<span class="comment">// 详见论文原文</span>',
+            'formula': '',
+            'formula_vars': '',
+            'code_example': '# 详见论文原文',
+            'datasets': ', '.join(extracted['experiments']['datasets']),
+            'metrics': ', '.join(extracted['experiments']['metrics']),
+            'baselines': '详见论文原文',
+            'stats_cards': self._render_stats_from_experiments(extracted['experiments']),
+            'comparison_headers': '<th>指标</th><th>数值</th>',
+            'comparison_rows': self._render_comparison_from_experiments(extracted['experiments']),
+            'ablation_results': '<tr><td>详见论文</td><td>-</td><td>-</td></tr>',
+            'findings': self._render_findings_from_content(raw_content),
+            'limitations': '<li>详见论文原文</li>',
+            'future_work': '<li>详见论文原文</li>',
+            'applications': '<li>相关领域应用</li>',
+            'implementation_tips': '<li>参考论文原文实现</li>',
+            'ratings': self._render_default_ratings(),
+            'faq': self._generate_faq_from_content(raw_content),
+            'tags': ''.join(f'<span class="tag">{t}</span>' for t in extracted['tags']),
         }
         
         return self._render_template(template, data)
     
-    def _render_innovations(self, innovations: list) -> str:
+    def _extract_key_points(self, content: str) -> str:
+        """提取关键要点"""
+        points = []
+        
+        # 查找可能的要点
+        sentences = content.split('.')
+        for sentence in sentences[:20]:
+            sentence = sentence.strip()
+            if len(sentence) > 50 and len(sentence) < 200:
+                if any(kw in sentence.lower() for kw in ['propose', 'present', 'introduce', 'achieve', 'improve']):
+                    points.append(sentence)
+                    if len(points) >= 4:
+                        break
+        
+        if not points:
+            return '<li>详见论文原文</li>'
+        
+        return ''.join(f'<li>{p}</li>' for p in points[:4])
+    
+    def _extract_background(self, content: str) -> str:
+        """提取背景"""
+        # 查找 Introduction 部分
+        patterns = [
+            r'(?:Introduction|Background)\s*(.*?)(?:\n\s*\n(?:Method|Approach|Related Work))',
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, content, re.DOTALL | re.IGNORECASE)
+            if match:
+                bg = match.group(1).strip()
+                return f"<p>{bg[:1000]}</p>"
+        
+        return "<p>研究背景详见论文原文。</p>"
+    
+    def _render_innovations_from_content(self, content: str) -> str:
+        """从内容中提取创新点"""
+        innovations = []
+        
+        # 查找可能的创新点描述
+        patterns = [
+            r'(?:Our|We|This paper)\s+(?:propose|present|introduce)\s+([^.]+)',
+            r'(?:novel|new|innovative)\s+([^.]+)',
+        ]
+        
+        for pattern in patterns:
+            for match in re.finditer(pattern, content, re.IGNORECASE):
+                text = match.group(1).strip()
+                if len(text) > 20 and len(text) < 100:
+                    innovations.append(text)
+        
+        if not innovations:
+            return '<tr><td>方法创新</td><td>详见论文</td><td>性能提升</td></tr>'
+        
         rows = []
-        for inn in innovations:
-            rows.append(f'''<tr>
-    <td>{inn.get('point', '')}</td>
-    <td>{inn.get('solution', '')}</td>
-    <td>{inn.get('problem', '')}</td>
-</tr>''')
+        for i, inn in enumerate(innovations[:3]):
+            rows.append(f'<tr><td>创新点{i+1}</td><td>{inn}</td><td>提升性能</td></tr>')
+        
         return '\n'.join(rows)
     
-    def _render_modules(self, modules: list) -> str:
-        if not modules:
-            return ''
-        html = ''
-        for m in modules:
-            html += f"<p><strong>{m.get('name', '')}：</strong>{m.get('description', '')}</p>"
-        return html
-    
-    def _generate_architecture_diagram(self, analysis: dict) -> str:
+    def _generate_architecture_from_content(self, content: str) -> str:
         """生成架构图"""
-        modules = analysis.get('modules', [])
-        if not modules:
-            return self._default_architecture_diagram()
-        
-        nodes = []
-        for i, m in enumerate(modules):
-            nodes.append(f'    M{i}["{m.get("name", f"模块{i+1}")}"]')
-        
-        edges = []
-        for i in range(len(modules) - 1):
-            edges.append(f'    M{i} --> M{i+1}')
-        
-        return f'''graph LR
-    Input["📥 输入"] --> M0
-{chr(10).join(nodes)}
-{chr(10).join(edges)}
-    M{len(modules)-1} --> Output["📤 输出"]
+        # 检测是否有特定架构关键词
+        if 'encoder' in content.lower() and 'decoder' in content.lower():
+            return '''graph LR
+    Input["📥 输入"] --> Encoder["🔄 编码器"]
+    Encoder --> Decoder["⚡ 解码器"]
+    Decoder --> Output["📤 输出"]
     
     style Input fill:#e3f2fd,stroke:#1565c0
     style Output fill:#e8f5e9,stroke:#2e7d32'''
+        
+        if 'transformer' in content.lower():
+            return '''graph TB
+    Input["📥 输入"] --> Embed["嵌入层"]
+    Embed --> Attn["注意力层"]
+    Attn --> FFN["前馈网络"]
+    FFN --> Output["📤 输出"]
+    
+    style Input fill:#e3f2fd,stroke:#1565c0
+    style Output fill:#e8f5e9,stroke:#2e7d32'''
+        
+        return self._default_architecture_diagram()
     
     def _default_architecture_diagram(self) -> str:
         return '''graph TB
@@ -428,45 +455,21 @@ class PaperDeepInsightGenerator:
     end
     
     subgraph Process["🔄 处理层"]
-        Encode[编码器]
-        Model[模型]
-        Decode[解码器]
+        Feature[特征提取]
+        Model[模型计算]
     end
     
     subgraph Output["📤 输出层"]
         Result[结果输出]
     end
     
-    Data --> Encode --> Model --> Decode --> Result
+    Data --> Feature --> Model --> Result
     
     style Input fill:#e3f2fd,stroke:#1565c0
     style Process fill:#fff3e0,stroke:#ef6c00
     style Output fill:#e8f5e9,stroke:#2e7d32'''
     
-    def _generate_algorithm_flowchart(self, analysis: dict) -> str:
-        """生成算法流程图"""
-        steps = analysis.get('algorithm_steps', [])
-        if not steps:
-            return self._default_algorithm_flowchart()
-        
-        nodes = ['    Start(["开始"])']
-        for i, step in enumerate(steps):
-            nodes.append(f'    S{i}["{step}"]')
-        nodes.append('    End(["结束"])')
-        
-        edges = ['    Start --> S0']
-        for i in range(len(steps) - 1):
-            edges.append(f'    S{i} --> S{i+1}')
-        edges.append(f'    S{len(steps)-1} --> End')
-        
-        return f'''flowchart TD
-{chr(10).join(nodes)}
-{chr(10).join(edges)}
-    
-    style Start fill:#e8f5e9
-    style End fill:#fce4ec'''
-    
-    def _default_algorithm_flowchart(self) -> str:
+    def _generate_default_flowchart(self) -> str:
         return '''flowchart TD
     A[输入数据] --> B[预处理]
     B --> C[特征提取]
@@ -477,120 +480,91 @@ class PaperDeepInsightGenerator:
     style A fill:#e3f2fd
     style F fill:#e8f5e9'''
     
-    def _render_pseudocode(self, pseudocode: str) -> str:
-        if not pseudocode:
-            return '<span class="comment">// 伪代码暂无</span>'
-        # 简单格式化
-        lines = pseudocode.strip().split('\n')
-        formatted = []
-        for line in lines:
-            line = line.strip()
-            if not line:
-                continue
-            # 关键字高亮
-            for kw in ['Input', 'Output', 'for', 'if', 'else', 'return', 'while', 'do', 'end']:
-                if line.startswith(kw):
-                    line = f'<span class="keyword">{kw}</span>{line[len(kw):]}'
-                    break
-            formatted.append(line)
-        return '<br>'.join(formatted)
+    def _render_modules(self, modules: list) -> str:
+        if not modules:
+            return '<p>模块详情请参见论文原文。</p>'
+        
+        html = ''
+        for m in modules:
+            html += f"<p><strong>{m.get('name', '模块')}：</strong>{m.get('description', '实现相应功能')}</p>"
+        return html
     
-    def _render_stats_cards(self, results: list) -> str:
-        if not results:
-            return '''<div class="stat-card">
-    <div class="stat-value">-</div>
-    <div class="stat-label">性能提升</div>
-</div>
-<div class="stat-card">
-    <div class="stat-value">-</div>
-    <div class="stat-label">主要指标</div>
-</div>'''
+    def _render_stats_from_experiments(self, experiments: dict) -> str:
+        improvements = experiments.get('improvements', ['性能提升'])
         
         cards = []
-        for r in results[:4]:
+        for i, imp in enumerate(improvements[:4]):
             cards.append(f'''<div class="stat-card">
-    <div class="stat-value">{r.get('improvement', r.get('value', '-'))}</div>
-    <div class="stat-label">{r.get('metric', '指标')}</div>
+    <div class="stat-value">{imp}</div>
+    <div class="stat-label">性能提升</div>
 </div>''')
+        
+        while len(cards) < 4:
+            cards.append('''<div class="stat-card">
+    <div class="stat-value">-</div>
+    <div class="stat-label">详见论文</div>
+</div>''')
+        
         return '\n'.join(cards)
     
-    def _render_comparison_headers(self, analysis: dict) -> str:
-        metrics = analysis.get('metrics', 'Metric').split(',')
-        return ''.join(f'<th>{m.strip()}</th>' for m in metrics[:3])
-    
-    def _render_comparison_rows(self, comparison: list) -> str:
-        if not comparison:
-            return '<tr><td>-</td><td>-</td><td>-</td></tr>'
-        
+    def _render_comparison_from_experiments(self, experiments: dict) -> str:
+        metrics = experiments.get('metrics', ['Accuracy'])
         rows = []
-        for c in comparison:
-            method = c.get('method', '-')
-            values = [v for k, v in c.items() if k != 'method']
-            cells = f'<td>{method}</td>' + ''.join(f'<td>{v}</td>' for v in values[:3])
-            rows.append(f'<tr>{cells}</tr>')
-        return '\n'.join(rows)
+        for m in metrics[:3]:
+            rows.append(f'<tr><td>本文方法</td><td>{m}</td></tr>')
+        return '\n'.join(rows) or '<tr><td>详见论文</td><td>-</td></tr>'
     
-    def _render_ablation(self, ablation: list) -> str:
-        if not ablation:
-            return '<tr><td>完整模型</td><td>-</td><td>-</td></tr>'
+    def _render_findings_from_content(self, content: str) -> str:
+        # 查找结论中的发现
+        findings = []
         
-        rows = []
-        for a in ablation:
-            rows.append(f'''<tr>
-    <td>{a.get('config', '-')}</td>
-    <td>{a.get('result', '-')}</td>
-    <td>{a.get('change', '-')}</td>
-</tr>''')
-        return '\n'.join(rows)
-    
-    def _render_findings(self, findings: list) -> str:
+        conclusion_match = re.search(r'(?:Conclusion|结论)\s*(.*?)(?:\n\s*\n|$)', content, re.DOTALL | re.IGNORECASE)
+        if conclusion_match:
+            conclusion = conclusion_match.group(1)
+            sentences = conclusion.split('.')
+            for s in sentences[:3]:
+                s = s.strip()
+                if len(s) > 30:
+                    findings.append(s)
+        
         if not findings:
-            return '<div class="step"><div class="step-title">方法有效</div><div class="step-desc">实验验证了方法的有效性。</div></div>'
+            return '<div class="step"><div class="step-title">实验验证</div><div class="step-desc">方法在实验中验证有效。</div></div>'
         
         html = []
-        for i, f in enumerate(findings, 1):
+        for i, f in enumerate(findings[:3], 1):
             html.append(f'''<div class="step">
     <div class="step-title">发现 {i}</div>
-    <div class="step-desc">{f}</div>
+    <div class="step-desc">{f[:100]}</div>
 </div>''')
         return '\n'.join(html)
     
-    def _render_ratings(self, ratings: dict) -> str:
-        def stars(score):
-            full = int(score)
-            return '★' * full + '☆' * (5 - full)
-        
-        return f'''<div class="rating-item">
+    def _render_default_ratings(self) -> str:
+        return '''<div class="rating-item">
     <span class="rating-label">创新性</span>
-    <span class="rating-stars">{stars(ratings.get('innovation', 4))}</span>
+    <span class="rating-stars">★★★★☆</span>
 </div>
 <div class="rating-item">
     <span class="rating-label">工业价值</span>
-    <span class="rating-stars">{stars(ratings.get('industry', 4))}</span>
+    <span class="rating-stars">★★★★☆</span>
 </div>
 <div class="rating-item">
     <span class="rating-label">实验充分性</span>
-    <span class="rating-stars">{stars(ratings.get('experiment', 4))}</span>
+    <span class="rating-stars">★★★★☆</span>
 </div>
 <div class="rating-item">
     <span class="rating-label">可复现性</span>
-    <span class="rating-stars">{stars(ratings.get('reproducibility', 4))}</span>
+    <span class="rating-stars">★★★☆☆</span>
 </div>'''
     
-    def _render_faq(self, faq: list) -> str:
-        if not faq:
-            return '''<div class="faq-item">
-    <div class="faq-q">该方法的主要优势是什么？</div>
-    <div class="faq-a">请参考论文原文获取详细信息。</div>
+    def _generate_faq_from_content(self, content: str) -> str:
+        return '''<div class="faq-item">
+    <div class="faq-q">该方法的主要贡献是什么？</div>
+    <div class="faq-a">请参考论文原文的摘要和结论部分。</div>
+</div>
+<div class="faq-item">
+    <div class="faq-q">如何复现该方法？</div>
+    <div class="faq-a">请参考论文的方法部分和实验设置，或查看作者提供的代码仓库。</div>
 </div>'''
-        
-        html = []
-        for f in faq:
-            html.append(f'''<div class="faq-item">
-    <div class="faq-q">{f.get('q', '问题')}</div>
-    <div class="faq-a">{f.get('a', '回答')}</div>
-</div>''')
-        return '\n'.join(html)
     
     def load_template(self) -> str:
         if self.template_path.exists():
@@ -619,7 +593,6 @@ def regenerate_all_insights(base_dir: str = None, limit: int = None):
     """重新生成所有论文的深度解读"""
     generator = PaperDeepInsightGenerator(base_dir)
     
-    # 加载 arxiv 缓存
     cache_path = generator.base_dir / "cache" / "arxiv_cache.json"
     if not cache_path.exists():
         print("❌ 未找到 arxiv 缓存文件")
@@ -654,7 +627,6 @@ if __name__ == "__main__":
             limit = int(sys.argv[2]) if len(sys.argv) > 2 else None
             regenerate_all_insights(limit=limit)
         elif sys.argv[1] == '--test':
-            # 测试单篇
             generator = PaperDeepInsightGenerator()
             test_paper = {
                 'arxiv_id': '2604.21593',
@@ -667,5 +639,5 @@ if __name__ == "__main__":
             print(f"✅ 测试完成: {path}")
     else:
         print("用法:")
-        print("  python generate_paper_deep_insight.py --test          # 测试单篇")
-        print("  python generate_paper_deep_insight.py --regenerate-all [limit]  # 重新生成所有")
+        print("  python generate_paper_deep_insight.py --test")
+        print("  python generate_paper_deep_insight.py --regenerate-all [limit]")
