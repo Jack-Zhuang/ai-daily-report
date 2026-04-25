@@ -24,6 +24,30 @@ class PaperDeepInsightGenerator:
         self.pdf_cache_dir = self.base_dir / "cache" / "pdfs"
         self.pdf_cache_dir.mkdir(parents=True, exist_ok=True)
         self.template_path = self.base_dir / "templates" / "paper_insight_template.html"
+        
+        # MiniMax API 配置
+        self.api_url = "https://api.minimax.chat/v1/text/chatcompletion_v2"
+        self.api_key = self._get_api_key()
+        self.model = "MiniMax-M2.7-highspeed"
+    
+    def _get_api_key(self) -> str:
+        """获取 API Key"""
+        import os
+        # 从环境变量获取
+        api_key = os.environ.get("MINIMAX_API_KEY", "")
+        if api_key:
+            return api_key
+        
+        # 从配置文件获取
+        config_file = self.base_dir / "config" / "api_keys.json"
+        if config_file.exists():
+            config = json.loads(config_file.read_text())
+            api_key = config.get("minimax_api_key", "")
+            if api_key:
+                return api_key
+        
+        # 默认 Token Plan API Key
+        return "sk-cp-51HhITrES8hvSzJ4os0cENQBsJErOPWPm67toEN0AL4_2LsknQ__U3NOFEB1H86CB_5xrjN-VkpFfqa4RR7Frxpuy6GEG64cFitUQxRz6XOcYCc8s2EipTo"
     
     def download_pdf(self, arxiv_id: str) -> Optional[Path]:
         """下载 arXiv PDF"""
@@ -90,21 +114,24 @@ class PaperDeepInsightGenerator:
             return ""
     
     def extract_content(self, paper_content: str, paper_info: dict) -> dict:
-        """从 PDF 内容中提取关键信息"""
+        """从 PDF 内容中提取关键信息（优先使用 LLM）"""
         
-        # 提取摘要
+        # 尝试使用 LLM 分析
+        if self.api_key and len(paper_content) > 500:
+            print("  🤖 使用 LLM 深度分析...")
+            try:
+                llm_result = self._analyze_with_llm(paper_content, paper_info)
+                if llm_result:
+                    return llm_result
+            except Exception as e:
+                print(f"  ⚠️ LLM 分析失败: {e}，使用规则提取")
+        
+        # 回退到规则提取
+        print("  📋 使用规则提取...")
         abstract = self._extract_abstract(paper_content)
-        
-        # 提取方法
         method = self._extract_method(paper_content)
-        
-        # 提取实验结果
         experiments = self._extract_experiments(paper_content)
-        
-        # 提取结论
         conclusion = self._extract_conclusion(paper_content)
-        
-        # 提取关键术语作为标签
         tags = self._extract_tags(paper_content, paper_info)
         
         return {
@@ -114,6 +141,84 @@ class PaperDeepInsightGenerator:
             'conclusion': conclusion,
             'tags': tags,
         }
+    
+    def _analyze_with_llm(self, paper_content: str, paper_info: dict) -> dict:
+        """使用 MiniMax API 深度分析论文"""
+        
+        # 截取内容（避免超出 token 限制）
+        max_chars = 30000
+        if len(paper_content) > max_chars:
+            paper_content = paper_content[:max_chars]
+        
+        prompt = f"""你是一位资深的学术论文解读专家。请对以下论文进行深度解读，提取关键信息。
+
+论文标题: {paper_info.get('title', '未知')}
+作者: {paper_info.get('authors', '未知')}
+
+论文内容:
+{paper_content}
+
+请严格按照以下 JSON 格式输出解读结果:
+
+{{
+    "abstract": "论文摘要的中文解读（200-400字）",
+    "key_points": ["关键要点1", "关键要点2", "关键要点3", "关键要点4"],
+    "background": "研究背景和动机（200-300字）",
+    "method": {{
+        "text": "方法概述（200-400字）",
+        "modules": [
+            {{"name": "模块名称", "description": "模块功能描述"}},
+            {{"name": "模块名称", "description": "模块功能描述"}}
+        ]
+    }},
+    "innovations": [
+        {{"point": "创新点名称", "solution": "技术方案", "problem": "解决的问题"}},
+        {{"point": "创新点名称", "solution": "技术方案", "problem": "解决的问题"}}
+    ],
+    "experiments": {{
+        "datasets": ["数据集1", "数据集2"],
+        "metrics": ["指标1", "指标2"],
+        "improvements": ["提升1", "提升2"]
+    }},
+    "conclusion": "主要结论（100-200字）",
+    "tags": ["标签1", "标签2", "标签3", "标签4"]
+}}
+
+注意：只输出 JSON，不要其他内容。"""
+
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json"
+        }
+        
+        data = {
+            "model": self.model,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": 0.3,
+            "max_tokens": 4000
+        }
+        
+        response = requests.post(self.api_url, headers=headers, json=data, timeout=120)
+        
+        if response.status_code == 200:
+            result = response.json()
+            content = result.get('choices', [{}])[0].get('message', {}).get('content', '')
+            
+            # 提取 JSON
+            try:
+                return json.loads(content)
+            except:
+                # 尝试提取 JSON 块
+                json_match = re.search(r'\{[\s\S]*\}', content)
+                if json_match:
+                    try:
+                        return json.loads(json_match.group())
+                    except:
+                        pass
+            
+            print(f"  ⚠️ 无法解析 LLM 返回内容")
+        
+        return None
     
     def _extract_abstract(self, content: str) -> str:
         """提取摘要"""
@@ -324,34 +429,44 @@ class PaperDeepInsightGenerator:
         else:
             authors_str = str(authors)
         
+        # 处理 LLM 返回的数据
+        abstract = extracted.get('abstract', '')
+        key_points = extracted.get('key_points', [])
+        background = extracted.get('background', '')
+        method = extracted.get('method', {})
+        innovations = extracted.get('innovations', [])
+        experiments = extracted.get('experiments', {})
+        conclusion = extracted.get('conclusion', '')
+        tags = extracted.get('tags', [])
+        
         # 渲染变量
         data = {
             'title': title,
-            'subtitle': extracted['abstract'][:100] + '...' if len(extracted['abstract']) > 100 else extracted['abstract'],
+            'subtitle': abstract[:100] + '...' if len(abstract) > 100 else abstract,
             'authors': authors_str,
             'date': paper.get('published', ''),
             'arxiv_id': arxiv_id,
             'arxiv_link': paper.get('link', f"https://arxiv.org/abs/{arxiv_id}"),
             'read_time': '15',
-            'abstract': f"<p>{extracted['abstract']}</p>",
-            'key_points': self._extract_key_points(raw_content),
-            'background': self._extract_background(raw_content),
+            'abstract': f"<p>{abstract}</p>",
+            'key_points': ''.join(f'<li>{p}</li>' for p in key_points[:4]) if key_points else self._extract_key_points(raw_content),
+            'background': f"<p>{background}</p>" if background else self._extract_background(raw_content),
             'core_problem': '详见论文原文',
-            'method_overview': f"<p>{extracted['method']['text']}</p>",
-            'innovations': self._render_innovations_from_content(raw_content),
+            'method_overview': f"<p>{method.get('text', '')}</p>" if isinstance(method, dict) else f"<p>{method}</p>",
+            'innovations': self._render_innovations(innovations) if innovations else self._render_innovations_from_content(raw_content),
             'architecture_diagram': self._generate_architecture_from_content(raw_content),
-            'modules_description': self._render_modules(extracted['method']['modules']),
+            'modules_description': self._render_modules(method.get('modules', [])) if isinstance(method, dict) else '',
             'algorithm_flowchart': self._generate_default_flowchart(),
             'pseudocode': '<span class="comment">// 详见论文原文</span>',
             'formula': '',
             'formula_vars': '',
             'code_example': '# 详见论文原文',
-            'datasets': ', '.join(extracted['experiments']['datasets']),
-            'metrics': ', '.join(extracted['experiments']['metrics']),
+            'datasets': ', '.join(experiments.get('datasets', [])) if isinstance(experiments, dict) else '',
+            'metrics': ', '.join(experiments.get('metrics', [])) if isinstance(experiments, dict) else '',
             'baselines': '详见论文原文',
-            'stats_cards': self._render_stats_from_experiments(extracted['experiments']),
+            'stats_cards': self._render_stats_from_experiments(experiments) if isinstance(experiments, dict) else self._render_stats_from_experiments({'improvements': []}),
             'comparison_headers': '<th>指标</th><th>数值</th>',
-            'comparison_rows': self._render_comparison_from_experiments(extracted['experiments']),
+            'comparison_rows': self._render_comparison_from_experiments(experiments) if isinstance(experiments, dict) else '<tr><td>详见论文</td><td>-</td></tr>',
             'ablation_results': '<tr><td>详见论文</td><td>-</td><td>-</td></tr>',
             'findings': self._render_findings_from_content(raw_content),
             'limitations': '<li>详见论文原文</li>',
@@ -360,10 +475,27 @@ class PaperDeepInsightGenerator:
             'implementation_tips': '<li>参考论文原文实现</li>',
             'ratings': self._render_default_ratings(),
             'faq': self._generate_faq_from_content(raw_content),
-            'tags': ''.join(f'<span class="tag">{t}</span>' for t in extracted['tags']),
+            'tags': ''.join(f'<span class="tag">{t}</span>' for t in tags[:6]) if tags else '',
         }
         
         return self._render_template(template, data)
+    
+    def _render_innovations(self, innovations: list) -> str:
+        """渲染创新点表格"""
+        if not innovations:
+            return '<tr><td>方法创新</td><td>详见论文</td><td>性能提升</td></tr>'
+        
+        rows = []
+        for inn in innovations[:3]:
+            if isinstance(inn, dict):
+                rows.append(f'''<tr>
+    <td>{inn.get('point', '创新点')}</td>
+    <td>{inn.get('solution', '技术方案')}</td>
+    <td>{inn.get('problem', '解决问题')}</td>
+</tr>''')
+            else:
+                rows.append(f'<tr><td>{inn}</td><td>-</td><td>-</td></tr>')
+        return '\n'.join(rows)
     
     def _extract_key_points(self, content: str) -> str:
         """提取关键要点"""

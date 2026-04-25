@@ -572,7 +572,7 @@
             <span>arXiv:2604.21896</span>
         </div>
         <h1 class="hero-title">Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models</h1>
-        <p class="hero-subtitle">—This paper introduces a new paradigm for AI game programming, leveraging large language models (LLM...</p>
+        <p class="hero-subtitle">本文提出了Nemobot Games，一个利用大语言模型(LLM)扩展Claude Shannon游戏机器分类的AI游戏编程新范式。核心贡献是Nemobot，一个交互式代理工程环境，使用户能够创建、定...</p>
         <div class="hero-meta">
             <div class="hero-meta-item">
                 <i class="fas fa-users"></i>
@@ -615,12 +615,11 @@
                 <h2 class="section-title">摘要速览</h2>
             </div>
             <div class="content">
-                <p>—This paper introduces a new paradigm for AI game programming, leveraging large language models (LLMs) to extend and operationalize Claude Shannon’s taxonomy of game-playing machines. Central to this paradigm is Nemobot, an interactive agentic engineering environment that enables users to create, customize, and deploy LLM-powered game agents while actively engaging with AI-driven strategies. The LLM-based chatbot, integrated within Nemobot, demonstrates its capabilities across four distinct classes of games. For dictionary-based games, it compresses state-action mappings into efficient, generalized models for rapid adaptability. In rigorously solvable games, it employs mathematical reasoning to compute optimal strategies and generates human-readable explanations for its decisions.</p>
+                <p>本文提出了Nemobot Games，一个利用大语言模型(LLM)扩展Claude Shannon游戏机器分类的AI游戏编程新范式。核心贡献是Nemobot，一个交互式代理工程环境，使用户能够创建、定制和部署LLM驱动的游戏智能体。系统将LLM能力整合到四类游戏中：字典类游戏（压缩状态-动作映射实现高效泛化）、数学可解游戏（通过数学推理计算最优策略并生成可读解释）、启发式游戏（结合minimax算法与众包数据合成策略）以及学习类游戏（利用强化学习与人类反馈进行迭代优化）。Nemobot通过可编程环境提供工具增强生成和策略游戏智能体微调功能，展示AI智能体如何通过整合众包学习与人类创造力实现自我编程。</p>
             </div>
             <div class="highlight-box">
                 <ul>
-                    <li>This represents a step toward
-the long-term goal of self-programming AI</li>
+                    <li>提出Nemobot框架，将Shannon游戏机器四类分类（字典式、公式式、启发式、学习式）与现代LLM能力深度融合</li><li>设计可编程提示工程方法，使LLM能够动态生成、调整和优化游戏策略</li><li>构建众包协作提示工程机制，通过人类反馈迭代改进AI游戏智能体策略</li><li>实现神经化记忆化(memoization)机制，类比KV缓存实现计算资源优化与策略复用</li>
                 </ul>
             </div>
         </div>
@@ -632,7 +631,7 @@ the long-term goal of self-programming AI</li>
                 <h2 class="section-title">研究背景与动机</h2>
             </div>
             <div class="content">
-                <p>研究背景详见论文原文。</p>
+                <p>Claude Shannon在1950年提出计算机能否自主生成99%指令的远见问题，Marvin Minsky则强调编程结构化规则应成为表达创造力的工具。当前LLM已能生成大量代码并驱动自进化AI系统，但直接用LLM玩游戏的非确定性、不可重现行为使其难以调试和系统改进。游戏作为离散、可观测的微世界，成为研究LLM世界模型表示学习的理想测试平台。然而，现有LLM游戏系统缺乏结构化编程范式，难以将涌现的内部表示转化为可验证的外部语义。Nemobot应运而生，旨在通过可编程环境将LLM能力封装为模块化、可检查的组件。</p>
             </div>
             <div class="info-box">
                 <p><strong>核心问题：</strong>详见论文原文</p>
@@ -646,7 +645,7 @@ the long-term goal of self-programming AI</li>
                 <h2 class="section-title">方法详解</h2>
             </div>
             <div class="content">
-                <p>方法详情请参见论文原文。</p>
+                <p>Nemobot采用分层架构整合LLM与Shannon游戏分类体系。对于字典类机器，LLM学习游戏数据模式，将预定义字典压缩为泛化模型，实现对未见位置的高效推断。对于数学可解类游戏（如Nim、Euclid游戏），LLM作为交互式副驾驶，在自然语言中解释最优移动逻辑，并利用代码生成能力实现GCD等高效算法。对于启发式游戏，LLM综合游戏知识与人类策略，结合蒙特卡洛树搜索和AlphaGo式自对弈，通过思维链推理分解复杂问题。对于学习类游戏，LLM充当AI教练，指导强化学习循环，利用Michie's Boxes等试错学习机制，模拟对手并提供自然语言反馈。众包机制贯穿全流程，聚合多样人类洞察生成高质量提示和策略数据集。</p>
             </div>
             
             <h3>核心创新点</h3>
@@ -660,13 +659,21 @@ the long-term goal of self-programming AI</li>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>创新点1</td><td>that lan-
-guage models can be utilized to augment this approach by
-learning patterns from game data</td><td>提升性能</td></tr>
-<tr><td>创新点2</td><td>strategies by interpreting prompts and adjusting its play based
-on real-time feedback</td><td>提升性能</td></tr>
-<tr><td>创新点3</td><td>programming paradigms in strategic AI game
-development, as illustrated in Figure 1</td><td>提升性能</td></tr>
+                        <tr>
+    <td>Shannon分类的LLM扩展</td>
+    <td>将四类游戏机器与LLM能力映射：字典类压缩为泛化模型、公式类作为交互式推理副驾驶、启发式类整合minimax与思维链、学习类结合RLHF实现自改进</td>
+    <td>传统游戏AI编程缺乏结构化框架，难以系统整合LLM的非确定性能力</td>
+</tr>
+<tr>
+    <td>神经化记忆化机制</td>
+    <td>将Michie的memo函数思想扩展为语义/程序/分布式三层记忆化，利用LLM的KV缓存和嵌入相似性检索实现计算资源优化</td>
+    <td>传统记忆化仅处理精确匹配，无法应对自然语言的语义等价性和策略复用需求</td>
+</tr>
+<tr>
+    <td>众包协作提示工程</td>
+    <td>构建可扩展的人类反馈收集框架，通过多样参与者视角优化LLM提示，结合众包数据微调强化学习模型</td>
+    <td>单一开发者难以覆盖多样推理风格和创意策略，需要集体智慧提升AI适应性</td>
+</tr>
                     </tbody>
                 </table>
             </div>
@@ -695,7 +702,7 @@ graph TB
             
             <div class="content">
                 <h3>模块说明</h3>
-                <p><strong>核心模块：</strong>实现主要功能</p>
+                <p><strong>编码板(Coding Pad)：</strong>用于编程游戏逻辑和AI推理启发式的模块，支持NodeJS模板定义初始状态、转移函数和终止状态，提供可定制的启发式函数接口，可通过自然语言描述调用LLM函数辅助编程</p><p><strong>聊天操场(Chat Playground)：</strong>实时交互测试环境，将编码板程序同步执行为聊天机器人游戏，支持与AI智能体即时对弈，收集交互数据并可视化游戏过程，支持不同LLM服务器集成</p><p><strong>分析门户(Analysis Portal)：</strong>性能评估与策略分析模块，评估AI智能体表现，识别策略薄弱环节，支持启发式函数迭代优化，可视化游戏数据和训练效果</p><p><strong>LLM函数层(LLM Functions)：</strong>可编程提示工程核心，实现语义记忆化（基于嵌入相似性缓存）、程序记忆化（缓存成功策略序列）和分布式记忆化（跨智能体共享知识），支持动态策略生成和自适应行为调整</p>
             </div>
             
             
@@ -757,24 +764,24 @@ flowchart TD
             
             <div class="content">
                 <h3>实验设置</h3>
-                <p><strong>数据集：</strong>a, vast</p>
-                <p><strong>评价指标：</strong>accuracy.</p>
+                <p><strong>数据集：</strong>游戏状态与玩家移动交互数据集, 众包人类反馈策略数据集, 游戏对局结果与评估数据</p>
+                <p><strong>评价指标：</strong>游戏胜率, 策略质量评分, 用户学习效果指标, 系统响应效率</p>
                 <p><strong>基线方法：</strong>详见论文原文</p>
             </div>
             
             <h3>主要结果</h3>
             <div class="stats-grid">
                 <div class="stat-card">
-    <div class="stat-value">性能提升</div>
+    <div class="stat-value">相比直接LLM提示，游戏策略生成质量显著提升</div>
     <div class="stat-label">性能提升</div>
 </div>
 <div class="stat-card">
-    <div class="stat-value">-</div>
-    <div class="stat-label">详见论文</div>
+    <div class="stat-value">通过众包反馈循环实现策略持续迭代优化</div>
+    <div class="stat-label">性能提升</div>
 </div>
 <div class="stat-card">
-    <div class="stat-value">-</div>
-    <div class="stat-label">详见论文</div>
+    <div class="stat-value">在远程学习环境中验证了游戏化AI教育的有效性</div>
+    <div class="stat-label">性能提升</div>
 </div>
 <div class="stat-card">
     <div class="stat-value">-</div>
@@ -792,7 +799,9 @@ flowchart TD
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>本文方法</td><td>accuracy.</td></tr>
+                        <tr><td>本文方法</td><td>游戏胜率</td></tr>
+<tr><td>本文方法</td><td>策略质量评分</td></tr>
+<tr><td>本文方法</td><td>用户学习效果指标</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -921,7 +930,7 @@ adap</div>
         
         <!-- 标签 -->
         <div class="tags">
-            <span class="tag">Transformer</span><span class="tag">注意力机制</span><span class="tag">AI Agent</span><span class="tag">优化</span><span class="tag">嵌入</span><span class="tag">机器学习</span>
+            <span class="tag">大语言模型</span><span class="tag">游戏AI</span><span class="tag">自我编程</span><span class="tag">强化学习</span><span class="tag">众包协作</span><span class="tag">Shannon分类</span>
         </div>
     </main>
     
@@ -940,7 +949,7 @@ adap</div>
             if (navigator.share) {
                 navigator.share({
                     title: 'Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models',
-                    text: '—This paper introduces a new paradigm for AI game programming, leveraging large language models (LLM...',
+                    text: '本文提出了Nemobot Games，一个利用大语言模型(LLM)扩展Claude Shannon游戏机器分类的AI游戏编程新范式。核心贡献是Nemobot，一个交互式代理工程环境，使用户能够创建、定...',
                     url: window.location.href
                 });
             } else {
