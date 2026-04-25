@@ -75,6 +75,52 @@ class PaperDeepInsightGenerator:
             print(f"  ❌ 下载出错: {e}")
             return None
     
+    def extract_figures(self, pdf_path: Path, arxiv_id: str) -> List[str]:
+        """从 PDF 中提取图表"""
+        try:
+            import fitz  # PyMuPDF
+        except ImportError:
+            print("  ⚠️ PyMuPDF 未安装，跳过图表提取")
+            return []
+        
+        figures_dir = self.pdf_cache_dir / "figures" / arxiv_id.replace('.', '_')
+        figures_dir.mkdir(parents=True, exist_ok=True)
+        
+        figure_paths = []
+        
+        try:
+            doc = fitz.open(str(pdf_path))
+            
+            for page_num, page in enumerate(doc):
+                images = page.get_images(full=True)
+                
+                for img in images:
+                    xref = img[0]
+                    base_image = doc.extract_image(xref)
+                    image_bytes = base_image["image"]
+                    image_ext = base_image["ext"]
+                    
+                    # 只保存较大的图片（过滤小图标）
+                    if len(image_bytes) > 10000:
+                        fig_num = len(figure_paths) + 1
+                        img_filename = f"fig_{fig_num}.{image_ext}"
+                        img_path = figures_dir / img_filename
+                        
+                        with open(img_path, "wb") as f:
+                            f.write(image_bytes)
+                        
+                        figure_paths.append(str(img_path))
+            
+            doc.close()
+            
+            if figure_paths:
+                print(f"  🖼️ 提取了 {len(figure_paths)} 张图表")
+        
+        except Exception as e:
+            print(f"  ⚠️ 图表提取失败: {e}")
+        
+        return figure_paths
+    
     def parse_pdf(self, pdf_path: Path) -> str:
         """解析 PDF"""
         try:
@@ -386,7 +432,12 @@ class PaperDeepInsightGenerator:
         # 1. 下载 PDF
         pdf_path = self.download_pdf(arxiv_id)
         
-        # 2. 解析 PDF
+        # 2. 提取图表
+        figure_paths = []
+        if pdf_path and pdf_path.exists():
+            figure_paths = self.extract_figures(pdf_path, arxiv_id)
+        
+        # 3. 解析 PDF
         if pdf_path and pdf_path.exists():
             print(f"  📖 解析 PDF...")
             paper_content = self.parse_pdf(pdf_path)
@@ -394,15 +445,19 @@ class PaperDeepInsightGenerator:
             print(f"  ⚠️ 无法获取 PDF，使用摘要")
             paper_content = paper.get('summary', '')
         
-        # 3. 提取内容
+        # 4. 提取内容
         print(f"  🔍 提取关键信息...")
         extracted = self.extract_content(paper_content, paper)
         
-        # 4. 生成 HTML
+        # 5. 生成 HTML
         print(f"  🎨 生成解读页面...")
-        html = self._render_html(paper, extracted, paper_content)
+        html = self._render_html(paper, extracted, paper_content, figure_paths)
         
-        # 5. 保存
+        # 6. 复制图表到 docs 目录
+        if figure_paths:
+            self._copy_figures_to_docs(arxiv_id)
+        
+        # 7. 保存
         safe_id = re.sub(r'[^\w\-]', '_', arxiv_id)
         today = datetime.now().strftime('%Y-%m-%d')
         filename = f"{today}_{safe_id}.html"
@@ -414,7 +469,7 @@ class PaperDeepInsightGenerator:
         print(f"  ✅ 完成: {filepath}")
         return str(filepath)
     
-    def _render_html(self, paper: dict, extracted: dict, raw_content: str) -> str:
+    def _render_html(self, paper: dict, extracted: dict, raw_content: str, figure_paths: List[str] = None) -> str:
         """渲染 HTML 页面"""
         template = self.load_template()
         
@@ -438,6 +493,9 @@ class PaperDeepInsightGenerator:
         experiments = extracted.get('experiments', {})
         conclusion = extracted.get('conclusion', '')
         tags = extracted.get('tags', [])
+        
+        # 处理图表
+        figures_html = self._render_figures(figure_paths, arxiv_id)
         
         # 渲染变量
         data = {
@@ -476,9 +534,91 @@ class PaperDeepInsightGenerator:
             'ratings': self._render_default_ratings(),
             'faq': self._generate_faq_from_content(raw_content),
             'tags': ''.join(f'<span class="tag">{t}</span>' for t in tags[:6]) if tags else '',
+            'figures': figures_html,
         }
         
         return self._render_template(template, data)
+    
+    def _render_figures(self, figure_paths: List[str], arxiv_id: str) -> str:
+        """渲染图表展示区域"""
+        if not figure_paths:
+            return ''
+        
+        # 将本地图片路径转换为相对路径（假设图表会被复制到 docs/insights/figures/）
+        html_parts = ['<div class="figures-section">', '<h3>📊 论文图表</h3>', '<div class="figures-grid">']
+        
+        for i, path in enumerate(figure_paths[:6], 1):  # 最多展示 6 张
+            # 使用相对路径
+            fig_name = Path(path).name
+            # 图表路径相对于 insights 目录
+            relative_path = f"figures/{arxiv_id.replace('.', '_')}/{fig_name}"
+            
+            html_parts.append(f'''
+            <div class="figure-item">
+                <img src="{relative_path}" alt="Figure {i}" loading="lazy">
+                <p class="figure-caption">图 {i}</p>
+            </div>''')
+        
+        html_parts.extend(['</div>', '</div>'])
+        
+        # 添加样式
+        html_parts.append('''
+<style>
+.figures-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 12px;
+}
+.figures-section h3 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+.figures-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+.figure-item {
+    background: white;
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+.figure-item:hover {
+    transform: translateY(-2px);
+}
+.figure-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+.figure-caption {
+    text-align: center;
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+</style>''')
+        
+        return '\n'.join(html_parts)
+    
+    def _copy_figures_to_docs(self, arxiv_id: str) -> None:
+        """将图表复制到 docs 目录"""
+        import shutil
+        
+        source_dir = self.pdf_cache_dir / "figures" / arxiv_id.replace('.', '_')
+        target_dir = self.insights_dir / "figures" / arxiv_id.replace('.', '_')
+        
+        if source_dir.exists():
+            target_dir.mkdir(parents=True, exist_ok=True)
+            
+            for fig_file in source_dir.glob("*"):
+                if fig_file.is_file():
+                    shutil.copy2(fig_file, target_dir / fig_file.name)
+            
+            print(f"  📁 复制图表到: {target_dir}")
     
     def _render_innovations(self, innovations: list) -> str:
         """渲染创新点表格"""
