@@ -1178,7 +1178,7 @@ class ReportGenerator:
             let footerHtml = '';
             if (pickType === 'paper') {{
                 // 论文：根据 has_insight 决定跳转目标
-                const paperId = (item.id || item.arxiv_id || '').replace('/', '_');
+                const paperId = (item.id || item.arxiv_id || '').replace(/[^\\w\\-]/g, '_');
                 const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
                 
                 if (item.has_insight) {{
@@ -1270,7 +1270,7 @@ class ReportGenerator:
                             if (aminerMatch) paperId = aminerMatch[1];
                         }}
                         if (!paperId) paperId = 'unknown_' + i;
-                        paperId = paperId.replace('/', '_');
+                        paperId = paperId.replace(/[^\w\-]/g, '_');
                         
                         // 根据 has_insight 决定跳转目标
                         const hasInsight = paper.has_insight || false;
@@ -1540,7 +1540,7 @@ class ReportGenerator:
                 const cnTitle = item.cn_title || (item.title ? item.title.slice(0, 40) + '...' : '论文');
                 const cnSummary = item.cn_summary || '本文在推荐系统相关领域做出了创新研究，提出了新的方法和见解。';
                 // 论文解读页面链接
-                const paperId = (item.id || item.arxiv_id || '').replace('/', '_');
+                const paperId = (item.id || item.arxiv_id || '').replace(/[^\w\-]/g, '_');
                 const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
                 
                 // 根据 has_insight 决定跳转目标和按钮文案
@@ -1636,7 +1636,7 @@ class ReportGenerator:
             }}
             
             // 论文解读页面链接
-            const paperId = (item.id || '').replace('/', '_');
+            const paperId = (item.id || '').replace(/[^\w\-]/g, '_');
             const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
             
             // 根据 has_insight 决定按钮显示
