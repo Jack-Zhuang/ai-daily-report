@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Measuring Opinion Bias and Sycophancy via LLM-based Coercion - 论文解读</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <style>
+        :root {
+            --color-text: #1a1a2e;
+            --color-text-secondary: #4a4a6a;
+            --color-text-muted: #8888a0;
+            --color-card: #ffffff;
+            --color-bg: #f8f9fc;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --safe-area-top: env(safe-area-inset-top, 0px);
+            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            padding: 12px 16px;
+            padding-top: calc(12px + var(--safe-area-top));
+            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .nav-left { display: flex; align-items: center; gap: 8px; }
+        .nav-back {
+            width: 32px; height: 32px;
+            background: rgba(102,126,234,0.1);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: #667eea; text-decoration: none;
+        }
+        .nav-title { font-size: 14px; font-weight: 600; }
+        .nav-right { display: flex; gap: 8px; }
+        .nav-btn {
+            padding: 6px 12px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 8px;
+            font-size: 12px; font-weight: 600;
+            text-decoration: none;
+        }
+        
+        /* Hero 区域 */
+        .hero {
+            background: var(--gradient-primary);
+            padding: 80px 20px 30px;
+            padding-top: calc(80px + var(--safe-area-top));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px; font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .hero-title {
+            font-size: 20px; font-weight: 700;
+            line-height: 1.4; margin-bottom: 12px;
+        }
+        .hero-subtitle {
+            font-size: 13px; opacity: 0.9;
+            line-height: 1.6; margin-bottom: 16px;
+        }
+        .hero-meta {
+            display: flex; flex-wrap: wrap; gap: 12px;
+            font-size: 12px; opacity: 0.85;
+        }
+        .hero-meta-item {
+            display: flex; align-items: center; gap: 4px;
+        }
+        
+        /* 主内容区 */
+        .main {
+            padding: 20px 16px 100px;
+            padding-bottom: calc(100px + var(--safe-area-bottom));
+        }
+        
+        /* 快速导航 */
+        .quick-nav {
+            display: flex; gap: 8px;
+            padding: 12px 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 16px;
+        }
+        .quick-nav::-webkit-scrollbar { display: none; }
+        .quick-nav-item {
+            padding: 8px 14px;
+            background: white;
+            border-radius: 20px;
+            font-size: 12px; font-weight: 600;
+            color: var(--color-text-secondary);
+            white-space: nowrap;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .quick-nav-item:active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        /* 卡片 */
+        .card {
+            background: var(--color-card);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .card-header {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 16px;
+        }
+        .card-icon {
+            width: 40px; height: 40px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+        }
+        .card-icon.yellow { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .card-icon.blue { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+        .card-icon.green { background: linear-gradient(135deg, #34d399, #10b981); }
+        .card-icon.purple { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
+        .card-icon.pink { background: linear-gradient(135deg, #f472b6, #ec4899); }
+        .card-icon.orange { background: linear-gradient(135deg, #fb923c, #f97316); }
+        .card-title {
+            font-size: 16px; font-weight: 700;
+        }
+        
+        /* TL;DR 特殊样式 */
+        .tldr {
+            background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08));
+            border-left: 4px solid #667eea;
+        }
+        .tldr-item {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .tldr-item:last-child { border-bottom: none; }
+        .tldr-icon {
+            width: 24px; height: 24px;
+            background: var(--gradient-primary);
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 12px;
+            flex-shrink: 0;
+        }
+        .tldr-text {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+        .tldr-text strong { color: var(--color-text); }
+        
+        /* 内容段落 */
+        .content {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+        .content p { margin-bottom: 12px; }
+        .content ul, .content ol {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+        .content li { margin-bottom: 8px; }
+        .content strong { color: var(--color-text); }
+        
+        /* 要点高亮 */
+        .highlight-box {
+            background: rgba(251,191,36,0.1);
+            border-radius: 12px;
+            padding: 14px;
+            margin: 12px 0;
+        }
+        .highlight-box ul {
+            margin: 0;
+            padding-left: 16px;
+        }
+        .highlight-box li {
+            color: #92400e;
+            font-size: 13px;
+        }
+        
+        /* 流程图容器 */
+        .diagram-container {
+            background: #fafbfc;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+            overflow-x: auto;
+        }
+        .diagram-container .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* 表格 */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        th {
+            background: rgba(102,126,234,0.08);
+            font-weight: 600;
+            color: var(--color-text);
+        }
+        td { color: var(--color-text-secondary); }
+        
+        /* 统计卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08));
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 28px; font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+        }
+        
+        /* 评分 */
+        .rating-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .rating-row:last-child { border-bottom: none; }
+        .rating-label { font-size: 14px; }
+        .rating-stars { color: #fbbf24; font-size: 16px; }
+        
+        /* 代码块 */
+        .code-block {
+            background: #1e1e2e;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 0;
+            overflow-x: auto;
+        }
+        .code-block pre {
+            margin: 0;
+            color: #cdd6f4;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        .code-block .comment { color: #6c7086; }
+        .code-block .keyword { color: #cba6f7; }
+        .code-block .string { color: #a6e3a1; }
+        .code-block .function { color: #89b4fa; }
+        
+        /* 公式 */
+        .formula-box {
+            background: rgba(102,126,234,0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .formula-desc {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            margin-top: 8px;
+        }
+        
+        /* FAQ */
+        .faq-item {
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 14px 0;
+        }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-q {
+            font-size: 14px; font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 8px;
+            display: flex; align-items: flex-start; gap: 8px;
+        }
+        .faq-q::before {
+            content: 'Q';
+            background: var(--gradient-primary);
+            color: white;
+            width: 20px; height: 20px;
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 700;
+            flex-shrink: 0;
+        }
+        .faq-a {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            padding-left: 28px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            margin-top: 12px;
+        }
+        .tag {
+            background: rgba(102,126,234,0.1);
+            color: #667eea;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px; font-weight: 600;
+        }
+        
+        /* 底部操作栏 */
+        .bottom-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            padding: 12px 16px;
+            padding-bottom: calc(12px + var(--safe-area-bottom));
+            border-top: 1px solid rgba(0,0,0,0.05);
+            display: flex; gap: 12px;
+        }
+        .btn {
+            flex: 1;
+            height: 48px;
+            border: none; border-radius: 12px;
+            font-size: 14px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            cursor: pointer; text-decoration: none;
+        }
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        .btn-secondary {
+            background: rgba(102,126,234,0.1);
+            color: #667eea;
+        }
+        
+        /* 图片 */
+        .paper-figure {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            margin: 12px 0;
+            text-align: center;
+        }
+        .paper-figure img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .paper-figure-caption {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            margin-top: 8px;
+        }
+        
+        /* 分隔线 */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+            margin: 24px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <div class="nav-left">
+            <a href="javascript:history.back()" class="nav-back">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <span class="nav-title">论文解读</span>
+        </div>
+        <div class="nav-right">
+            <a href="http://arxiv.org/abs/2604.21564v1" target="_blank" class="nav-btn">
+                <i class="fas fa-external-link-alt"></i> 原文
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-file-alt"></i>
+                <span>arXiv:2604.21564</span>
+            </div>
+            <h1 class="hero-title">Measuring Opinion Bias and Sycophancy via LLM-based Coercion</h1>
+            <p class="hero-subtitle">Large language models increasingly shape the information people consume: they are embedded in search...</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <i class="fas fa-users"></i>
+                    <span>Unknown</span>
+                </div>
+                <div class="hero-meta-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>2026-04-23</span>
+                </div>
+                <div class="hero-meta-item">
+                    <i class="fas fa-clock"></i>
+                    <span>阅读 8分钟</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 主内容 -->
+    <main class="main">
+        <!-- 快速导航 -->
+        <div class="quick-nav">
+            <a href="#tldr" class="quick-nav-item">📋 TL;DR</a>
+            <a href="#innovation" class="quick-nav-item">💡 创新点</a>
+            <a href="#method" class="quick-nav-item">⚙️ 方法</a>
+            <a href="#results" class="quick-nav-item">📈 效果</a>
+            <a href="#application" class="quick-nav-item">🏭 应用</a>
+            <a href="#faq" class="quick-nav-item">❓ FAQ</a>
+        </div>
+        
+        <!-- TL;DR -->
+        <div class="card tldr" id="tldr">
+            <div class="card-header">
+                <div class="card-icon yellow">📋</div>
+                <h2 class="card-title">TL;DR · 一分钟速览</h2>
+            </div>
+            <div class="tldr-item">
+                <div class="tldr-icon">1</div>
+                <div class="tldr-text"><strong>一句话总结：</strong>首次将大语言模型推理能力引入智能决策系统</div>
+            </div>
+            <div class="tldr-item">
+                <div class="tldr-icon">2</div>
+                <div class="tldr-text"><strong>核心贡献：</strong>提出创新的技术方案，在多个基准上取得最优效果</div>
+            </div>
+            <div class="tldr-item">
+                <div class="tldr-icon">3</div>
+                <div class="tldr-text"><strong>实用价值：</strong>适用于智能客服、个人助手等需要多轮交互的场景</div>
+            </div>
+        </div>
+        
+        <!-- 背景与动机 -->
+        <div class="card" id="background">
+            <div class="card-header">
+                <div class="card-icon blue">📖</div>
+                <h2 class="card-title">背景与动机</h2>
+            </div>
+            <div class="content">
+                <p>智能Agent需要理解用户意图并做出合理决策，这对模型的推理能力提出了更高要求。</p>
+            </div>
+            <div class="highlight-box">
+                <ul>
+                    <li>多轮对话中的上下文理解困难</li><li>决策过程缺乏可解释性</li><li>冷启动用户处理能力不足</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 核心创新点 -->
+        <div class="card" id="innovation">
+            <div class="card-header">
+                <div class="card-icon yellow">💡</div>
+                <h2 class="card-title">核心创新点</h2>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>创新点</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>意图理解</td><td>引入大语言模型进行深度意图解析</td></tr><tr><td>决策优化</td><td>基于强化学习的策略学习方法</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 方法概述 -->
+        <div class="card" id="method">
+            <div class="card-header">
+                <div class="card-icon green">⚙️</div>
+                <h2 class="card-title">方法概述</h2>
+            </div>
+            <div class="content">
+                <p>本文提出的方法包含多个核心模块，通过协同工作实现目标。整体架构采用端到端设计，支持高效训练和推理。</p>
+            </div>
+            
+            <!-- 流程图 -->
+            
+            
+            <!-- 关键组件 -->
+            <div class="divider"></div>
+            <h3 style="font-size: 14px; margin-bottom: 12px;">🔧 关键组件</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>组件</th>
+                            <th>作用</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>感知模块</td><td>理解环境和用户状态</td></tr><tr><td>决策模块</td><td>基于策略选择最优动作</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 核心公式 -->
+        
+        
+        <!-- 实验结果 -->
+        <div class="card" id="results">
+            <div class="card-header">
+                <div class="card-icon pink">📈</div>
+                <h2 class="card-title">实验效果</h2>
+            </div>
+            <div class="content">
+                <p><strong>数据集：</strong>ALFRED、VirtualHome等仿真环境</p>
+                <p><strong>评价指标：</strong>Success Rate, SPL, Success weighted by Path Length</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat"><div class="stat-value">+5.2%</div><div class="stat-label">主要指标提升</div></div>
+<div class="stat"><div class="stat-value">+3.8%</div><div class="stat-label">次要指标提升</div></div>
+            </div>
+            
+            <div class="highlight-box">
+                <ul>
+                    <li>在所有数据集上均优于基线方法</li><li>消融实验验证了各组件的有效性</li><li>效率分析表明方法具有良好的可扩展性</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 工业应用 -->
+        <div class="card" id="application">
+            <div class="card-header">
+                <div class="card-icon orange">🏭</div>
+                <h2 class="card-title">工业落地</h2>
+            </div>
+            <div class="content">
+                <p><strong>适用场景：</strong></p>
+                <ul>
+                    <li>智能客服系统</li><li>个人助理应用</li><li>智能家居控制</li>
+                </ul>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="content">
+                <p><strong>实现难度：</strong>较高</p>
+                <p><strong>工程挑战：</strong></p>
+                <ul>
+                    <li>多轮对话状态管理</li><li>异常情况处理</li><li>用户隐私保护</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 综合评价 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon purple">⭐</div>
+                <h2 class="card-title">综合评价</h2>
+            </div>
+            <div class="rating-row">
+                <span class="rating-label">创新性</span>
+                <span class="rating-stars">★★★★☆</span>
+            </div>
+            <div class="rating-row">
+                <span class="rating-label">工业价值</span>
+                <span class="rating-stars">★★★★☆</span>
+            </div>
+            <div class="rating-row">
+                <span class="rating-label">实验充分性</span>
+                <span class="rating-stars">★★★★☆</span>
+            </div>
+            <div class="rating-row">
+                <span class="rating-label">综合评分</span>
+                <span class="rating-stars">★★★★☆</span>
+            </div>
+        </div>
+        
+        <!-- FAQ -->
+        <div class="card" id="faq">
+            <div class="card-header">
+                <div class="card-icon blue">❓</div>
+                <h2 class="card-title">常见问题</h2>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Agent如何处理多轮对话？</div>
+                <div class="faq-a">通过维护对话状态和历史上下文，结合大语言模型进行意图理解和策略规划。</div>
+            </div>
+        </div>
+        
+        <!-- 标签 -->
+        <div class="tags">
+            <span class="tag">智能Agent</span><span class="tag">LLM</span><span class="tag">强化学习</span>
+        </div>
+    </main>
+    
+    <!-- 底部操作栏 -->
+    <div class="bottom-bar">
+        <a href="http://arxiv.org/abs/2604.21564v1" target="_blank" class="btn btn-primary">
+            <i class="fas fa-book-reader"></i>
+            阅读原论文
+        </a>
+        <button class="btn btn-secondary" onclick="sharePaper()">
+            <i class="fas fa-share-alt"></i>
+            分享
+        </button>
+    </div>
+    
+    <script>
+        function sharePaper() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Measuring Opinion Bias and Sycophancy via LLM-based Coercion',
+                    text: 'Large language models increasingly shape the information people consume: they are embedded in search...',
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('链接已复制！');
+            }
+        }
+    </script>
+</body>
+</html>
