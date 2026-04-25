@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language as a Latent Variable for Reasoning Optimization - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.21593" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>语言作为推理优化的潜变量</h1>
+
+<strong>通过多语言策略优化释放大模型的隐式推理潜能</strong>
+
+
+<blockquote>📅 预计阅读：15分钟 | </blockquote>
+<p>难度：高级 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.21593" target="_blank">2604.21593</a></p>
+
+
+<p>🏷️ 标签：<code>大语言模型</code> | <code>强化学习</code> | <code>多语言推理</code> | <code>策略优化</code> | <code>推理能力提升</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：语言不仅是输出媒介，更是调控模型内部推理路径的潜变量。</li>
+<li><strong>核心贡献</strong>：提出polyGRPO框架，将语言变化视为隐式探索信号，通过多语言约束与自由条件的对比学习，显著提升模型推理能力。</li>
+<li><strong>实用价值</strong>：为工业场景下的多语言智能应用提供新的训练范式，无需人工标注即可提升模型跨语言推理性能。</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>随着大语言模型(LLM)逐渐减少对英语的偏向性，一个反直觉的现象浮现：非英语响应在推理任务上有时优于英语响应。这一发现挑战了「英语是最佳推理语言」的固有认知。研究团队推测，语言不仅是输出的媒介，更是一种结构性地调控模型内部推理路径的潜变量。为验证这一假设，团队设计了「多语言思维实验」(Polyglot Thinking Experiment)，通过对比语言约束与自由条件下模型的推理表现，揭示语言在推理过程中的深层作用机制。这一发现为推理能力优化开辟了全新的研究方向。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>LLM减少英语偏向后，非英语响应在推理任务上展现出意想不到的优势</li>
+<li>传统观点认为语言仅是输出媒介，未考虑其对推理路径的结构性影响</li>
+<li>多语言思维实验通过控制变量法验证语言作为潜变量的假设</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>polyGRPO是一种新型强化学习框架，将语言变化作为隐式探索信号，通过多语言响应生成、奖励计算和组内相对策略优化三个核心模块，实现推理能力的自动提升。</p>
+
+
+<h3>详细设计</h3>
+
+<p>polyGRPO框架包含三个关键组件：多语言推理生成模块(PRGM)、奖励模块和组相对策略优化模块。在训练过程中，对于每个推理问题，PRGM同时生成多个语言的响应（包括约束语言和自由语言），奖励模块从准确性和格式两个维度进行评估，最后通过组相对策略优化算法（借鉴GRPO思想，采用PPO风格的裁剪目标）更新模型策略。关键创新在于将语言多样性视为探索信号——不同语言响应间的差异提供了丰富的学习信号，使模型能够在隐式推理空间中探索更优的路径。实验表明，让模型自由选择语言时往往能获得最佳性能，这证实了多语言空间确实扩展了模型的隐式推理能力。</p>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>graph LR</p>
+<p>%% 样式定义</p>
+<p>classDef inputStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:2px</p>
+<p>classDef genStyle fill:#fff3e0,stroke:#ef6c00,stroke-width:2px</p>
+<p>classDef optStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px</p>
+<p>classDef arrowStyle fill:none,stroke:#666,stroke-width:1.5px</p>
+
+<p>%% ========== 输入端 ==========</p>
+<p>subgraph INPUT[输入端]</p>
+<p>direction LR</p>
+<p>Q[问题输入]</p>
+<p>QT[推理问题]</p>
+<p>end</p>
+
+<p>%% ========== 生成端 ==========</p>
+<p>subgraph GEN[生成端]</p>
+<p>direction LR</p>
+<p>BRANCH[双分支生成]</p>
+<p>CB[约束分支<br/>指定语言]</p>
+<p>FB[自由分支<br/>模型自选语言]</p>
+<p>PRGM[PRGM模块<br/>并行生成]</p>
+<p>MRS[多语言响应集<br/>推理+答案]</p>
+<p>end</p>
+
+<p>%% ========== 优化端 ==========</p>
+<p>subgraph OPT[优化端]</p>
+<p>direction LR</p>
+<p>REWARD[奖励评估]</p>
+<p>AR[准确性reward]</p>
+<p>FR[格式reward]</p>
+<p>GA[组相对优势<br/>计算器]</p>
+<p>KL[KL约束]</p>
+<p>PPO[PPO裁剪目标<br/>策略更新]</p>
+<p>end</p>
+
+<p>%% ========== 数据流连接 ==========</p>
+<p>Q --> QT</p>
+<p>QT --> BRANCH</p>
+<p>BRANCH --> CB</p>
+<p>BRANCH --> FB</p>
+<p>CB --> PRGM</p>
+<p>FB --> PRGM</p>
+<p>PRGM --> MRS</p>
+<p>MRS --> REWARD</p>
+<p>REWARD --> AR</p>
+<p>REWARD --> FR</p>
+<p>AR --> GA</p>
+<p>FR --> GA</p>
+<p>GA --> KL</p>
+<p>KL --> PPO</p>
+
+<p>%% 应用样式</p>
+<p>class Q,QT,CB,FB inputStyle</p>
+<p>class BRANCH,PRGM,MRS genStyle</p>
+<p>class REWARD,AR,FR,GA,KL,PPO optStyle</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| 多语言推理生成模块 (PRGM) | 针对同一问题并行生成多种语言的推理响应，支持语言约束与自由两种模式，是实现语言空间探索的基础引擎 |</p>
+<p>| 组相对优势计算器 | 借鉴GRPO思想，计算同问题多语言响应间的相对优势，将语言多样性转化为策略优化的学习信号 |</p>
+<p>| 双奖励模块 | Format Reward（二值奖励，确保输出格式规范）和Accuracy Reward（准确性奖励，验证推理答案正确性） |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+<p>import random</p>
+
+<h1>=============================================</h1>
+<h1>简化的 polyGRPO 框架实现</h1>
+<h1>=============================================</h1>
+
+<h1>----------------------</h1>
+<h1>1. 多语言推理生成模块 (PRGM)</h1>
+<h1>----------------------</h1>
+<p>def generate_multi_lang_responses(model, question, languages):</p>
+<p>"""</p>
+<p>PRGM: 同时生成多个语言的响应</p>
+<p>languages: 包含约束语言和自由语言的列表</p>
+<p>"""</p>
+<p>responses = {}</p>
+<p>for lang in languages:</p>
+<p># 伪代码：模型根据语言生成响应</p>
+<p>responses[lang] = model.generate(question, language=lang)</p>
+<p>return responses</p>
+
+
+<h1>----------------------</h1>
+<h1>2. 奖励模块</h1>
+<h1>----------------------</h1>
+<p>def compute_rewards(question, responses, ground_truth):</p>
+<p>"""</p>
+<p>奖励模块：从准确性和格式两个维度评估</p>
+<p>返回: {language: (accuracy_reward, format_reward)}</p>
+<p>"""</p>
+<p>rewards = {}</p>
+<p>for lang, response in responses.items():</p>
+<p># 准确性奖励</p>
+<p>accuracy = evaluate_accuracy(response, ground_truth)</p>
+<p># 格式奖励</p>
+<p>format_score = evaluate_format(response)</p>
+<p>rewards[lang] = (accuracy, format_score)</p>
+<p>return rewards</p>
+
+
+<p>def evaluate_accuracy(response, ground_truth):</p>
+<p>"""评估答案准确性（伪代码）"""</p>
+<p>return random.uniform(0, 1)  # 模拟评分</p>
+
+
+<p>def evaluate_format(response):</p>
+<p>"""评估格式规范性（伪代码）"""</p>
+<p>return random.uniform(0, 1)  # 模拟评分</p>
+
+
+<h1>----------------------</h1>
+<h1>3. 组相对策略优化模块 (GRPO)</h1>
+<h1>----------------------</h1>
+<p>def grpo_update(policy_model, responses, rewards, clip_epsilon=0.2):</p>
+<p>"""</p>
+<p>GRPO: 基于组内相对优势进行策略更新</p>
+<p>借鉴PPO风格的裁剪目标</p>
+<p>"""</p>
+<p># 计算组内相对优势（语言多样性的学习信号）</p>
+<p>all_rewards = [sum(r) for r in rewards.values()]  # 合并准确性和格式奖励</p>
+<p>max_reward = max(all_rewards)</p>
+<p>min_reward = min(all_rewards)</p>
+
+<p>advantages = {}</p>
+<p>for lang, reward in rewards.items():</p>
+<p>combined_reward = sum(reward)</p>
+<p># 相对优势：与其他语言响应的相对表现</p>
+<p>advantages[lang] = (combined_reward - min_reward) / (max_reward - min_reward + 1e-8)</p>
+
+<p># PPO风格裁剪更新</p>
+<p>for lang, advantage in advantages.items():</p>
+<p># 伪代码：计算策略梯度并裁剪更新</p>
+<p>policy_model.update(language=lang, advantage=advantage, clip_epsilon=clip_epsilon)</p>
+
+<p>return advantages</p>
+
+
+<h1>----------------------</h1>
+<h1>4. 主训练循环</h1>
+<h1>----------------------</h1>
+<p>def train_polygrpo(model, questions, languages, num_iterations=10):</p>
+<p>"""</p>
+<p>polyGRRO 主训练流程</p>
+<p>"""</p>
+<p>for iteration in range(num_iterations):</p>
+<p>for question in questions:</p>
+<p># Step 1: 多语言生成</p>
+<p>responses = generate_multi_lang_responses(model, question, languages)</p>
+
+<p># Step 2: 计算奖励</p>
+<p>rewards = compute_rewards(question, responses, ground_truth=None)</p>
+
+<p># Step 3: GRPO策略更新</p>
+<p>advantages = grpo_update(model, responses, rewards)</p>
+
+<p># 打印学习信号</p>
+<p>print(f"Iter {iteration}: 语言间差异 = {max(advantages.values()) - min(advantages.values()):.3f}")</p>
+
+<p>return model</p>
+
+
+<h1>----------------------</h1>
+<h1>简化示例调用</h1>
+<h1>----------------------</h1>
+<p>if __name__ == "__main__":</p>
+<p># 模拟模型和配置</p>
+<p>class DummyModel:</p>
+<p>def generate(self, q, language):</p>
+<p>return f"[{language}] 推理过程..."</p>
+
+<p>dummy_model = DummyModel()</p>
+<p>test_question = "小明有5个苹果，买了3个，又丢了2个，还剩多少？"</p>
+<p>languages = ["中文", "英文", "日文"]  # 约束+自由语言</p>
+
+<p># 运行训练</p>
+<p>trained_model = train_polygrpo(dummy_model, [test_question], languages, num_iterations=3)</p>
+</code>``
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>\text{Format Reward (FR)} &:=</p>
+<p>\begin{cases}</p>
+<p>1 & \text{if the generated output conforms to the specified format},\\</p>
+<p>0 & \text{otherwise}.</p>
+<p>\end{cases}</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：• Format Reward (FR): A binary reward that encour-
+
+<strong>公式 2</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>p_i &: \text{the } i\text{-th prompt with or without explicit language}</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：where pi is the i-th prompt with or without explicit language
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：MGSM（多语言数学推理基准）、MATH500（高难度数学推理数据集，评估多语言翻译版本）、以及其他标准化推理 benchmarks
+
+<strong>评价指标</strong>：推理准确率（Accuracy）、多语言响应一致性、RL训练稳定性指标
+
+<strong>主要结果</strong>：
+
+<p>在Qwen2.5-7B-Instruct和Llama3-8B-Instruct上的实验表明：(1)非英语响应在多个任务上优于英语响应，中文、日语等语言表现尤为突出；(2)语言自由条件下的性能普遍优于语言约束条件，证实了多语言空间对推理能力的正向影响；(3)polyGRPO在MATH500等高难度任务上相比基线方法取得显著提升，且训练过程更加稳定。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ 非英语响应在推理任务中展现出与英语相当甚至更优的性能</li>
+<li>✅ 语言自由选择条件下模型推理准确率最高，证实多语言空间扩展了隐式推理能力</li>
+<li>✅ polyGRPO通过语言多样性作为探索信号，在不增加标注成本的情况下有效提升推理能力</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 语言即潜变量假说 | 首次提出语言不仅是输出媒介，而是调控推理路径的潜变量，为理解LLM推理机制提供新视角 |</p>
+<p>| 多语言思维实验范式 | 设计语言约束与自由条件对比实验，系统验证语言对推理能力的结构性影响 |</p>
+<p>| polyGRPO训练框架 | 将语言变化作为隐式探索信号，利用组相对策略优化实现无需额外标注的推理能力提升 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 多语言客服机器人的推理能力优化：无需针对每种语言单独训练，即可提升全球用户的交互质量</li>
+<li>🎯 跨语言智能助手：统一模型处理多语言推理任务，降低部署和维护成本</li>
+<li>🎯 专业领域AI助手：利用多语言空间探索提升复杂推理（如金融分析、医疗诊断）的准确性</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 部分小语种推理质量有限，需要平衡语言多样性收益与低资源语言的性能损失</li>
+<li>⚠️ 推理延迟可能因多语言生成而增加，需要优化推理效率</li>
+<li>⚠️ 语言选择策略的自动化调优需要进一步研究</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>实现polyGRPO的关键步骤：(1)构建多语言响应生成器，支持指定语言和自由语言两种模式；(2)设计奖励函数，兼顾准确性和格式；(3)实现组相对优势计算，将多语言响应差异转化为学习信号；(4)采用PPO裁剪目标结合KL约束进行策略更新。核心伪代码约100行，建议使用vLLM加速多语言并行生成。</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：语言是大模型推理的潜变量，多语言空间为推理优化提供了免费且有效的探索信号，polyGRPO开辟了无需人工标注即可提升推理能力的新路径。
+
+<strong>未来方向</strong>：探索自动最优语言选择策略、研究语言差异与推理类型的关系、以及在小语种和特定领域任务上的应用验证。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：为什么非英语响应有时比英语响应表现更好？</strong>
+
+<p>A：论文认为语言作为潜变量结构性地影响推理路径。不同语言可能激活模型中不同的知识表示子空间，某些语言在特定推理任务上可能对应更高效的内部表征路径。英语虽是训练语料最充足的语言，但未必是所有推理任务的最优选择。</p>
+
+
+<strong>Q：polyGRPO相比传统RL方法的优势是什么？</strong>
+
+<p>A：传统RL方法需要大量人工标注的偏好数据，成本高昂。polyGRPO利用语言多样性自然产生多语言响应对，无需人工标注即可获得丰富的学习信号，大幅降低训练成本。同时，多语言探索空间比单一语言提供更丰富的梯度信息，训练更加稳定。</p>
+
+
+<strong>Q：普通开发者如何使用这项技术？</strong>
+
+<p>A：可以通过开源的polyGRPO代码库直接应用到自己的模型训练中。关键是要有多语言推理数据集和LLM推理引擎（如vLLM）的支持。对于资源有限的团队，可以选择性地在几种表现较好的语言（如中文、日文）上应用，无需覆盖所有语言。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: Polyglot Thinking Experiment results (left part) on MGSM (Shi et al., 2023) in Qwen2.5-7B-Instruct (Yang et al., 2024a) model,
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_0.jpeg" target="_blank">Figure 1</a></p>
+
+<strong>Figure 1</strong>: Our findings indicate that, in con-
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_1_1.jpeg" target="_blank">Figure 1</a></p>
+
+<strong>Figure 2</strong>: The framework of polyGRPO, including Polyglot Reasoning Generate Module (PRGM), Reward Module and Group Relative
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_2.jpeg" target="_blank">Figure 2</a></p>
+
+<strong>Figure 2</strong>: The advantage Ai of the i-th response is calculated
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_3.jpeg" target="_blank">Figure 2</a></p>
+
+<strong>Figure 3</strong>: Ablation results on MGSM with three sizes of Qwen2.5-
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_4.jpeg" target="_blank">Figure 3</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

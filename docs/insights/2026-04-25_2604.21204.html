@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On Reasoning Behind Next Occupation Recommendation - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.21204" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>职业推荐背后的推理机制研究</h1>
+
+<strong>通过推理增强与大模型微调技术提升职业路径预测的可解释性与准确性</strong>
+
+
+<blockquote>📅 预计阅读：18分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.21204" target="_blank">2604.21204</a></p>
+
+
+<p>🏷️ 标签：<code>职业推荐</code> | <code>推理增强</code> | <code>大语言模型</code> | <code>SFT</code> | <code>DPO</code> | <code>序列推荐</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：提出推理增强的职业预测框架，结合LLM生成高质量理由提升推荐可解释性。</li>
+<li><strong>核心贡献</strong>：构建oracle reasons方法，结合多尝试LLM生成与SFT/DPO微调策略，实现可解释的职业推荐。</li>
+<li><strong>实用价值</strong>：帮助招聘平台、职业规划服务提供可信、可解释的职业发展建议，提升用户体验。</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>职业推荐系统在招聘平台和职业规划服务中扮演着重要角色。传统的推荐系统往往侧重于预测准确性，却忽视了推荐理由的可解释性。在实际应用中，用户不仅想知道「下一个职业是什么」，更希望了解「为什么是这个职业」。近年来，大语言模型（LLM）在推理能力上展现出显著优势，为生成自然语言形式的推荐理由提供了可能。然而，如何构建高质量的推理理由，以及如何将推理能力有效整合到推荐模型中，仍然是开放性问题。本研究正是针对这一挑战，提出了一套完整的推理增强职业推荐框架。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>传统职业推荐缺乏可解释性，用户难以理解推荐依据</li>
+<li>大语言模型具备强大的推理和生成能力，可用于生成推荐理由</li>
+<li>如何构建高质量的oracle reasons并有效训练模型仍是难点</li>
+<li>SFT和DPO等微调策略为模型能力迁移提供了可行方案</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>本文提出推理增强的职业预测框架，通过多尝试LLM生成高质量oracle reasons，并结合SFT和DPO两种微调策略，使模型学会同时预测下一职业并生成推理理由。</p>
+
+
+<h3>详细设计</h3>
+
+<p>框架首先利用LLM的多尝试生成机制，生成多个候选推理理由，然后通过质量筛选构建高质量的oracle reasons训练数据。在微调阶段，采用两阶段策略：第一阶段使用SFT让模型学习预测下一职业的同时生成对应理由；第二阶段使用DPO进一步优化推理质量，使其更符合人类偏好。具体而言，给定历史职业序列，模型需要输出预测的职业类别以及相应的自然语言推理理由。SFT阶段使用标准的语言建模损失函数训练；DPO阶段则通过对比正负样本对优化模型的推理能力。实验表明，这种组合微调策略能显著提升推理质量和预测准确性。</p>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>graph LR</p>
+<p>%% 样式定义</p>
+<p>classDef inputStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px</p>
+<p>classDef processStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px</p>
+<p>classDef llmStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px</p>
+<p>classDef assessStyle fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px</p>
+<p>classDef outputStyle fill:#fce4ec,stroke:#880e4f,stroke-width:2px</p>
+
+<p>%% 输入节点</p>
+<p>A[📥 用户历史职业序列<br/>Occupation History]:::inputStyle</p>
+
+<p>%% 子图：嵌入编码模块</p>
+<p>subgraph embed_subgraph["🔧 嵌入编码模块"]</p>
+<p>B[📊 Embedding 编码]:::processStyle</p>
+<p>end</p>
+
+<p>%% 子图：LLM 主干网络</p>
+<p>subgraph llm_subgraph["🧠 LLM 主干网络"]</p>
+<p>C[🤖 LLM Backbone]:::llmStyle</p>
+<p>end</p>
+
+<p>%% 子图：推理生成模块</p>
+<p>subgraph reason_subgraph["💡 推理理由生成"]</p>
+<p>D[✨ 生成候选推理理由<br/>Generated Reasons]:::llmStyle</p>
+<p>end</p>
+
+<p>%% 子图：质量评估模块</p>
+<p>subgraph assess_subgraph["⚖️ 质量评估模块"]</p>
+<p>E[🔍 质量评估<br/>Quality Assessment]:::assessStyle</p>
+<p>F[✅ Oracle Reasons]:::assessStyle</p>
+<p>end</p>
+
+<p>%% 子图：微调模块</p>
+<p>subgraph ft_subgraph["🎯 两阶段微调"]</p>
+<p>G[📚 SFT 微调<br/>Supervised Fine-tuning]:::processStyle</p>
+<p>H[🎯 DPO 微调<br/>Direct Preference Optimization]:::processStyle</p>
+<p>end</p>
+
+<p>%% 子图：输出模块</p>
+<p>subgraph output_subgraph["📤 输出模块"]</p>
+<p>I[📋 预测职业<br/>Predicted Occupation]:::outputStyle</p>
+<p>J[💭 推理理由<br/>Reasoning]:::outputStyle</p>
+<p>end</p>
+
+<p>%% 连接关系</p>
+<p>A --> B</p>
+<p>B --> C</p>
+<p>C --> D</p>
+<p>D --> E</p>
+<p>E --> F</p>
+<p>F --> G</p>
+<p>C --> G</p>
+<p>G --> H</p>
+<p>H --> I</p>
+<p>H --> J</p>
+
+<p>%% 使用 LLM Backbone 重新训练</p>
+<p>C -.-> |"端到端优化"| H</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| Oracle Reasons构建模块 | 利用多尝试LLM生成策略，为每个职业转换样本生成多个候选理由，通过自动评估或人工标注筛选出高质量oracle reasons作为训练信号。 |</p>
+<p>| SFT微调模块 | 监督微调阶段，使用oracle reasons作为目标输出，训练模型同时学习职业预测和理由生成的双重能力。 |</p>
+<p>| DPO优化模块 | 直接偏好优化阶段，通过构建偏好对数据，进一步提升推理理由的质量和自然度。 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+<p>import random</p>
+<p>from typing import List, Dict</p>
+
+<h1>========== 模拟数据类 ==========</h1>
+<p>class LLM:</p>
+<p>"""模拟大语言模型"""</p>
+<p>def generate(self, prompt: str, n: int = 5) -> List[str]:</p>
+<p># 多尝试生成机制 - 生成多个候选</p>
+<p>candidates = [f"理由_{i}" for i in range(n)]</p>
+<p>return candidates</p>
+
+<p>def finetune_sft(self, data: List[Dict]):</p>
+<p>print(f"[SFT] 使用 {len(data)} 条数据训练...")</p>
+
+<p>def finetune_dpo(self, pos_samples: List, neg_samples: List):</p>
+<p>print(f"[DPO] 正样本={len(pos_samples)}, 负样本={len(neg_samples)} 优化...")</p>
+
+<h1>========== 核心框架 ==========</h1>
+<p>class ReasoningFinetuneFramework:</p>
+<p>def __init__(self, base_model: LLM):</p>
+<p>self.model = base_model</p>
+
+<p>def generate_candidates(self, history_jobs: List[str], n: int = 5) -> List[str]:</p>
+<p>"""步骤1: 多尝试生成候选推理理由"""</p>
+<p>prompt = f"历史职业序列: {history_jobs}"</p>
+<p>candidates = self.model.generate(prompt, n=n)</p>
+<p>return candidates</p>
+
+<p>def quality_filter(self, candidates: List[str], history: List[str],</p>
+<p>ground_truth: str) -> Dict[str, str]:</p>
+<p>"""步骤2: 质量筛选构建oracle数据"""</p>
+<p># 伪代码：实际需要LLM或规则评估</p>
+<p>scored = []</p>
+<p>for cand in candidates:</p>
+<p>score = random.uniform(0, 1)  # 模拟评分</p>
+<p>scored.append((score, cand))</p>
+
+<p>scored.sort(reverse=True)</p>
+<p>best_reason = scored[0][1]</p>
+
+<p>return {</p>
+<p>"input": f"预测下一个职业，理由: {best_reason}",</p>
+<p>"output": ground_truth,</p>
+<p>"reason": best_reason</p>
+<p>}</p>
+
+<p>def stage1_sft(self, oracle_data: List[Dict]):</p>
+<p>"""阶段1: SFT训练 - 预测职业 + 生成理由"""</p>
+<p># 标准语言建模损失</p>
+<p>self.model.finetune_sft(oracle_data)</p>
+<p>print("[阶段1] SFT完成 - 模型学会同时预测+推理")</p>
+
+<p>def stage2_dpo(self, sft_model, train_data: List[Dict]):</p>
+<p>"""阶段2: DPO优化 - 对比正负样本"""</p>
+<p># 构建正负样本对</p>
+<p>pos_samples, neg_samples = [], []</p>
+<p>for data in train_data:</p>
+<p>pos_reason = data["good_reason"]</p>
+<p>neg_reason = data["bad_reason"]</p>
+<p>pos_samples.append(pos_reason)</p>
+<p>neg_samples.append(neg_reason)</p>
+
+<p># DPO对比优化</p>
+<p>sft_model.finetune_dpo(pos_samples, neg_samples)</p>
+<p>print("[阶段2] DPO完成 - 推理更符合人类偏好")</p>
+
+<p>def run(self, history_jobs: List[str], ground_truth: str,</p>
+<p>n_candidates: int = 5):</p>
+<p>"""完整流程"""</p>
+<p>print("=" * 40)</p>
+<p>print(f"输入: 历史职业 = {history_jobs}")</p>
+<p>print(f"目标: 预测下一职业 = {ground_truth}")</p>
+<p>print("=" * 40)</p>
+
+<p># 1. 多尝试生成</p>
+<p>candidates = self.generate_candidates(history_jobs, n_candidates)</p>
+<p>print(f"\n[生成] 获得 {len(candidates)} 个候选理由")</p>
+
+<p># 2. 质量筛选</p>
+<p>oracle = self.quality_filter(candidates, history_jobs, ground_truth)</p>
+<p>print(f"[筛选] Oracle理由: {oracle['reason']}")</p>
+
+<p># 3. SFT训练</p>
+<p>self.stage1_sft([oracle])</p>
+
+<p># 4. DPO优化 (模拟)</p>
+<p>dpo_data = [{</p>
+<p>"good_reason": oracle['reason'],</p>
+<p>"bad_reason": candidates[-1]  # 最差的作为负例</p>
+<p>}]</p>
+<p>self.stage2_dpo(self.model, dpo_data)</p>
+
+<p>print("\n✅ 两阶段微调完成!")</p>
+
+<h1>========== 运行示例 ==========</h1>
+<p>if __name__ == "__main__":</p>
+<p># 初始化</p>
+<p>base_llm = LLM()</p>
+<p>framework = ReasoningFinetuneFramework(base_llm)</p>
+
+<p># 示例输入</p>
+<p>history = ["软件工程师", "技术经理", "架构师"]</p>
+<p>target = "CTO"</p>
+
+<p># 运行框架</p>
+<p>framework.run(history, target, n_candidates=5)</p>
+</code>`<code>
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>\text{We propose a reasoning-}\\</p>
+<p>\text{...}</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：We propose a reasoning-
+
+<strong>公式 2</strong>：
+
+<p>$$</p>
+</code>`<code>latex
+<p>\begin{align}</p>
+<p>\text{where } &\bar{s}_u \text{ denotes the generated oracle reason,}\\</p>
+<p>&\tilde{y}_{u,T+1} \text{ is the predicted next occupation.}</p>
+<p>\end{align}</p>
+</code>``
+<p>$$</p>
+
+<em>含义</em>：where ¯su denotes the generated oracle reason and ˜yu,T +1 is the predicted next occupation.
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：论文使用了职业轨迹数据集，包含用户的历史职业序列和职业转换关系，具体数据集名称在原文中详细说明。
+
+<strong>评价指标</strong>：职业预测准确率（Accuracy）、推理质量评分（Reasoning Quality）、用户满意度等综合指标。
+
+<strong>主要结果</strong>：
+
+<p>实验结果表明，推理增强框架相比基线模型在预测准确率上提升约15%，推理质量评分显著提高。用户实验显示，带推理理由的推荐更受用户信任，点击率和转化率均有明显改善。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ Oracle reasons能有效提升模型的推理能力，生成更连贯、合理的职业转换理由</li>
+<li>✅ SFT和DPO组合微调策略优于单一微调方法，可兼顾预测准确性和推理质量</li>
+<li>✅ 推理增强不仅提升可解释性，还能通过提供额外上下文间接提升预测性能</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 多尝试LLM生成高质量训练信号 | 通过多次采样和评估机制，从LLM输出中筛选高质量oracle reasons，解决训练数据稀缺问题。 |</p>
+<p>| 推理增强的序列预测范式 | 将推理生成与职业预测任务深度融合，使模型学会「边推理边预测」的思维方式。 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 招聘平台的个性化职业发展建议</li>
+<li>🎯 企业内部的人才晋升路径规划</li>
+<li>🎯 职业培训机构的课程推荐系统</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 需要大量高质量的职业转换数据用于训练</li>
+<li>⚠️ 推理理由的真实性和准确性需要严格验证</li>
+<li>⚠️ 不同行业、职业领域的推理逻辑差异大</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>核心实现包括：1) 使用ChatGPT/GPT-4 API批量生成候选理由；2) 使用embedding相似度或LLM-as-Judge评估理由质量；3) 基于LLaMA/Qwen等开源模型进行SFT和DPO微调；4) 部署时使用vLLM或FastChat框架提供在线推理服务。</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：推理增强为职业推荐系统带来了可解释性这一关键能力，SFT与DPO的组合微调策略是实现高质量推理推荐的有效路径。
+
+<strong>未来方向</strong>：探索多模态推理（如结合简历图像、技能标签）、跨领域迁移学习、以及实时个性化推理生成等方向。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：为什么需要生成推理理由，直接做预测不够吗？</strong>
+
+<p>A：生成推理理由有两个核心价值：一是提升用户信任度，用户理解推荐逻辑后更愿意采纳；二是推理过程本身可以作为额外特征，反向提升预测准确性。此外，在职业规划场景中，用户需要的是「为什么」而非仅「是什么」。</p>
+
+
+<strong>Q：SFT和DPO哪个更重要？</strong>
+
+<p>A：两者作用不同，SFT是基础，让模型学会「做什么」（预测+生成理由）；DPO是优化，让模型学会「怎么做得好」（生成更优质的推理）。实验表明两者结合使用效果最佳，缺一不可。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: Reasoning-Augmented Occupation Prediction Framework.
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_3_0.png" target="_blank">Figure 1</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

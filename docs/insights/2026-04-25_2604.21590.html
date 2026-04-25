@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgenticQwen: Training Small Agentic Language Models with Dual Data Flywheels for Industrial-Scale Tool Use - AI推荐日报</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #667eea;
+            --color-secondary: #764ba2;
+            --color-text: #333;
+            --color-text-light: #666;
+            --bg: #fafafa;
+            --bg-card: #fff;
+            --border: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 12px 20px;
+        }
+        
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-weight: 600;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* 文章内容 */
+        article {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+        
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+            color: var(--color-text);
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-text);
+        }
+        
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--color-text);
+        }
+        
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 引用块 */
+        blockquote {
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 20px;
+            margin: 20px 0;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-text-light);
+        }
+        
+        /* 代码块 */
+        pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        /* 列表 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* 标签 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 元信息 */
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 公式样式 */
+        .MathJax {
+            font-size: 1.1em !important;
+        }
+        
+        /* Mermaid 图表 */
+        .mermaid {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 图片 */
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 40px 0;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            article {
+                padding: 24px;
+                margin-top: 50px;
+            }
+            
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+        }
+    </style>
+    
+    <!-- MathJax 支持 -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    <!-- Mermaid 支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#666',
+                secondaryColor: '#f0f0f0',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-robot"></i> AI推荐日报
+            </a>
+            <div class="nav-links">
+                <a href="https://arxiv.org/abs/2604.21590" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> arXiv
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <article>
+            <h1>AgenticQwen：双数据飞轮驱动的工业级小模型智能体训练方法</h1>
+
+<strong>通过推理飞轮与智能体飞轮协同迭代，用有限数据训练出高性能的工业级工具调用小模型</strong>
+
+
+<blockquote>📅 预计阅读：15分钟 | </blockquote>
+<p>难度：进阶 |</p>
+<p>arXiv: <a href="http://arxiv.org/abs/2604.21590" target="_blank">2604.21590</a></p>
+
+
+<p>🏷️ 标签：<code>小语言模型</code> | <code>智能体</code> | <code>强化学习</code> | <code>工具调用</code> | <code>数据飞轮</code> | <code>工业应用</code></p>
+
+
+<hr>
+
+<h3>📌 TL;DR</h3>
+
+<ul><li><strong>一句话总结</strong>：提出双数据飞轮框架训练小模型智能体，实现工业级工具调用能力。</li>
+<li><strong>核心贡献</strong>：提出推理飞轮（错误驱动难度提升）与智能体飞轮（线性流程扩展为行为树），通过多轮RL训练小模型。</li>
+<li><strong>实用价值</strong>：在严格成本与延迟约束下，提供可部署的小模型解决方案，验证于工业级智能体系统。</li>
+</ul>
+
+<hr>
+
+<h2>📖 背景与动机</h2>
+
+<p>现代工业应用对语言模型的智能体能力需求日益增长，要求模型具备多步推理与工具调用能力。然而，实际部署面临严格的成本与延迟约束，使得小模型成为刚需。传统方法依赖大量人工标注数据，成本高昂且扩展性差。现有开源智能体数据集规模有限、难度单一，难以覆盖真实工业场景的决策复杂性。本研究旨在解决的核心问题：如何用有限的合成数据与开源数据，训练出在工业级任务上表现优异的小模型智能体。</p>
+
+
+<strong>关键要点：</strong>
+
+<ul><li>工业场景对成本和延迟的严格要求使得小模型成为首选</li>
+<li>高质量智能体标注数据稀缺且成本高昂</li>
+<li>现有数据集缺乏任务难度递进与决策分支多样性</li>
+<li>需要自动化方法生成具有工业代表性的训练数据</li>
+</ul>
+
+<hr>
+
+<h2>💡 核心方法</h2>
+
+<h3>方法概述</h3>
+
+<p>AgenticQwen采用双数据飞轮协同训练框架，通过推理飞轮自动生成递增难度的推理任务，通过智能体飞轮将线性工作流扩展为多分支行为树，结合多轮强化学习实现模型能力的迭代提升。</p>
+
+
+<h3>详细设计</h3>
+
+<p>推理飞轮（Reasoning Flywheel）的核心机制是「错误驱动难度进化」：初始阶段使用种子数据训练基础模型，然后在每个迭代周期中让模型尝试任务，收集失败案例，分析错误模式（推理链路断裂、工具选择错误、状态追踪失误等），自动生成针对性的更难样本。具体而言，当模型在某个难度级别达到收敛阈值后，系统会自动增加任务复杂度：增加中间步骤数量、引入干扰选项、加入条件分支等。这种自动化难度调节避免了人工设计难题的瓶颈。</p>
+
+<p>智能体飞轮（Agentic Flywheel）专注于扩展决策空间。初始阶段提供线性工具调用序列作为示范，然后通过「工作流树化」策略，自动将线性路径扩展为多分支行为树。具体操作包括：识别可替代的工具路径、在决策点引入条件分支、添加错误恢复分支、生成对抗性干扰路径等。例如，一个简单的「查询库存→下单」线性流程，会被扩展为包含「库存不足时的替代方案」「支付失败的重试策略」「用户修改订单的分支」等多分支结构。</p>
+
+<p>训练采用多轮强化学习（RL）框架，使用GRPO或类似算法。策略优化目标结合了任务成功率、路径合规性、工具调用效率等多个维度。奖励设计特别考虑了「对抗性路径抑制」，即对成功绕过安全限制的对抗性调用给予负向奖励，引导模型学习安全合规的工具使用模式。</p>
+
+
+<h3>📊 方法流程图</h3>
+
+<p>``<code>mermaid</p>
+<p>graph LR</p>
+<p>%% 样式定义</p>
+<p>classDef inference fill:#e3f2fd,stroke:#1565c0,stroke-width:2px</p>
+<p>classDef agent fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px</p>
+<p>classDef central fill:#fff8e1,stroke:#ff8f00,stroke-width:3px</p>
+<p>classDef industry fill:#e8f5e9,stroke:#388e3c,stroke-width:2px</p>
+
+<p>%% 左通道 - 推理飞轮</p>
+<p>subgraph 左通道["🔄 推理飞轮"]</p>
+<p>A1[种子数据] --> A2[模型训练]</p>
+<p>A2 --> A3[任务执行]</p>
+<p>A3 --> A4[错误收集]</p>
+<p>A4 --> A5[难度生成]</p>
+<p>A5 --> A6[高难度数据]</p>
+<p>A6 -.->|"螺旋上升"| A2</p>
+<p>end</p>
+
+<p>%% 右通道 - 智能体飞轮</p>
+<p>subgraph 右通道["🌳 智能体飞轮"]</p>
+<p>B1[线性工作流] --> B2[树化扩展]</p>
+<p>B2 --> B3[行为树生成]</p>
+<p>B3 --> B4[分支数据]</p>
+<p>B4 --> B5[模型训练]</p>
+<p>end</p>
+
+<p>%% 中央 - RL训练模块</p>
+<p>subgraph 中央模块["🎯 RL训练模块"]</p>
+<p>C1[数据汇聚] --> C2[强化学习训练]</p>
+<p>C2 --> C3[增强策略模型]</p>
+<p>end</p>
+
+<p>%% 下方 - 工业验证环境</p>
+<p>subgraph 工业验证["🏭 工业验证环境"]</p>
+<p>D1[真实工具API]</p>
+<p>D2[状态验证系统]</p>
+<p>end</p>
+
+<p>%% 数据流连接</p>
+<p>A6 --> C1</p>
+<p>B5 --> C1</p>
+<p>C3 --> D1</p>
+<p>C3 --> D2</p>
+<p>C3 --> D2</p>
+
+<p>%% 应用样式</p>
+<p>class A1,A2,A3,A4,A5,A6 inference</p>
+<p>class B1,B2,B3,B4,B5 agent</p>
+<p>class C1,C2,C3 central</p>
+<p>class D1,D2 industry</p>
+</code>`<code>
+
+<h3>🔧 关键组件</h3>
+
+<p>| 组件 | 说明 |</p>
+<p>|------|------|</p>
+<p>| 推理飞轮 | 错误驱动难度递增的数据生成模块，通过分析模型失败案例自动生成更高难度的推理任务，包含步骤数增加、干扰项注入、约束条件强化等策略 |</p>
+<p>| 智能体飞轮 | 工作流树化扩展模块，将简单线性工具调用序列自动扩展为多分支行为树，引入条件分支、错误恢复路径、对抗性干扰等复杂决策结构 |</p>
+<p>| 多轮RL训练器 | 基于GRPO的强化学习训练框架，优化策略模型的工具选择、状态追踪、路径规划能力，同时抑制对抗性调用行为 |</p>
+<p>| 状态验证系统 | 工业级验证模块，通过客观可验证的状态变化（如数据库修改）评判任务完成度，确保评估的准确性和可复现性 |</p>
+
+<h3>💻 代码示例</h3>
+
+</code>`<code>python
+<p>import random</p>
+<p>from dataclasses import dataclass, field</p>
+<p>from typing import List, Callable</p>
+
+<h1>============================================</h1>
+<h1>1. 任务定义与难度级别</h1>
+<h1>============================================</h1>
+<p>@dataclass</p>
+<p>class Task:</p>
+<p>"""任务定义"""</p>
+<p>description: str</p>
+<p>difficulty: int = 1  # 难度等级</p>
+<p>required_steps: int = 1</p>
+<p>has_distractors: bool = False</p>
+<p>has_branches: bool = False</p>
+
+<h1>============================================</h1>
+<h1>2. 推理飞轮：错误驱动难度进化</h1>
+<h1>============================================</h1>
+<p>class ReasoningFlywheel:</p>
+<p>"""推理飞轮：基于错误模式自动提升难度"""</p>
+
+<p>def __init__(self):</p>
+<p>self.tasks = []  # 任务池</p>
+<p>self.error_patterns = []  # 收集的错误模式</p>
+
+<p>def generate_initial_tasks(self, num: int = 10):</p>
+<p>"""种子数据：简单任务"""</p>
+<p>for _ in range(num):</p>
+<p>self.tasks.append(Task(difficulty=1, required_steps=1))</p>
+
+<p>def collect_failures(self, model, task: Task) -> dict:</p>
+<p>"""让模型尝试任务，收集失败案例"""</p>
+<p># 模拟模型推理过程</p>
+<p>result = model.attempt(task)</p>
+
+<p>if not result.success:</p>
+<p>return {</p>
+<p>"task": task,</p>
+<p>"error_type": self._analyze_error(result),</p>
+<p>"reasoning_gap": result.gap_location</p>
+<p>}</p>
+<p>return None</p>
+
+<p>def _analyze_error(self, result) -> str:</p>
+<p>"""分析错误模式"""</p>
+<p># 伪代码：分析推理链路断裂、工具选择错误等</p>
+<p>error_types = ["reasoning_gap", "tool_error", "state_mismatch"]</p>
+<p>return random.choice(error_types)</p>
+
+<p>def evolve_difficulty(self, task: Task) -> Task:</p>
+<p>"""根据错误模式自动增加任务复杂度"""</p>
+<p>new_task = Task(</p>
+<p>difficulty=task.difficulty + 1,</p>
+<p>required_steps=task.required_steps + 1,  # 增加中间步骤</p>
+<p>has_distractors=True,  # 引入干扰选项</p>
+<p>has_branches=task.difficulty >= 3  # 难度>=3时加入分支</p>
+<p>)</p>
+<p>return new_task</p>
+
+<p>def run_iteration(self, model, convergence_threshold: float = 0.95):</p>
+<p>"""单轮迭代"""</p>
+<p>for task in self.tasks:</p>
+<p># 1. 模型尝试</p>
+<p>failure = self.collect_failures(model, task)</p>
+
+<p># 2. 错误分析并进化</p>
+<p>if failure:</p>
+<p>self.error_patterns.append(failure)</p>
+<p>new_task = self.evolve_difficulty(task)</p>
+<p>self.tasks.append(new_task)</p>
+
+<h1>============================================</h1>
+<h1>3. 智能体飞轮：工作流树化扩展</h1>
+<h1>============================================</h1>
+<p>@dataclass</p>
+<p>class WorkflowNode:</p>
+<p>"""工作流节点"""</p>
+<p>name: str</p>
+<p>children: List['WorkflowNode'] = field(default_factory=list)</p>
+<p>is_terminal: bool = False</p>
+
+<p>class AgenticFlywheel:</p>
+<p>"""智能体飞轮：线性路径扩展为多分支行为树"""</p>
+
+<p>def __init__(self):</p>
+<p>self.workflow_trees = []</p>
+
+<p>def treefy_linear_workflow(self, linear_steps: List[str]) -> WorkflowNode:</p>
+<p>"""将线性流程树化"""</p>
+<p>root = WorkflowNode(name="Start")</p>
+<p>current = root</p>
+
+<p>for step in linear_steps:</p>
+<p>node = WorkflowNode(name=step)</p>
+<p>current.children.append(node)</p>
+<p>current = node</p>
+
+<p># 在关键节点扩展分支</p>
+<p>if self._is_decision_point(step):</p>
+<p>self._add_branches(current, step)</p>
+
+<p>current.is_terminal = True</p>
+<p>return root</p>
+
+<p>def _is_decision_point(self, step: str) -> bool:</p>
+<p>"""判断是否为决策点"""</p>
+<p>decision_keywords = ["check", "verify", "query"]</p>
+<p>return any(k in step.lower() for k in decision_keywords)</p>
+
+<p>def _add_branches(self, node: WorkflowNode, step: str):</p>
+<p>"""添加分支：替代路径、重试、错误恢复"""</p>
+<p># 替代方案分支</p>
+<p>node.children.append(WorkflowNode(name=f"{step}_alt1", children=[]))</p>
+<p>node.children.append(WorkflowNode(name=f"{step}_alt2", children=[]))</p>
+
+<p># 重试/恢复分支</p>
+<p>node.children.append(WorkflowNode(name=f"{step}_retry", children=[]))</p>
+
+<p># 对抗性干扰路径（用于训练安全性）</p>
+<p>node.children.append(WorkflowNode(name=f"{step}_adversarial", children=[]))</p>
+
+<h1>============================================</h1>
+<h1>4. 强化学习训练框架</h1>
+<h1>============================================</h1>
+<p>@dataclass</p>
+<p>class Experience:</p>
+<p>"""经验样本"""</p>
+<p>trajectory: List[dict]</p>
+<p>reward: float</p>
+<p>is_adversarial: bool = False</p>
+
+<p>class RLTraining:</p>
+<p>"""多维度奖励的强化学习训练"""</p>
+
+<p>def __init__(self, model):</p>
+<p>self.model = model</p>
+<p>self.experiences = []</p>
+
+<p>def compute_reward(self, trajectory: List[dict], task_success: bool) -> float:</p>
+<p>"""多维度奖励计算"""</p>
+<p>reward = 0.0</p>
+
+<p># 1. 任务成功率</p>
+<p>reward += 10.0 if task_success else -5.0</p>
+
+<p># 2. 路径合规性</p>
+<p>compliance = self._check_compliance(trajectory)</p>
+<p>reward += 2.0 * compliance</p>
+
+<p># 3. 工具调用效率</p>
+<p>efficiency = self._compute_efficiency(trajectory)</p>
+<p>reward += 1.0 * efficiency</p>
+
+<p># 4. 对抗性路径抑制（关键安全机制）</p>
+<p>if self._is_adversarial_bypass(trajectory):</p>
+<p>reward -= 20.0  # 严重惩罚绕过安全限制</p>
+
+<p>return reward</p>
+
+<p>def _is_adversarial_bypass(self, trajectory: List[dict]) -> bool:</p>
+<p>"""检测是否绕过安全限制"""</p>
+<p># 伪代码：检测对抗性模式</p>
+<p>return any("bypass" in str(step) for step in trajectory)</p>
+
+<p>def _check_compliance(self, trajectory: List[dict]) -> float:</p>
+<p>"""路径合规性检查"""</p>
+<p>return random.uniform(0.5, 1.0)</p>
+
+<p>def _compute_efficiency(self, trajectory: List[dict]) -> float:</p>
+<p>"""效率评估"""</p>
+<p>return random.uniform(0.3, 0.8)</p>
+
+<p>def grpo_update(self, experiences: List[Experience]):</p>
+<p>"""GRPO策略更新（伪代码）"""</p>
+<p># 1. 计算优势估计</p>
+<p># 2. 策略梯度更新</p>
+<p># 3. KL散度约束</p>
+<p>pass</p>
+
+<h1>============================================</h1>
+<h1>5. 整合示例</h1>
+<h1>============================================</h1>
+<p>class MockModel:</p>
+<p>"""模拟模型"""</p>
+<p>def attempt(self, task):</p>
+<p>class Result:</p>
+<p>success = random.random() > 0.5</p>
+<p>gap_location = "step_2"</p>
+<p>return Result()</p>
+
+<p>if __name__ == "__main__":</p>
+<p># 初始化</p>
+<p>model = MockModel()</p>
+<p>reasoning_fw = ReasoningFlywheel()</p>
+<p>agentic_fw = AgenticFlywheel()</p>
+
+<p># 推理飞轮</p>
+<p>reasoning_fw.generate_initial_tasks()</p>
+<p>reasoning_fw.run_iteration(model)</p>
+
+<p># 智能体飞轮</p>
+<p>linear_workflow = ["query_inventory", "place_order"]</p>
+<p>workflow_tree = agentic_fw.treefy_linear_workflow(linear_workflow)</p>
+
+<p># RL训练</p>
+<p>rl_trainer = RLTraining(model)</p>
+<p>sample_traj = [{"action": "query", "safe": True}]</p>
+<p>reward = rl_trainer.compute_reward(sample_traj, task_success=True)</p>
+
+<p>print(f"任务数: {len(reasoning_fw.tasks)}")</p>
+<p>print(f"奖励: {reward:.2f}")</p>
+</code>``
+
+<h3>🔢 核心公式</h3>
+
+<strong>公式 1</strong>：
+
+<p>$$</p>
+<p>\begin{align}</p>
+<p>\text{user back-}</p>
+<p>\end{align}</p>
+<p>$$</p>
+
+<em>含义</em>：user back-
+
+<strong>公式 2</strong>：
+
+<p>$$</p>
+<p>\begin{align*}</p>
+<p>(1)&\ \text{natural user request},\\</p>
+<p>(2)&\ \text{expected compliant tool-calling path},\\</p>
+<p>(3)&\ \text{adversarial hack path}</p>
+<p>\end{align*}</p>
+<p>$$</p>
+
+<em>含义</em>：natural user request, (2) expected compliant tool-calling path, and (3) adversarial hack path
+
+<strong>公式 3</strong>：
+
+<p>$$</p>
+<p>\begin{align*}</p>
+<p>\pi_{\theta} \gets \text{RL\_Train}\bigl(\pi_{\theta}, T_k, E, U\bigr)</p>
+<p>\end{align*}</p>
+<p>$$</p>
+
+<em>含义</em>：πθ ←RL_Train(πθ, Tk, E, U)
+
+<hr>
+
+<h2>🔬 实验结果</h2>
+
+<strong>数据集</strong>：TAU-2、BFCL-V4 Multi-Turn等公开智能体基准测试集，以及工业智能体系统的真实工具调用日志
+
+<strong>评价指标</strong>：任务成功率、路径合规率、工具调用准确率、端到端执行效率、工业系统响应时间
+
+<strong>主要结果</strong>：
+
+<p>AgenticQwen在多个公开智能体基准上取得显著性能提升，迭代训练过程中呈现持续上升曲线。在工业级智能体系统验证中，模型展现出良好的鲁棒性，能够处理复杂的决策分支和状态依赖关系。实验表明，双数据飞轮的训练策略相比单次大规模数据训练，能够更高效地提升模型能力，尤其是面对分布外任务时表现更为稳定。</p>
+
+
+<strong>主要发现：</strong>
+
+<ul><li>✅ 双飞轮迭代训练呈现明显的「飞轮效应」，每轮迭代都带来性能净提升</li>
+<li>✅ 推理飞轮有效解决了任务难度的自动递进问题，模型在更高难度任务上收敛更快</li>
+<li>✅ 智能体飞轮生成的分支行为树显著增强了模型的决策多样性</li>
+<li>✅ 对抗性路径训练显著提升了模型的安全合规能力</li>
+</ul>
+
+<hr>
+
+<h2>🎯 创新点分析</h2>
+
+<p>| 创新点 | 说明 |</p>
+<p>|--------|------|</p>
+<p>| 自动化难度控制 | 通过错误分析自动调节任务难度，避免人工设计瓶颈，实现推理能力的渐进式提升 |</p>
+<p>| 工作流树化扩展 | 将线性工具调用扩展为多分支行为树，模拟真实工业场景的复杂决策网络 |</p>
+<p>| 双飞轮协同 | 推理飞轮提升单步能力，智能体飞轮扩展决策空间，两者协同实现能力互补 |</p>
+<p>| 工业级验证 | 采用状态可验证的评判标准，确保训练信号与实际业务需求对齐 |</p>
+
+<hr>
+
+<h2>🏭 工业落地思考</h2>
+
+<strong>适用场景：</strong>
+
+<ul><li>🎯 企业内部知识库问答与文档检索工具链</li>
+<li>🎯 电商订单处理与库存管理自动化系统</li>
+<li>🎯 客户服务对话智能体与工单流转系统</li>
+<li>🎯 数据库查询与报表生成的数据分析智能体</li>
+</ul>
+
+<strong>实现难度</strong>：中等
+
+<strong>工程挑战：</strong>
+
+<ul><li>⚠️ 真实工业环境工具接口的标准化与适配</li>
+<li>⚠️ 决策分支数量爆炸带来的状态空间管理</li>
+<li>⚠️ 工具调用失败时的优雅降级与恢复策略</li>
+<li>⚠️ 小模型的推理效率与精度的平衡</li>
+</ul>
+
+<strong>代码实现思路</strong>：
+
+<p>核心实现分三阶段：1) 工具接口标准化封装，统一输入输出格式；2) 基于LLM的轨迹生成器，自动构建线性→树状工作流；3) GRPO强化学习训练循环，集成合规性奖励与成功率奖励。关键优化点在于使用批量生成+过滤机制控制合成数据质量，优先选择多样性高且难度适中的样本。</p>
+
+
+<hr>
+
+<h2>📝 总结与展望</h2>
+
+<strong>核心收获</strong>：双数据飞轮框架证明了用有限数据训练高性能小模型智能体的可行性，为工业级部署提供了新的技术路径。
+
+<strong>未来方向</strong>：探索飞轮的自启动机制（无需种子数据）、多模态工具调用支持、以及跨领域迁移能力。
+
+
+<hr>
+
+<h2>❓ 常见问题</h2>
+
+<strong>Q：为什么选择小模型而不是直接用大模型？</strong>
+
+<p>A：工业场景对推理延迟和部署成本有严格要求。小模型（如7B参数级）在优化后可达到与大模型相当的工具调用准确率，同时显著降低推理成本和响应延迟，更适合大规模生产部署。</p>
+
+
+<strong>Q：双飞轮训练是否会陷入局部最优？</strong>
+
+<p>A：设计上通过难度梯度控制避免此问题：推理飞轮确保难度递增，智能体飞轮确保决策多样性。只要初始种子数据足够多样化，飞轮机制会持续推动模型探索更优策略。</p>
+
+
+<strong>Q：如何保证合成数据的质量？</strong>
+
+<p>A：采用「生成-验证-过滤」三阶段机制：生成阶段使用规则模板保证语法正确性，验证阶段通过模拟执行检查状态变化是否符合预期，过滤阶段剔除与真实分布偏差过大的样本。</p>
+
+
+<strong>Q：对抗性路径训练的具体机制是什么？</strong>
+
+<p>A：在奖励函数中引入安全约束项：当模型成功绕过安全检查（如访问未授权资源、构造恶意输入）时给予大幅负奖励，引导模型学习「拒绝执行不安全操作」而非「尝试绕过限制」。</p>
+
+
+<hr>
+
+<h2>📷 论文图片</h2>
+
+<strong>Figure 1</strong>: Overview of our dual data flywheels. The reasoning data flywheel generates increasingly challenging,
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_0.png" target="_blank">Figure 1</a></p>
+
+<strong>Figure 2</strong>: Performance gains from iterative data flywheel training. Across TAU-2 and BFCL-V4 Multi-Turn, both
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_1.png" target="_blank">Figure 2</a></p>
+
+<strong>Figure 3</strong>: Case study of AgenticQwen in a production
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_2.png" target="_blank">Figure 3</a></p>
+
+<strong>Figure 4</strong>: get_player_stats
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_3.png" target="_blank">Figure 4</a></p>
+
+<strong>Figure 4</strong>: Expected execution: compliant path (left) ver-
+
+<p>!<a href="/home/sandbox/.openclaw/workspace/ai_daily/paper_cache/figure_2_4.png" target="_blank">Figure 4</a></p>
+
+<hr>
+
+<em>本文由 AI 推荐日报自动生成，仅供参考学习</em>
+
+        </article>
+        
+        <footer class="footer">
+            <p>本文由 AI 推荐日报自动生成，仅供参考学习</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/Jack-Zhuang/ai-daily-report" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
