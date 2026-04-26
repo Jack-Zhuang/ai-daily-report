@@ -277,18 +277,28 @@ if (pickType === 'paper') {
 
 ### 11.3 同步时的注意事项
 
-**每次同步 `index.html` 到 `docs/index.html` 时，必须保留以下修复：**
+**⚠️ 重要：修复应该在 `generate_report.py` 中进行，而不是直接修改 `docs/index.html`！**
 
-1. ✅ 路径修复：`docs/insights/` → `insights/`
-2. ✅ 路径修复：`docs/conferences/` → `conferences/`
-3. ✅ 路径修复：`conferences/xxx/index.html` → `conferences/xxx.html`
-4. ✅ 按钮文案逻辑：根据 `source` 判断是否是 arXiv
+原因：`generate_report.py` 生成的 `index.html` 会通过 `sync_to_docs.sh` 同步到 `docs/index.html`，直接修改 `docs/index.html` 会被覆盖。
+
+**每次修改 `generate_report.py` 后，需要重新运行生成脚本：**
+```bash
+python3 scripts/generate_report.py
+./sync_to_docs.sh
+```
+
+**必须保留的修复（在 `generate_report.py` 中）：**
+
+1. ✅ pickType 优先使用 item.type：`item.pick_type || item.type || 'paper'`
+2. ✅ 按钮文案逻辑：根据 `source` 判断是否是 arXiv
+3. ✅ 路径修复：`insights/` 而不是 `docs/insights/`
+4. ✅ 会议链接：`conferences/xxx.html` 而不是 `conferences/xxx/index.html`
 5. ✅ arXiv 数据注入：`arxivPapers` 不能为空数组
-6. ✅ pickType 优先使用 item.type：`item.pick_type || item.type || 'paper'`
-7. ✅ JavaScript 初始化时机：使用 `document.readyState` 判断
-8. ✅ 热门文章点击：使用 `item.id` 而不是索引
-9. ✅ 论文ID替换：`replace(/[^\w\-]/g, '_')` 处理点号等特殊字符
-10. ✅ 顶会论文 has_insight 判断：决定跳转解读页还是原文
+6. ✅ JavaScript 初始化时机：使用 `document.readyState` 判断
+7. ✅ 热门文章点击：使用 `item.id` 而不是索引
+8. ✅ 论文ID替换：`replace(/[^\w\-]/g, '_')` 处理点号等特殊字符
+9. ✅ 顶会论文 has_insight 判断：决定跳转解读页还是原文
+10. ✅ GitHub 项目历史去重：过滤 30 天内已发布的项目
 
 ### 11.4 已验证存在的优化（无需修复）
 
