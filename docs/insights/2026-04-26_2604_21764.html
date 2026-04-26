@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thinking with Reasoning Skills: Fewer Tokens, More Accuracy - 论文解读</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --color-text: #1a1a2e;
+            --color-text-secondary: #4a4a6a;
+            --color-text-muted: #8888a0;
+            --color-card: #ffffff;
+            --color-bg: #f5f7fa;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.8;
+        }
+        
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(12px);
+            padding: 12px 20px;
+            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .nav-back {
+            width: 36px; height: 36px;
+            background: rgba(102,126,234,0.1);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: #667eea; text-decoration: none; font-size: 16px;
+        }
+        .nav-title { font-size: 15px; font-weight: 600; }
+        .nav-link {
+            padding: 8px 16px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 10px;
+            font-size: 13px; font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .hero {
+            background: var(--gradient-primary);
+            padding: 80px 20px 40px;
+            color: white;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px; font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .hero-title {
+            font-size: 22px; font-weight: 700;
+            line-height: 1.4; margin-bottom: 12px;
+        }
+        
+        .main {
+            padding: 20px 20px 100px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .section-header {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid rgba(102,126,234,0.1);
+        }
+        .section-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+        }
+        .section-icon.yellow { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .section-icon.blue { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+        .section-icon.green { background: linear-gradient(135deg, #34d399, #10b981); }
+        .section-icon.purple { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
+        .section-icon.pink { background: linear-gradient(135deg, #f472b6, #ec4899); }
+        .section-icon.orange { background: linear-gradient(135deg, #fb923c, #f97316); }
+        .section-icon.cyan { background: linear-gradient(135deg, #22d3ee, #06b6d4); }
+        .section-title { font-size: 18px; font-weight: 700; }
+        
+        .content { font-size: 15px; color: var(--color-text-secondary); }
+        .content p { margin-bottom: 16px; }
+        .content h3 { font-size: 16px; font-weight: 600; color: var(--color-text); margin: 24px 0 12px; }
+        
+        .key-points { margin: 16px 0; padding-left: 24px; }
+        .key-points li { margin-bottom: 8px; color: var(--color-text); }
+        
+        .innovation-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .innovation-table td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.06); vertical-align: top; }
+        .innovation-table td:first-child { width: 30%; color: #667eea; }
+        
+        .figures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .figure-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 12px;
+        }
+        .figure-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            background: white;
+        }
+        .figure-caption {
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--color-text-muted);
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08));
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .stat-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+        
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .comparison-table td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+        
+        .findings-list { display: flex; flex-direction: column; gap: 16px; }
+        .finding-item { display: flex; gap: 16px; align-items: flex-start; }
+        .finding-num {
+            width: 32px; height: 32px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 14px;
+            flex-shrink: 0;
+        }
+        .finding-text { font-size: 15px; color: var(--color-text-secondary); }
+        
+        .discussion-content { display: flex; flex-direction: column; gap: 20px; }
+        .discussion-item h4 {
+            font-size: 14px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        .discussion-item p { font-size: 14px; color: var(--color-text-secondary); }
+        
+        .tags {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            padding: 16px 0;
+        }
+        .tag {
+            background: rgba(102,126,234,0.1);
+            color: #667eea;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px; font-weight: 600;
+        }
+        
+        .bottom-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(12px);
+            padding: 12px 20px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            display: flex; gap: 12px;
+        }
+        .btn {
+            flex: 1;
+            height: 48px;
+            border: none; border-radius: 12px;
+            font-size: 15px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            cursor: pointer; text-decoration: none;
+        }
+        .btn-primary { background: var(--gradient-primary); color: white; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="javascript:history.back()" class="nav-back"><i class="fas fa-arrow-left"></i></a>
+        <span class="nav-title">论文解读</span>
+        <a href="https://arxiv.org/abs/2604.21764" class="nav-link" target="_blank"><i class="fas fa-external-link-alt"></i> 原文</a>
+    </nav>
+    
+    <div class="hero">
+        <div class="hero-badge">
+            <i class="fas fa-file-alt"></i>
+            <span>arXiv:2604.21764</span>
+        </div>
+        <h1 class="hero-title">Thinking with Reasoning Skills: Fewer Tokens, More Accuracy</h1>
+    </div>
+    
+    <main class="main">
+        
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon yellow">📋</div>
+                <h2 class="section-title">摘要速览</h2>
+            </div>
+            <div class="content">
+                <p>本论文提出Thinking with Reasoning Skills (TRS)框架，通过从历史推理轨迹中提炼可重用的「推理技能」并在推理时检索使用，实现用更少令牌完成更准确推理的突破。方法包括离线阶段将长推理轨迹蒸馏成包含触发词、行动指南、避免事项、检查点、风险提示的结构化技能卡，以及在线推理时根据问题检索相关技能卡并注入提示引导模型。实验表明：在Doubao模型上，数学准确率94.9%（仅下降0.2%），但令牌减少59.1%，成本降低53.8%；Gemini-3-Flash数学准确率提升至95.5%，成本降低17.5%；GPT-4o-mini编程准确率提升至24.4%。在困难问题（推理token≥12k）上，TRS将令牌从~12k降至~5k且保持高准确率。该工作打破了传统推理方法的效率-准确性权衡，为商业API部署提供了经济高效的解决方案。</p>
+                <ul class="key-points"><li>推理技能可显式提取和复用：将从零推理转变为检索-复用模式，将一次性的昂贵探索成本分摊到多次复用中，边际成本接近零</li><li>困难问题优势更明显：当基线模型推理token≥12k时，TRS将令牌减半且保持顶级精度，说明技能卡作为「导航图」在探索成本高时价值最大</li><li>结构化技能卡优于非结构化表示：5字段结构化设计（Trigger/Do/Avoid/Check/Risk）配合93k规模技能库达到最佳性能，朴素检索和自由文本无法解释TRS收益</li><li>失败模式技能卡的价值：区分成功和失败轨迹，分别提取「怎么做」和「避开什么」，帮助模型避开常见错误陷阱</li></ul>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon blue">📖</div>
+                <h2 class="section-title">研究背景</h2>
+            </div>
+            <div class="content">
+                <p>现代推理模型（如OpenAI o1、DeepSeek-R1）生成大量「思考」令牌（有时达数千个），导致推理成本高、延迟大。商业API按令牌计费，推理成本可能成为大规模部署的瓶颈。现有加速方法（如强制缩短推理链的CoD、硬性限制token预算的TALE）往往以牺牲准确性为代价。论文认为这一问题的本质是「每次都重新推导」的范式浪费了历史推理中积累的知识，需要一种新的知识复用机制来解决效率-准确性权衡困境。</p>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon green">⚙️</div>
+                <h2 class="section-title">方法详解</h2>
+            </div>
+            <div class="content">
+                <p>TRS采用三步流程实现推理技能复用：第一步「备菜」（离线构建）将模型的长推理轨迹（几千token）通过强模型（如Gemini-3）蒸馏成紧凑的技能卡（~50token+触发词），每张技能卡包含5个结构化字段——Trigger（触发条件）、Do（行动指南）、Avoid（避免事项）、Check（检查点）、Risk（风险提示），成功轨迹提取核心解法，失败轨迹提取常见错误及修复方法；第二步「找菜」（在线检索）使用BM25稀疏检索、Embedding稠密检索或混合检索，根据问题+触发词拼接的检索键匹配最相关的技能卡；第三步「做菜」（注入推理）将检索到的技能卡注入Prompt引导模型直接走正确路径而非从零探索。技能卡的设计使得知识可跨模型迁移，离线构建成本固定后，每次新请求的边际成本大幅降低。</p>
+                
+                <h3>核心创新</h3>
+                <table class="innovation-table">
+                    <tbody>
+                        <tr><td><strong>推理技能的显式提取与复用范式</strong></td><td>区别于传统从零推理或简单压缩推理链的方法，TRS从历史轨迹中显式提取可迁移的推理模式，将知识从隐式于模型权重转为显式于技能库，实现「一次构建、多次复用」的经济模式</td></tr><tr><td><strong>区分成功/失败轨迹的双通道技能蒸馏</strong></td><td>分别处理正确和错误的推理轨迹，提取「核心解法」和「避免事项」两类技能卡，类似同时观看老司机示范和事故视频，既学正确操作又避免常见错误</td></tr><tr><td><strong>结构化技能卡的五字段设计</strong></td><td>每张技能卡包含Trigger/Do/Avoid/Check/Risk五个结构化字段，既提高检索匹配性，又便于模型遵循执行，相比自由文本摘要有显著优势</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon purple">📊</div>
+                <h2 class="section-title">论文图表</h2>
+            </div>
+            <div class="figures-grid">
+                
+            <div class="figure-card">
+                <img src="figures/2604_21764/fig_1.png" alt="Figure 1" loading="lazy">
+                
+            </div>
+            <div class="figure-card">
+                <img src="figures/2604_21764/fig_2.png" alt="Figure 2" loading="lazy">
+                
+            </div>
+            <div class="figure-card">
+                <img src="figures/2604_21764/fig_3.png" alt="Figure 3" loading="lazy">
+                
+            </div>
+            <div class="figure-card">
+                <img src="figures/2604_21764/fig_5.png" alt="Figure 5" loading="lazy">
+                
+            </div>
+            <div class="figure-card">
+                <img src="figures/2604_21764/fig_6.png" alt="Figure 6" loading="lazy">
+                
+            </div>
+            <div class="figure-card">
+                <img src="figures/2604_21764/fig_7.png" alt="Figure 7" loading="lazy">
+                
+            </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon pink">📈</div>
+                <h2 class="section-title">实验结果</h2>
+            </div>
+            <div class="content">
+                <p><strong>数据集：</strong>DEEPMATH-103K（93K源问题+10K评估）：数学基准测试，用于构建技能库和端到端评估, NEMOTRON-COMPETITIVE-PROGRAMMING-V1（26.6K筛选→1K测试）：编程基准测试，用于端到端评判, AoPS-derived竞赛题库（7,616道）：外部迁移测试，验证从竞赛题蒸馏的技能跨领域迁移能力, AIME 2024 I/II, AIME 2025/2026, HMMT November 2025（共120题）：验证外部竞赛数学迁移能力</p>
+            </div>
+            
+            <h3>主要结果</h3>
+            <div class="stats-grid">
+                
+                <div class="stat-card">
+                    <div class="stat-value">Doubao Seed数学：准确率94.9%（-0.2%），令牌减少59.1%，成本降低53.8%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">Gemini-3-Flash数学：准确率95.5%（+0.7%），令牌减少18.5%，成本降低17.5%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">GPT-4o-mini数学：准确率61.4%（+1.8%），令牌减少20.6%，成本降低6.9%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">GPT-4o-mini编程：准确率24.4%（+2.4%），令牌减少33.9%，成本降低6.3%</div>
+                </div>
+            </div>
+            
+            <h3>方法对比</h3>
+            <table class="comparison-table">
+                <tbody>
+                    <tr><td>vs TALE-EP/CoD/NoWait：在困难问题上基线方法精度灾难性崩溃，TRS精度提升45%-80%</td></tr><tr><td>vs Direct：无检索基线准确率92.8%，Raw examples 92.0%，Raw CoT 91.0%，Full TRS 92.6%</td></tr><tr><td>库覆盖率：10k cards 91.8%→30k cards 90.6%（反直觉下降）→93k cards 92.6%，说明需要足够规模和质量的技能库</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon orange">🏆</div>
+                <h2 class="section-title">主要发现</h2>
+            </div>
+            <div class="findings-list">
+                
+            <div class="finding-item">
+                <div class="finding-num">1</div>
+                <div class="finding-text">TRS在困难问题上优势最明显：推理token≥12k时，令牌减半但精度不降甚至提升，证明技能卡作为「导航图」在高探索成本场景价值最大</div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-num">2</div>
+                <div class="finding-text">结构化技能卡+充分覆盖率是必要条件：朴素检索无法解释TRS收益，从10k到93k规模需配合结构化设计才能发挥最佳效果</div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-num">3</div>
+                <div class="finding-text">存在一定失败案例：Doubao数学准确率下降0.2%，Gemini编程下降0.3%，GPT-OSS-120B编程成本增加4.8%，12/25模型-基准对在外部测试中准确率下降</div>
+            </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon cyan">💬</div>
+                <h2 class="section-title">讨论与展望</h2>
+            </div>
+            <div class="discussion-content">
+                <div class="discussion-item"><h4>⚠️ 局限性</h4><p>论文存在几方面不足。首先，统计验证缺失：无p值、无置信区间、无多次运行标准差，0.7%的提升可能仅是随机波动。其次，失败案例分析不深入：Doubao数学下降0.2%是否在统计误差范围内未说明，检索到不相关技能导致误导的机制未分析。成本计算片面：仅计算推理token，离线构建成本、存储成本、检索开销均未计入。核心假设缺乏充分验证：表面相似问题是否真有可复用模式未系统论证，技能蒸馏质量依赖强模型能力但无质量控制。检索和仲裁机制设计不完整：简单指令「忽略矛盾建议」将关键选择交给黑盒模型判断，可靠性存疑。此外，评估范围有限：主要聚焦有明确验证器的数学和编程任务，未涵盖开放域、主观评判、Agent任务等更广泛场景。</p></div><div class="discussion-item"><h4>🔮 未来方向</h4><p>方法层面可从三方面改进：一是技能卡多样性，同一问题保留多个可选技能卡和不同推理路径；二是自适应检索数量，根据问题复杂度动态决定而非固定k值；三是技能卡质量评分和反馈机制，推理失败时自动降低被错误依赖的技能卡权重。实验层面需增加统计验证（p值、置信区间）、扩展评估范围（开放域任务、主观评判）、更全面基线对比（知识蒸馏、模型压缩）。应用层面需设计增量更新机制应对问题分布变化，以及技能库压缩技术减少存储开销。多模态扩展也值得探索：技能卡能否用于视觉推理、多模态任务？</p></div><div class="discussion-item"><h4>💡 应用场景</h4><p>TRS对以下场景具有直接价值：商业API成本优化场景，GPT-4o-mini成本降低6.9%对高调用量应用有意义；数学/编程教育辅助，提供解题思路导航而不暴露完整答案；实时推理服务，困难问题令牌减半可显著降低延迟；资源受限部署，边缘设备或低配服务器受益于token大幅减少；跨模型知识迁移，技能卡作为语言化知识可在不同模型间共享。企业级应用需考虑冷启动问题（新领域需先构建技能库）和模型适配问题（不同模型对技能卡的遵循能力不同）。</p></div><div class="discussion-item"><h4>🌍 领域影响</h4><p>TRS提出「推理技能复用」新范式，为LLM推理效率优化提供了有别于模型压缩和推理链截断的第三条路。核心贡献是证明结构化技能库可打破效率-准确性权衡，尤其在困难问题上优势明显。然而，论文的实验和论证存在明显不足（统计验证缺失、失败分析不深入、成本计算片面），读者应将其视为初步探索而非成熟方案，谨慎对待其成功案例。其潜在风险是如果社区盲目跟进，可能构建大量质量参差的技能库，陷入类似「捷径学习」的困境。</p></div>
+            </div>
+        </div>
+        
+        <div class="tags"><span class="tag">LLM推理优化</span><span class="tag">推理效率</span><span class="tag">技能复用</span><span class="tag">检索增强生成</span><span class="tag">成本优化</span></div>
+    </main>
+    
+    <div class="bottom-bar">
+        <a href="https://arxiv.org/abs/2604.21764" class="btn btn-primary" target="_blank">
+            <i class="fas fa-book"></i> 阅读原论文
+        </a>
+    </div>
+</body>
+</html>

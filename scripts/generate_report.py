@@ -2258,13 +2258,19 @@ class ReportGenerator:
         # 保存到归档
         self.save_to_archive(data, html)
         
-        # 同时保存到主目录
+        # 保存到主目录
         main_path = self.base_dir / "index.html"
         main_path.write_text(html, encoding="utf-8")
+        
+        # 同时保存到 docs 目录（GitHub Pages 需要）
+        docs_path = self.base_dir / "docs" / "index.html"
+        docs_path.parent.mkdir(exist_ok=True)
+        docs_path.write_text(html, encoding="utf-8")
         
         print(f"\n{'='*50}")
         print(f"✅ 日报生成完成！")
         print(f"   📄 主文件: {main_path}")
+        print(f"   📄 Docs文件: {docs_path}")
         print(f"   📁 归档: {self.archive_dir / self.today}")
         print(f"{'='*50}\n")
         
