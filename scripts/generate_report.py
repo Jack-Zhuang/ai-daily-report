@@ -1215,16 +1215,12 @@ class ReportGenerator:
             const isArxivPaper = item.source === 'arXiv' || item.type === 'paper' || (item.link && item.link.includes('arxiv.org'));
             
             if (isArxivPaper && pickType === 'paper') {{
-                // arXiv 论文：根据 has_insight 决定跳转目标
+                // arXiv 论文：始终跳转到解读页面
                 const paperId = (item.id || item.arxiv_id || '').replace(/[^\\w\\-]/g, '_');
                 const insightUrl = `insights/${{data.date}}_${{paperId}}.html`;
                 
-                if (item.has_insight) {{
-                    // 有解读：跳转到解读页
-                    footerHtml = `<a href="${{insightUrl}}" class="detail-link"><i class="fas fa-book-reader"></i> 查看论文解读</a>`;
-                }} else {{
-                    // 无解读：跳转到 arXiv 原文
-                    footerHtml = `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 查看 arXiv 原文</a>`;
+                // 论文点击直接跳转解读页
+                footerHtml = `<a href="${{insightUrl}}" class="detail-link"><i class="fas fa-book-reader"></i> 查看论文解读</a>`;
                 }}
             }} else if (pickType === 'github' || item.type === 'github') {{
                 footerHtml = `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 访问 GitHub</a>`;
