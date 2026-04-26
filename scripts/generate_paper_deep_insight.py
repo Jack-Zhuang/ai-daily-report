@@ -149,13 +149,12 @@ class PaperDeepInsightGenerator:
                             pil_img.getpixel((min(10, width-1), min(10, height-1)))[:3] if pil_img.mode == 'RGB' else (0, 0, 0),
                         ]
                         
-                        # 如果四角都是黑色，可能是黑色背景的图表，需要处理
+                        # 如果四角都是黑色，可能是黑色背景的图表，需要反转颜色
                         if all(c[0] < 30 and c[1] < 30 and c[2] < 30 for c in corners):
-                            # 创建白色背景并合成
-                            white_bg = Image.new('RGB', pil_img.size, (255, 255, 255))
-                            # 使用叠加模式
-                            white_bg.paste(pil_img, (0, 0))
-                            pil_img = white_bg
+                            # 使用 ImageOps 反转颜色（黑色变白色）
+                            from PIL import ImageOps
+                            pil_img = ImageOps.invert(pil_img)
+                            print(f"    🔄 反转图片颜色（黑色背景 -> 白色背景）")
                             
                     except Exception as e:
                         print(f"    ⚠️ 图片处理失败: {e}")
