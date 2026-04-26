@@ -76,10 +76,12 @@ class PaperDeepInsightGenerator:
             return None
     
     def extract_figures(self, pdf_path: Path, arxiv_id: str) -> List[str]:
-        """从 PDF 中提取图表 - 使用页面渲染方式获取高质量图表
+        """从 PDF 中精确提取图表
         
-        注意：很多 PDF 中的图表是矢量图形，不是嵌入的位图。
-        因此需要渲染页面区域来获取真正的图表。
+        方法：
+        1. 查找 "Figure X." 标题的精确位置
+        2. 根据标题位置推断图表区域（图表通常在标题上方）
+        3. 裁剪出单个图表
         """
         try:
             import fitz  # PyMuPDF
@@ -99,64 +101,86 @@ class PaperDeepInsightGenerator:
         try:
             doc = fitz.open(str(pdf_path))
             
-            # 1. 提取所有图表说明
-            full_text = ""
-            for page in doc:
-                full_text += page.get_text()
+            # 高分辨率渲染参数
+            scale = 2.0
+            mat = fitz.Matrix(scale, scale)
             
-            # 匹配 Figure X: caption 格式
-            caption_pattern = r"(?m)(?:Figure|Fig\.?)\s*(\d+)[.:]\s*([^\n]+)"
-            for match in re.finditer(caption_pattern, full_text):
-                fig_num = int(match.group(1))
-                caption = match.group(2).strip()
-                if len(caption) > 10:
-                    figure_captions[fig_num] = caption[:200]
-            
-            print(f"  📝 找到 {len(figure_captions)} 个图表说明")
-            
-            # 2. 查找包含图表的页面并渲染
-            # 使用高分辨率渲染 (2x = 144 DPI)
-            mat = fitz.Matrix(2.0, 2.0)
-            
-            fig_count = 0
+            # 遍历每一页，查找 Figure 标题并裁剪
             for page_num in range(len(doc)):
                 page = doc[page_num]
-                page_text = page.get_text()
+                page_rect = page.rect
                 
-                # 检查页面是否包含图表
-                figures_on_page = re.findall(r'Figure\s+(\d+)', page_text)
-                if not figures_on_page:
-                    continue
-                
-                # 渲染整个页面
+                # 渲染页面
                 pix = page.get_pixmap(matrix=mat)
                 img_data = pix.tobytes("png")
                 pil_img = Image.open(io.BytesIO(img_data))
                 
-                # 保存整个页面作为图表来源
-                fig_count += 1
-                img_filename = f"fig_{fig_count}.png"
-                img_path = figures_dir / img_filename
+                # 查找 "Figure X." 标题
+                text_dict = page.get_text("dict")
                 
-                # 裁剪掉页眉页脚（通常图表在中间区域）
-                # 页面尺寸: 1224x1584 (2x 缩放)
-                # 保留中间 80% 的区域
-                width, height = pil_img.size
-                crop_top = int(height * 0.1)  # 去掉顶部 10%
-                crop_bottom = int(height * 0.9)  # 去掉底部 10%
-                
-                cropped_img = pil_img.crop((0, crop_top, width, crop_bottom))
-                cropped_img.save(img_path, 'PNG')
-                
-                figure_paths.append(str(img_path))
-                
-                if fig_count >= 8:  # 最多 8 页
-                    break
+                for block in text_dict["blocks"]:
+                    if "lines" not in block:
+                        continue
+                    for line in block["lines"]:
+                        for span in line["spans"]:
+                            text_content = span.get("text", "")
+                            # 精确匹配 "Figure X." 或 "Fig. X."
+                            match = re.match(r'^(Figure|Fig\.)\s*(\d+)\.\s*(.+)?', text_content)
+                            if match:
+                                fig_num = int(match.group(2))
+                                caption = match.group(3).strip() if match.group(3) else ""
+                                bbox = span["bbox"]  # (x0, y0, x1, y1)
+                                
+                                # 保存图表说明
+                                if caption and len(caption) > 10:
+                                    figure_captions[fig_num] = caption[:200]
+                                
+                                # 计算图表区域（图表在标题上方）
+                                fig_height = page_rect.height * 0.30
+                                
+                                fig_top = max(page_rect.height * 0.08, bbox[1] - fig_height)
+                                fig_bottom = bbox[1] - 5
+                                
+                                # 水平方向：根据标题位置决定
+                                if bbox[0] > page_rect.width * 0.4:
+                                    # 右列
+                                    fig_left = page_rect.width * 0.5
+                                    fig_right = page_rect.width - 20
+                                else:
+                                    # 左列
+                                    fig_left = 20
+                                    fig_right = page_rect.width * 0.5 - 10
+                                
+                                # 缩放坐标
+                                crop_box = (
+                                    int(fig_left * scale),
+                                    int(fig_top * scale),
+                                    int(fig_right * scale),
+                                    int(fig_bottom * scale)
+                                )
+                                
+                                # 裁剪
+                                fig_img = pil_img.crop(crop_box)
+                                
+                                # 过滤太小的图片（可能是表格而非图表）
+                                if fig_img.width < 200 or fig_img.height < 100:
+                                    continue
+                                
+                                # 保存
+                                img_filename = f"fig_{fig_num}.png"
+                                img_path = figures_dir / img_filename
+                                fig_img.save(img_path, 'PNG')
+                                
+                                figure_paths.append(str(img_path))
+                                
+                                print(f"    📊 Figure {fig_num}: {fig_img.size[0]}x{fig_img.size[1]}")
             
             doc.close()
             
             if figure_paths:
-                print(f"  🖼️ 渲染了 {len(figure_paths)} 页图表")
+                print(f"  🖼️ 提取了 {len(figure_paths)} 张图表")
+                if figure_captions:
+                    print(f"  📝 找到 {len(figure_captions)} 个图表说明")
         
         except Exception as e:
             print(f"  ⚠️ 图表提取失败: {e}")
