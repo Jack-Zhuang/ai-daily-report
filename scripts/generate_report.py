@@ -66,6 +66,16 @@ class ReportGenerator:
         # ========== 强约束验证 ==========
         # 1. 每日精选必须是5项，顺序为：3文章+1论文+1GitHub
         daily_pick = data.get('daily_pick', [])
+        
+        # 验证每日精选中的论文是否有解读
+        insights_dir = self.base_dir / "docs" / "insights"
+        for i, item in enumerate(daily_pick):
+            if item.get('type') == 'paper':
+                paper_id = str(item.get('id', item.get('arxiv_id', ''))).replace('.', '_')
+                insight_file = insights_dir / f"{date}_{paper_id}.html"
+                if not insight_file.exists():
+                    print(f"⚠️ 每日精选第{i+1}项论文缺少解读: {item.get('title', '')[:30]}")
+        
         if len(daily_pick) != 5:
             print(f"⚠️ 每日精选数量错误: {len(daily_pick)}项，应为5项")
         
@@ -97,23 +107,26 @@ class ReportGenerator:
         if github_projects:
             self._update_github_history(github_projects, history_file)
         
-        # 3. arXiv论文必须是5项
+        # 3. arXiv论文必须是5项，且必须有解读
         arxiv_papers = data.get('arxiv_papers', [])
         
         # 检查每篇论文是否有解读文件
         insights_dir = self.base_dir / "docs" / "insights"
+        papers_with_insight = []
         for paper in arxiv_papers:
             paper_id = str(paper.get('id', paper.get('arxiv_id', ''))).replace('.', '_')
             insight_file = insights_dir / f"{date}_{paper_id}.html"
-            paper['has_insight'] = insight_file.exists()
+            if insight_file.exists():
+                paper['has_insight'] = True
+                papers_with_insight.append(paper)
         
-        if len(arxiv_papers) > 5:
-            arxiv_papers = arxiv_papers[:5]
-            print(f"⚠️ arXiv论文截取为5项")
+        # 只保留有解读的论文，确保5篇
+        arxiv_papers = papers_with_insight[:5]
         
-        # 统计有解读的论文数量
-        insight_count = sum(1 for p in arxiv_papers if p.get('has_insight'))
-        print(f"📖 arXiv论文解读: {insight_count}/{len(arxiv_papers)} 篇有解读")
+        if len(arxiv_papers) < 5:
+            print(f"⚠️ arXiv论文有解读的不足5篇: {len(arxiv_papers)}篇")
+        else:
+            print(f"📖 arXiv论文解读: {len(arxiv_papers)}/5 篇有解读 ✅")
         
         # 4. 热门文章去重（移除与每日精选重复的）
         pick_titles = set()

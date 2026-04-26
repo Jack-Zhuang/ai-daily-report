@@ -291,14 +291,38 @@ python3 scripts/generate_report.py
 
 1. ✅ pickType 优先使用 item.type：`item.pick_type || item.type || 'paper'`
 2. ✅ 按钮文案逻辑：根据 `source` 判断是否是 arXiv
-3. ✅ 路径修复：`insights/` 而不是 `docs/insights/`
-4. ✅ 会议链接：`conferences/xxx.html` 而不是 `conferences/xxx/index.html`
-5. ✅ arXiv 数据注入：`arxivPapers` 不能为空数组
-6. ✅ JavaScript 初始化时机：使用 `document.readyState` 判断
-7. ✅ 热门文章点击：使用 `item.id` 而不是索引
-8. ✅ 论文ID替换：`replace(/[^\w\-]/g, '_')` 处理点号等特殊字符
-9. ✅ 顶会论文 has_insight 判断：决定跳转解读页还是原文
-10. ✅ GitHub 项目历史去重：过滤 30 天内已发布的项目
+3. ✅ **论文点击逻辑：所有论文都优先跳转解读页面**
+4. ✅ 路径修复：`insights/` 而不是 `docs/insights/`
+5. ✅ 会议链接：`conferences/xxx.html` 而不是 `conferences/xxx/index.html`
+6. ✅ arXiv 数据注入：`arxivPapers` 不能为空数组
+7. ✅ JavaScript 初始化时机：使用 `document.readyState` 判断
+8. ✅ 热门文章点击：使用 `item.id` 而不是索引
+9. ✅ 论文ID替换：`replace(/[^\w\-]/g, '_')` 处理点号等特殊字符
+10. ✅ 顶会论文 has_insight 判断：决定跳转解读页还是原文
+11. ✅ GitHub 项目历史去重：过滤 30 天内已发布的项目
+12. ✅ **每日精选比例：3文章 + 1论文 + 1GitHub**
+13. ✅ **论文必须有解读：没有解读的论文不应展示**
+
+### 11.4 论文解读生成规则
+
+**核心原则：所有展示的论文都必须有解读页面**
+
+1. **每日精选中的论文**：必须有解读，否则替换为其他论文
+2. **arXiv 最新论文**：必须有解读，否则不展示
+3. **顶会论文**：外显列表中的论文必须有解读
+
+**解读生成流程：**
+```bash
+# 生成论文解读
+python3 scripts/generate_paper_insight.py
+
+# 或使用深度解读（需要 MiniMax API）
+python3 scripts/generate_paper_deep_insight.py --regenerate-all
+```
+
+**如果没有解读文件：**
+- 该论文不应出现在日报中
+- 需要后台生成解读后再展示
 
 ### 11.4 已验证存在的优化（无需修复）
 
