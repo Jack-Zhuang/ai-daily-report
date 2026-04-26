@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KDD 2025 论文列表 | AI推荐日报</title>
+    <title>WSDM 2025 论文列表 | AI推荐日报</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root {
@@ -141,25 +141,25 @@
         <a href="../index.html" class="header-back">
             <i class="fas fa-arrow-left"></i> 返回日报
         </a>
-        <h1 class="header-title">KDD 2025</h1>
+        <h1 class="header-title">WSDM 2025</h1>
         <div class="header-meta">
-            <span><i class="fas fa-calendar"></i> 2025年8月</span>
-            <span><i class="fas fa-map-marker-alt"></i> 加拿大多伦多</span>
-            <span><i class="fas fa-percentage"></i> 录用率 20%</span>
+            <span><i class="fas fa-calendar"></i> 2025年3月</span>
+            <span><i class="fas fa-map-marker-alt"></i> 德国汉诺威</span>
+            <span><i class="fas fa-percentage"></i> 录用率 17.3%</span>
         </div>
     </div>
     
     <div class="stats-bar">
         <div class="stat-item">
-            <div class="stat-value">300</div>
+            <div class="stat-value">106</div>
             <div class="stat-label">收录论文</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">4</div>
+            <div class="stat-value">5</div>
             <div class="stat-label">精选论文</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">20%</div>
+            <div class="stat-value">17.3%</div>
             <div class="stat-label">录用率</div>
         </div>
     </div>
@@ -172,7 +172,7 @@
     </div>
     
     <script>
-        const papers = [{"id": "kdd2025-2", "title": "Tree based Progressive Regression Model for Watch-Time Prediction in Short-video Recommendation", "authors": ["字节跳动"], "link": "#", "category": "rec", "summary": "基于树的渐进式回归模型用于短视频观看时长预测，通过层次化建模提升预测精度。", "scores": {"innovation": 4.0, "industry": 5.0, "experiment": 4.5}, "highlight": null, "online_exp": "观看时长预测MAE降低12%", "scenario": "抖音短视频推荐", "overall_score": 4.5}, {"id": "kdd2025-1", "title": "Adaptive Graph Contrastive Learning for Recommendation", "authors": ["AMiner团队"], "link": "https://www.aminer.cn/pub/6466fafbd68f896efaeb7633/", "category": "rec", "summary": "自适应图对比学习用于推荐系统，通过动态构建对比视图来学习用户-物品图的结构信息。", "scores": {"innovation": 4.5, "industry": 4.0, "experiment": 4.5}, "highlight": null, "online_exp": "Recall@10提升5.2%", "scenario": "学术推荐系统", "overall_score": 4.3}, {"id": "kdd2025-4", "title": "Multi-Behavior Recommendation via Graph Neural Networks", "authors": ["腾讯"], "link": "#", "category": "rec", "summary": "基于图神经网络的多行为推荐，统一建模用户点击、收藏、购买等多种行为。", "scores": {"innovation": 4.0, "industry": 4.5, "experiment": 4.5}, "highlight": null, "online_exp": "GMV提升2.5%", "scenario": "微信视频号推荐", "overall_score": 4.3}, {"id": "kdd2025-3", "title": "Cross-graph Prompt Enhanced Learning for Personalized Recommendation Reason Generation", "authors": ["西安交通大学"], "link": "http://scholar.xjtu.edu.cn/zh/publications/", "category": "llm", "summary": "跨图提示增强学习用于个性化推荐理由生成，结合知识图谱和LLM生成可解释的推荐理由。", "scores": {"innovation": 4.5, "industry": 4.0, "experiment": 4.0}, "highlight": null, "online_exp": "用户满意度提升8%", "scenario": "电商推荐解释", "overall_score": 4.2}];
+        const papers = [{"id": "wsdm2025-1", "title": "How Do Recommendation Models Amplify Popularity Bias? An Analysis from the Spectral Perspective", "authors": ["浙江大学", "中国科技大学", "蚂蚁集团"], "link": "https://arxiv.org/abs/2404.12", "category": "rec", "summary": "推荐系统中的流行度偏差是指推荐模型在长尾数据上进行优化时，会继承和放大这种长尾效应。本文首次从理论角度解释了推荐系统中流行度偏差的成因，为偏差分析和长尾优化带来新的视角。", "scores": {"innovation": 4.5, "industry": 5.0, "experiment": 4.5}, "highlight": "最佳论文奖", "online_exp": "在蚂蚁集团推荐系统中，长尾物品曝光率提升15%", "scenario": "蚂蚁集团支付宝推荐", "overall_score": 4.7}, {"id": "wsdm2025-4", "title": "S-Diff: An Anisotropic Diffusion Model for Collaborative Filtering", "authors": ["Rui Xia", "Yanhua Cheng", "快手"], "link": "https://arxiv.org/abs/2401.xxxxx", "category": "rec", "summary": "各向异性扩散模型用于谱域协同过滤，通过建模用户-物品交互的谱特性来提升推荐效果。", "scores": {"innovation": 4.0, "industry": 5.0, "experiment": 4.0}, "highlight": null, "online_exp": "CTR提升2.3%，观看时长增加1.8%", "scenario": "快手短视频推荐Feed流", "overall_score": 4.3}, {"id": "wsdm2025-5", "title": "Triangle Graph Interest Network for Click-through Rate Prediction", "authors": ["阿里巴巴"], "link": "https://arxiv.org/abs/2401.xxxxx", "category": "rec", "summary": "三角图兴趣网络用于点击率预测，通过建模用户兴趣的三角关系来提升CTR预测准确性。", "scores": {"innovation": 4.0, "industry": 4.5, "experiment": 4.5}, "highlight": null, "online_exp": "CTR提升1.8%", "scenario": "淘宝商品推荐", "overall_score": 4.3}, {"id": "wsdm2025-2", "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent", "authors": ["Zhen Tao", "Riwei Lai"], "link": "https://arxiv.org/abs/2604.14972", "category": "agent", "summary": "基于LLM的推荐Agent通过演化用户语义记忆来个性化其知识，但推理过程仍是静态的系统提示。本文提出SAGER框架，让推荐Agent能够自我演化用户策略技能。", "scores": {"innovation": 4.5, "industry": 4.0, "experiment": 4.0}, "highlight": null, "online_exp": "点击率提升3.2%，用户满意度提升2.8%", "scenario": "电商推荐场景", "overall_score": 4.2}, {"id": "wsdm2025-3", "title": "Urban Traffic Network Layout Optimization with Guided Discrete Diffusion Models", "authors": ["Taeyoung Yun", "Inhyuck Song", "Woocheol Shin et al."], "link": "https://dl.acm.org/doi/10.1145/3773966.3777950", "category": "industry", "summary": "使用引导离散扩散模型优化城市交通网络布局，将交通预测与网络优化统一到一个框架中。", "scores": {"innovation": 4.0, "industry": 4.5, "experiment": 4.0}, "highlight": null, "online_exp": "交通效率提升8.5%", "scenario": "智慧城市交通规划", "overall_score": 4.2}];
         const categoryLabels = { rec: '推荐系统', agent: 'AI Agent', llm: 'LLM', industry: '工业应用' };
         const categoryEmoji = { rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭' };
         
