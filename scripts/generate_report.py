@@ -2252,6 +2252,9 @@ class ReportGenerator:
         if not data:
             return None
         
+        # 生成 LLM 摘要（如果需要）
+        self._ensure_summaries(data)
+        
         # 生成HTML
         html = self.generate_html(data)
         
@@ -2275,6 +2278,17 @@ class ReportGenerator:
         print(f"{'='*50}\n")
         
         return str(main_path)
+    
+    def _ensure_summaries(self, data: dict):
+        """确保所有内容都有摘要，并同步到每日精选"""
+        from llm_summarizer import sync_daily_pick_summaries
+        
+        # 同步每日精选摘要
+        sync_daily_pick_summaries(data)
+        
+        # 保存更新后的数据
+        data_file = self.data_dir / f"{self.today}.json"
+        data_file.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
     
     def _update_github_history(self, projects: list, history_file: Path):
         """更新 GitHub 项目发布历史"""
