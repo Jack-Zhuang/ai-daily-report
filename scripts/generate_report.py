@@ -1055,7 +1055,7 @@ class ReportGenerator:
             container.innerHTML = dailyPick.map((item, i) => {{
                 const rankClass = i < 3 ? ['gold', 'silver', 'bronze'][i] : 'normal';
                 const category = item.type === 'github' ? 'github' : item.category;
-                const pickType = item.pick_type || 'paper';
+                const pickType = item.pick_type || item.type || 'paper';
                 const typeIcon = typeIcons[pickType] || '📄';
                 const imageClass = item.type === 'github' ? 'card-image-github' : (categoryImages[category] || 'card-image-paper');
                 const itemId = item.id || item.name || 'pick-' + i;
@@ -1115,7 +1115,7 @@ class ReportGenerator:
             const item = dailyPick[index];
             if (!item) return;
             
-            const pickType = item.pick_type || 'paper';
+            const pickType = item.pick_type || item.type || 'paper';
             const typeIcon = {{ paper: '📄', article: '📰', github: '💻' }}[pickType] || '📄';
             const cnTitle = item.cn_title || item.title || item.name || '未知标题';
             const cnSummary = item.cn_summary || item.summary || item.description || '暂无简介';
@@ -1198,10 +1198,14 @@ class ReportGenerator:
             
             // 生成按钮HTML
             let footerHtml = '';
-            if (pickType === 'paper') {{
-                // 论文：根据 has_insight 决定跳转目标
+            
+            // 根据来源判断是否是 arXiv 论文
+            const isArxivPaper = item.source === 'arXiv' || item.type === 'paper' || (item.link && item.link.includes('arxiv.org'));
+            
+            if (isArxivPaper && pickType === 'paper') {{
+                // arXiv 论文：根据 has_insight 决定跳转目标
                 const paperId = (item.id || item.arxiv_id || '').replace(/[^\\w\\-]/g, '_');
-                const insightUrl = `docs/insights/${{data.date}}_${{paperId}}.html`;
+                const insightUrl = `insights/${{data.date}}_${{paperId}}.html`;
                 
                 if (item.has_insight) {{
                     // 有解读：跳转到解读页
@@ -1210,8 +1214,11 @@ class ReportGenerator:
                     // 无解读：跳转到 arXiv 原文
                     footerHtml = `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 查看 arXiv 原文</a>`;
                 }}
+            }} else if (pickType === 'github' || item.type === 'github') {{
+                footerHtml = `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 访问 GitHub</a>`;
             }} else {{
-                footerHtml = `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> ${{pickType === 'github' ? '访问 GitHub' : '阅读原文'}}</a>`;
+                // 普通文章：显示"阅读原文"
+                footerHtml = `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 阅读原文</a>`;
             }}
             
             document.getElementById('detail-modal-title').innerHTML = `${{typeIcon}} ${{cnTitle}}`;
