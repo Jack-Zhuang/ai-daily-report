@@ -238,6 +238,52 @@ sed -i 's|docs/conferences/|conferences/|g' docs/index.html
 | 内容不更新 | 只修改了根目录文件 | 同步到 `docs/` 目录 |
 | 数据不同步 | cache 未更新 | 重新运行数据采集脚本 |
 
+## 11. 代码逻辑规范（重要！）
+
+### 11.1 按钮文案判断逻辑
+
+**问题**：每日精选中混合了 arXiv 论文和普通技术文章，按钮文案需要区分。
+
+**正确逻辑**：
+```javascript
+// 根据来源判断是否是 arXiv 论文
+const isArxivPaper = item.source === 'arXiv' || item.type === 'paper' || (item.link && item.link.includes('arxiv.org'));
+
+if (isArxivPaper) {
+    // arXiv 论文：显示"查看 arXiv 原文"或"查看论文解读"
+} else if (item.type === 'github') {
+    // GitHub 项目：显示"访问 GitHub"
+} else {
+    // 普通文章：显示"阅读原文"
+}
+```
+
+**错误逻辑**（已修复）：
+```javascript
+// ❌ 错误：仅根据 pickType 判断，导致普通文章也显示"查看 arXiv 原文"
+if (pickType === 'paper') {
+    footerHtml = "查看 arXiv 原文";
+}
+```
+
+### 11.2 数据类型字段说明
+
+| 字段 | 含义 | 可能值 |
+|------|------|--------|
+| `type` | 内容类型 | `article`, `paper`, `github` |
+| `source` | 来源平台 | `arXiv`, `机器之心`, `量子位`, `InfoQ技术文章`, `GitHub` 等 |
+| `pick_type` | 精选类型 | `paper`, `article`, `github`（已废弃，应使用 `type`） |
+| `has_insight` | 是否有解读 | `true`, `false` |
+
+### 11.3 同步时的注意事项
+
+**每次同步 `index.html` 到 `docs/index.html` 时，必须保留以下修复：**
+
+1. ✅ 路径修复：`docs/insights/` → `insights/`
+2. ✅ 路径修复：`docs/conferences/` → `conferences/`
+3. ✅ 按钮文案逻辑：根据 `source` 判断是否是 arXiv
+4. ✅ arXiv 数据注入：`arxivPapers` 不能为空数组
+
 ---
 
 **最后更新**: 2026-04-26
