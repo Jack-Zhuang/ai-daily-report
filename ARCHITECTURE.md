@@ -2,49 +2,174 @@
 
 > **重要**: 此文档定义了项目的文件结构和路径规范，所有修改必须遵循此规范！
 
-## 1. GitHub Pages 配置
+## 1. 网站模块总览
+
+主页 (`docs/index.html`) 包含以下 **6 大模块**：
+
+| 模块 | 数据来源 | 数据文件 | 展示位置 |
+|------|----------|----------|----------|
+| ⭐ 每日精选 | 编辑精选 | `cache/all_articles.json` | 主页 `#daily-pick` |
+| 🔥 热门文章 | 公众号/知乎/36氪等 | `cache/all_articles.json` | 主页 `#hot` |
+| 📈 GitHub Trending | GitHub API | `cache/github_cache.json` | 主页 `#github` |
+| 📄 arXiv 最新 | arXiv API | `cache/arxiv_cache.json` | 主页 `#papers` + 独立页面 |
+| 🏆 顶会论文 | AMiner/会议官网 | `cache/conference_papers.json` | 主页 `#conferences` + 独立页面 |
+| 🌐 内容来源 | 静态配置 | - | 主页 `#sources` |
+
+## 2. GitHub Pages 配置
 
 - **Pages 源目录**: `/docs`
 - **访问 URL**: `https://jack-zhuang.github.io/ai-daily-report/`
 - **关键规则**: 只有 `docs/` 目录下的文件会被部署到线上
 
-## 2. 文件结构规范
+## 3. 完整文件结构
 
 ```
 ai_daily/
-├── docs/                          # GitHub Pages 根目录（唯一部署源）
-│   ├── index.html                 # 主页（唯一版本）
-│   ├── conferences/               # 会议论文列表页面
-│   │   ├── arXiv_2026.html       # arXiv 论文列表
-│   │   ├── KDD_2025.html
-│   │   ├── WSDM_2025.html
-│   │   └── ...
-│   ├── insights/                  # 论文解读页面
-│   │   ├── figures/              # 论文图表
-│   │   │   └── 2604_21593/
-│   │   │       ├── fig_1.jpeg
-│   │   │       └── ...
-│   │   └── 2026-04-26_2604_21593.html
-│   ├── covers/                    # 封面图
-│   └── archive/                   # 归档
+├── docs/                              # GitHub Pages 根目录（唯一部署源）
+│   ├── index.html                     # 主页（包含所有 6 大模块）
+│   │
+│   ├── conferences/                   # 顶会论文独立页面
+│   │   ├── arXiv_2026.html           # arXiv 论文列表（25篇）
+│   │   ├── KDD_2025.html             # KDD 2025 论文列表
+│   │   ├── WSDM_2025.html            # WSDM 2025 论文列表
+│   │   ├── RecSys_2025.html          # RecSys 2025 论文列表
+│   │   ├── WWW_2025.html             # WWW 2025 论文列表
+│   │   ├── CIKM_2025.html            # CIKM 2025 论文列表
+│   │   └── SIGIR_2025.html           # SIGIR 2025 论文列表
+│   │
+│   ├── insights/                      # 论文深度解读页面
+│   │   ├── 2026-04-26_2604_21593.html # 单篇论文解读
+│   │   ├── 2026-04-26_2604_21896.html
+│   │   └── figures/                   # 论文图表
+│   │       └── 2604_21593/
+│   │           ├── fig_1.jpeg
+│   │           ├── fig_2.jpeg
+│   │           └── ...
+│   │
+│   ├── covers/                        # 文章封面图
+│   │   └── xxx.jpg
+│   │
+│   └── archive/                       # 往期日报归档
+│       └── 2026-04-25/
+│           └── index.html
 │
-├── index.html                     # 开发版本（需同步到 docs/）
-├── conferences/                   # 开发版本（仅用于本地开发）
-│   └── arXiv_2026/
-│       └── index.html
+├── cache/                             # 数据缓存（不部署，仅用于生成页面）
+│   ├── all_articles.json              # 所有文章数据（热门文章 + 每日精选）
+│   ├── arxiv_cache.json               # arXiv 论文数据
+│   ├── github_cache.json              # GitHub Trending 数据
+│   ├── conference_papers.json         # 顶会论文数据
+│   └── pdfs/                          # 论文 PDF 缓存
 │
-├── cache/                         # 数据缓存（不部署）
-│   ├── arxiv_cache.json
-│   └── github_cache.json
+├── index.html                         # 主页开发版本（需同步到 docs/）
+├── conferences/                       # 会议页面开发版本
+│   ├── arXiv_2026/
+│   │   └── index.html
+│   ├── KDD_2025/
+│   │   └── index.html
+│   └── ...
 │
-└── daily_data/                    # 原始数据（不部署）
+├── ARCHITECTURE.md                    # 本文档
+└── sync_to_docs.sh                    # 同步脚本
 ```
 
-## 3. 路径引用规范
+## 4. 数据流向
 
-### 3.1 在 `docs/index.html` 中的引用
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        数据采集层                                │
+├─────────────┬─────────────┬─────────────┬─────────────────────┤
+│ 公众号/知乎  │  arXiv API  │  GitHub API │  AMiner/会议官网     │
+└──────┬──────┴──────┬──────┴──────┬──────┴──────────┬──────────┘
+       │             │             │                  │
+       ▼             ▼             ▼                  ▼
+┌─────────────┬─────────────┬─────────────┬─────────────────────┐
+│all_articles │arxiv_cache  │github_cache │conference_papers    │
+│   .json     │   .json     │   .json     │     .json           │
+└──────┬──────┴──────┬──────┴──────┬──────┴──────────┬──────────┘
+       │             │             │                  │
+       └─────────────┴──────┬──────┴──────────────────┘
+                            │
+                            ▼
+                   ┌─────────────────┐
+                   │   页面生成器     │
+                   │ (Python 脚本)   │
+                   └────────┬────────┘
+                            │
+        ┌───────────────────┼───────────────────┐
+        │                   │                   │
+        ▼                   ▼                   ▼
+┌───────────────┐   ┌───────────────┐   ┌───────────────┐
+│ docs/         │   │ docs/         │   │ docs/         │
+│ index.html    │   │ conferences/  │   │ insights/     │
+│ (主页6模块)   │   │ (会议论文)    │   │ (论文解读)    │
+└───────────────┘   └───────────────┘   └───────────────┘
+        │                   │                   │
+        └───────────────────┼───────────────────┘
+                            │
+                            ▼
+                   ┌─────────────────┐
+                   │   GitHub Pages  │
+                   │  (自动部署)      │
+                   └─────────────────┘
+```
 
-由于 `docs/` 是 GitHub Pages 的根目录，所有路径都相对于 `docs/`：
+## 5. 各模块详细说明
+
+### 5.1 每日精选 (Daily Pick)
+
+- **数据源**: `cache/all_articles.json` 中标记为精选的文章
+- **展示位置**: 主页 `#daily-pick` 区域
+- **特点**: 编辑人工筛选的高质量内容
+- **链接**: 点击跳转到原文或详情页
+
+### 5.2 热门文章 (Hot Articles)
+
+- **数据源**: `cache/all_articles.json`
+- **来源**: 机器之心、量子位、36氪、InfoQ、知乎等
+- **展示位置**: 主页 `#hot` 区域
+- **分类**: 推荐、Agent、LLM 等
+- **链接**: 点击跳转到原文
+
+### 5.3 GitHub Trending
+
+- **数据源**: `cache/github_cache.json`
+- **展示位置**: 主页 `#github` 区域
+- **内容**: 高增长开源项目
+- **指标**: Stars 数、增长率、语言
+
+### 5.4 arXiv 最新
+
+- **数据源**: `cache/arxiv_cache.json`
+- **展示位置**: 
+  - 主页 `#papers` 区域（显示前 5 篇）
+  - `docs/conferences/arXiv_2026.html`（完整列表）
+- **特点**: 最新预印本论文，带中文解读
+- **链接**: 
+  - "查看论文" → arXiv 原文
+  - "查看解读" → `docs/insights/xxx.html`
+
+### 5.5 顶会论文
+
+- **数据源**: `cache/conference_papers.json`
+- **展示位置**:
+  - 主页 `#conferences` 区域（各会议概览）
+  - `docs/conferences/{会议名}_{年份}.html`（详细列表）
+- **支持的会议**: WSDM、KDD、RecSys、WWW、CIKM、SIGIR
+
+### 5.6 论文深度解读
+
+- **位置**: `docs/insights/*.html`
+- **内容**: 
+  - 论文摘要翻译
+  - 核心贡献分析
+  - 方法架构图
+  - 实验结果图表
+  - 个人点评
+- **图表**: `docs/insights/figures/{论文ID}/`
+
+## 6. 路径引用规范
+
+### 6.1 在 `docs/index.html` 中的引用
 
 ```html
 <!-- 正确 -->
@@ -54,30 +179,23 @@ ai_daily/
 
 <!-- 错误 -->
 <a href="docs/conferences/...">  <!-- 多了 docs/ 前缀 -->
-<a href="conferences/arXiv_2026/index.html">  <!-- 应该是 .html 文件 -->
 ```
 
-### 3.2 在 `docs/conferences/*.html` 中的引用
+### 6.2 在 `docs/conferences/*.html` 中的引用
 
 ```html
-<!-- 返回主页 -->
 <a href="../index.html">返回日报</a>
-
-<!-- 跳转到论文解读 -->
 <a href="../insights/2026-04-26_2604_21593.html">查看解读</a>
 ```
 
-### 3.3 在 `docs/insights/*.html` 中的引用
+### 6.3 在 `docs/insights/*.html` 中的引用
 
 ```html
-<!-- 引用图表 -->
 <img src="figures/2604_21593/fig_1.jpeg">
-
-<!-- 返回主页 -->
 <a href="../index.html">返回日报</a>
 ```
 
-## 4. 文件命名规范
+## 7. 文件命名规范
 
 | 类型 | 命名格式 | 示例 |
 |------|----------|------|
@@ -85,29 +203,9 @@ ai_daily/
 | 会议页面 | `{会议名}_{年份}.html` | `docs/conferences/KDD_2025.html` |
 | 论文解读 | `{日期}_{论文ID}.html` | `docs/insights/2026-04-26_2604_21593.html` |
 | 论文图表 | `fig_{序号}.jpeg` | `docs/insights/figures/2604_21593/fig_1.jpeg` |
+| 封面图 | `{文章ID}.jpg` | `docs/covers/article_001.jpg` |
 
-## 5. 同步规则
-
-### 5.1 主页同步
-
-根目录的 `index.html` 是开发版本，修改后必须同步到 `docs/index.html`：
-
-```bash
-cp index.html docs/index.html
-# 然后修复路径引用
-sed -i 's|docs/insights/|insights/|g' docs/index.html
-sed -i 's|docs/conferences/|conferences/|g' docs/index.html
-sed -i 's|conferences/\([^/]*\)/index\.html|conferences/\1.html|g' docs/index.html
-```
-
-### 5.2 会议页面同步
-
-```bash
-# 从开发目录同步到 docs
-cp conferences/arXiv_2026/index.html docs/conferences/arXiv_2026.html
-```
-
-## 6. Git 提交检查清单
+## 8. Git 提交检查清单
 
 每次提交前必须检查：
 
@@ -116,8 +214,21 @@ cp conferences/arXiv_2026/index.html docs/conferences/arXiv_2026.html
 - [ ] 会议页面是否同步到 `docs/conferences/`
 - [ ] 论文解读页面是否在 `docs/insights/`
 - [ ] 图表文件是否在 `docs/insights/figures/`
+- [ ] 数据缓存是否更新（如有变化）
 
-## 7. 常见错误及修复
+## 9. 同步脚本使用
+
+```bash
+# 同步所有文件到 docs 目录
+./sync_to_docs.sh
+
+# 手动同步主页
+cp index.html docs/index.html
+sed -i 's|docs/insights/|insights/|g' docs/index.html
+sed -i 's|docs/conferences/|conferences/|g' docs/index.html
+```
+
+## 10. 常见错误及修复
 
 | 错误 | 原因 | 修复方法 |
 |------|------|----------|
@@ -125,30 +236,7 @@ cp conferences/arXiv_2026/index.html docs/conferences/arXiv_2026.html
 | 链接失效 | 路径多了 `docs/` 前缀 | 使用相对路径，去掉 `docs/` |
 | 图片不显示 | 图表路径错误 | 检查 `figures/` 相对路径 |
 | 内容不更新 | 只修改了根目录文件 | 同步到 `docs/` 目录 |
-
-## 8. 自动化脚本
-
-创建同步脚本 `sync_to_docs.sh`：
-
-```bash
-#!/bin/bash
-# 同步所有文件到 docs 目录
-
-# 同步主页
-cp index.html docs/index.html
-sed -i 's|docs/insights/|insights/|g' docs/index.html
-sed -i 's|docs/conferences/|conferences/|g' docs/index.html
-
-# 同步会议页面
-for conf in conferences/*/; do
-    name=$(basename "$conf")
-    if [ -f "${conf}index.html" ]; then
-        cp "${conf}index.html" "docs/conferences/${name}.html"
-    fi
-done
-
-echo "同步完成！"
-```
+| 数据不同步 | cache 未更新 | 重新运行数据采集脚本 |
 
 ---
 
