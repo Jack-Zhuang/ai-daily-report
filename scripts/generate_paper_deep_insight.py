@@ -130,17 +130,45 @@ class PaperDeepInsightGenerator:
                         # 3. 宽度和高度都 < 200px（小图标）
                         if height < 200 or aspect_ratio > 15 or aspect_ratio < 0.07 or (width < 200 and height < 200):
                             continue
-                    except:
+                        
+                        # 处理透明背景：将黑色背景转换为白色背景
+                        if pil_img.mode in ('RGBA', 'LA', 'P'):
+                            # 创建白色背景
+                            background = Image.new('RGB', pil_img.size, (255, 255, 255))
+                            if pil_img.mode == 'P':
+                                pil_img = pil_img.convert('RGBA')
+                            background.paste(pil_img, mask=pil_img.split()[-1] if pil_img.mode == 'RGBA' else None)
+                            pil_img = background
+                        elif pil_img.mode == 'L':
+                            # 灰度图转RGB
+                            pil_img = pil_img.convert('RGB')
+                        
+                        # 检查是否是黑色背景的图片，如果是则反转或添加白色背景
+                        corners = [
+                            pil_img.getpixel((0, 0))[:3] if pil_img.mode == 'RGB' else (0, 0, 0),
+                            pil_img.getpixel((min(10, width-1), min(10, height-1)))[:3] if pil_img.mode == 'RGB' else (0, 0, 0),
+                        ]
+                        
+                        # 如果四角都是黑色，可能是黑色背景的图表，需要处理
+                        if all(c[0] < 30 and c[1] < 30 and c[2] < 30 for c in corners):
+                            # 创建白色背景并合成
+                            white_bg = Image.new('RGB', pil_img.size, (255, 255, 255))
+                            # 使用叠加模式
+                            white_bg.paste(pil_img, (0, 0))
+                            pil_img = white_bg
+                            
+                    except Exception as e:
+                        print(f"    ⚠️ 图片处理失败: {e}")
                         # 如果无法检查尺寸，使用文件大小过滤
                         if len(image_bytes) < 10000:
                             continue
                     
                     fig_num = len(figure_paths) + 1
-                    img_filename = f"fig_{fig_num}.{image_ext}"
+                    img_filename = f"fig_{fig_num}.jpeg"
                     img_path = figures_dir / img_filename
                     
-                    with open(img_path, "wb") as f:
-                        f.write(image_bytes)
+                    # 保存处理后的图片
+                    pil_img.save(img_path, 'JPEG', quality=95)
                     
                     figure_paths.append(str(img_path))
             
@@ -656,6 +684,9 @@ class PaperDeepInsightGenerator:
     height: auto;
     border-radius: 4px;
     transition: transform 0.2s;
+    background: white;
+    padding: 8px;
+    box-sizing: border-box;
 }
 .figure-card img.zoom {
     position: fixed;
