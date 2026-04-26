@@ -610,7 +610,7 @@ class PaperDeepInsightGenerator:
             
             html_parts.append(f'''
             <div class="figure-card">
-                <img src="{relative_path}" alt="Figure {i}" loading="lazy" onclick="this.classList.toggle('zoom')">
+                <img src="{relative_path}" alt="Figure {i}" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
                 <p class="figure-caption">{caption}</p>
             </div>''')
         
