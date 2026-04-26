@@ -303,6 +303,21 @@ if (pickType === 'paper') {
 | 顶会论文 has_insight | ✅ | 根据 `has_insight` 决定跳转目标 |
 | 封面图支持 | ✅ | `cover_image` 字段和 CSS 背景 |
 | DOM 加载完成判断 | ✅ | `if (document.readyState === 'loading')` |
+| **GitHub 项目历史去重** | ✅ | `history/published.json` 记录已发布项目，30天内不重复 |
+
+### 11.5 GitHub 项目去重机制
+
+**问题**：热门项目（如 langchain）长期占据 GitHub Trending，导致每天重复推送。
+
+**解决方案**：
+1. 维护 `history/published.json` 记录已发布的 GitHub 项目 ID
+2. 生成日报时过滤掉 30 天内已发布的项目
+3. 每次生成后更新历史记录
+
+**相关文件**：
+- `scripts/generate_report.py` - 包含过滤逻辑
+- `history/published.json` - 历史记录文件
+- `scripts/history_manager.py` - 历史管理模块（备用）
 
 ---
 
