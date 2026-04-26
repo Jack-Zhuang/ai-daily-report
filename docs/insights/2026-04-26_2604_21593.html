@@ -232,8 +232,8 @@
                 <h2 class="section-title">摘要速览</h2>
             </div>
             <div class="content">
-                <p>本论文提出语言不仅是输出的媒介，还可以作为潜在变量来结构性地调节大语言模型的内部推理路径。通过Polyglot Thinking Experiment，作者发现在约束响应语言设置下，中文响应平均优于英语；而在无约束设置下，模型性能通常最佳。这表明多语言能力拓宽了模型的潜在推理空间。基于此发现，论文提出polyGRPO（Polyglot Group Relative Policy Optimization），一种将语言变化视为隐式探索信号的强化学习框架。该方法在线生成多语言偏好数据，包含语言约束和非约束条件下的响应，使用GRPO优化策略。实验在仅18.1K多语言数学问题（无链式思维注释）上训练，polyGRPO将Qwen2.5-7B-Instruct在四个英语推理测试集上提升+6.72%，在多语言基准上提升+6.89%。值得注意的是，这是唯一在英语常识推理任务（X-CSQA）上超越基础LLM的方法（+4.9%），展示了强大的跨任务泛化能力。</p>
-                <ul class="key-points"><li>语言可作为潜在变量结构性地调节模型内部推理路径，而非仅作为输出媒介</li><li>非英语响应在某些推理任务中可优于英语响应，多语言思考扩展了潜在推理空间</li><li>无约束语言响应设置通常产生最佳性能，表明允许模型自由选择语言能增强推理能力</li><li>格式奖励对引导多语言思考路径和有效最终答案至关重要，特别是在小模型中</li></ul>
+                <p>本论文提出polyGRPO框架，创新性地将语言视为潜在变量，通过多语言思考增强大语言模型推理能力。该方法在强化学习训练中同时生成语言约束和无约束的多语言响应，构建偏好组并计算组相对优势，使用GRPO优化策略。实验使用18.1K多语言数学问题训练，Qwen2.5-7B-Instruct在英语推理测试集上提升+6.72%，多语言基准提升+6.89%；在英语常识推理任务上成为唯一超越基础LLM的方法（+4.9%）。核心发现是：语言多样性可扩展模型的潜在推理空间，实现跨任务泛化推理提升。</p>
+                <ul class="key-points"><li>语言可作为推理过程的调节器而非仅是输出格式，多语言思考能扩展模型的潜在推理空间</li><li>无语言约束时性能经常优于单一语言约束，表明语言选择本身可能是一种推理策略</li><li>数学数据训练后能在常识推理任务上提升，说明学到的推理能力具有跨任务泛化性</li></ul>
             </div>
         </div>
         <div class="section">
@@ -242,7 +242,7 @@
                 <h2 class="section-title">研究背景</h2>
             </div>
             <div class="content">
-                <p>大语言模型在推理任务中表现出色，但通常存在英语偏见——在英语输入或响应时表现更强。然而随着多语言训练的进展，模型在非英语语言中的推理能力不断提升，甚至在某些任务中超越英语。这引发了一个关键问题：多语言思考能否作为推理优化的潜在变量？现有方法如多数投票和自动语言选择受限于任务复杂性和语言选择策略，而基于强化学习的方法往往依赖英语中心的偏好数据，未能充分利用多语言思考的优势。</p>
+                <p>现有强化学习方法依赖英语中心的偏好数据，无法充分利用多语言思考能力来增强推理。研究发现非英语响应有时优于英语响应，表明语言多样性具有提升推理能力的潜力。然而现有方法将语言仅视为输出媒介，限制了多语言思考在推理增强中的应用价值。这促使研究者探索如何系统性地利用多语言思考来扩展模型的推理空间。</p>
             </div>
         </div>
         <div class="section">
@@ -251,12 +251,12 @@
                 <h2 class="section-title">方法详解</h2>
             </div>
             <div class="content">
-                <p>polyGRPO框架包含三个核心模块：Polyglot Reasoning Generation Module（PRGM）生成多语言响应组，对每个问题生成n=5个响应，包括一个无语言约束和四个随机选择语言的约束响应；Reward Module使用规则奖励函数，结合准确率奖励（二元：最终答案是否正确）和格式奖励（二元：是否包含[Thinking]推理步骤和####格式的答案）；Group Relative Policy Optimization Module计算组相对优势并通过GRPO优化策略。PRGM在训练期间在线运行，减少存储开销并促进多语言思考空间的广泛探索。</p>
+                <p>polyGRPO构建了一个'多语言探险家训练营'，包含三个核心模块：多语言推理生成模块（PRGM）对每个数学问题同时生成1个无语言约束和N个语言约束的响应（如强制用中文、日文、德文等）；奖励模块采用规则驱动机制，评估准确率（答案正确=1.0）和格式（包含推理步骤分隔符=0.1）；组相对策略优化模块（GRPO）在同问题的多个响应构成的组内计算z-score标准化的相对优势，避免依赖额外 critic网络。策略更新时表现好的响应被强化，表现差的被抑制，无需链式思考标注即可提升推理能力。</p>
                 
                 <h3>核心创新</h3>
                 <table class="innovation-table">
                     <tbody>
-                        <tr><td><strong>语言作为潜在变量假设</strong></td><td>首次提出语言不仅是输出媒介，而是作为潜在变量结构性地调节模型内部推理路径，通过Polyglot Thinking Experiment系统验证了这一假设</td></tr><tr><td><strong>polyGRPO框架</strong></td><td>将多语言思考整合到强化学习框架中，在线生成多语言偏好数据，利用语言变化作为隐式探索信号，无需预定义语言锚点或翻译数据</td></tr>
+                        <tr><td><strong>语言作为潜在变量</strong></td><td>首次将语言从'输出约束'转变为'推理空间的调节器'，提出多语言思考可以扩展模型潜在推理空间的假设，通过在线生成多语言偏好组验证了这一假设。</td></tr><tr><td><strong>多语言组相对优势学习</strong></td><td>设计PRGM模块同时生成约束和无约束的多语言响应，构建异质偏好组，利用组内相对优势学习，避免了对外部奖励模型或大量偏好数据的依赖。</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -296,30 +296,30 @@
                 <h2 class="section-title">实验结果</h2>
             </div>
             <div class="content">
-                <p><strong>数据集：</strong>MAPO多语言数学推理数据集（1,703英语问题及其9种语言翻译版本，共18,140示例）, MGSM（250 GSM8K样本的10种语言版本）, MATH500（500道英文数学问题，含6种翻译版本）, PolyMath-medium（125道更难数学问题）, X-CSQA（常识推理，扩展到16种语言）</p>
+                <p><strong>数据集：</strong>MAPO（训练集）：18,140个样本，包含1,703个英文数学问题翻译成9种语言（孟加拉语、泰语、斯瓦希里语、日语、汉语、俄语、德语、西班牙语、法语）, MGSM（域内测试）：250题，10种语言，评估多语言数学推理能力, MATH500（域外测试）：500题，评估分布外泛化能力, PolyMath-medium（高难度）：125题，18种语言, X-CSQA（跨任务）：常识推理基准，评估数学训练到常识推理的迁移能力</p>
             </div>
             
             <h3>主要结果</h3>
             <div class="stats-grid">
                 
                 <div class="stat-card">
-                    <div class="stat-value">Qwen2.5-7B-Instruct：MGSM英语81.20→94.00（+12.8%），多语言平均63.16→75.93（+12.77%）</div>
+                    <div class="stat-value">Qwen2.5-7B-Instruct在MGSM上：81.20→94.00（英语+12.8%），63.16→75.93（全部+12.77%）</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">Qwen2.5-7B-Instruct：四基准英语平均+6.72%，多语言平均+6.89%</div>
+                    <div class="stat-value">Qwen2.5-7B在MATH500上：70.80→76.80（英语+6.0%），57.89→64.94（全部+7.05%）</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">Llama3-8B-Instruct：四基准英语平均+1.72%，MGSM多语言+3.53%</div>
+                    <div class="stat-value">Qwen2.5-7B在X-CSQA上：77.10→82.00（英语+4.9%，唯一超越Base的方法）</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">X-CSQA：Qwen2.5-7B唯一超越基础模型的方法（+4.9%），尽管仅在数学数据上训练</div>
+                    <div class="stat-value">Qwen2.5-7B平均性能：63.88→70.60（英语+6.72%），49.75→56.64（全部+6.89%）</div>
                 </div>
             </div>
             
             <h3>方法对比</h3>
             <table class="comparison-table">
                 <tbody>
-                    <tr><td>相比GRPO：MGSM英语提升3.6%，多语言提升2.91%</td></tr><tr><td>相比最强基线LIDR：四基准英语平均+3.07%</td></tr><tr><td>相比MAPO：四基准英语平均+3.08%</td></tr>
+                    <tr><td>相比GRPO：Qwen提升+3.07%（英语）/+2.45%（全部），Llama3提升+1.72%</td></tr><tr><td>相比xRFT：Qwen提升+3.98%（英语）/+9.33%（全部）</td></tr><tr><td>相比LIDR：Qwen提升+4.03%（英语）/+4.06%（全部）</td></tr>
                 </tbody>
             </table>
         </div>
@@ -332,15 +332,15 @@
                 
             <div class="finding-item">
                 <div class="finding-num">1</div>
-                <div class="finding-text">中文响应在约束设置下平均表现优于英语，无单一语言设置在所有语言中始终占优</div>
+                <div class="finding-text">无语言约束设置经常优于单一语言约束，表明语言选择本身可能是推理策略的一部分</div>
             </div>
             <div class="finding-item">
                 <div class="finding-num">2</div>
-                <div class="finding-text">无约束语言响应设置通常超越英语基线，表明灵活的多语言操作扩展了推理潜力</div>
+                <div class="finding-text">仅用数学数据训练即可在常识推理任务上提升（+4.9%），证明学到的推理能力具有跨任务泛化性</div>
             </div>
             <div class="finding-item">
                 <div class="finding-num">3</div>
-                <div class="finding-text">格式奖励对小模型（如1.5B）尤为重要，可防止低资源语言推理中的失控行为</div>
+                <div class="finding-text">混合高资源语言和低资源语言可减少语言选择对性能的影响，提高训练稳定性</div>
             </div>
             </div>
         </div>
@@ -350,11 +350,11 @@
                 <h2 class="section-title">讨论与展望</h2>
             </div>
             <div class="discussion-content">
-                <div class="discussion-item"><h4>局限性</h4><p>论文主要关注数学和常识推理任务，对于更复杂的推理任务（如多跳推理或形式推理）可能需要进一步验证；语言集组成对性能的影响仍有待深入探索。</p></div><div class="discussion-item"><h4>未来方向</h4><p>探索将语言作为潜在变量应用于更复杂的推理任务，以及在更小规模模型上的应用效果。</p></div><div class="discussion-item"><h4>应用场景</h4><p>多语言推理系统开发、跨语言自然语言处理、推理能力增强的语言无关优化、教育辅助工具（支持多语言数学问题解答）。</p></div>
+                <div class="discussion-item"><h4>⚠️ 局限性</h4><p>论文存在若干需要审慎解读的问题。首先，语言一致性问题与核心论点存在矛盾：训练过程中模型逐渐放弃多语言转向纯英文（Epoch 5后99%+使用英语），这与'语言多样性扩展推理空间'的论断相悖，更合理的解释可能是多语言数据提供了更多训练样本而非真正扩展推理空间。其次，组相对优势计算假设同组内响应可比较，但不同语言的固有难度不同，可能导致不公平的优势估计。此外，消融实验不充分，缺少与纯SFT、多语言SFT等的对比，性能提升的归因不清。实验数据规模偏小（18.1K），在更大规模场景下的结论可靠性待验证。</p></div><div class="discussion-item"><h4>🔮 未来方向</h4><p>理论层面需形式化语言多样性与推理能力的关系，分析收敛到单一语言的原因；方法层面可探索课程学习（从多语言逐渐聚焦）、语言感知的优势估计、更细粒度的奖励设计、自适应语言选择策略；实验层面需大规模验证（更多任务、模型、数据）、统计显著性分析、完善消融实验、计算成本分析；应用层面可探索低资源语言支持、实时多语言对话系统、代码生成任务、多模态场景等方向。</p></div><div class="discussion-item"><h4>💡 应用场景</h4><p>polyGRPO的应用潜力包括：多语言教育辅助系统，利用多语言推理能力为不同语言背景的学习者提供高质量的数学和问题解决辅导；跨语言知识迁移，可将英语领域学到的推理能力迁移到低资源语言；多语言对话助手，在保持强大推理能力的同时支持多语言服务；特定领域推理助手，如金融分析、科学研究等需要严谨推理的场景。训练后的模型推理时无多语言开销，可直接部署使用。</p></div><div class="discussion-item"><h4>🌍 领域影响</h4><p>polyGRPO证明了多语言思考不仅是翻译工具，更可以成为认知增强的来源，开辟了'用语言多样性换推理能力'的新范式。虽然其理论创新程度有限（主要是工程组合创新），但为多语言推理训练提供了新思路，对多语言AI系统的开发具有参考价值。</p></div>
             </div>
         </div>
         
-        <div class="tags"><span class="tag">多语言推理</span><span class="tag">强化学习</span><span class="tag">语言作为潜在变量</span><span class="tag">polyGRPO</span><span class="tag">大语言模型优化</span><span class="tag">Group Relative Policy Optimization</span></div>
+        <div class="tags"><span class="tag">多语言推理</span><span class="tag">强化学习</span><span class="tag">语言作为潜在变量</span><span class="tag">组相对策略优化</span><span class="tag">跨任务泛化</span></div>
     </main>
     
     <div class="bottom-bar">
