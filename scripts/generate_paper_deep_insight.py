@@ -79,18 +79,36 @@ class PaperDeepInsightGenerator:
         """从 PDF 中提取图表"""
         try:
             import fitz  # PyMuPDF
+            from PIL import Image
+            import io
         except ImportError:
-            print("  ⚠️ PyMuPDF 未安装，跳过图表提取")
-            return []
+            print("  ⚠️ PyMuPDF 或 PIL 未安装，跳过图表提取")
+            return [], {}
         
         figures_dir = self.pdf_cache_dir / "figures" / arxiv_id.replace('.', '_')
         figures_dir.mkdir(parents=True, exist_ok=True)
         
         figure_paths = []
+        figure_captions = {}  # 存储图表说明
         
         try:
             doc = fitz.open(str(pdf_path))
             
+            # 先提取所有文本，用于匹配图表说明
+            full_text = ""
+            for page in doc:
+                full_text += page.get_text()
+            
+            # 匹配图表说明
+            import re
+            caption_pattern = r"(?m)(?:Figure|Fig\.?)\s*(\d+)[.:]\s*([^\n]+)"
+            for match in re.finditer(caption_pattern, full_text):
+                fig_num = int(match.group(1))
+                caption = match.group(2).strip()
+                if len(caption) > 10:
+                    figure_captions[fig_num] = caption[:200]
+            
+            # 提取图片
             for page_num, page in enumerate(doc):
                 images = page.get_images(full=True)
                 
@@ -100,26 +118,43 @@ class PaperDeepInsightGenerator:
                     image_bytes = base_image["image"]
                     image_ext = base_image["ext"]
                     
-                    # 只保存较大的图片（过滤小图标）
-                    if len(image_bytes) > 10000:
-                        fig_num = len(figure_paths) + 1
-                        img_filename = f"fig_{fig_num}.{image_ext}"
-                        img_path = figures_dir / img_filename
+                    # 检查图片尺寸
+                    try:
+                        pil_img = Image.open(io.BytesIO(image_bytes))
+                        width, height = pil_img.size
+                        aspect_ratio = width / height if height > 0 else 0
                         
-                        with open(img_path, "wb") as f:
-                            f.write(image_bytes)
-                        
-                        figure_paths.append(str(img_path))
+                        # 过滤异常图片：
+                        # 1. 高度 < 200px（通常是图标或装饰元素）
+                        # 2. 宽高比 > 15 或 < 0.07（极端扁平或极端窄长）
+                        # 3. 宽度和高度都 < 200px（小图标）
+                        if height < 200 or aspect_ratio > 15 or aspect_ratio < 0.07 or (width < 200 and height < 200):
+                            continue
+                    except:
+                        # 如果无法检查尺寸，使用文件大小过滤
+                        if len(image_bytes) < 10000:
+                            continue
+                    
+                    fig_num = len(figure_paths) + 1
+                    img_filename = f"fig_{fig_num}.{image_ext}"
+                    img_path = figures_dir / img_filename
+                    
+                    with open(img_path, "wb") as f:
+                        f.write(image_bytes)
+                    
+                    figure_paths.append(str(img_path))
             
             doc.close()
             
             if figure_paths:
                 print(f"  🖼️ 提取了 {len(figure_paths)} 张图表")
+                if figure_captions:
+                    print(f"  📝 找到 {len(figure_captions)} 个图表说明")
         
         except Exception as e:
             print(f"  ⚠️ 图表提取失败: {e}")
         
-        return figure_paths
+        return figure_paths, figure_captions
     
     def parse_pdf(self, pdf_path: Path) -> str:
         """解析 PDF"""
@@ -434,8 +469,9 @@ class PaperDeepInsightGenerator:
         
         # 2. 提取图表
         figure_paths = []
+        figure_captions = {}
         if pdf_path and pdf_path.exists():
-            figure_paths = self.extract_figures(pdf_path, arxiv_id)
+            figure_paths, figure_captions = self.extract_figures(pdf_path, arxiv_id)
         
         # 3. 解析 PDF
         if pdf_path and pdf_path.exists():
@@ -451,7 +487,7 @@ class PaperDeepInsightGenerator:
         
         # 5. 生成 HTML
         print(f"  🎨 生成解读页面...")
-        html = self._render_html(paper, extracted, paper_content, figure_paths)
+        html = self._render_html(paper, extracted, paper_content, figure_paths, figure_captions)
         
         # 6. 复制图表到 docs 目录
         if figure_paths:
@@ -469,9 +505,12 @@ class PaperDeepInsightGenerator:
         print(f"  ✅ 完成: {filepath}")
         return str(filepath)
     
-    def _render_html(self, paper: dict, extracted: dict, raw_content: str, figure_paths: List[str] = None) -> str:
+    def _render_html(self, paper: dict, extracted: dict, raw_content: str, figure_paths: List[str] = None, figure_captions: dict = None) -> str:
         """渲染 HTML 页面"""
         template = self.load_template()
+        
+        if figure_captions is None:
+            figure_captions = {}
         
         # 基本信息
         arxiv_id = paper.get('arxiv_id', paper.get('id', 'unknown'))
@@ -495,7 +534,7 @@ class PaperDeepInsightGenerator:
         tags = extracted.get('tags', [])
         
         # 处理图表
-        figures_html = self._render_figures(figure_paths, arxiv_id)
+        figures_html = self._render_figures(figure_paths, arxiv_id, figure_captions)
         
         # 渲染变量
         data = {
@@ -539,10 +578,13 @@ class PaperDeepInsightGenerator:
         
         return self._render_template(template, data)
     
-    def _render_figures(self, figure_paths: List[str], arxiv_id: str) -> str:
-        """渲染图表展示区域 - 放在实验分析部分"""
+    def _render_figures(self, figure_paths: List[str], arxiv_id: str, figure_captions: dict = None) -> str:
+        """渲染图表展示区域 - 使用真实的图表说明"""
         if not figure_paths:
             return ''
+        
+        if figure_captions is None:
+            figure_captions = {}
         
         html_parts = ['''
 <div class="figures-inline">
@@ -554,13 +596,17 @@ class PaperDeepInsightGenerator:
             fig_name = Path(path).name
             relative_path = f"figures/{arxiv_id.replace('.', '_')}/{fig_name}"
             
-            # 根据图表序号推断类型
-            if i <= 2:
-                caption = f"图{i}: 方法架构或流程示意"
-            elif i <= 5:
-                caption = f"图{i}: 实验结果对比"
+            # 使用真实的图表说明，如果没有则使用默认说明
+            if i in figure_captions:
+                caption = f"图{i}: {figure_captions[i]}"
             else:
-                caption = f"图{i}: 消融实验或案例分析"
+                # 根据图表序号推断类型
+                if i <= 2:
+                    caption = f"图{i}: 方法架构或流程示意"
+                elif i <= 5:
+                    caption = f"图{i}: 实验结果对比"
+                else:
+                    caption = f"图{i}: 消融实验或案例分析"
             
             html_parts.append(f'''
             <div class="figure-card">

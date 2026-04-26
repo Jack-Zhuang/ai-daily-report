@@ -128,6 +128,28 @@ class PaperExtractor:
                 image_bytes = base_image["image"]
                 image_ext = base_image["ext"]
                 
+                # 检查图片尺寸，过滤掉异常图片
+                # 使用 PIL 检查尺寸
+                try:
+                    from PIL import Image
+                    import io
+                    pil_img = Image.open(io.BytesIO(image_bytes))
+                    width, height = pil_img.size
+                    
+                    # 过滤条件：
+                    # 1. 高度 < 200px（通常是图标或装饰元素）
+                    # 2. 宽高比 > 15 或 < 0.07（极端扁平或极端窄长）
+                    # 3. 宽度和高度都 < 200px（小图标）
+                    aspect_ratio = width / height if height > 0 else 0
+                    
+                    if height < 200 or aspect_ratio > 15 or aspect_ratio < 0.07 or (width < 200 and height < 200):
+                        print(f"    ⚠️ 跳过异常图片: {width}x{height}, 比例={aspect_ratio:.2f}")
+                        continue
+                        
+                except Exception as e:
+                    print(f"    ⚠️ 无法检查图片尺寸: {e}")
+                    # 如果无法检查，仍然保存
+                
                 # 保存图片
                 img_filename = f"figure_{page_num}_{img_index}.{image_ext}"
                 img_path = self.cache_dir / img_filename
@@ -138,7 +160,9 @@ class PaperExtractor:
                     "page": page_num + 1,
                     "index": img_index,
                     "path": str(img_path),
-                    "ext": image_ext
+                    "ext": image_ext,
+                    "width": width if 'width' in dir() else 0,
+                    "height": height if 'height' in dir() else 0
                 })
         
         doc.close()
@@ -175,27 +199,57 @@ class PaperExtractor:
         return sections
     
     def parse_figures(self, full_text: str, images: List[Dict]) -> List[Figure]:
-        """解析图片说明"""
+        """解析图片说明 - 增强版"""
         figures = []
         
-        # 匹配 Figure X: caption 或 Fig. X: caption
-        figure_pattern = r"(?m)(?:Figure|Fig\.?)\s*(\d+)[.:]\s*([^\n]+)"
-        matches = re.findall(figure_pattern, full_text)
+        # 多种匹配模式，按优先级排序
+        patterns = [
+            # 标准 Figure X: Caption 格式
+            r"(?m)(?:Figure|Fig\.?)\s*(\d+)[.:]\s*([^\n]+(?:\n(?![A-Z][a-z])[^\n]+)*)",
+            # Figure X: Caption (多行，下一行以小写开头)
+            r"(?m)(?:Figure|Fig\.?)\s*(\d+)[.:]\s*([^\n]+)",
+        ]
         
-        for idx, (fig_num, caption) in enumerate(matches):
-            fig_num = int(fig_num)
-            caption = caption.strip()
+        all_matches = []
+        for pattern in patterns:
+            matches = re.findall(pattern, full_text)
+            for fig_num, caption in matches:
+                fig_num = int(fig_num)
+                caption = caption.strip()
+                # 清理 caption 中的多余空白
+                caption = re.sub(r'\s+', ' ', caption)
+                # 过滤太短的 caption
+                if len(caption) > 10:
+                    all_matches.append((fig_num, caption))
+        
+        # 去重（保留最长的 caption）
+        seen = {}
+        for fig_num, caption in all_matches:
+            if fig_num not in seen or len(caption) > len(seen[fig_num]):
+                seen[fig_num] = caption
+        
+        # 按序号排序
+        for fig_num in sorted(seen.keys()):
+            caption = seen[fig_num]
             
-            # 尝试匹配图片文件
+            # 尝试匹配图片文件（按序号匹配）
             image_url = None
             for img in images:
-                if img.get("index") == idx:
+                # 匹配逻辑：图片序号与 Figure 序号对应
+                if img.get("index") == fig_num - 1:  # 0-indexed
                     image_url = img.get("path")
                     break
             
+            # 如果没有精确匹配，使用第一个可用的图片
+            if not image_url and images:
+                for img in images:
+                    if img.get("path") and img.get("height", 0) >= 100:
+                        image_url = img.get("path")
+                        break
+            
             figures.append(Figure(
                 index=fig_num,
-                caption=caption[:200],  # 限制长度
+                caption=caption[:300],  # 允许更长的 caption
                 image_url=image_url
             ))
         
