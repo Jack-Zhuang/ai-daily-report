@@ -3,33 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Language as a Latent Variable for Reasoning Optimization - 论文解读报告</title>
+    <title>Language as a Latent Variable for Reasoning Optimization - 论文解读</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({ 
-            startOnLoad: true,
-            theme: 'base',
-            themeVariables: {
-                primaryColor: '#667eea',
-                primaryTextColor: '#fff',
-                primaryBorderColor: '#764ba2',
-                lineColor: '#666',
-                secondaryColor: '#f0f0f0',
-                tertiaryColor: '#fff'
-            },
-            flowchart: { curve: 'basis', padding: 20 },
-            sequence: { mirrorActors: false }
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
-    <script>
-        MathJax = {
-            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
-            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
-        };
-    </script>
     <style>
         :root {
             --color-text: #1a1a2e;
@@ -38,8 +13,6 @@
             --color-card: #ffffff;
             --color-bg: #f5f7fa;
             --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --safe-area-top: env(safe-area-inset-top, 0px);
-            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -49,21 +22,17 @@
             background: var(--color-bg);
             color: var(--color-text);
             line-height: 1.8;
-            -webkit-font-smoothing: antialiased;
         }
         
-        /* 导航栏 */
         .nav {
             position: fixed; top: 0; left: 0; right: 0;
             background: rgba(255,255,255,0.98);
             backdrop-filter: blur(12px);
-            padding: 12px 16px;
-            padding-top: calc(12px + var(--safe-area-top));
+            padding: 12px 20px;
             z-index: 100;
             display: flex; align-items: center; justify-content: space-between;
             border-bottom: 1px solid rgba(0,0,0,0.08);
         }
-        .nav-left { display: flex; align-items: center; gap: 12px; }
         .nav-back {
             width: 36px; height: 36px;
             background: rgba(102,126,234,0.1);
@@ -72,23 +41,19 @@
             color: #667eea; text-decoration: none; font-size: 16px;
         }
         .nav-title { font-size: 15px; font-weight: 600; }
-        .nav-btn {
+        .nav-link {
             padding: 8px 16px;
             background: var(--gradient-primary);
             color: white;
             border-radius: 10px;
             font-size: 13px; font-weight: 600;
             text-decoration: none;
-            display: flex; align-items: center; gap: 6px;
         }
         
-        /* Hero */
         .hero {
             background: var(--gradient-primary);
-            padding: 90px 20px 40px;
-            padding-top: calc(90px + var(--safe-area-top));
+            padding: 80px 20px 40px;
             color: white;
-            position: relative;
         }
         .hero-badge {
             display: inline-flex; align-items: center; gap: 6px;
@@ -99,64 +64,16 @@
             margin-bottom: 16px;
         }
         .hero-title {
-            font-size: 24px; font-weight: 700;
-            line-height: 1.3; margin-bottom: 12px;
-        }
-        .hero-subtitle {
-            font-size: 14px; opacity: 0.9;
-            line-height: 1.6; margin-bottom: 20px;
-        }
-        .hero-meta {
-            display: flex; flex-wrap: wrap; gap: 16px;
-            font-size: 13px; opacity: 0.85;
-        }
-        .hero-meta-item {
-            display: flex; align-items: center; gap: 6px;
+            font-size: 22px; font-weight: 700;
+            line-height: 1.4; margin-bottom: 12px;
         }
         
-        /* 主内容 */
         .main {
-            padding: 20px 20px 120px;
-            padding-bottom: calc(120px + var(--safe-area-bottom));
+            padding: 20px 20px 100px;
             max-width: 800px;
             margin: 0 auto;
         }
         
-        /* 目录导航 */
-        .toc {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-        }
-        .toc-title {
-            font-size: 14px; font-weight: 700;
-            margin-bottom: 12px;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .toc-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-        }
-        .toc-item {
-            font-size: 13px;
-            color: var(--color-text-secondary);
-            text-decoration: none;
-            padding: 8px 12px;
-            background: rgba(102,126,234,0.06);
-            border-radius: 8px;
-            display: flex; align-items: center; gap: 8px;
-            transition: all 0.2s;
-        }
-        .toc-item:hover {
-            background: rgba(102,126,234,0.12);
-            color: #667eea;
-        }
-        .toc-item i { font-size: 12px; width: 16px; }
-        
-        /* 卡片 */
         .section {
             background: white;
             border-radius: 16px;
@@ -171,11 +88,10 @@
             border-bottom: 2px solid rgba(102,126,234,0.1);
         }
         .section-icon {
-            width: 44px; height: 44px;
-            border-radius: 12px;
+            width: 40px; height: 40px;
+            border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 20px;
-            flex-shrink: 0;
+            font-size: 18px;
         }
         .section-icon.yellow { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
         .section-icon.blue { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
@@ -184,287 +100,87 @@
         .section-icon.pink { background: linear-gradient(135deg, #f472b6, #ec4899); }
         .section-icon.orange { background: linear-gradient(135deg, #fb923c, #f97316); }
         .section-icon.cyan { background: linear-gradient(135deg, #22d3ee, #06b6d4); }
-        .section-title {
-            font-size: 18px; font-weight: 700;
-        }
+        .section-title { font-size: 18px; font-weight: 700; }
         
-        /* 内容 */
-        .content {
-            font-size: 15px;
-            color: var(--color-text-secondary);
-        }
+        .content { font-size: 15px; color: var(--color-text-secondary); }
         .content p { margin-bottom: 16px; }
-        .content h3 {
-            font-size: 16px; font-weight: 600;
-            color: var(--color-text);
-            margin: 24px 0 12px;
-        }
-        .content h4 {
-            font-size: 14px; font-weight: 600;
-            color: var(--color-text);
-            margin: 20px 0 10px;
-        }
-        .content ul, .content ol {
-            margin: 12px 0;
-            padding-left: 24px;
-        }
-        .content li { margin-bottom: 8px; }
-        .content strong { color: var(--color-text); }
-        .content a { color: #667eea; text-decoration: none; }
-        .content a:hover { text-decoration: underline; }
+        .content h3 { font-size: 16px; font-weight: 600; color: var(--color-text); margin: 24px 0 12px; }
         
-        /* 高亮框 */
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(245,158,11,0.08));
-            border-left: 4px solid #f59e0b;
-            border-radius: 0 12px 12px 0;
-            padding: 16px 20px;
-            margin: 16px 0;
-        }
-        .highlight-box ul { margin: 0; padding-left: 20px; }
-        .highlight-box li { color: #92400e; font-size: 14px; }
+        .key-points { margin: 16px 0; padding-left: 24px; }
+        .key-points li { margin-bottom: 8px; color: var(--color-text); }
         
-        .info-box {
-            background: linear-gradient(135deg, rgba(96,165,250,0.08), rgba(59,130,246,0.08));
-            border-left: 4px solid #3b82f6;
-            border-radius: 0 12px 12px 0;
-            padding: 16px 20px;
-            margin: 16px 0;
-        }
-        .info-box p { margin: 0; color: #1e40af; font-size: 14px; }
+        .innovation-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .innovation-table td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.06); vertical-align: top; }
+        .innovation-table td:first-child { width: 30%; color: #667eea; }
         
-        /* 流程图 */
-        .diagram-container {
-            background: #fafbfc;
-            border: 1px solid rgba(0,0,0,0.06);
+        .figures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .figure-card {
+            background: #f8fafc;
             border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            overflow-x: auto;
+            padding: 12px;
         }
-        .diagram-title {
-            font-size: 13px; font-weight: 600;
-            color: var(--color-text-muted);
-            margin-bottom: 12px;
-            text-align: center;
-        }
-        .diagram-container .mermaid {
-            display: flex;
-            justify-content: center;
-        }
-        
-        /* 图片 */
-        .figure {
-            background: white;
-            border: 1px solid rgba(0,0,0,0.06);
-            border-radius: 12px;
-            padding: 16px;
-            margin: 20px 0;
-            text-align: center;
-        }
-        .figure img {
-            max-width: 100%;
+        .figure-card img {
+            width: 100%;
+            height: auto;
             border-radius: 8px;
-            margin-bottom: 12px;
+            background: white;
         }
         .figure-caption {
+            margin-top: 8px;
             font-size: 13px;
             color: var(--color-text-muted);
-            font-style: italic;
-        }
-        .figure-number {
-            font-weight: 600;
-            color: var(--color-text-secondary);
-        }
-        
-        /* 代码块 */
-        .code-block {
-            background: #1e1e2e;
-            border-radius: 12px;
-            margin: 16px 0;
-            overflow: hidden;
-        }
-        .code-header {
-            background: rgba(255,255,255,0.05);
-            padding: 10px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .code-lang {
-            font-size: 12px;
-            color: #a6adc8;
-            font-weight: 600;
-        }
-        .code-copy {
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: #a6adc8;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            cursor: pointer;
-        }
-        .code-block pre {
-            margin: 0;
-            padding: 16px;
-            overflow-x: auto;
-        }
-        .code-block code {
-            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #cdd6f4;
-        }
-        
-        /* 伪代码 */
-        .pseudo-code {
-            background: #f8f9fa;
-            border: 1px solid rgba(0,0,0,0.08);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 16px 0;
-            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
-            font-size: 13px;
-            line-height: 1.8;
-        }
-        .pseudo-code .keyword { color: #7c3aed; font-weight: 600; }
-        .pseudo-code .function { color: #2563eb; }
-        .pseudo-code .comment { color: #6b7280; font-style: italic; }
-        .pseudo-code .variable { color: #059669; }
-        .pseudo-code .operator { color: #dc2626; }
-        
-        /* 公式 */
-        .formula {
-            background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(139,92,246,0.08));
-            border-radius: 12px;
-            padding: 24px;
-            margin: 20px 0;
             text-align: center;
-            overflow-x: auto;
-        }
-        .formula-title {
-            font-size: 13px; font-weight: 600;
-            color: var(--color-text-muted);
-            margin-bottom: 12px;
-        }
-        .formula-desc {
-            font-size: 13px;
-            color: var(--color-text-secondary);
-            margin-top: 12px;
-            text-align: left;
         }
         
-        /* 表格 */
-        .table-wrapper {
-            overflow-x: auto;
-            margin: 16px 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-        th, td {
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-        }
-        th {
-            background: rgba(102,126,234,0.08);
-            font-weight: 600;
-            color: var(--color-text);
-        }
-        td { color: var(--color-text-secondary); }
-        tr:hover td { background: rgba(102,126,234,0.03); }
-        
-        /* 统计卡片 */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            margin: 20px 0;
+            margin: 16px 0;
         }
         .stat-card {
             background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08));
             border-radius: 12px;
-            padding: 20px;
-            text-align: center;
+            padding: 16px;
         }
         .stat-value {
-            font-size: 32px; font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .stat-label {
-            font-size: 12px;
-            color: var(--color-text-muted);
-            margin-top: 4px;
-        }
-        
-        /* 对比表格 */
-        .comparison-table {
-            margin: 20px 0;
-        }
-        .comparison-table th:first-child { background: #f8f9fa; }
-        .comparison-table .highlight { background: rgba(34,197,94,0.1); }
-        .comparison-table .best { 
-            color: #059669; 
+            font-size: 14px;
             font-weight: 600;
-        }
-        
-        /* 评分 */
-        .rating-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-        .rating-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 16px;
-            background: rgba(0,0,0,0.02);
-            border-radius: 10px;
-        }
-        .rating-label { font-size: 14px; }
-        .rating-stars { color: #fbbf24; font-size: 18px; letter-spacing: 2px; }
-        
-        /* FAQ */
-        .faq-item {
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-            padding: 16px 0;
-        }
-        .faq-item:last-child { border-bottom: none; }
-        .faq-q {
-            font-size: 15px; font-weight: 600;
             color: var(--color-text);
-            margin-bottom: 10px;
-            display: flex; align-items: flex-start; gap: 10px;
+            line-height: 1.5;
         }
-        .faq-q::before {
-            content: 'Q';
+        
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .comparison-table td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+        
+        .findings-list { display: flex; flex-direction: column; gap: 16px; }
+        .finding-item { display: flex; gap: 16px; align-items: flex-start; }
+        .finding-num {
+            width: 32px; height: 32px;
             background: var(--gradient-primary);
             color: white;
-            width: 24px; height: 24px;
-            border-radius: 6px;
+            border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 12px; font-weight: 700;
+            font-weight: 700; font-size: 14px;
             flex-shrink: 0;
         }
-        .faq-a {
-            font-size: 14px;
-            color: var(--color-text-secondary);
-            padding-left: 34px;
-            line-height: 1.7;
-        }
+        .finding-text { font-size: 15px; color: var(--color-text-secondary); }
         
-        /* 标签 */
+        .discussion-content { display: flex; flex-direction: column; gap: 20px; }
+        .discussion-item h4 {
+            font-size: 14px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        .discussion-item p { font-size: 14px; color: var(--color-text-secondary); }
+        
         .tags {
             display: flex; flex-wrap: wrap; gap: 8px;
-            margin-top: 16px;
+            padding: 16px 0;
         }
         .tag {
             background: rgba(102,126,234,0.1);
@@ -474,544 +190,177 @@
             font-size: 12px; font-weight: 600;
         }
         
-        /* 底部操作栏 */
         .bottom-bar {
             position: fixed; bottom: 0; left: 0; right: 0;
             background: rgba(255,255,255,0.98);
             backdrop-filter: blur(12px);
-            padding: 12px 16px;
-            padding-bottom: calc(12px + var(--safe-area-bottom));
+            padding: 12px 20px;
             border-top: 1px solid rgba(0,0,0,0.08);
             display: flex; gap: 12px;
         }
         .btn {
             flex: 1;
-            height: 50px;
+            height: 48px;
             border: none; border-radius: 12px;
             font-size: 15px; font-weight: 600;
             display: flex; align-items: center; justify-content: center; gap: 8px;
             cursor: pointer; text-decoration: none;
         }
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-        }
-        .btn-secondary {
-            background: rgba(102,126,234,0.1);
-            color: #667eea;
-        }
-        
-        /* 分隔线 */
-        .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
-            margin: 24px 0;
-        }
-        
-        /* 引用 */
-        .quote {
-            border-left: 4px solid #667eea;
-            padding-left: 16px;
-            margin: 16px 0;
-            font-style: italic;
-            color: var(--color-text-secondary);
-        }
-        
-        /* 步骤列表 */
-        .steps {
-            counter-reset: step;
-            margin: 16px 0;
-        }
-        .step {
-            position: relative;
-            padding-left: 48px;
-            margin-bottom: 20px;
-        }
-        .step::before {
-            counter-increment: step;
-            content: counter(step);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 32px; height: 32px;
-            background: var(--gradient-primary);
-            color: white;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: 700;
-        }
-        .step-title {
-            font-weight: 600;
-            color: var(--color-text);
-            margin-bottom: 6px;
-        }
-        .step-desc {
-            font-size: 14px;
-            color: var(--color-text-secondary);
-        }
+        .btn-primary { background: var(--gradient-primary); color: white; }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
     <nav class="nav">
-        <div class="nav-left">
-            <a href="javascript:history.back()" class="nav-back">
-                <i class="fas fa-arrow-left"></i>
-            </a>
-            <span class="nav-title">论文解读报告</span>
-        </div>
-        <a href="https://arxiv.org/abs/2604.21593" target="_blank" class="nav-btn">
-            <i class="fas fa-file-pdf"></i> 原文 PDF
-        </a>
+        <a href="javascript:history.back()" class="nav-back"><i class="fas fa-arrow-left"></i></a>
+        <span class="nav-title">论文解读</span>
+        <a href="https://arxiv.org/abs/2604.21593" class="nav-link" target="_blank"><i class="fas fa-external-link-alt"></i> 原文</a>
     </nav>
     
-    <!-- Hero -->
     <div class="hero">
         <div class="hero-badge">
             <i class="fas fa-file-alt"></i>
             <span>arXiv:2604.21593</span>
         </div>
         <h1 class="hero-title">Language as a Latent Variable for Reasoning Optimization</h1>
-        <p class="hero-subtitle">本论文提出了一种新颖的强化学习框架polyGRPO（Polyglot Group Relative Policy Optimization），将语言视为潜在变量来优化大语言模型的推理能力。研究发现，在...</p>
-        <div class="hero-meta">
-            <div class="hero-meta-item">
-                <i class="fas fa-users"></i>
-                <span>Unknown</span>
-            </div>
-            <div class="hero-meta-item">
-                <i class="fas fa-calendar"></i>
-                <span></span>
-            </div>
-            <div class="hero-meta-item">
-                <i class="fas fa-clock"></i>
-                <span>阅读约 15 分钟</span>
-            </div>
-        </div>
     </div>
     
-    <!-- 主内容 -->
     <main class="main">
-        <!-- 目录 -->
-        <div class="toc">
-            <div class="toc-title">
-                <i class="fas fa-list"></i> 目录导航
-            </div>
-            <div class="toc-list">
-                <a href="#abstract" class="toc-item"><i class="fas fa-file-alt"></i> 摘要速览</a>
-                <a href="#background" class="toc-item"><i class="fas fa-book"></i> 研究背景</a>
-                <a href="#method" class="toc-item"><i class="fas fa-cogs"></i> 方法详解</a>
-                <a href="#architecture" class="toc-item"><i class="fas fa-project-diagram"></i> 架构设计</a>
-                <a href="#algorithm" class="toc-item"><i class="fas fa-code"></i> 算法实现</a>
-                <a href="#experiments" class="toc-item"><i class="fas fa-chart-bar"></i> 实验分析</a>
-                <a href="#results" class="toc-item"><i class="fas fa-trophy"></i> 结果对比</a>
-                <a href="#discussion" class="toc-item"><i class="fas fa-comments"></i> 讨论与展望</a>
-            </div>
-        </div>
         
-        <!-- 摘要速览 -->
-        <div class="section" id="abstract">
+        <div class="section">
             <div class="section-header">
                 <div class="section-icon yellow">📋</div>
                 <h2 class="section-title">摘要速览</h2>
             </div>
             <div class="content">
-                <p>本论文提出了一种新颖的强化学习框架polyGRPO（Polyglot Group Relative Policy Optimization），将语言视为潜在变量来优化大语言模型的推理能力。研究发现，在多语言思维实验中，非英语响应在某些任务上表现优于英语，且无约束语言响应通常能获得最佳性能。基于此洞察，polyGRPO通过在线生成多语言偏好数据，结合准确率奖励和格式奖励，利用组相对策略优化增强模型推理能力。实验表明，仅使用18.1K多语言数学问题训练（无链式思维注释），polyGRPO在Qwen2.5-7B-Instruct模型上使四个英语推理测试集准确率提升6.72%，多语言基准测试提升6.89%，并在英语常识推理任务上超越基线模型4.9%，展现了强大的跨任务泛化能力。</p>
-            </div>
-            <div class="highlight-box">
-                <ul>
-                    <li>语言可作为潜在变量结构性地调节模型内部推理路径，而非仅作为输出媒介</li><li>多语言思维实验证明非英语响应在推理任务中可优于英语，无约束语言响应表现最佳</li><li>polyGRPO框架通过在线生成多语言偏好数据，利用组相对优势优化策略</li><li>仅使用数学数据训练即可泛化至常识推理任务，验证了方法的跨任务迁移能力</li>
-                </ul>
+                <p>本论文提出语言不仅是输出的媒介，还可以作为潜在变量来结构性地调节大语言模型的内部推理路径。通过Polyglot Thinking Experiment，作者发现在约束响应语言设置下，中文响应平均优于英语；而在无约束设置下，模型性能通常最佳。这表明多语言能力拓宽了模型的潜在推理空间。基于此发现，论文提出polyGRPO（Polyglot Group Relative Policy Optimization），一种将语言变化视为隐式探索信号的强化学习框架。该方法在线生成多语言偏好数据，包含语言约束和非约束条件下的响应，使用GRPO优化策略。实验在仅18.1K多语言数学问题（无链式思维注释）上训练，polyGRPO将Qwen2.5-7B-Instruct在四个英语推理测试集上提升+6.72%，在多语言基准上提升+6.89%。值得注意的是，这是唯一在英语常识推理任务（X-CSQA）上超越基础LLM的方法（+4.9%），展示了强大的跨任务泛化能力。</p>
+                <ul class="key-points"><li>语言可作为潜在变量结构性地调节模型内部推理路径，而非仅作为输出媒介</li><li>非英语响应在某些推理任务中可优于英语响应，多语言思考扩展了潜在推理空间</li><li>无约束语言响应设置通常产生最佳性能，表明允许模型自由选择语言能增强推理能力</li><li>格式奖励对引导多语言思考路径和有效最终答案至关重要，特别是在小模型中</li></ul>
             </div>
         </div>
-        
-        <!-- 研究背景 -->
-        <div class="section" id="background">
+        <div class="section">
             <div class="section-header">
                 <div class="section-icon blue">📖</div>
-                <h2 class="section-title">研究背景与动机</h2>
+                <h2 class="section-title">研究背景</h2>
             </div>
             <div class="content">
-                <p>大语言模型（LLMs）在推理任务中表现出色，但长期存在英语偏见，在英语输入或响应时性能更强。随着多语言训练数据的增加，这一偏见正在减弱，非英语语言中的推理能力逐步提升甚至超越英语。已有方法如多数投票和自动语言选择受限于任务复杂性和次优的语言选择，而现有的强化学习方法多依赖英语中心或英语优化的偏好数据，限制了模型充分发挥多语言思维的潜力。本研究旨在探索多语言思维是否能作为潜在变量用于推理优化。</p>
-            </div>
-            <div class="info-box">
-                <p><strong>核心问题：</strong>详见论文原文</p>
+                <p>大语言模型在推理任务中表现出色，但通常存在英语偏见——在英语输入或响应时表现更强。然而随着多语言训练的进展，模型在非英语语言中的推理能力不断提升，甚至在某些任务中超越英语。这引发了一个关键问题：多语言思考能否作为推理优化的潜在变量？现有方法如多数投票和自动语言选择受限于任务复杂性和语言选择策略，而基于强化学习的方法往往依赖英语中心的偏好数据，未能充分利用多语言思考的优势。</p>
             </div>
         </div>
-        
-        <!-- 方法详解 -->
-        <div class="section" id="method">
+        <div class="section">
             <div class="section-header">
                 <div class="section-icon green">⚙️</div>
                 <h2 class="section-title">方法详解</h2>
             </div>
             <div class="content">
-                <p>polyGRPO是一种基于强化学习的推理优化框架，核心思想是将语言多样性作为隐式探索信号。该方法包含三个模块：首先通过多语言推理生成模块为每个问题生成一组响应，包括无语言约束的响应和随机指定语言的响应；其次使用规则奖励函数评估响应质量，结合准确率奖励和格式奖励；最后基于组内奖励计算相对优势，通过GRPO风格的裁剪目标优化策略。训练时采用在线方式生成多语言响应，无需预存偏好数据，降低了存储开销的同时扩展了推理空间的探索范围。</p>
-            </div>
-            
-            <h3>核心创新点</h3>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>创新点</th>
-                            <th>技术方案</th>
-                            <th>解决的问题</th>
-                        </tr>
-                    </thead>
+                <p>polyGRPO框架包含三个核心模块：Polyglot Reasoning Generation Module（PRGM）生成多语言响应组，对每个问题生成n=5个响应，包括一个无语言约束和四个随机选择语言的约束响应；Reward Module使用规则奖励函数，结合准确率奖励（二元：最终答案是否正确）和格式奖励（二元：是否包含[Thinking]推理步骤和####格式的答案）；Group Relative Policy Optimization Module计算组相对优势并通过GRPO优化策略。PRGM在训练期间在线运行，减少存储开销并促进多语言思考空间的广泛探索。</p>
+                
+                <h3>核心创新</h3>
+                <table class="innovation-table">
                     <tbody>
-                        <tr>
-    <td>语言作为潜在变量假设</td>
-    <td>提出语言不仅是输出媒介，更是结构性调节模型内部推理路径的潜在变量。通过Polyglot Thinking Experiment验证了多语言能力扩展了模型的潜在推理空间，使模型能够探索不同推理轨迹。</td>
-    <td>传统观点认为语言仅是输出媒介，未能充分利用语言多样性提升推理能力。</td>
-</tr>
-<tr>
-    <td>polyGRPO多语言强化学习框架</td>
-    <td>在线生成多语言偏好数据，结合语言约束与非约束响应设置，利用组相对优势优化策略。训练时只需数学数据，无需链式思维注释即可实现跨任务泛化。</td>
-    <td>现有RL方法依赖英语优化的偏好数据，限制了多语言思维的充分发挥。</td>
-</tr>
-<tr>
-    <td>格式奖励机制</td>
-    <td>设计包含准确率奖励和格式奖励的规则奖励函数，要求模型生成包含推理过程的响应，推理内容不少于100字符，防止模型生成最小化文本直接输出答案。</td>
-    <td>模型在多语言推理时容易出现跳过推理步骤、添加无关文本或重复内容等失控行为。</td>
-</tr>
+                        <tr><td><strong>语言作为潜在变量假设</strong></td><td>首次提出语言不仅是输出媒介，而是作为潜在变量结构性地调节模型内部推理路径，通过Polyglot Thinking Experiment系统验证了这一假设</td></tr><tr><td><strong>polyGRPO框架</strong></td><td>将多语言思考整合到强化学习框架中，在线生成多语言偏好数据，利用语言变化作为隐式探索信号，无需预定义语言锚点或翻译数据</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        
-        <!-- 架构设计 -->
-        <div class="section" id="architecture">
+        <div class="section">
             <div class="section-header">
-                <div class="section-icon purple">🏗️</div>
-                <h2 class="section-title">架构设计</h2>
+                <div class="section-icon purple">📊</div>
+                <h2 class="section-title">论文图表</h2>
             </div>
-            
-            
-            
-            <div class="content">
-                <h3>模块说明</h3>
-                <p><strong>Polyglot Reasoning Generation Module (PRGM)：</strong>多语言推理生成模块，为每个问题生成n=5个响应，包括一个无语言约束响应和四个随机指定语言响应，在线生成多语言推理轨迹，扩展模型潜在推理空间。</p><p><strong>Reward Module：</strong>奖励模块由准确率奖励AR和格式奖励FR组成，AR判断最终答案是否正确，FR鼓励包含[Thinking]推理过程和[Answer]格式，并要求推理内容不少于100字符。</p><p><strong>Group Relative Policy Optimization Module：</strong>组相对策略优化模块，计算组内相对优势Ai，通过PPO风格裁剪目标结合KL惩罚更新策略，无需价值函数估计。</p>
-            </div>
-            
-            
-        </div>
-        
-        <!-- 算法实现 -->
-        <div class="section" id="algorithm">
-            <div class="section-header">
-                <div class="section-icon cyan">💻</div>
-                <h2 class="section-title">算法实现</h2>
-            </div>
-            
-            
-            
-            
-            
-            
-            
-            
-        </div>
-        
-        <!-- 实验分析 -->
-        <div class="section" id="experiments">
-            <div class="section-header">
-                <div class="section-icon pink">📊</div>
-                <h2 class="section-title">实验分析</h2>
-            </div>
-            
-            <!-- 论文图表（放在实验部分开头） -->
-            
-<div class="figures-inline">
-<h3>📊 论文图表</h3>
-<p class="figures-note">以下图表来自论文原文，展示了方法架构和实验结果：</p>
-<div class="figures-scroll">
-
+            <div class="figures-grid">
+                
             <div class="figure-card">
-                <img src="figures/2604_21593/fig_1.png" alt="Figure 1" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="figures/2604_21593/fig_1.png" alt="Figure 1" loading="lazy">
                 <p class="figure-caption">图1: Polyglot Thinking Experiment results (left part) on MGSM (Shi et al., 2023) in Qwen2.5-7B-Instruct (Yang et al., 2024a) model, including ten languages: English (en), German (de), French (fr), Spanish </p>
             </div>
-
             <div class="figure-card">
-                <img src="figures/2604_21593/fig_2.png" alt="Figure 2" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="figures/2604_21593/fig_2.png" alt="Figure 2" loading="lazy">
                 <p class="figure-caption">图2: The advantage Ai of the i-th response is calculated by normalizing the rewards {ri}n i=1 of the group: Ai = ri −mean({ri}n i=1) std({ri}n i=1) . (3) GRPO adopts a PPO-style clipped objective, with a K</p>
             </div>
-
             <div class="figure-card">
-                <img src="figures/2604_21593/fig_3.png" alt="Figure 3" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="figures/2604_21593/fig_3.png" alt="Figure 3" loading="lazy">
                 <p class="figure-caption">图3: Ablation results on MGSM with three sizes of Qwen2.5- Instruct models. Figure 3, with further details in Appendix D. The ablation studies validate the importance of each setting in ensuring the effect</p>
             </div>
-
             <div class="figure-card">
-                <img src="figures/2604_21593/fig_6.png" alt="Figure 6" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="figures/2604_21593/fig_6.png" alt="Figure 6" loading="lazy">
                 <p class="figure-caption">图6: The performance of GRPO and polyGRPO in MGSM benchmark with 10 epochs checkpoints trained based on Qwen2.5- 7B-Instruct model. for Thai questions, English/Chinese for Bengali), with code- switching, w</p>
             </div>
-
             <div class="figure-card">
-                <img src="figures/2604_21593/fig_7.png" alt="Figure 7" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="figures/2604_21593/fig_7.png" alt="Figure 7" loading="lazy">
                 <p class="figure-caption">图7: The entropy of GRPO and polyGRPO during training process based on Qwen2.5-7B-Instruct model with 10 epochs (700 steps total). 5.2.3. PERFORMANCE DYNAMICS AND ENTROPY ANALYSIS We further analyze traini</p>
             </div>
-</div>
-</div>
-
-<style>
-.figures-inline {
-    margin: 1.5rem 0;
-    padding: 1rem;
-    background: #f8fafc;
-    border-radius: 8px;
-}
-.figures-inline h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1rem;
-    color: #334155;
-}
-.figures-note {
-    font-size: 0.85rem;
-    color: #64748b;
-    margin-bottom: 1rem;
-}
-.figures-scroll {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-    scroll-snap-type: x mandatory;
-}
-.figure-card {
-    flex: 0 0 280px;
-    background: white;
-    border-radius: 8px;
-    padding: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    scroll-snap-align: start;
-    cursor: zoom-in;
-}
-.figure-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-    transition: transform 0.2s;
-    background: white;
-    padding: 8px;
-    box-sizing: border-box;
-}
-.figure-card img.zoom {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(2);
-    z-index: 1000;
-    cursor: zoom-out;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-}
-.figure-caption {
-    margin: 0.5rem 0 0;
-    font-size: 0.8rem;
-    color: #64748b;
-    text-align: center;
-}
-</style>
-            
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon pink">📈</div>
+                <h2 class="section-title">实验结果</h2>
+            </div>
             <div class="content">
-                <h3>实验设置</h3>
-                <p><strong>数据集：</strong>MAPO数学推理数据集（18,140个多语言样本，包含英语及9种翻译语言）, MGSM（250个GSM8K样本翻译为10种语言，用于域内评估）, MATH500（500个数学问题，含6种翻译版本，域外评估）, PolyMath-medium（125个中高难度数学问题，18种语言）, X-CSQA（16种语言的常识推理基准）</p>
-                <p><strong>评价指标：</strong>Accuracy（准确率）, Average Performance across languages</p>
-                <p><strong>基线方法：</strong>详见论文原文</p>
+                <p><strong>数据集：</strong>MAPO多语言数学推理数据集（1,703英语问题及其9种语言翻译版本，共18,140示例）, MGSM（250 GSM8K样本的10种语言版本）, MATH500（500道英文数学问题，含6种翻译版本）, PolyMath-medium（125道更难数学问题）, X-CSQA（常识推理，扩展到16种语言）</p>
             </div>
             
             <h3>主要结果</h3>
             <div class="stats-grid">
+                
                 <div class="stat-card">
-    <div class="stat-value">在MGSM数据集上，基于Qwen2.5-7B-Instruct模型，polyGRPO平均多语言准确率较最强基线提升2.91%</div>
-    <div class="stat-label">实验结果</div>
-</div>
-<div class="stat-card">
-    <div class="stat-value">在四个英语推理测试集上，基于Qwen2.5-7B-Instruct模型，polyGRPO平均准确率提升6.72%</div>
-    <div class="stat-label">实验结果</div>
-</div>
-<div class="stat-card">
-    <div class="stat-value">在多语言基准测试上，polyGRPO较基线提升6.89%</div>
-    <div class="stat-label">实验结果</div>
-</div>
-<div class="stat-card">
-    <div class="stat-value">在X-CSQA英语常识推理任务中，polyGRPO是唯一超越基线LLM的方法，提升4.9%</div>
-    <div class="stat-label">实验结果</div>
-</div>
+                    <div class="stat-value">Qwen2.5-7B-Instruct：MGSM英语81.20→94.00（+12.8%），多语言平均63.16→75.93（+12.77%）</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">Qwen2.5-7B-Instruct：四基准英语平均+6.72%，多语言平均+6.89%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">Llama3-8B-Instruct：四基准英语平均+1.72%，MGSM多语言+3.53%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">X-CSQA：Qwen2.5-7B唯一超越基础模型的方法（+4.9%），尽管仅在数学数据上训练</div>
+                </div>
             </div>
             
-            <h3>性能对比</h3>
-            <div class="table-wrapper">
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>方法</th>
-                            <th>指标</th><th>数值</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>本文方法</td><td>Accuracy（准确率）</td></tr>
-<tr><td>本文方法</td><td>Average Performance across languages</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <h3>消融实验</h3>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>配置</th>
-                            <th>性能</th>
-                            <th>变化</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>消融配置 1</td><td>8.</td><td>-</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <h3>方法对比</h3>
+            <table class="comparison-table">
+                <tbody>
+                    <tr><td>相比GRPO：MGSM英语提升3.6%，多语言提升2.91%</td></tr><tr><td>相比最强基线LIDR：四基准英语平均+3.07%</td></tr><tr><td>相比MAPO：四基准英语平均+3.08%</td></tr>
+                </tbody>
+            </table>
         </div>
-        
-        <!-- 结果与讨论 -->
-        <div class="section" id="results">
+        <div class="section">
             <div class="section-header">
                 <div class="section-icon orange">🏆</div>
-                <h2 class="section-title">结果与讨论</h2>
+                <h2 class="section-title">主要发现</h2>
             </div>
-            
-            <div class="content">
-                <h3>主要发现</h3>
-                <div class="steps">
-                    <div class="step">
-    <div class="step-title">发现 1</div>
-    <div class="step-desc">Figure 6 illustrates the performance of GRPO and poly-
-GRPO on the MGSM benchmark with 10 epochs of </div>
-</div>
-<div class="step">
-    <div class="step-title">发现 2</div>
-    <div class="step-desc">For English (EN)
-performance, polyGRPO shows an initial improvement over
-GRPO, with a peak performan</div>
-</div>
-                </div>
+            <div class="findings-list">
                 
-                <h3>局限性</h3>
-                <ul>
-                    <li>详见论文原文</li>
-                </ul>
-                
-                <h3>未来方向</h3>
-                <ul>
-                    <li>详见论文原文</li>
-                </ul>
+            <div class="finding-item">
+                <div class="finding-num">1</div>
+                <div class="finding-text">中文响应在约束设置下平均表现优于英语，无单一语言设置在所有语言中始终占优</div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-num">2</div>
+                <div class="finding-text">无约束语言响应设置通常超越英语基线，表明灵活的多语言操作扩展了推理潜力</div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-num">3</div>
+                <div class="finding-text">格式奖励对小模型（如1.5B）尤为重要，可防止低资源语言推理中的失控行为</div>
+            </div>
             </div>
         </div>
-        
-        <!-- 讨论与展望 -->
-        <div class="section" id="discussion">
+        <div class="section">
             <div class="section-header">
-                <div class="section-icon blue">💬</div>
+                <div class="section-icon cyan">💬</div>
                 <h2 class="section-title">讨论与展望</h2>
             </div>
-            
-            <div class="content">
-                <h3>工业应用价值</h3>
-                <ul>
-                    <li>可应用于相关领域的推理任务优化</li>
-                </ul>
-                
-                <h3>实现建议</h3>
-                <div class="highlight-box">
-                    <ul>
-                        <li>Consequently, the polyGSPO objective
-
-16
-
-Language as a Latent Variable for Reasoning Optimization
-</li>
-                    </ul>
-                </div>
+            <div class="discussion-content">
+                <div class="discussion-item"><h4>局限性</h4><p>论文主要关注数学和常识推理任务，对于更复杂的推理任务（如多跳推理或形式推理）可能需要进一步验证；语言集组成对性能的影响仍有待深入探索。</p></div><div class="discussion-item"><h4>未来方向</h4><p>探索将语言作为潜在变量应用于更复杂的推理任务，以及在更小规模模型上的应用效果。</p></div><div class="discussion-item"><h4>应用场景</h4><p>多语言推理系统开发、跨语言自然语言处理、推理能力增强的语言无关优化、教育辅助工具（支持多语言数学问题解答）。</p></div>
             </div>
         </div>
         
-        <!-- 综合评价 -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon purple">⭐</div>
-                <h2 class="section-title">综合评价</h2>
-            </div>
-            <div class="rating-grid">
-                <div class="rating-item">
-    <span class="rating-label">创新性</span>
-    <span class="rating-stars">★★★★☆</span>
-</div>
-<div class="rating-item">
-    <span class="rating-label">工业价值</span>
-    <span class="rating-stars">★★★★☆</span>
-</div>
-<div class="rating-item">
-    <span class="rating-label">实验充分性</span>
-    <span class="rating-stars">★★★★☆</span>
-</div>
-<div class="rating-item">
-    <span class="rating-label">可复现性</span>
-    <span class="rating-stars">★★★☆☆</span>
-</div>
-            </div>
-        </div>
-        
-        <!-- FAQ -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon blue">❓</div>
-                <h2 class="section-title">常见问题</h2>
-            </div>
-            <div class="faq-item">
-    <div class="faq-q">该方法的主要贡献是什么？</div>
-    <div class="faq-a">请参考论文原文的摘要和结论部分。</div>
-</div>
-<div class="faq-item">
-    <div class="faq-q">如何复现该方法？</div>
-    <div class="faq-a">请参考论文的方法部分和实验设置，或查看作者提供的代码仓库。</div>
-</div>
-        </div>
-        
-        <!-- 标签 -->
-        <div class="tags">
-            <span class="tag">多语言思维</span><span class="tag">强化学习</span><span class="tag">推理优化</span><span class="tag">polyGRPO</span><span class="tag">大语言模型</span><span class="tag">潜在变量</span>
-        </div>
+        <div class="tags"><span class="tag">多语言推理</span><span class="tag">强化学习</span><span class="tag">语言作为潜在变量</span><span class="tag">polyGRPO</span><span class="tag">大语言模型优化</span><span class="tag">Group Relative Policy Optimization</span></div>
     </main>
     
-    <!-- 底部操作栏 -->
     <div class="bottom-bar">
-        <a href="https://arxiv.org/abs/2604.21593" target="_blank" class="btn btn-primary">
-            <i class="fas fa-file-pdf"></i> 阅读原论文
+        <a href="https://arxiv.org/abs/2604.21593" class="btn btn-primary" target="_blank">
+            <i class="fas fa-book"></i> 阅读原论文
         </a>
-        <button class="btn btn-secondary" onclick="sharePaper()">
-            <i class="fas fa-share-alt"></i> 分享
-        </button>
     </div>
-    
-    <script>
-        function sharePaper() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Language as a Latent Variable for Reasoning Optimization',
-                    text: '本论文提出了一种新颖的强化学习框架polyGRPO（Polyglot Group Relative Policy Optimization），将语言视为潜在变量来优化大语言模型的推理能力。研究发现，在...',
-                    url: window.location.href
-                });
-            } else {
-                navigator.clipboard.writeText(window.location.href);
-                alert('链接已复制！');
-            }
-        }
-        
-        function copyCode(btn) {
-            const code = btn.closest('.code-block').querySelector('code').textContent;
-            navigator.clipboard.writeText(code);
-            btn.textContent = '已复制';
-            setTimeout(() => btn.textContent = '复制', 2000);
-        }
-    </script>
 </body>
 </html>
