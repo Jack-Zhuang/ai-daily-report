@@ -101,6 +101,26 @@ class PaperDeepInsightGenerator:
         try:
             doc = fitz.open(str(pdf_path))
             
+            # 首先从全文中提取所有图表说明
+            full_text = ""
+            for page in doc:
+                full_text += page.get_text()
+            
+            # 匹配 "Figure X. Caption" 格式（可能跨多行）
+            caption_pattern = r'(Figure\s+(\d+)\.\s*[^\n]+(?:\n(?![A-Z][a-z]*\s+\d+\.)([^\n]+))*)'
+            for match in re.finditer(caption_pattern, full_text):
+                fig_num = int(match.group(2))
+                caption = match.group(1).strip()
+                # 清理多余的空白
+                caption = re.sub(r'\s+', ' ', caption)
+                # 只保留说明部分（去掉 "Figure X."）
+                caption = re.sub(r'^Figure\s+\d+\.\s*', '', caption)
+                if len(caption) > 10:
+                    figure_captions[fig_num] = caption[:200]
+            
+            if figure_captions:
+                print(f"  📝 找到 {len(figure_captions)} 个图表说明")
+            
             # 高分辨率渲染参数
             scale = 2.0
             mat = fitz.Matrix(scale, scale)
@@ -131,8 +151,8 @@ class PaperDeepInsightGenerator:
                                 caption = match.group(3).strip() if match.group(3) else ""
                                 bbox = span["bbox"]  # (x0, y0, x1, y1)
                                 
-                                # 保存图表说明
-                                if caption and len(caption) > 10:
+                                # 保存图表说明（如果还没有）
+                                if fig_num not in figure_captions and caption and len(caption) > 10:
                                     figure_captions[fig_num] = caption[:200]
                                 
                                 # 计算图表区域（图表在标题上方）
@@ -281,24 +301,29 @@ class PaperDeepInsightGenerator:
     "method": {{
         "text": "方法概述（200-400字）",
         "modules": [
-            {{"name": "模块名称", "description": "模块功能描述"}},
-            {{"name": "模块名称", "description": "模块功能描述"}}
+            {{"name": "模块名称", "description": "模块功能描述（50-100字）"}},
+            {{"name": "模块名称", "description": "模块功能描述（50-100字）"}}
         ]
     }},
     "innovations": [
-        {{"point": "创新点名称", "solution": "技术方案", "problem": "解决的问题"}},
-        {{"point": "创新点名称", "solution": "技术方案", "problem": "解决的问题"}}
+        {{"point": "创新点名称（简短）", "solution": "技术方案（详细描述）", "problem": "解决的问题"}},
+        {{"point": "创新点名称（简短）", "solution": "技术方案（详细描述）", "problem": "解决的问题"}},
+        {{"point": "创新点名称（简短）", "solution": "技术方案（详细描述）", "problem": "解决的问题"}}
     ],
     "experiments": {{
-        "datasets": ["数据集1", "数据集2"],
-        "metrics": ["指标1", "指标2"],
-        "improvements": ["提升1", "提升2"]
+        "datasets": ["数据集名称（简要说明用途）", "数据集名称（简要说明用途）"],
+        "metrics": ["评价指标1", "评价指标2"],
+        "improvements": ["具体的性能提升数据（如：在XX数据集上提升X%）", "具体的性能提升数据", "具体的性能提升数据", "具体的性能提升数据"]
     }},
     "conclusion": "主要结论（100-200字）",
     "tags": ["标签1", "标签2", "标签3", "标签4"]
 }}
 
-注意：只输出 JSON，不要其他内容。"""
+重要提示：
+1. improvements 数组必须包含 4 个具体的实验结果，格式如："在MGSM数据集上准确率提升6.72%"
+2. 不要使用模糊的描述，必须包含具体的数值
+3. 如果论文中有多个模型的结果，分别列出
+4. 只输出 JSON，不要其他内容"""
 
         headers = {
             "Authorization": f"Bearer {self.api_key}",
@@ -625,25 +650,34 @@ class PaperDeepInsightGenerator:
 <p class="figures-note">以下图表来自论文原文，展示了方法架构和实验结果：</p>
 <div class="figures-scroll">''']
         
-        for i, path in enumerate(figure_paths[:8], 1):
+        for path in figure_paths[:8]:
             fig_name = Path(path).name
             relative_path = f"figures/{arxiv_id.replace('.', '_')}/{fig_name}"
             
-            # 使用真实的图表说明，如果没有则使用默认说明
-            if i in figure_captions:
-                caption = f"图{i}: {figure_captions[i]}"
-            else:
+            # 从文件名提取 Figure 编号 (fig_X.png -> X)
+            fig_num = None
+            import re
+            match = re.search(r'fig_(\d+)', fig_name)
+            if match:
+                fig_num = int(match.group(1))
+            
+            # 使用真实的图表说明
+            if fig_num and fig_num in figure_captions:
+                caption = f"图{fig_num}: {figure_captions[fig_num]}"
+            elif fig_num:
                 # 根据图表序号推断类型
-                if i <= 2:
-                    caption = f"图{i}: 方法架构或流程示意"
-                elif i <= 5:
-                    caption = f"图{i}: 实验结果对比"
+                if fig_num <= 2:
+                    caption = f"图{fig_num}: 方法架构或流程示意"
+                elif fig_num <= 5:
+                    caption = f"图{fig_num}: 实验结果对比"
                 else:
-                    caption = f"图{i}: 消融实验或案例分析"
+                    caption = f"图{fig_num}: 消融实验或案例分析"
+            else:
+                caption = "论文图表"
             
             html_parts.append(f'''
             <div class="figure-card">
-                <img src="{relative_path}" alt="Figure {i}" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="{relative_path}" alt="Figure {fig_num or ''}" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
                 <p class="figure-caption">{caption}</p>
             </div>''')
         
@@ -870,13 +904,23 @@ class PaperDeepInsightGenerator:
         return html
     
     def _render_stats_from_experiments(self, experiments: dict) -> str:
-        improvements = experiments.get('improvements', ['性能提升'])
+        """渲染实验结果统计卡片"""
+        improvements = experiments.get('improvements', [])
+        
+        # 如果没有提取到改进数据，使用默认值
+        if not improvements:
+            improvements = [
+                '详见论文原文',
+                '详见论文原文',
+                '详见论文原文',
+                '详见论文原文'
+            ]
         
         cards = []
-        for i, imp in enumerate(improvements[:4]):
+        for imp in improvements[:4]:
             cards.append(f'''<div class="stat-card">
     <div class="stat-value">{imp}</div>
-    <div class="stat-label">性能提升</div>
+    <div class="stat-label">实验结果</div>
 </div>''')
         
         while len(cards) < 4:
