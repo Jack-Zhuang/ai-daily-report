@@ -76,11 +76,16 @@ class PaperDeepInsightGenerator:
             return None
     
     def extract_figures(self, pdf_path: Path, arxiv_id: str) -> List[str]:
-        """从 PDF 中提取图表"""
+        """从 PDF 中提取图表 - 使用页面渲染方式获取高质量图表
+        
+        注意：很多 PDF 中的图表是矢量图形，不是嵌入的位图。
+        因此需要渲染页面区域来获取真正的图表。
+        """
         try:
             import fitz  # PyMuPDF
             from PIL import Image
             import io
+            import re
         except ImportError:
             print("  ⚠️ PyMuPDF 或 PIL 未安装，跳过图表提取")
             return [], {}
@@ -94,13 +99,12 @@ class PaperDeepInsightGenerator:
         try:
             doc = fitz.open(str(pdf_path))
             
-            # 先提取所有文本，用于匹配图表说明
+            # 1. 提取所有图表说明
             full_text = ""
             for page in doc:
                 full_text += page.get_text()
             
-            # 匹配图表说明
-            import re
+            # 匹配 Figure X: caption 格式
             caption_pattern = r"(?m)(?:Figure|Fig\.?)\s*(\d+)[.:]\s*([^\n]+)"
             for match in re.finditer(caption_pattern, full_text):
                 fig_num = int(match.group(1))
@@ -108,78 +112,56 @@ class PaperDeepInsightGenerator:
                 if len(caption) > 10:
                     figure_captions[fig_num] = caption[:200]
             
-            # 提取图片
-            for page_num, page in enumerate(doc):
-                images = page.get_images(full=True)
+            print(f"  📝 找到 {len(figure_captions)} 个图表说明")
+            
+            # 2. 查找包含图表的页面并渲染
+            # 使用高分辨率渲染 (2x = 144 DPI)
+            mat = fitz.Matrix(2.0, 2.0)
+            
+            fig_count = 0
+            for page_num in range(len(doc)):
+                page = doc[page_num]
+                page_text = page.get_text()
                 
-                for img in images:
-                    xref = img[0]
-                    base_image = doc.extract_image(xref)
-                    image_bytes = base_image["image"]
-                    image_ext = base_image["ext"]
-                    
-                    # 检查图片尺寸
-                    try:
-                        pil_img = Image.open(io.BytesIO(image_bytes))
-                        width, height = pil_img.size
-                        aspect_ratio = width / height if height > 0 else 0
-                        
-                        # 过滤异常图片：
-                        # 1. 高度 < 200px（通常是图标或装饰元素）
-                        # 2. 宽高比 > 15 或 < 0.07（极端扁平或极端窄长）
-                        # 3. 宽度和高度都 < 200px（小图标）
-                        if height < 200 or aspect_ratio > 15 or aspect_ratio < 0.07 or (width < 200 and height < 200):
-                            continue
-                        
-                        # 处理透明背景：将黑色背景转换为白色背景
-                        if pil_img.mode in ('RGBA', 'LA', 'P'):
-                            # 创建白色背景
-                            background = Image.new('RGB', pil_img.size, (255, 255, 255))
-                            if pil_img.mode == 'P':
-                                pil_img = pil_img.convert('RGBA')
-                            background.paste(pil_img, mask=pil_img.split()[-1] if pil_img.mode == 'RGBA' else None)
-                            pil_img = background
-                        elif pil_img.mode == 'L':
-                            # 灰度图转RGB
-                            pil_img = pil_img.convert('RGB')
-                        
-                        # 检查是否是黑色背景的图片，如果是则反转或添加白色背景
-                        corners = [
-                            pil_img.getpixel((0, 0))[:3] if pil_img.mode == 'RGB' else (0, 0, 0),
-                            pil_img.getpixel((min(10, width-1), min(10, height-1)))[:3] if pil_img.mode == 'RGB' else (0, 0, 0),
-                        ]
-                        
-                        # 如果四角都是黑色，可能是黑色背景的图表，需要反转颜色
-                        if all(c[0] < 30 and c[1] < 30 and c[2] < 30 for c in corners):
-                            # 使用 ImageOps 反转颜色（黑色变白色）
-                            from PIL import ImageOps
-                            pil_img = ImageOps.invert(pil_img)
-                            print(f"    🔄 反转图片颜色（黑色背景 -> 白色背景）")
-                            
-                    except Exception as e:
-                        print(f"    ⚠️ 图片处理失败: {e}")
-                        # 如果无法检查尺寸，使用文件大小过滤
-                        if len(image_bytes) < 10000:
-                            continue
-                    
-                    fig_num = len(figure_paths) + 1
-                    img_filename = f"fig_{fig_num}.jpeg"
-                    img_path = figures_dir / img_filename
-                    
-                    # 保存处理后的图片
-                    pil_img.save(img_path, 'JPEG', quality=95)
-                    
-                    figure_paths.append(str(img_path))
+                # 检查页面是否包含图表
+                figures_on_page = re.findall(r'Figure\s+(\d+)', page_text)
+                if not figures_on_page:
+                    continue
+                
+                # 渲染整个页面
+                pix = page.get_pixmap(matrix=mat)
+                img_data = pix.tobytes("png")
+                pil_img = Image.open(io.BytesIO(img_data))
+                
+                # 保存整个页面作为图表来源
+                fig_count += 1
+                img_filename = f"fig_{fig_count}.png"
+                img_path = figures_dir / img_filename
+                
+                # 裁剪掉页眉页脚（通常图表在中间区域）
+                # 页面尺寸: 1224x1584 (2x 缩放)
+                # 保留中间 80% 的区域
+                width, height = pil_img.size
+                crop_top = int(height * 0.1)  # 去掉顶部 10%
+                crop_bottom = int(height * 0.9)  # 去掉底部 10%
+                
+                cropped_img = pil_img.crop((0, crop_top, width, crop_bottom))
+                cropped_img.save(img_path, 'PNG')
+                
+                figure_paths.append(str(img_path))
+                
+                if fig_count >= 8:  # 最多 8 页
+                    break
             
             doc.close()
             
             if figure_paths:
-                print(f"  🖼️ 提取了 {len(figure_paths)} 张图表")
-                if figure_captions:
-                    print(f"  📝 找到 {len(figure_captions)} 个图表说明")
+                print(f"  🖼️ 渲染了 {len(figure_paths)} 页图表")
         
         except Exception as e:
             print(f"  ⚠️ 图表提取失败: {e}")
+            import traceback
+            traceback.print_exc()
         
         return figure_paths, figure_captions
     

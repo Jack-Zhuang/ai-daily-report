@@ -572,7 +572,7 @@
             <span>arXiv:2604.21593</span>
         </div>
         <h1 class="hero-title">Language as a Latent Variable for Reasoning Optimization</h1>
-        <p class="hero-subtitle">本文探讨了语言作为隐变量在推理优化中的作用。研究发现，随着大语言模型减少英语中心偏见，非英语响应在某些推理任务上反而表现更好。基于此假设，作者提出语言并非仅仅是输出媒介，而是结构性地调节模型内部推理路...</p>
+        <p class="hero-subtitle">本文研究发现非英语响应在某些推理任务中可能优于英语响应，提出语言作为一种潜在变量来结构性地调节模型内部推理路径的观点。通过多语言思维实验发现，当语言不受约束时模型表现最佳，表明多语言能力拓宽了模型的潜...</p>
         <div class="hero-meta">
             <div class="hero-meta-item">
                 <i class="fas fa-users"></i>
@@ -615,11 +615,11 @@
                 <h2 class="section-title">摘要速览</h2>
             </div>
             <div class="content">
-                <p>本文探讨了语言作为隐变量在推理优化中的作用。研究发现，随着大语言模型减少英语中心偏见，非英语响应在某些推理任务上反而表现更好。基于此假设，作者提出语言并非仅仅是输出媒介，而是结构性地调节模型内部推理路径的隐变量。团队设计了多语言思维实验（Polyglot Thinking Experiment），发现在无语言约束条件下模型表现最佳，表明多语言能力扩展了模型的潜在推理空间。基于这一发现，作者提出polyGRPO方法，通过强化学习框架将语言变化作为隐式探索信号。polyGRPO在仅使用18.1K多语言数学问题（无链式思考标注）训练的情况下，将Qwen2.5-7B-Instruct在四个英语推理测试集上提升6.72%，多语言基准上提升6.89%。值得注意的是，该方法是唯一在英语常识推理任务上超越基础LLM的方法（+4.9%），展示了强大的跨任务泛化能力。</p>
+                <p>本文研究发现非英语响应在某些推理任务中可能优于英语响应，提出语言作为一种潜在变量来结构性地调节模型内部推理路径的观点。通过多语言思维实验发现，当语言不受约束时模型表现最佳，表明多语言能力拓宽了模型的潜在推理空间。基于此发现，论文提出了polyGRPO（多语言组相对策略优化）强化学习框架，将语言变化视为隐式探索信号。该方法仅使用18.1K多语言数学问题训练，无需思维链标注，使Qwen2.5-7B-Instruct在四个英语推理测试集上提升6.72%，多语言基准上提升6.89%。值得注意的是，这是唯一在仅训练数学数据的情况下仍能超越基线模型在英语常识推理任务上表现的方法（+4.9%），展现了强大的跨任务泛化能力。</p>
             </div>
             <div class="highlight-box">
                 <ul>
-                    <li>语言可作为隐变量结构性地调节模型的内部推理路径，而非仅作为输出媒介</li><li>多语言思维（Polyglot Thinking）能够扩展模型的潜在推理空间，提升推理能力</li><li>polyGRPO通过结合语言约束与非约束响应构建偏好组，在线生成多语言偏好数据</li><li>仅在数学数据上训练即可泛化到常识推理任务，证明方法具有跨任务迁移能力</li>
+                    <li>非英语响应在推理任务中可能优于英语响应，语言作为潜在变量调节模型内部推理路径</li><li>无约束语言设置下模型表现最佳，多语言能力拓宽了潜在推理空间</li><li>polyGRPO将语言变化作为隐式探索信号，通过在线生成多语言偏好数据进行强化学习训练</li><li>仅用18.1K多语言数学数据即可实现跨任务泛化，在常识推理任务上也有显著提升</li>
                 </ul>
             </div>
         </div>
@@ -631,7 +631,7 @@
                 <h2 class="section-title">研究背景与动机</h2>
             </div>
             <div class="content">
-                <p>大语言模型在推理任务上表现卓越，但普遍存在英语中心偏见问题，即在英语输入或输出时表现更强。然而随着多语言训练数据的增加，LLM在非英语语言上的推理能力逐渐提升，甚至在某些任务上超越英语表现。这引发了一个关键问题：多语言思维能否作为隐变量用于推理优化？现有强化学习方法如PPO、DPO和GRPO虽然能改进LLM推理，但通常依赖英语中心或英语优化的偏好数据，限制模型充分利用多语言思维的潜力。因此需要探索一种新方法，让模型能够自主探索和整合多语言思维作为隐变量。</p>
+                <p>大语言模型在各种任务上表现优异，但通常存在英语偏见——使用英语输入或响应时表现更强。然而最新进展表明这种偏见正在减弱，使用非英语语言时也能展现强大甚至更优的推理能力。这引发了一个关键问题：多语言思维能力能否作为推理优化的潜在变量？现有方法如多数投票和自动语言选择受限于任务复杂性和次优的语言选择，而基于强化学习的方法虽然有潜力，但通常依赖英语中心或英语优化的偏好数据，限制了模型充分发挥多语言思维优势。因此需要探索一种能够将语言多样性作为内在推理空间扩展的有效方法。</p>
             </div>
             <div class="info-box">
                 <p><strong>核心问题：</strong>详见论文原文</p>
@@ -645,7 +645,7 @@
                 <h2 class="section-title">方法详解</h2>
             </div>
             <div class="content">
-                <p>polyGRPO是一种基于强化学习的多语言推理优化框架，包含三个核心模块：多语言推理生成模块（PRGM）、奖励模块和组相对策略优化模块。PRGM为每个输入问题生成一组多语言响应，包括一个无语言约束的响应和多个随机指定语言的响应，从而探索不同的推理轨迹。奖励模块采用基于规则的设计，结合准确性奖励（二值判断最终答案是否正确）和格式奖励（鼓励结构化推理，包含[Thinking]和####格式）。最后利用GRPO算法计算组内相对优势，通过PPO风格的裁剪目标进行策略优化，同时加入KL散度惩罚保持与参考模型的接近。该方法在线生成多语言响应，减少存储开销，同时促进更广泛的多语言思维空间探索。</p>
+                <p>polyGRPO是一种新颖的强化学习框架，旨在通过多语言思维增强LLM的推理能力。该方法结合语言约束和无约束提示形成偏好组，捕捉多语言推理轨迹。整体框架包含三个核心模块：首先通过多语言推理生成模块为每个问题生成一组响应——包括一个无语言约束的响应和多个随机指定语言的响应，从而创建多样化的推理路径；然后使用基于规则的奖励函数评估每个响应，结合答案正确性奖励和格式奖励（鼓励结构化推理过程）；最后基于奖励分数计算组相对优势，通过GRPO进行策略优化。这种方法允许模型在训练过程中持续生成新鲜的多语言响应，相比之前依赖监督翻译或固定语言锚点的方法，polyGRPO能更灵活地探索和整合多语言思维作为潜在变量。</p>
             </div>
             
             <h3>核心创新点</h3>
@@ -660,19 +660,19 @@
                     </thead>
                     <tbody>
                         <tr>
-    <td>语言作为隐变量假说</td>
-    <td>通过多语言思维实验验证语言的结构性调节作用，提出语言多样性能扩展潜在推理空间的理论</td>
-    <td>解决英语中心偏见限制模型推理能力的问题</td>
+    <td>多语言思维作为潜在变量</td>
+    <td>通过Polyglot Thinking Experiment系统验证非英语响应在推理任务中的优势，提出将语言多样性作为调节模型内部推理路径的潜在变量，而非仅作为输出媒介</td>
+    <td>解决现有方法未充分利用多语言思维能力提升推理的问题</td>
 </tr>
 <tr>
-    <td>polyGRPO框架</td>
-    <td>在线生成多语言偏好数据，结合语言约束与非约束设置，利用组相对优势进行强化学习优化</td>
-    <td>克服传统方法依赖固定语言锚点或翻译监督的局限性</td>
+    <td>polyGRPO强化学习框架</td>
+    <td>在线生成多语言偏好数据，结合语言约束和无约束响应设置，通过组相对优势估计进行策略优化，无需依赖监督翻译或固定语言锚点</td>
+    <td>解决现有RL训练依赖英语中心偏好数据、限制多语言推理潜力的问题</td>
 </tr>
 <tr>
     <td>跨任务泛化能力</td>
-    <td>仅在数学数据上训练即可在常识推理任务上提升性能，证明方法具有普适性</td>
-    <td>解决训练数据与目标任务域不匹配时的迁移问题</td>
+    <td>仅使用数学数据训练即可在常识推理任务上实现提升，format reward引导生成有效推理路径，特别是对小模型至关重要</td>
+    <td>解决训练数据与目标任务分布不一致时的泛化问题</td>
 </tr>
                     </tbody>
                 </table>
@@ -713,7 +713,7 @@ graph TB
             
             <div class="content">
                 <h3>模块说明</h3>
-                <p><strong>多语言推理生成模块(PRGM)：</strong>为每个问题生成n=5个响应，包括一个无语言约束响应和四个随机语言约束响应，支持模型探索不同语言下的推理轨迹，实现隐式语言空间扩展。</p><p><strong>奖励模块：</strong>包含准确性奖励（最终答案匹配得1分）和格式奖励（包含推理过程和规范化答案格式得1分），鼓励模型生成正确且结构化的响应。</p><p><strong>组相对策略优化模块：</strong>基于GRPO算法，通过归一化组内奖励计算优势函数，采用PPO裁剪目标进行策略优化，并引入KL惩罚维持训练稳定性。</p>
+                <p><strong>多语言推理生成模块(PRGM)：</strong>为每个输入问题生成一组n=5的多语言响应，包括一个无语言约束的响应和四个随机选择语言的响应。这些响应形成多语言思维集，可能包含正确和错误的答案。该模块在线运行，减少存储开销的同时促进更广泛的多语言思维空间探索。</p><p><strong>奖励模块：</strong>采用基于规则的奖励函数，分为两部分：准确性奖励（AR）判断最终答案是否与标准答案完全匹配，正确得1分否则得0分；格式奖励（FR）鼓励结构化推理，要求响应包含[Thinking]推理过程且答案前有'#### '标记，格式正确得1分。最终奖励ri∈{0,1,2}，并对推理内容设置最少100字符的最小长度约束以防止走捷径。</p><p><strong>组相对策略优化模块：</strong>遵循GRPO方法，通过归一化组内奖励计算优势Ai=(ri-mean({ri}))/std({ri})。采用PPO风格的裁剪目标函数，同时将当前策略与参考模型之间的KL散度惩罚直接整合到损失中，引导策略优化同时保持与原始模型的相似性。</p>
             </div>
             
             
@@ -781,38 +781,43 @@ flowchart TD
 <div class="figures-scroll">
 
             <div class="figure-card">
-                <img src="figures/2604_21593/fig_1.jpeg" alt="Figure 1" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="figures/2604_21593/fig_1.png" alt="Figure 1" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
                 <p class="figure-caption">图1: Our findings indicate that, in con-</p>
             </div>
 
             <div class="figure-card">
-                <img src="figures/2604_21593/fig_2.jpeg" alt="Figure 2" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="figures/2604_21593/fig_2.png" alt="Figure 2" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
                 <p class="figure-caption">图2: The advantage Ai of the i-th response is calculated</p>
             </div>
 
             <div class="figure-card">
-                <img src="figures/2604_21593/fig_3.jpeg" alt="Figure 3" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="figures/2604_21593/fig_3.png" alt="Figure 3" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
                 <p class="figure-caption">图3: Ablation results on MGSM with three sizes of Qwen2.5-</p>
             </div>
 
             <div class="figure-card">
-                <img src="figures/2604_21593/fig_4.jpeg" alt="Figure 4" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="figures/2604_21593/fig_4.png" alt="Figure 4" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
                 <p class="figure-caption">图4: The results in MGSM with different language set for</p>
             </div>
 
             <div class="figure-card">
-                <img src="figures/2604_21593/fig_5.jpeg" alt="Figure 5" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="figures/2604_21593/fig_5.png" alt="Figure 5" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
                 <p class="figure-caption">图5: The language consistency of GRPO and polyGRPO</p>
             </div>
 
             <div class="figure-card">
-                <img src="figures/2604_21593/fig_6.jpeg" alt="Figure 6" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="figures/2604_21593/fig_6.png" alt="Figure 6" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
                 <p class="figure-caption">图6: The performance of GRPO and polyGRPO in MGSM</p>
             </div>
 
             <div class="figure-card">
-                <img src="figures/2604_21593/fig_7.jpeg" alt="Figure 7" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <img src="figures/2604_21593/fig_7.png" alt="Figure 7" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
                 <p class="figure-caption">图7: The entropy of GRPO and polyGRPO during training</p>
+            </div>
+
+            <div class="figure-card">
+                <img src="figures/2604_21593/fig_8.png" alt="Figure 8" onclick="this.classList.toggle('zoom')" onerror="this.style.display='none'">
+                <p class="figure-caption">图8: 消融实验或案例分析</p>
             </div>
 </div>
 </div>
@@ -878,28 +883,28 @@ flowchart TD
             
             <div class="content">
                 <h3>实验设置</h3>
-                <p><strong>数据集：</strong>MGSM（10种语言250题）, MATH500（多语言数学基准）, PolyMath-medium（高难度多语言数学）, X-CSQA（16种语言常识推理）</p>
-                <p><strong>评价指标：</strong>答案准确率（Accuracy）, 英语/多语言平均性能</p>
+                <p><strong>数据集：</strong>MGSM（10种语言的小学数学问题）, MATH500（英语多样化数学问题及6种翻译版本）, PolyMath-medium（18种语言9K数学问题的中等难度子集）, X-CSQA（16种语言的常识推理基准）, MAPO训练数据集（1,703英语问题及9种语言翻译版本，共18,140示例）</p>
+                <p><strong>评价指标：</strong>准确率（Accuracy）, 英语测试集平均性能, 多语言测试集平均性能, 跨任务泛化能力</p>
                 <p><strong>基线方法：</strong>详见论文原文</p>
             </div>
             
             <h3>主要结果</h3>
             <div class="stats-grid">
                 <div class="stat-card">
-    <div class="stat-value">Qwen2.5-7B-Instruct平均提升3.07%，Llama3-8B提升1.72%</div>
+    <div class="stat-value">Qwen2.5-7B-Instruct在四个英语推理测试集上平均提升6.72%</div>
     <div class="stat-label">性能提升</div>
 </div>
 <div class="stat-card">
-    <div class="stat-value">MGSM多语言性能提升2.91%（Qwen）和3.53%（Llama）</div>
+    <div class="stat-value">多语言基准测试集上平均提升6.89%</div>
     <div class="stat-label">性能提升</div>
 </div>
 <div class="stat-card">
-    <div class="stat-value">X-CSQA常识推理任务提升4.9%，是唯一超越基础LLM的方法</div>
+    <div class="stat-value">英语常识推理任务X-CSQA上提升4.9%（唯一超越基线LLM的方法）</div>
     <div class="stat-label">性能提升</div>
 </div>
 <div class="stat-card">
-    <div class="stat-value">-</div>
-    <div class="stat-label">详见论文</div>
+    <div class="stat-value">相比GRPO baseline，polyGRPO在所有指标上均有显著提升</div>
+    <div class="stat-label">性能提升</div>
 </div>
             </div>
             
@@ -913,8 +918,9 @@ flowchart TD
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>本文方法</td><td>答案准确率（Accuracy）</td></tr>
-<tr><td>本文方法</td><td>英语/多语言平均性能</td></tr>
+                        <tr><td>本文方法</td><td>准确率（Accuracy）</td></tr>
+<tr><td>本文方法</td><td>英语测试集平均性能</td></tr>
+<tr><td>本文方法</td><td>多语言测试集平均性能</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1037,7 +1043,7 @@ GRPO, with a peak performan</div>
         
         <!-- 标签 -->
         <div class="tags">
-            <span class="tag">大语言模型</span><span class="tag">多语言推理</span><span class="tag">强化学习</span><span class="tag">隐变量</span><span class="tag">推理优化</span><span class="tag">polyGRPO</span>
+            <span class="tag">大语言模型</span><span class="tag">多语言推理</span><span class="tag">强化学习</span><span class="tag">语言作为潜在变量</span><span class="tag">polyGRPO</span><span class="tag">跨任务泛化</span>
         </div>
     </main>
     
@@ -1056,7 +1062,7 @@ GRPO, with a peak performan</div>
             if (navigator.share) {
                 navigator.share({
                     title: 'Language as a Latent Variable for Reasoning Optimization',
-                    text: '本文探讨了语言作为隐变量在推理优化中的作用。研究发现，随着大语言模型减少英语中心偏见，非英语响应在某些推理任务上反而表现更好。基于此假设，作者提出语言并非仅仅是输出媒介，而是结构性地调节模型内部推理路...',
+                    text: '本文研究发现非英语响应在某些推理任务中可能优于英语响应，提出语言作为一种潜在变量来结构性地调节模型内部推理路径的观点。通过多语言思维实验发现，当语言不受约束时模型表现最佳，表明多语言能力拓宽了模型的潜...',
                     url: window.location.href
                 });
             } else {
