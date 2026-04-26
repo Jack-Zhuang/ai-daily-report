@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Learning to Communicate: Toward End-to-End Optimization of Multi-Agent Language Systems - 论文解读</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --color-text: #1a1a2e;
+            --color-text-secondary: #4a4a6a;
+            --color-text-muted: #8888a0;
+            --color-card: #ffffff;
+            --color-bg: #f5f7fa;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.8;
+        }
+        
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(12px);
+            padding: 12px 20px;
+            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .nav-back {
+            width: 36px; height: 36px;
+            background: rgba(102,126,234,0.1);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: #667eea; text-decoration: none; font-size: 16px;
+        }
+        .nav-title { font-size: 15px; font-weight: 600; }
+        .nav-link {
+            padding: 8px 16px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 10px;
+            font-size: 13px; font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .hero {
+            background: var(--gradient-primary);
+            padding: 80px 20px 40px;
+            color: white;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px; font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .hero-title {
+            font-size: 22px; font-weight: 700;
+            line-height: 1.4; margin-bottom: 12px;
+        }
+        
+        .main {
+            padding: 20px 20px 100px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .section-header {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid rgba(102,126,234,0.1);
+        }
+        .section-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+        }
+        .section-icon.yellow { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .section-icon.blue { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+        .section-icon.green { background: linear-gradient(135deg, #34d399, #10b981); }
+        .section-icon.purple { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
+        .section-icon.pink { background: linear-gradient(135deg, #f472b6, #ec4899); }
+        .section-icon.orange { background: linear-gradient(135deg, #fb923c, #f97316); }
+        .section-icon.cyan { background: linear-gradient(135deg, #22d3ee, #06b6d4); }
+        .section-title { font-size: 18px; font-weight: 700; }
+        
+        .content { font-size: 15px; color: var(--color-text-secondary); }
+        .content p { margin-bottom: 16px; }
+        .content h3 { font-size: 16px; font-weight: 600; color: var(--color-text); margin: 24px 0 12px; }
+        
+        .key-points { margin: 16px 0; padding-left: 24px; }
+        .key-points li { margin-bottom: 8px; color: var(--color-text); }
+        
+        .innovation-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .innovation-table td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.06); vertical-align: top; }
+        .innovation-table td:first-child { width: 30%; color: #667eea; }
+        
+        .figures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .figure-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 12px;
+        }
+        .figure-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            background: white;
+        }
+        .figure-caption {
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--color-text-muted);
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08));
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .stat-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+        
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .comparison-table td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+        
+        .findings-list { display: flex; flex-direction: column; gap: 16px; }
+        .finding-item { display: flex; gap: 16px; align-items: flex-start; }
+        .finding-num {
+            width: 32px; height: 32px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 14px;
+            flex-shrink: 0;
+        }
+        .finding-text { font-size: 15px; color: var(--color-text-secondary); }
+        
+        .discussion-content { display: flex; flex-direction: column; gap: 20px; }
+        .discussion-item h4 {
+            font-size: 14px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        .discussion-item p { font-size: 14px; color: var(--color-text-secondary); }
+        
+        .tags {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            padding: 16px 0;
+        }
+        .tag {
+            background: rgba(102,126,234,0.1);
+            color: #667eea;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px; font-weight: 600;
+        }
+        
+        .bottom-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(12px);
+            padding: 12px 20px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            display: flex; gap: 12px;
+        }
+        .btn {
+            flex: 1;
+            height: 48px;
+            border: none; border-radius: 12px;
+            font-size: 15px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            cursor: pointer; text-decoration: none;
+        }
+        .btn-primary { background: var(--gradient-primary); color: white; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="javascript:history.back()" class="nav-back"><i class="fas fa-arrow-left"></i></a>
+        <span class="nav-title">论文解读</span>
+        <a href="https://arxiv.org/abs/2604.21794" class="nav-link" target="_blank"><i class="fas fa-external-link-alt"></i> 原文</a>
+    </nav>
+    
+    <div class="hero">
+        <div class="hero-badge">
+            <i class="fas fa-file-alt"></i>
+            <span>arXiv:2604.21794</span>
+        </div>
+        <h1 class="hero-title">Learning to Communicate: Toward End-to-End Optimization of Multi-Agent Language Systems</h1>
+    </div>
+    
+    <main class="main">
+        
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon yellow">📋</div>
+                <h2 class="section-title">摘要速览</h2>
+            </div>
+            <div class="content">
+                <p>DiffMAS是一种将多智能体LLM系统的通信协议从固定文本接口转变为可学习KV缓存潜在表示的新方法。该方法采用两阶段架构：Stage I中上游智能体顺序构建共享KV缓存追踪（纯前向无梯度），Stage II中最终智能体在累积KV追踪上通过交叉注意力解码并使用LoRA微调反向传播梯度，实现跨智能体的端到端联合优化。在AIME2024数学竞赛上，Qwen3-8B从50.0%提升至76.7%（+26.7%），GPQA-Diamond从39.9%升至60.1%（+20.2%），HumanEval+达81.5%。实验表明，仅需10步通信即可获得最佳性能，且连续KV追踪优于独立生成后拼接的方式。</p>
+                <ul class="key-points"><li>多智能体系统的通信瓶颈在于传统方法使用离散文本作为通信媒介，导致梯度在智能体边界截断，无法实现真正的端到端优化</li><li>KV缓存作为连续表示可以直接传递LLM内部推理状态，避免离散化损失，同时允许梯度跨智能体传播</li><li>采用追加而非覆盖策略构建KV追踪可以避免传统系统的梯度几何衰减问题，所有智能体的信息都得以保留</li><li>仅需极少量训练数据（210个数学样本）即可学习有效的通信协议，且关键在于学习通信本身而非仅微调任务</li></ul>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon blue">📖</div>
+                <h2 class="section-title">研究背景</h2>
+            </div>
+            <div class="content">
+                <p>现有多智能体LLM系统中，智能体间的通信依赖于固定文本协议，每个智能体需要将内部状态解码为离散token序列传递给下游智能体。这种设计导致两个根本性问题：一是文本解码引入离散化损失，LLM在连续表示空间进行推理，但被迫先解码再编码；二是梯度在智能体边界截断，无法实现跨智能体的端到端优化。这限制了多智能体系统潜力的发挥，因为系统无法学习如何更有效地传递关键信息。DiffMAS正是针对这一通信瓶颈提出，旨在将通信本身变成可优化的组件。</p>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon green">⚙️</div>
+                <h2 class="section-title">方法详解</h2>
+            </div>
+            <div class="content">
+                <p>DiffMAS采用创新的两阶段设计来突破传统通信范式。第一阶段（Stage I）中，K-1个上游智能体依次处理输入问题，每个智能体首先预填充已有的KV缓存了解前序推理状态，然后生成新的KV段并追加到共享的KV追踪中，而非覆盖之前的缓存。这些KV缓存本质上是Transformer注意力机制的副产品，包含连续向量表示，完整保留了智能体的内部推理状态。第二阶段（Stage II）中，最终智能体（Agent K）通过交叉注意力机制读取整个累积的KV追踪，生成隐藏状态后投影到词表输出token，计算交叉熵损失后仅通过LoRA微调更新自己的低秩适配器参数（约0.1%可训练参数）。这种设计使得梯度可以反向传播到KV追踪，从而实现跨智能体的隐式学习——让最后一个智能体学会如何更好地解读前序智能体留下的信息。</p>
+                
+                <h3>核心创新</h3>
+                <table class="innovation-table">
+                    <tbody>
+                        <tr><td><strong>将多智能体通信作为可优化组件</strong></td><td>首次将智能体间通信协议本身作为可学习的优化目标，而非固定的接口定义。通过学习什么样的信息应被编码进KV缓存，以及如何解读这些信息，实现通信策略的自动优化。</td></tr><tr><td><strong>基于KV缓存的连续潜在通信接口</strong></td><td>用KV缓存替代离散文本作为智能体间的通信媒介。KV缓存是连续向量表示，直接传递可避免解码/重编码的信息损失，同时允许梯度端到端传播。</td></tr><tr><td><strong>非覆盖连接策略</strong></td><td>采用追加式KV追踪而非覆盖式设计。每个智能体生成的新KV段追加到共享追踪中而非替换，实验证明这避免了传统系统的梯度几何衰减问题。</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon purple">📊</div>
+                <h2 class="section-title">论文图表</h2>
+            </div>
+            <div class="figures-grid">
+                
+            <div class="figure-card">
+                <img src="figures/2604_21794/fig_1.png" alt="Figure 1" loading="lazy">
+                
+            </div>
+            <div class="figure-card">
+                <img src="figures/2604_21794/fig_4.png" alt="Figure 4" loading="lazy">
+                
+            </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon pink">📈</div>
+                <h2 class="section-title">实验结果</h2>
+            </div>
+            <div class="content">
+                <p><strong>数据集：</strong>AIME2024/AIME2025：数学推理评估，高难度竞赛题目, GPQA-Diamond：科学推理评估，多步符号推理, HumanEval+/MBPP+：Python代码生成和功能正确性评估, OpenBookQA：常识推理评估, 训练数据集：Hendrycks Math(210样本)、HumanEval(50样本)、CommonsenseQA(700样本)</p>
+            </div>
+            
+            <h3>主要结果</h3>
+            <div class="stats-grid">
+                
+                <div class="stat-card">
+                    <div class="stat-value">Qwen3-8B在AIME2024上：76.7%（单智能体基线50.0%，提升+26.7%）</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">Qwen3-8B在GPQA-Diamond上：60.1%（单智能体基线39.9%，提升+20.2%）</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">Qwen3-8B在HumanEval+上：81.5%（单智能体基线74.5%，提升+7.0%）</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">Qwen3-4B在AIME2024上：63.3%（单智能体基线43.3%，提升+20.0%）</div>
+                </div>
+            </div>
+            
+            <h3>方法对比</h3>
+            <table class="comparison-table">
+                <tbody>
+                    <tr><td>DiffMAS在所有6个数据集上均一致优于单智能体基线</td></tr><tr><td>DiffMAS在困难推理任务（AIME24/25、GPQA-Diamond）上显著优于TextMAS和LatentMAS</td></tr><tr><td>C2C方法在困难推理任务上完全失败（Qwen3-8B在AIME上达0.0%），因其训练于指令跟随数据而非推理轨迹</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon orange">🏆</div>
+                <h2 class="section-title">主要发现</h2>
+            </div>
+            <div class="findings-list">
+                
+            <div class="finding-item">
+                <div class="finding-num">1</div>
+                <div class="finding-text">仅需10步智能体通信即可获得最佳性能，过长轨迹（>40步）反而引入冗余噪声导致性能下降</div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-num">2</div>
+                <div class="finding-text">连续KV追踪结构比独立生成后拼接的策略更优，证明SFT本身不足以实现有效的潜在协作</div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-num">3</div>
+                <div class="finding-text">LatentMAS存在不稳定性（平均困惑度1.31 vs DiffMAS的1.24），且频繁产生低一致性结果</div>
+            </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon cyan">💬</div>
+                <h2 class="section-title">讨论与展望</h2>
+            </div>
+            <div class="discussion-content">
+                <div class="discussion-item"><h4>⚠️ 局限性</h4><p>DiffMAS仅训练最后一个智能体，前K-1个智能体的编码策略完全冻结，严格来说实现的是'末端优化'而非真正的端到端优化。论文假设串行拓扑，与实际复杂交互场景（如辩论系统、树状思维）存在脱节。AIME数据集仅30道题目的样本量过小，论文缺乏统计显著性分析（p值、置信区间）。此外，论文未报告训练时间、显存占用、推理延迟等关键计算成本数据，也未讨论KV缓存的内存开销（8B模型1K token的KV缓存可能占用数百MB显存）。训练数据的具体构建方式和质量验证流程也缺乏透明度。</p></div><div class="discussion-item"><h4>🔮 未来方向</h4><p>首要方向是联合训练所有智能体，可采用分层训练策略或Gumbel-Softmax等技巧实现端到端的编码-解码联合优化。其次应探索动态通信拓扑，支持根据任务复杂度自适应选择串行、双向或网状结构。此外，研究稀疏通信策略（如选择性传递关键KV块、使用PCA压缩）可解决内存和带宽问题。理论层面需提供梯度传播的严格数学分析，量化梯度衰减程度。实验层面应在更大规模模型（70B+）和更多实际应用场景中验证方法的有效性。</p></div><div class="discussion-item"><h4>💡 应用场景</h4><p>DiffMAS适用于需要复杂多步推理的实际场景：数学问题求解系统可分解推理步骤让多个专业智能体协作；代码生成系统可分工处理需求分析、算法设计、代码实现、测试验证等环节；科学发现系统可让文献检索、智能体阅读、假设生成、实验设计等智能体顺序协作。该方法也为构建可自主学习最优通信协议的通用多智能体框架奠定了基础，有望提升现有AI Agent系统的推理能力和效率。</p></div><div class="discussion-item"><h4>🌍 领域影响</h4><p>DiffMAS首次证明了多智能体通信协议本身可以被优化，开辟了'可学习通信协议'这一新的研究方向。它展示了连续表示在多智能体协作中的优势，为解决传统离散通信的梯度截断问题提供了可行方案。LoRA+KV缓存的组合技术方案计算效率可接受且实现相对简单，有望启发后续在自适应通信频率、任务相关通信协议学习、最优拓扑探索等方向的深入研究。</p></div>
+            </div>
+        </div>
+        
+        <div class="tags"><span class="tag">多智能体系统</span><span class="tag">可学习通信协议</span><span class="tag">KV缓存</span><span class="tag">端到端优化</span><span class="tag">大语言模型</span><span class="tag">LoRA微调</span></div>
+    </main>
+    
+    <div class="bottom-bar">
+        <a href="https://arxiv.org/abs/2604.21794" class="btn btn-primary" target="_blank">
+            <i class="fas fa-book"></i> 阅读原论文
+        </a>
+    </div>
+</body>
+</html>

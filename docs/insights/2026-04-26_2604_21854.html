@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bounding the Black Box: A Statistical Certification Framework for AI Risk Regulation - 论文解读</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --color-text: #1a1a2e;
+            --color-text-secondary: #4a4a6a;
+            --color-text-muted: #8888a0;
+            --color-card: #ffffff;
+            --color-bg: #f5f7fa;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.8;
+        }
+        
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(12px);
+            padding: 12px 20px;
+            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .nav-back {
+            width: 36px; height: 36px;
+            background: rgba(102,126,234,0.1);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: #667eea; text-decoration: none; font-size: 16px;
+        }
+        .nav-title { font-size: 15px; font-weight: 600; }
+        .nav-link {
+            padding: 8px 16px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 10px;
+            font-size: 13px; font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .hero {
+            background: var(--gradient-primary);
+            padding: 80px 20px 40px;
+            color: white;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px; font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .hero-title {
+            font-size: 22px; font-weight: 700;
+            line-height: 1.4; margin-bottom: 12px;
+        }
+        
+        .main {
+            padding: 20px 20px 100px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .section-header {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid rgba(102,126,234,0.1);
+        }
+        .section-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+        }
+        .section-icon.yellow { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .section-icon.blue { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+        .section-icon.green { background: linear-gradient(135deg, #34d399, #10b981); }
+        .section-icon.purple { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
+        .section-icon.pink { background: linear-gradient(135deg, #f472b6, #ec4899); }
+        .section-icon.orange { background: linear-gradient(135deg, #fb923c, #f97316); }
+        .section-icon.cyan { background: linear-gradient(135deg, #22d3ee, #06b6d4); }
+        .section-title { font-size: 18px; font-weight: 700; }
+        
+        .content { font-size: 15px; color: var(--color-text-secondary); }
+        .content p { margin-bottom: 16px; }
+        .content h3 { font-size: 16px; font-weight: 600; color: var(--color-text); margin: 24px 0 12px; }
+        
+        .key-points { margin: 16px 0; padding-left: 24px; }
+        .key-points li { margin-bottom: 8px; color: var(--color-text); }
+        
+        .innovation-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .innovation-table td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.06); vertical-align: top; }
+        .innovation-table td:first-child { width: 30%; color: #667eea; }
+        
+        .figures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .figure-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 12px;
+        }
+        .figure-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            background: white;
+        }
+        .figure-caption {
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--color-text-muted);
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08));
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .stat-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+        
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .comparison-table td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+        
+        .findings-list { display: flex; flex-direction: column; gap: 16px; }
+        .finding-item { display: flex; gap: 16px; align-items: flex-start; }
+        .finding-num {
+            width: 32px; height: 32px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 14px;
+            flex-shrink: 0;
+        }
+        .finding-text { font-size: 15px; color: var(--color-text-secondary); }
+        
+        .discussion-content { display: flex; flex-direction: column; gap: 20px; }
+        .discussion-item h4 {
+            font-size: 14px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        .discussion-item p { font-size: 14px; color: var(--color-text-secondary); }
+        
+        .tags {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            padding: 16px 0;
+        }
+        .tag {
+            background: rgba(102,126,234,0.1);
+            color: #667eea;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px; font-weight: 600;
+        }
+        
+        .bottom-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(12px);
+            padding: 12px 20px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            display: flex; gap: 12px;
+        }
+        .btn {
+            flex: 1;
+            height: 48px;
+            border: none; border-radius: 12px;
+            font-size: 15px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            cursor: pointer; text-decoration: none;
+        }
+        .btn-primary { background: var(--gradient-primary); color: white; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="javascript:history.back()" class="nav-back"><i class="fas fa-arrow-left"></i></a>
+        <span class="nav-title">论文解读</span>
+        <a href="https://arxiv.org/abs/2604.21854" class="nav-link" target="_blank"><i class="fas fa-external-link-alt"></i> 原文</a>
+    </nav>
+    
+    <div class="hero">
+        <div class="hero-badge">
+            <i class="fas fa-file-alt"></i>
+            <span>arXiv:2604.21854</span>
+        </div>
+        <h1 class="hero-title">Bounding the Black Box: A Statistical Certification Framework for AI Risk Regulation</h1>
+    </div>
+    
+    <main class="main">
+        
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon yellow">📋</div>
+                <h2 class="section-title">摘要速览</h2>
+            </div>
+            <div class="content">
+                <p>论文提出了一种两阶段AI安全认证框架，通过RoMA（Robustness Measurement and Assessment）和gRoMA统计验证工具，为黑盒AI系统提供可量化、可审计的失败概率上限证明。框架采用类似航空业DO-178认证范式，第一阶段由监管机构确定可接受失败概率δ和操作输入扰动域ε，第二阶段使用Hoeffding不等式进行黑盒采样测试。实验验证表明，RoMA统计概率与精确形式化验证的真实失败率偏差小于1%，而在精确方法超过24小时超时的情况下，RoMA在16分钟内完成计算。该框架首次将规范性决策与技术验证明确解耦，为EU AI Act等监管框架提供了缺失的"测量仪器"。</p>
+                <ul class="key-points"><li>RoMA认证的实际保障范围仅限于"随机扰动"下的失败率，与实际安全威胁（定向对抗攻击）之间存在根本性错位，可能导致通过认证的系统在真实攻击下仍存在严重漏洞</li><li>ε（扰动域）参数的选择本质上是一个价值判断而非技术问题，论文将其完全"外包"给监管机构，但缺乏理论指导可能导致认证结果缺乏实际意义</li><li>该方法的核心价值在于将统计工具赋予法律意义，而非发明新算法——相当于为AI监管提供了类似于尺子对于长度测量的"测量仪器"</li></ul>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon blue">📖</div>
+                <h2 class="section-title">研究背景</h2>
+            </div>
+            <div class="content">
+                <p>当前AI监管框架（如EU AI Act、NIST AI RMF）虽要求高风险系统展示安全性，但既未定义"何为可接受风险"的量化标准，也缺乏验证技术——监管架构已就位，测量工具却缺失。随着AI系统被部署于医疗诊断、自动驾驶等高风险领域，这种"监管真空"可能导致不安全系统被错误认证，造成严重社会危害。传统形式化验证方法计算复杂度呈指数级增长，仅适用于小规模网络，无法扩展到现代深度学习系统。</p>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon green">⚙️</div>
+                <h2 class="section-title">方法详解</h2>
+            </div>
+            <div class="content">
+                <p>RoMA本质上是一个黑盒统计采样测试协议，其核心思想类似于药品抽检——通过随机抽样推断整批产品的次品率。具体流程为：首先根据Hoeffding不等式确定采样数量n（公式：n = ⌈(1/2ε²) × ln(2/η)⌉）；然后从扰动域ε中随机采样n个输入点；接着对每个采样点测试系统在(x ± ε)邻域内是否失败；最后统计失败次数k，计算经验失败率ρ̂ = k/n，并通过ρ̂ + ε计算失败率上界，若该上界≤δ则颁发证书。gRoMA是分组感知扩展，将输入空间划分为多个"组"（如不同年龄患者），在每组内独立应用RoMA，可发现系统对特定群体的隐性偏见。该方法完全不需要访问模型权重、架构或训练数据，仅通过输入-输出接口进行验证。</p>
+                
+                <h3>核心创新</h3>
+                <table class="innovation-table">
+                    <tbody>
+                        <tr><td><strong>规范-技术接口标准化</strong></td><td>首次将δ（可接受失败率）和ε（扰动域）的配对定义作为监管与技术的"桥梁语言"，使政策决策与技术验证可以独立演进。监管机构负责设定δ值，技术验证者负责RoMA测试，责任边界清晰，可追责。</td></tr><tr><td><strong>黑盒可审计性实现</strong></td><td>首次实现监管机构无需理解神经网络内部结构即可独立验证安全阈值。通过Hoeffding不等式提供概率上界而非精确值，在保护商业机密的同时满足合规要求，为"过程合规"向"结果可证"的转变提供技术路径。</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon pink">📈</div>
+                <h2 class="section-title">实验结果</h2>
+            </div>
+            <div class="content">
+                <p><strong>数据集：</strong>ACAS Xu模型：用于航空碰撞避免系统的小型神经网络（300神经元），用于验证RoMA与形式化验证方法的一致性, 字符级扰动实验：用于评估LLM在正交扰动下的鲁棒性，验证方法在非正态分布假设下的表现</p>
+            </div>
+            
+            <h3>主要结果</h3>
+            <div class="stats-grid">
+                
+                <div class="stat-card">
+                    <div class="stat-value">RoMA与形式化验证概率偏差：< 1%（对小规模ACAS Xu网络验证）</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">Exact Count方法耗时：> 24小时（超时），RoMA统计框架耗时：< 16分钟</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">字符级扰动场景：RoMA估计94.44% vs 真实值94.61%，偏差仅0.17%；另一组93.94% vs 93.84%，偏差0.10%</div>
+                </div>
+            </div>
+            
+            <h3>方法对比</h3>
+            <table class="comparison-table">
+                <tbody>
+                    <tr><td>与形式化验证方法（Exact Count）对比：计算效率提升超过90倍，准确率损失小于1%，但牺牲了精确值变为概率上界</td></tr><tr><td>与基准测试对比：传统测试仅覆盖固定测试集，RoMA提供概率覆盖全输入域的失败率上界证明</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon orange">🏆</div>
+                <h2 class="section-title">主要发现</h2>
+            </div>
+            <div class="findings-list">
+                
+            <div class="finding-item">
+                <div class="finding-num">1</div>
+                <div class="finding-text">RoMA统计验证可达到形式化方法的精度（偏差<1%），同时将计算时间从超过24小时缩短至16分钟以内</div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-num">2</div>
+                <div class="finding-text">当正态性假设失效时（如字符级扰动），RoMA估计与真值仍高度一致（偏差0.17%），证明方法的实用可靠性</div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-num">3</div>
+                <div class="finding-text">gRoMA分组机制可以发现系统对特定群体的隐性偏见，为公平性审计提供技术手段</div>
+            </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon cyan">💬</div>
+                <h2 class="section-title">讨论与展望</h2>
+            </div>
+            <div class="discussion-content">
+                <div class="discussion-item"><h4>⚠️ 局限性</h4><p>论文方法存在多个根本性局限：首先，Hoeffding不等式要求样本独立同分布，但AI输入空间的结构化特征使该假设难以满足；其次，ε参数选择缺乏理论指导，过大或过小都会导致认证结果无意义；最关键的是，RoMA测量的是随机扰动下的失败率，而非定向对抗攻击，无法防范实际安全威胁。此外，实验仅在300神经元的小型网络上验证，对现代亿级参数模型的有效性未知。论文声称"满足EU AI Act监管要求"具有误导性，因RoMA仅覆盖监管要求中的一小部分指标。</p></div><div class="discussion-item"><h4>🔮 未来方向</h4><p>未来研究应重点解决以下问题：一是开发针对对抗攻击的认证扩展，将认证范围从随机扰动扩展到定向攻击；二是建立ε参数选择的理论指导和最佳实践指南，降低监管机构的选择难度；三是设计动态认证机制，处理模型更新、数据漂移等场景下的认证时效性问题；四是探索与形式化方法的混合策略，在可承受的计算成本下提供更强的安全保障；五是研究高维输入空间的采样优化策略，应对维度灾难挑战。</p></div><div class="discussion-item"><h4>💡 应用场景</h4><p>该框架适用于以下场景：医疗AI系统的上市前安全认证（如癌症筛查、诊断辅助系统）；自动驾驶系统的监管测试（确定可接受的事故率阈值）；金融风控模型的合规审计；关键基础设施中的AI系统认证。监管机构可将该框架作为EU AI Act合规的技术验证工具，独立审计供应商声称的安全指标而无需访问专有模型权重。商业开发者可使用该框架量化其系统的安全边界，优化安全投入分配。</p></div><div class="discussion-item"><h4>🌍 领域影响</h4><p>该论文为AI安全监管提供了急需的技术基础，推动了从"过程合规"向"结果可证"的范式转变。其核心贡献是将统计学习理论赋予法律意义，为监管机构提供了可操作的测量工具。尽管存在根本性局限（主要针对随机扰动而非对抗攻击），但该框架为后续研究开辟了"规范-技术接口"这一有价值的设计方向，可能对AI governance领域产生持久影响。</p></div>
+            </div>
+        </div>
+        
+        <div class="tags"><span class="tag">AI安全认证</span><span class="tag">黑盒测试</span><span class="tag">Hoeffding不等式</span><span class="tag">监管技术</span><span class="tag">统计学习理论</span></div>
+    </main>
+    
+    <div class="bottom-bar">
+        <a href="https://arxiv.org/abs/2604.21854" class="btn btn-primary" target="_blank">
+            <i class="fas fa-book"></i> 阅读原论文
+        </a>
+    </div>
+</body>
+</html>
