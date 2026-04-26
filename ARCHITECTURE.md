@@ -319,6 +319,26 @@ if (pickType === 'paper') {
 - `history/published.json` - 历史记录文件
 - `scripts/history_manager.py` - 历史管理模块（备用）
 
+### 11.6 GitHub Trending 按增长排序
+
+**问题**：之前显示的是 Star 数最多的老牌项目（如 langchain），而不是真正热门的新项目。
+
+**解决方案**：
+1. 优先从 GitHub Trending 页面获取数据（`since=daily`）
+2. 提取每个项目的当日增长数（`growth` 字段）
+3. 按 `growth` 降序排序，优先展示增长最快的项目
+4. 如果 Trending 页面获取失败，fallback 到 API 搜索
+
+**数据字段**：
+- `growth`: 当日新增 Star 数
+- `growth_rate`: 增长百分比
+- `stars`: 总 Star 数
+
+**排序逻辑**：
+```python
+all_repos.sort(key=lambda x: (x.get('growth', 0), x.get('stars', 0)), reverse=True)
+```
+
 ---
 
 **最后更新**: 2026-04-26
