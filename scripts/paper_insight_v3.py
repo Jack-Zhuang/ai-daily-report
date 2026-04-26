@@ -133,7 +133,40 @@ class PaperInsightV3:
             return ""
     
     def _extract_figures(self, pdf_path: Path, arxiv_id: str) -> List[Dict]:
-        """提取图表"""
+        """提取图表 - 使用嵌入的高分辨率图片"""
+        if not pdf_path or not pdf_path.exists():
+            return []
+        
+        figures = []
+        figures_dir = self.insights_dir / "figures" / arxiv_id.replace('.', '_')
+        figures_dir.mkdir(parents=True, exist_ok=True)
+        
+        try:
+            # 导入新的图表提取器
+            import sys
+            scripts_dir = self.base_dir / "scripts"
+            if str(scripts_dir) not in sys.path:
+                sys.path.insert(0, str(scripts_dir))
+            
+            from figure_extractor_v2 import extract_figures as extract_figures_v2
+            
+            figures = extract_figures_v2(str(pdf_path), str(figures_dir), arxiv_id)
+            
+            if figures:
+                print(f"    提取了 {len(figures)} 张图表")
+        
+        except ImportError as e:
+            # 回退到旧方法
+            print(f"  ⚠️ 使用旧版图表提取: {e}")
+            return self._extract_figures_legacy(pdf_path, arxiv_id)
+        
+        except Exception as e:
+            print(f"  ⚠️ 图表提取失败: {e}")
+        
+        return figures
+    
+    def _extract_figures_legacy(self, pdf_path: Path, arxiv_id: str) -> List[Dict]:
+        """旧版图表提取方法（回退用）"""
         if not pdf_path or not pdf_path.exists():
             return []
         
