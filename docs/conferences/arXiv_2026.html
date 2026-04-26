@@ -20,7 +20,6 @@
         html { font-size: 16px; scroll-behavior: smooth; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: var(--bg); color: var(--color-text-anchor); line-height: 1.6; -webkit-font-smoothing: antialiased; }
         
-        /* Header */
         .header {
             background: var(--gradient-primary); color: white;
             padding: 60px 16px 30px; padding-top: calc(60px + var(--safe-area-top));
@@ -34,7 +33,6 @@
         .header-meta { font-size: 13px; opacity: 0.9; display: flex; flex-wrap: wrap; gap: 12px; }
         .header-meta span { display: flex; align-items: center; gap: 4px; }
         
-        /* Stats Bar */
         .stats-bar {
             display: flex; gap: 16px; padding: 16px;
             background: white; margin: -20px 12px 0; border-radius: 14px;
@@ -44,17 +42,14 @@
         .stat-value { font-size: 20px; font-weight: 700; color: #667eea; }
         .stat-label { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
         
-        /* Main */
         .main { padding: 20px 12px 60px; padding-bottom: calc(60px + var(--safe-area-bottom)); }
         
-        /* Section */
         .section-title {
             font-size: 16px; font-weight: 700; margin-bottom: 12px;
             display: flex; align-items: center; gap: 8px;
         }
         .section-title i { color: #667eea; }
         
-        /* Paper Card */
         .paper-card {
             background: var(--color-card); border-radius: 16px;
             margin-bottom: 12px; overflow: hidden;
@@ -64,9 +59,7 @@
             background: var(--gradient-primary); color: white;
             padding: 16px; position: relative;
         }
-        .paper-tags {
-            display: flex; gap: 8px; margin-bottom: 10px;
-        }
+        .paper-tags { display: flex; gap: 8px; margin-bottom: 10px; }
         .paper-tag {
             background: rgba(255,255,255,0.2); padding: 3px 10px;
             border-radius: 6px; font-size: 10px; font-weight: 700;
@@ -83,7 +76,6 @@
         .paper-body { padding: 16px; }
         .paper-summary { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 16px; }
         
-        /* Scores */
         .scores-section { margin-bottom: 16px; }
         .scores-title { font-size: 12px; font-weight: 700; color: var(--color-text-anchor); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
         .scores-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -100,7 +92,6 @@
         .overall-label { font-size: 12px; }
         .overall-value { font-size: 20px; font-weight: 700; }
         
-        /* Experiment & Scenario */
         .exp-section { margin-bottom: 16px; }
         .exp-item {
             display: flex; align-items: flex-start; gap: 10px;
@@ -118,7 +109,6 @@
         .exp-label { font-size: 10px; color: var(--color-text-muted); margin-bottom: 2px; }
         .exp-value { font-size: 12px; font-weight: 600; }
         
-        /* Action Button */
         .paper-action {
             display: block; width: 100%; padding: 14px;
             background: var(--gradient-primary); color: white;
@@ -127,7 +117,6 @@
             text-decoration: none;
         }
         
-        /* Empty State */
         .empty-state {
             text-align: center; padding: 60px 20px;
             color: var(--color-text-muted);
@@ -145,7 +134,6 @@
         <div class="header-meta">
             <span><i class="fas fa-calendar"></i> 最新预印本</span>
             <span><i class="fas fa-map-marker-alt"></i> 在线</span>
-            <span><i class="fas fa-percentage"></i> 录用率 -</span>
         </div>
     </div>
     
@@ -155,7 +143,7 @@
             <div class="stat-label">收录论文</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">0</div>
+            <div class="stat-value">25</div>
             <div class="stat-label">精选论文</div>
         </div>
         <div class="stat-item">
@@ -172,458 +160,7 @@
     </div>
     
     <script>
-        const papers = [
-        {
-                "id": "2604.21593",
-                "title": "Language as a Latent Variable for Reasoning Optimization",
-                "summary": "As LLMs reduce English-centric bias, a surprising trend emerges: non-English responses sometimes outperform English on reasoning tasks. We hypothesize that language functions as a latent variable that...",
-                "link": "http://arxiv.org/abs/2604.21593v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 3.2,
-                "scores": {
-                        "innovation": 3.4,
-                        "industry": 4.0,
-                        "experiment": 3.2
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21896",
-                "title": "Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models",
-                "summary": "This paper introduces a new paradigm for AI game programming, leveraging large language models (LLMs) to extend and operationalize Claude Shannon's taxonomy of game-playing machines. Central to this p...",
-                "link": "http://arxiv.org/abs/2604.21896v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 3.0,
-                "scores": {
-                        "innovation": 3.3,
-                        "industry": 2.5,
-                        "experiment": 3.2
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21891",
-                "title": "A Multi-Stage Warm-Start Deep Learning Framework for Unit Commitment",
-                "summary": "Maintaining instantaneous balance between electricity supply and demand is critical for reliability and grid instability. System operators achieve this through solving the task of Unit Commitment (UC)...",
-                "link": "http://arxiv.org/abs/2604.21891v1",
-                "category": "rec",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.9,
-                "scores": {
-                        "innovation": 3.2,
-                        "industry": 3.5,
-                        "experiment": 3.1
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21590",
-                "title": "AgenticQwen: Training Small Agentic Language Models with Dual Data Flywheels for Industrial-Scale Tool Use",
-                "summary": "Modern industrial applications increasingly demand language models that act as agents, capable of multi-step reasoning and tool use in real-world settings. These tasks are typically performed under st...",
-                "link": "http://arxiv.org/abs/2604.21590v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.9,
-                "scores": {
-                        "innovation": 3.2,
-                        "industry": 3.5,
-                        "experiment": 3.1
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21860",
-                "title": "Transient Turn Injection: Exposing Stateless Multi-Turn Vulnerabilities in Large Language Models",
-                "summary": "Large language models (LLMs) are increasingly integrated into sensitive workflows, raising the stakes for adversarial robustness and safety. This paper introduces Transient Turn Injection(TTI), a new ...",
-                "link": "http://arxiv.org/abs/2604.21860v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.9,
-                "scores": {
-                        "innovation": 3.2,
-                        "industry": 2.5,
-                        "experiment": 3.1
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21816",
-                "title": "Tool Attention Is All You Need: Dynamic Tool Gating and Lazy Schema Loading for Eliminating the MCP/Tools Tax in Scalable Agentic Workflows",
-                "summary": "The Model Context Protocol (MCP) has become a common interface for connecting large language model (LLM) agents to external tools, but its reliance on stateless, eager schema injection imposes a hidde...",
-                "link": "http://arxiv.org/abs/2604.21816v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.9,
-                "scores": {
-                        "innovation": 3.2,
-                        "industry": 3.5,
-                        "experiment": 3.1
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21284",
-                "title": "Spatial Metaphors for LLM Memory: A Critical Analysis of the MemPalace Architecture",
-                "summary": "MemPalace is an open-source AI memory system that applies the ancient method of loci (memory palace) spatial metaphor to organize long-term memory for large language models; launched in April 2026, it...",
-                "link": "http://arxiv.org/abs/2604.21284v1",
-                "category": "llm",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.8,
-                "scores": {
-                        "innovation": 3.1,
-                        "industry": 3.0,
-                        "experiment": 3.1
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21854",
-                "title": "Bounding the Black Box: A Statistical Certification Framework for AI Risk Regulation",
-                "summary": "Artificial intelligence now decides who receives a loan, who is flagged for criminal investigation, and whether an autonomous vehicle brakes in time. Governments have responded: the EU AI Act, the NIS...",
-                "link": "http://arxiv.org/abs/2604.21854v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.8,
-                "scores": {
-                        "innovation": 3.1,
-                        "industry": 4.0,
-                        "experiment": 3.1
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21794",
-                "title": "Learning to Communicate: Toward End-to-End Optimization of Multi-Agent Language Systems",
-                "summary": "Multi-agent systems built on large language models have shown strong performance on complex reasoning tasks, yet most work focuses on agent roles and orchestration while treating inter-agent communica...",
-                "link": "http://arxiv.org/abs/2604.21794v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.8,
-                "scores": {
-                        "innovation": 3.1,
-                        "industry": 3.0,
-                        "experiment": 3.1
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21764",
-                "title": "Thinking with Reasoning Skills: Fewer Tokens, More Accuracy",
-                "summary": "Reasoning LLMs often spend substantial tokens on long intermediate reasoning traces (e.g., chain-of-thought) when solving new problems. We propose to summarize and store reusable reasoning skills dist...",
-                "link": "http://arxiv.org/abs/2604.21764v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.7,
-                "scores": {
-                        "innovation": 3.1,
-                        "industry": 2.5,
-                        "experiment": 3.1
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21748",
-                "title": "StructMem: Structured Memory for Long-Horizon Behavior in LLMs",
-                "summary": "Long-term conversational agents need memory systems that capture relationships between events, not merely isolated facts, to support temporal reasoning and multi-hop question answering. Current approa...",
-                "link": "http://arxiv.org/abs/2604.21748v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.7,
-                "scores": {
-                        "innovation": 3.0,
-                        "industry": 2.5,
-                        "experiment": 3.0
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21910",
-                "title": "From Research Question to Scientific Workflow: Leveraging Agentic AI for Science Automation",
-                "summary": "Scientific workflow systems automate execution -- scheduling, fault tolerance, resource management -- but not the semantic translation that precedes it. Scientists still manually convert research ques...",
-                "link": "http://arxiv.org/abs/2604.21910v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.7,
-                "scores": {
-                        "innovation": 3.0,
-                        "industry": 2.5,
-                        "experiment": 3.0
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21536",
-                "title": "Pre-trained LLMs Meet Sequential Recommenders: Efficient User-Centric Knowledge Distillation",
-                "summary": "Sequential recommender systems have achieved significant success in modeling temporal user behavior but remain limited in capturing rich user semantics beyond interaction patterns. Large Language Mode...",
-                "link": "http://arxiv.org/abs/2604.21536v1",
-                "category": "rec",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.6,
-                "scores": {
-                        "innovation": 3.0,
-                        "industry": 3.0,
-                        "experiment": 3.0
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21724",
-                "title": "Beyond N-gram: Data-Aware X-GRAM Extraction for Efficient Embedding Parameter Scaling",
-                "summary": "Large token-indexed lookup tables provide a compute-decoupled scaling path, but their practical gains are often limited by poor parameter efficiency and rapid memory growth. We attribute these limitat...",
-                "link": "http://arxiv.org/abs/2604.21724v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.6,
-                "scores": {
-                        "innovation": 3.0,
-                        "industry": 3.0,
-                        "experiment": 3.0
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21611",
-                "title": "Process Supervision via Verbal Critique Improves Reasoning in Large Language Models",
-                "summary": "Inference-time scaling for LLM reasoning has focused on three axes: chain depth, sample breadth, and learned step-scorers (PRMs). We introduce a fourth axis, granularity of external verbal supervision...",
-                "link": "http://arxiv.org/abs/2604.21611v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.6,
-                "scores": {
-                        "innovation": 3.0,
-                        "industry": 3.0,
-                        "experiment": 3.0
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21238",
-                "title": "Unlocking the Power of Large Language Models for Multi-table Entity Matching",
-                "summary": "Multi-table entity matching (MEM) addresses the limitations of dual-table approaches by enabling simultaneous identification of equivalent entities across multiple data sources without unique identifi...",
-                "link": "http://arxiv.org/abs/2604.21238v1",
-                "category": "llm",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.5,
-                "scores": {
-                        "innovation": 3.0,
-                        "industry": 2.5,
-                        "experiment": 3.0
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21765",
-                "title": "PrismaDV: Automated Task-Aware Data Unit Test Generation",
-                "summary": "Data is a central resource for modern enterprises, and data validation is essential for ensuring the reliability of downstream applications. However, existing automated data unit testing frameworks ar...",
-                "link": "http://arxiv.org/abs/2604.21765v1",
-                "category": "llm",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.5,
-                "scores": {
-                        "innovation": 3.0,
-                        "industry": 3.5,
-                        "experiment": 3.0
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21564",
-                "title": "Measuring Opinion Bias and Sycophancy via LLM-based Coercion",
-                "summary": "Large language models increasingly shape the information people consume: they are embedded in search, consulted for professional advice, deployed as agents, and used as a first stop for questions abou...",
-                "link": "http://arxiv.org/abs/2604.21564v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.5,
-                "scores": {
-                        "innovation": 2.9,
-                        "industry": 2.5,
-                        "experiment": 3.0
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21304",
-                "title": "PAPERMIND: Benchmarking Agentic Reasoning and Critique over Scientific Papers in Multimodal LLMs",
-                "summary": "Understanding scientific papers requires more than answering isolated questions or summarizing content. It involves an integrated reasoning process that grounds textual and visual information, interpr...",
-                "link": "http://arxiv.org/abs/2604.21304v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.5,
-                "scores": {
-                        "innovation": 2.9,
-                        "industry": 2.5,
-                        "experiment": 2.9
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21809",
-                "title": "Quotient-Space Diffusion Models",
-                "summary": "Diffusion-based generative models have reformed generative AI, and have enabled new capabilities in the science domain, for example, generating 3D structures of molecules. Due to the intrinsic problem...",
-                "link": "http://arxiv.org/abs/2604.21809v1",
-                "category": "agent",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.5,
-                "scores": {
-                        "innovation": 2.9,
-                        "industry": 3.0,
-                        "experiment": 2.9
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21769",
-                "title": "Who Defines \"Best\"? Towards Interactive, User-Defined Evaluation of LLM Leaderboards",
-                "summary": "LLM leaderboards are widely used to compare models and guide deployment decisions. However, leaderboard rankings are shaped by evaluation priorities set by benchmark designers, rather than by the dive...",
-                "link": "http://arxiv.org/abs/2604.21769v1",
-                "category": "rec",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.4,
-                "scores": {
-                        "innovation": 2.9,
-                        "industry": 3.0,
-                        "experiment": 2.9
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21751",
-                "title": "Why are all LLMs Obsessed with Japanese Culture? On the Hidden Cultural and Regional Biases of LLMs",
-                "summary": "LLMs have been showing limitations when it comes to cultural coverage and competence, and in some cases show regional biases such as amplifying Western and Anglocentric viewpoints. While there have be...",
-                "link": "http://arxiv.org/abs/2604.21751v1",
-                "category": "llm",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.4,
-                "scores": {
-                        "innovation": 2.9,
-                        "industry": 2.0,
-                        "experiment": 2.9
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21871",
-                "title": "Machine Behavior in Relational Moral Dilemmas: Moral Rightness, Predicted Human Behavior, and Model Decisions",
-                "summary": "Human moral judgment is context-dependent and modulated by interpersonal relationships. As large language models (LLMs) increasingly function as decision-support systems, determining whether they enco...",
-                "link": "http://arxiv.org/abs/2604.21871v1",
-                "category": "llm",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.4,
-                "scores": {
-                        "innovation": 2.9,
-                        "industry": 3.0,
-                        "experiment": 2.9
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21096",
-                "title": "Multilingual and Domain-Agnostic Tip-of-the-Tongue Query Generation for Simulated Evaluation",
-                "summary": "Tip-of-the-Tongue (ToT) retrieval benchmarks have largely focused on English, limiting their applicability to multilingual information access. In this work, we construct multilingual ToT test collecti...",
-                "link": "http://arxiv.org/abs/2604.21096v1",
-                "category": "llm",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-22",
-                "overall_score": 2.4,
-                "scores": {
-                        "innovation": 2.9,
-                        "industry": 3.0,
-                        "experiment": 2.9
-                },
-                "highlight": null
-        },
-        {
-                "id": "2604.21882",
-                "title": "Revisiting Non-Verbatim Memorization in Large Language Models: The Role of Entity Surface Forms",
-                "summary": "Understanding what kinds of factual knowledge large language models (LLMs) memorize is essential for evaluating their reliability and limitations. Entity-based QA is a common framework for analyzing n...",
-                "link": "http://arxiv.org/abs/2604.21882v1",
-                "category": "llm",
-                "authors": [
-                        "Unknown"
-                ],
-                "published": "2026-04-23",
-                "overall_score": 2.3,
-                "scores": {
-                        "innovation": 2.8,
-                        "industry": 2.5,
-                        "experiment": 2.9
-                },
-                "highlight": null
-        }
-];
+        const papers = [{"id": "2604.21593", "arxiv_id": "2604.21593", "title": "Language as a Latent Variable for Reasoning Optimization", "summary": "As LLMs reduce English-centric bias, a surprising trend emerges: non-English responses sometimes outperform English on reasoning tasks. We hypothesize that language functions as a latent variable that structurally modulates the model's internal inference pathways, rather than merely serving as an output medium. To test this, we conducted a Polyglot Thinking Experiment, in which models were prompted to solve identical problems under language-constrained and language-unconstrained conditions. Resu", "link": "http://arxiv.org/abs/2604.21593v1", "category": "agent", "published": "2026-04-23", "industry_score": 4, "paper_value": 2.73, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21896", "arxiv_id": "2604.21896", "title": "Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models", "summary": "This paper introduces a new paradigm for AI game programming, leveraging large language models (LLMs) to extend and operationalize Claude Shannon's taxonomy of game-playing machines. Central to this paradigm is Nemobot, an interactive agentic engineering environment that enables users to create, customize, and deploy LLM-powered game agents while actively engaging with AI-driven strategies. The LLM-based chatbot, integrated within Nemobot, demonstrates its capabilities across four distinct class", "link": "http://arxiv.org/abs/2604.21896v1", "category": "agent", "published": "2026-04-23", "industry_score": 1, "paper_value": 2.53, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21891", "arxiv_id": "2604.21891", "title": "A Multi-Stage Warm-Start Deep Learning Framework for Unit Commitment", "summary": "Maintaining instantaneous balance between electricity supply and demand is critical for reliability and grid instability. System operators achieve this through solving the task of Unit Commitment (UC),ca high dimensional large-scale Mixed-integer Linear Programming (MILP) problem that is strictly and heavily governed by the grid physical constraints. As grid integrate variable renewable sources, and new technologies such as long duration storage in the grid, UC must be optimally solved for multi", "link": "http://arxiv.org/abs/2604.21891v1", "category": "rec", "published": "2026-04-23", "industry_score": 3, "paper_value": 2.38, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21590", "arxiv_id": "2604.21590", "title": "AgenticQwen: Training Small Agentic Language Models with Dual Data Flywheels for Industrial-Scale Tool Use", "summary": "Modern industrial applications increasingly demand language models that act as agents, capable of multi-step reasoning and tool use in real-world settings. These tasks are typically performed under strict cost and latency constraints, making small agentic models highly desirable. In this paper, we introduce the AgenticQwen family of models, trained via multi-round reinforcement learning (RL) on synthetic data and a limited amount of open-source data. Our training framework combines reasoning RL ", "link": "http://arxiv.org/abs/2604.21590v1", "category": "agent", "published": "2026-04-23", "industry_score": 3, "paper_value": 2.38, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21860", "arxiv_id": "2604.21860", "title": "Transient Turn Injection: Exposing Stateless Multi-Turn Vulnerabilities in Large Language Models", "summary": "Large language models (LLMs) are increasingly integrated into sensitive workflows, raising the stakes for adversarial robustness and safety. This paper introduces Transient Turn Injection(TTI), a new multi-turn attack technique that systematically exploits stateless moderation by distributing adversarial intent across isolated interactions. TTI leverages automated attacker agents powered by large language models to iteratively test and evade policy enforcement in both commercial and open-source ", "link": "http://arxiv.org/abs/2604.21860v1", "category": "agent", "published": "2026-04-23", "industry_score": 1, "paper_value": 2.33, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21816", "arxiv_id": "2604.21816", "title": "Tool Attention Is All You Need: Dynamic Tool Gating and Lazy Schema Loading for Eliminating the MCP/Tools Tax in Scalable Agentic Workflows", "summary": "The Model Context Protocol (MCP) has become a common interface for connecting large language model (LLM) agents to external tools, but its reliance on stateless, eager schema injection imposes a hidden per-turn overhead the MCP Tax or Tools Tax that practitioner reports place between roughly 10k and 60k tokens in typical multi-server deployments. This payload inflates the key-value cache, is associated with reasoning degradation as context utilization approaches published fracture points around ", "link": "http://arxiv.org/abs/2604.21816v1", "category": "agent", "published": "2026-04-23", "industry_score": 3, "paper_value": 2.33, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21284", "arxiv_id": "2604.21284", "title": "Spatial Metaphors for LLM Memory: A Critical Analysis of the MemPalace Architecture", "summary": "MemPalace is an open-source AI memory system that applies the ancient method of loci (memory palace) spatial metaphor to organize long-term memory for large language models; launched in April 2026, it accumulated over 47,000 GitHub stars in its first two weeks and claims state-of-the-art retrieval performance on the LongMemEval benchmark (96.6% Recall@5) without requiring any LLM inference at write time. Through independent codebase analysis, benchmark replication, and comparison with competing ", "link": "http://arxiv.org/abs/2604.21284v1", "category": "llm", "published": "2026-04-23", "industry_score": 2, "paper_value": 2.28, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21854", "arxiv_id": "2604.21854", "title": "Bounding the Black Box: A Statistical Certification Framework for AI Risk Regulation", "summary": "Artificial intelligence now decides who receives a loan, who is flagged for criminal investigation, and whether an autonomous vehicle brakes in time. Governments have responded: the EU AI Act, the NIST Risk Management Framework, and the Council of Europe Convention all demand that high-risk systems demonstrate safety before deployment. Yet beneath this regulatory consensus lies a critical vacuum: none specifies what ``acceptable risk'' means in quantitative terms, and none provides a technical m", "link": "http://arxiv.org/abs/2604.21854v1", "category": "agent", "published": "2026-04-23", "industry_score": 4, "paper_value": 2.28, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21794", "arxiv_id": "2604.21794", "title": "Learning to Communicate: Toward End-to-End Optimization of Multi-Agent Language Systems", "summary": "Multi-agent systems built on large language models have shown strong performance on complex reasoning tasks, yet most work focuses on agent roles and orchestration while treating inter-agent communication as a fixed interface. Latent communication through internal representations such as key-value caches offers a promising alternative to text-based protocols, but existing approaches do not jointly optimize communication with multi-agent reasoning. Therefore we propose DiffMAS, a training framewo", "link": "http://arxiv.org/abs/2604.21794v1", "category": "agent", "published": "2026-04-23", "industry_score": 2, "paper_value": 2.23, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21764", "arxiv_id": "2604.21764", "title": "Thinking with Reasoning Skills: Fewer Tokens, More Accuracy", "summary": "Reasoning LLMs often spend substantial tokens on long intermediate reasoning traces (e.g., chain-of-thought) when solving new problems. We propose to summarize and store reusable reasoning skills distilled from extensive deliberation and trial-and-error exploration, and to retrieve these skills at inference time to guide future reasoning. Unlike the prevailing \\emph{reasoning from scratch} paradigm, our approach first recalls relevant skills for each query, helping the model avoid redundant deto", "link": "http://arxiv.org/abs/2604.21764v1", "category": "agent", "published": "2026-04-23", "industry_score": 1, "paper_value": 2.18, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21748", "arxiv_id": "2604.21748", "title": "StructMem: Structured Memory for Long-Horizon Behavior in LLMs", "summary": "Long-term conversational agents need memory systems that capture relationships between events, not merely isolated facts, to support temporal reasoning and multi-hop question answering. Current approaches face a fundamental trade-off: flat memory is efficient but fails to model relational structure, while graph-based memory enables structured reasoning at the cost of expensive and fragile construction. To address these issues, we propose \\textbf{StructMem}, a structure-enriched hierarchical memo", "link": "http://arxiv.org/abs/2604.21748v1", "category": "agent", "published": "2026-04-23", "industry_score": 1, "paper_value": 2.08, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21910", "arxiv_id": "2604.21910", "title": "From Research Question to Scientific Workflow: Leveraging Agentic AI for Science Automation", "summary": "Scientific workflow systems automate execution -- scheduling, fault tolerance, resource management -- but not the semantic translation that precedes it. Scientists still manually convert research questions into workflow specifications, a task requiring both domain knowledge and infrastructure expertise. We propose an agentic architecture that closes this gap through three layers: an LLM interprets natural language into structured intents (semantic layer); validated generators produce reproducibl", "link": "http://arxiv.org/abs/2604.21910v1", "category": "agent", "published": "2026-04-23", "industry_score": 1, "paper_value": 2.08, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21536", "arxiv_id": "2604.21536", "title": "Pre-trained LLMs Meet Sequential Recommenders: Efficient User-Centric Knowledge Distillation", "summary": "Sequential recommender systems have achieved significant success in modeling temporal user behavior but remain limited in capturing rich user semantics beyond interaction patterns. Large Language Models (LLMs) present opportunities to enhance user understanding with their reasoning capabilities, yet existing integration approaches create prohibitive inference costs in real time. To address these limitations, we present a novel knowledge distillation method that utilizes textual user profile gene", "link": "http://arxiv.org/abs/2604.21536v1", "category": "rec", "published": "2026-04-23", "industry_score": 2, "paper_value": 2.03, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21724", "arxiv_id": "2604.21724", "title": "Beyond N-gram: Data-Aware X-GRAM Extraction for Efficient Embedding Parameter Scaling", "summary": "Large token-indexed lookup tables provide a compute-decoupled scaling path, but their practical gains are often limited by poor parameter efficiency and rapid memory growth. We attribute these limitations to Zipfian under-training of the long tail, heterogeneous demand across layers, and \"slot collapse\" that produces redundant embeddings. To address this, we propose X-GRAM, a frequency-aware dynamic token-injection framework. X-GRAM employs hybrid hashing and alias mixing to compress the tail wh", "link": "http://arxiv.org/abs/2604.21724v1", "category": "agent", "published": "2026-04-23", "industry_score": 2, "paper_value": 2.03, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21611", "arxiv_id": "2604.21611", "title": "Process Supervision via Verbal Critique Improves Reasoning in Large Language Models", "summary": "Inference-time scaling for LLM reasoning has focused on three axes: chain depth, sample breadth, and learned step-scorers (PRMs). We introduce a fourth axis, granularity of external verbal supervision, via Verbal Process Supervision (VPS), a training-free framework that uses structured natural-language critique from a stronger supervisor to guide an iterative generate-critique-refine loop up to a round budget R. Across GPQA Diamond, AIME 2025, and LiveCodeBench V6 (covering both closed and open ", "link": "http://arxiv.org/abs/2604.21611v1", "category": "agent", "published": "2026-04-23", "industry_score": 2, "paper_value": 2.03, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21238", "arxiv_id": "2604.21238", "title": "Unlocking the Power of Large Language Models for Multi-table Entity Matching", "summary": "Multi-table entity matching (MEM) addresses the limitations of dual-table approaches by enabling simultaneous identification of equivalent entities across multiple data sources without unique identifiers. However, existing methods relying on pre-trained language models struggle to handle semantic inconsistencies caused by numerical attribute variations. Inspired by the powerful language understanding capabilities of large language models (LLMs), we propose a novel LLM-based framework for multi-t", "link": "http://arxiv.org/abs/2604.21238v1", "category": "llm", "published": "2026-04-23", "industry_score": 1, "paper_value": 1.93, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21765", "arxiv_id": "2604.21765", "title": "PrismaDV: Automated Task-Aware Data Unit Test Generation", "summary": "Data is a central resource for modern enterprises, and data validation is essential for ensuring the reliability of downstream applications. However, existing automated data unit testing frameworks are largely task-agnostic: they validate datasets without considering the semantics and requirements of the code that consumes the data.\n  We present PrismaDV, a compound AI system that analyzes downstream task code together with dataset profiles to identify data access patterns, infer implicit data a", "link": "http://arxiv.org/abs/2604.21765v1", "category": "llm", "published": "2026-04-23", "industry_score": 3, "paper_value": 1.93, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21564", "arxiv_id": "2604.21564", "title": "Measuring Opinion Bias and Sycophancy via LLM-based Coercion", "summary": "Large language models increasingly shape the information people consume: they are embedded in search, consulted for professional advice, deployed as agents, and used as a first stop for questions about policy, ethics, health, and politics. When such a model silently holds a position on a contested topic, that position propagates at scale into users' decisions. Eliciting a model's positions is harder than it first appears: contemporary assistants answer direct opinion questions with evasive discl", "link": "http://arxiv.org/abs/2604.21564v1", "category": "agent", "published": "2026-04-23", "industry_score": 1, "paper_value": 1.88, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21304", "arxiv_id": "2604.21304", "title": "PAPERMIND: Benchmarking Agentic Reasoning and Critique over Scientific Papers in Multimodal LLMs", "summary": "Understanding scientific papers requires more than answering isolated questions or summarizing content. It involves an integrated reasoning process that grounds textual and visual information, interprets experimental evidence, synthesizes information across sources, and critically evaluates scientific claims. However, existing benchmarks typically assess these abilities in isolation, making it difficult to evaluate scientific paper understanding as a unified set of interacting cognitive abilitie", "link": "http://arxiv.org/abs/2604.21304v1", "category": "agent", "published": "2026-04-23", "industry_score": 1, "paper_value": 1.83, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21809", "arxiv_id": "2604.21809", "title": "Quotient-Space Diffusion Models", "summary": "Diffusion-based generative models have reformed generative AI, and have enabled new capabilities in the science domain, for example, generating 3D structures of molecules. Due to the intrinsic problem structure of certain tasks, there is often a symmetry in the system, which identifies objects that can be converted by a group action as equivalent, hence the target distribution is essentially defined on the quotient space with respect to the group. In this work, we establish a formal framework fo", "link": "http://arxiv.org/abs/2604.21809v1", "category": "agent", "published": "2026-04-23", "industry_score": 2, "paper_value": 1.83, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21769", "arxiv_id": "2604.21769", "title": "Who Defines \"Best\"? Towards Interactive, User-Defined Evaluation of LLM Leaderboards", "summary": "LLM leaderboards are widely used to compare models and guide deployment decisions. However, leaderboard rankings are shaped by evaluation priorities set by benchmark designers, rather than by the diverse goals and constraints of actual users and organizations. A single aggregate score often obscures how models behave across different prompt types and compositions. In this work, we conduct an in-depth analysis of the dataset used in the LMArena (formerly Chatbot Arena) benchmark and investigate t", "link": "http://arxiv.org/abs/2604.21769v1", "category": "rec", "published": "2026-04-23", "industry_score": 2, "paper_value": 1.78, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21751", "arxiv_id": "2604.21751", "title": "Why are all LLMs Obsessed with Japanese Culture? On the Hidden Cultural and Regional Biases of LLMs", "summary": "LLMs have been showing limitations when it comes to cultural coverage and competence, and in some cases show regional biases such as amplifying Western and Anglocentric viewpoints. While there have been works analysing the cultural capabilities of LLMs, there has not been specific work on highlighting LLM regional preferences when it comes to cultural-related questions. In this work, we propose a new dataset based on a comprehensive taxonomy of Culture-Related Open Questions (CROQ). The results ", "link": "http://arxiv.org/abs/2604.21751v1", "category": "llm", "published": "2026-04-23", "industry_score": 0, "paper_value": 1.78, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21871", "arxiv_id": "2604.21871", "title": "Machine Behavior in Relational Moral Dilemmas: Moral Rightness, Predicted Human Behavior, and Model Decisions", "summary": "Human moral judgment is context-dependent and modulated by interpersonal relationships. As large language models (LLMs) increasingly function as decision-support systems, determining whether they encode these social nuances is critical. We characterize machine behavior using the Whistleblower's Dilemma by varying two experimental dimensions: crime severity and relational closeness. Our study evaluates three distinct perspectives: (1) moral rightness (prescriptive norms), (2) predicted human beha", "link": "http://arxiv.org/abs/2604.21871v1", "category": "llm", "published": "2026-04-23", "industry_score": 2, "paper_value": 1.78, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21882", "arxiv_id": "2604.21882", "title": "Revisiting Non-Verbatim Memorization in Large Language Models: The Role of Entity Surface Forms", "summary": "Understanding what kinds of factual knowledge large language models (LLMs) memorize is essential for evaluating their reliability and limitations. Entity-based QA is a common framework for analyzing non-verbatim memorization, but typical evaluations query each entity using a single canonical surface form, making it difficult to disentangle fact memorization from access through a particular name. We introduce RedirectQA, an entity-based QA dataset that uses Wikipedia redirect information to assoc", "link": "http://arxiv.org/abs/2604.21882v1", "category": "llm", "published": "2026-04-23", "industry_score": 1, "paper_value": 1.68, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}, {"id": "2604.21204", "arxiv_id": "2604.21204", "title": "On Reasoning Behind Next Occupation Recommendation", "summary": "In this work, we develop a novel reasoning approach to enhance the performance of large language models (LLMs) in future occupation prediction. In this approach, a reason generator first derives a ``reason'' for a user using his/her past education and career history. The reason summarizes the user's preference and is used as the input of an occupation predictor to recommend the user's next occupation. This two-step occupation prediction approach is, however, non-trivial as LLMs are not aligned w", "link": "http://arxiv.org/abs/2604.21204v1", "category": "rec", "published": "2026-04-23", "industry_score": 0, "paper_value": 1.58, "type": "paper", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0}];
         const categoryLabels = { rec: '推荐系统', agent: 'AI Agent', llm: 'LLM', industry: '工业应用' };
         const categoryEmoji = { rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭' };
         

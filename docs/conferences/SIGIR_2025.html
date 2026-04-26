@@ -20,7 +20,6 @@
         html { font-size: 16px; scroll-behavior: smooth; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: var(--bg); color: var(--color-text-anchor); line-height: 1.6; -webkit-font-smoothing: antialiased; }
         
-        /* Header */
         .header {
             background: var(--gradient-primary); color: white;
             padding: 60px 16px 30px; padding-top: calc(60px + var(--safe-area-top));
@@ -34,7 +33,6 @@
         .header-meta { font-size: 13px; opacity: 0.9; display: flex; flex-wrap: wrap; gap: 12px; }
         .header-meta span { display: flex; align-items: center; gap: 4px; }
         
-        /* Stats Bar */
         .stats-bar {
             display: flex; gap: 16px; padding: 16px;
             background: white; margin: -20px 12px 0; border-radius: 14px;
@@ -44,17 +42,14 @@
         .stat-value { font-size: 20px; font-weight: 700; color: #667eea; }
         .stat-label { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
         
-        /* Main */
         .main { padding: 20px 12px 60px; padding-bottom: calc(60px + var(--safe-area-bottom)); }
         
-        /* Section */
         .section-title {
             font-size: 16px; font-weight: 700; margin-bottom: 12px;
             display: flex; align-items: center; gap: 8px;
         }
         .section-title i { color: #667eea; }
         
-        /* Paper Card */
         .paper-card {
             background: var(--color-card); border-radius: 16px;
             margin-bottom: 12px; overflow: hidden;
@@ -64,9 +59,7 @@
             background: var(--gradient-primary); color: white;
             padding: 16px; position: relative;
         }
-        .paper-tags {
-            display: flex; gap: 8px; margin-bottom: 10px;
-        }
+        .paper-tags { display: flex; gap: 8px; margin-bottom: 10px; }
         .paper-tag {
             background: rgba(255,255,255,0.2); padding: 3px 10px;
             border-radius: 6px; font-size: 10px; font-weight: 700;
@@ -83,7 +76,6 @@
         .paper-body { padding: 16px; }
         .paper-summary { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 16px; }
         
-        /* Scores */
         .scores-section { margin-bottom: 16px; }
         .scores-title { font-size: 12px; font-weight: 700; color: var(--color-text-anchor); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
         .scores-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -100,7 +92,6 @@
         .overall-label { font-size: 12px; }
         .overall-value { font-size: 20px; font-weight: 700; }
         
-        /* Experiment & Scenario */
         .exp-section { margin-bottom: 16px; }
         .exp-item {
             display: flex; align-items: flex-start; gap: 10px;
@@ -118,7 +109,6 @@
         .exp-label { font-size: 10px; color: var(--color-text-muted); margin-bottom: 2px; }
         .exp-value { font-size: 12px; font-weight: 600; }
         
-        /* Action Button */
         .paper-action {
             display: block; width: 100%; padding: 14px;
             background: var(--gradient-primary); color: white;
@@ -127,7 +117,6 @@
             text-decoration: none;
         }
         
-        /* Empty State */
         .empty-state {
             text-align: center; padding: 60px 20px;
             color: var(--color-text-muted);
@@ -144,22 +133,21 @@
         <h1 class="header-title">SIGIR 2025</h1>
         <div class="header-meta">
             <span><i class="fas fa-calendar"></i> 2025年7月</span>
-            <span><i class="fas fa-map-marker-alt"></i> 待定</span>
-            <span><i class="fas fa-percentage"></i> 录用率 待公布</span>
+            <span><i class="fas fa-map-marker-alt"></i> 意大利帕多瓦</span>
         </div>
     </div>
     
     <div class="stats-bar">
         <div class="stat-item">
-            <div class="stat-value">0</div>
+            <div class="stat-value">10</div>
             <div class="stat-label">收录论文</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">0</div>
+            <div class="stat-value">10</div>
             <div class="stat-label">精选论文</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">待公布</div>
+            <div class="stat-value">-</div>
             <div class="stat-label">录用率</div>
         </div>
     </div>
@@ -172,7 +160,7 @@
     </div>
     
     <script>
-        const papers = [];
+        const papers = [{"id": "2604.15294", "arxiv_id": "2604.15294", "title": "How Do LLMs and VLMs Understand Viewpoint Rotation Without Vision? An Interpretability Study", "summary": "Over the past year, spatial intelligence has drawn increasing attention. Many prior works study it from the perspective of visual-spatial intelligence, where models have access to visuospatial information from visual inputs. However, in the absence of visual information, whether linguistic intelligence alone is sufficient to endow models with spatial intelligence, and how models perform relevant tasks with text-only inputs still remain unexplored. Therefore, in this paper, we focus on a fundamen", "link": "http://arxiv.org/abs/2604.15294v1", "published": "2026-04-16", "authors": ["Zhen Yang", "Ping Jian", "Zhongbin Guo", "Zuming Zhang", "Chengzhi Li"], "type": "paper", "conference": "SIGIR 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.15280", "arxiv_id": "2604.15280", "title": "Why Do Vision Language Models Struggle To Recognize Human Emotions?", "summary": "Understanding emotions is a fundamental ability for intelligent systems to be able to interact with humans. Vision-language models (VLMs) have made tremendous progress in the last few years for many visual tasks, potentially offering a promising solution for understanding emotions. However, it is surprising that even the most sophisticated contemporary VLMs struggle to recognize human emotions or to outperform even specialized vision-only classifiers. In this paper we ask the question \"Why do VL", "link": "http://arxiv.org/abs/2604.15280v1", "published": "2026-04-16", "authors": ["Madhav Agarwal", "Sotirios A. Tsaftaris", "Laura Sevilla-Lara", "Steven McDonagh"], "type": "paper", "conference": "SIGIR 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.15233", "arxiv_id": "2604.15233", "title": "Blue Data Intelligence Layer: Streaming Data and Agents for Multi-source Multi-modal Data-Centric Applications", "summary": "NL2SQL systems aim to address the growing need for natural language interaction with data. However, real-world information rarely maps to a single SQL query because (1) users express queries iteratively (2) questions often span multiple data sources beyond the closed-world assumption of a single database, and (3) queries frequently rely on commonsense or external knowledge. Consequently, satisfying realistic data needs require integrating heterogeneous sources, modalities, and contextual data. I", "link": "http://arxiv.org/abs/2604.15233v1", "published": "2026-04-16", "authors": ["Moin Aminnaseri", "Farima Fatahi Bayat", "Nikita Bhutani", "Jean-Flavien Bussotti", "Kevin Chan"], "type": "paper", "conference": "SIGIR 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.15224", "arxiv_id": "2604.15224", "title": "Context Over Content: Exposing Evaluation Faking in Automated Judges", "summary": "The $\\textit{LLM-as-a-judge}$ paradigm has become the operational backbone of automated AI evaluation pipelines, yet rests on an unverified assumption: that judges evaluate text strictly on its semantic content, impervious to surrounding contextual framing. We investigate $\\textit{stakes signaling}$, a previously unmeasured vulnerability where informing a judge model of the downstream consequences its verdicts will have on the evaluated model's continued operation systematically corrupts its ass", "link": "http://arxiv.org/abs/2604.15224v1", "published": "2026-04-16", "authors": ["Manan Gupta", "Inderjeet Nair", "Lu Wang", "Dhruv Kumar"], "type": "paper", "conference": "SIGIR 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.15190", "arxiv_id": "2604.15190", "title": "Meituan Merchant Business Diagnosis via Policy-Guided Dual-Process User Simulation", "summary": "Simulating group-level user behavior enables scalable counterfactual evaluation of merchant strategies without costly online experiments. However, building a trustworthy simulator faces two structural challenges. First, information incompleteness causes reasoning-based simulators to over-rationalize when unobserved factors such as offline context and implicit habits are missing. Second, mechanism duality requires capturing both interpretable preferences and implicit statistical regularities, whi", "link": "http://arxiv.org/abs/2604.15190v1", "published": "2026-04-16", "authors": ["Ziyang Chen", "Renbing Chen", "Daowei Li", "Jinzhi Liao", "Jiashen Sun"], "type": "paper", "conference": "SIGIR 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.15166", "arxiv_id": "2604.15166", "title": "Class Unlearning via Depth-Aware Removal of Forget-Specific Directions", "summary": "Machine unlearning aims to remove targeted knowledge from a trained model without the cost of retraining from scratch. In class unlearning, however, reducing accuracy on forget classes does not necessarily imply true forgetting: forgotten information can remain encoded in internal representations, and apparent forgetting may arise from classifier-head suppression rather than representational removal. We show that existing class-unlearning methods often exhibit weak or negative selectivity, prese", "link": "http://arxiv.org/abs/2604.15166v1", "published": "2026-04-16", "authors": ["Arman Hatami", "Romina Aalishah", "Ilya E. Monosov"], "type": "paper", "conference": "SIGIR 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.15148", "arxiv_id": "2604.15148", "title": "IG-Search: Step-Level Information Gain Rewards for Search-Augmented Reasoning", "summary": "Reinforcement learning has emerged as an effective paradigm for training large language models to perform search-augmented reasoning. However, existing approaches rely on trajectory-level rewards that cannot distinguish precise search queries from vague or redundant ones within a rollout group, and collapse to a near-zero gradient signal whenever every sampled trajectory fails. In this paper, we propose IG-Search, a reinforcement learning framework that introduces a step-level reward based on In", "link": "http://arxiv.org/abs/2604.15148v1", "published": "2026-04-16", "authors": ["Zihan Liang", "Yufei Ma", "Ben Chen", "Zhipeng Qian", "Huangyu Dai"], "type": "paper", "conference": "SIGIR 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.15140", "arxiv_id": "2604.15140", "title": "DiscoTrace: Representing and Comparing Answering Strategies of Humans and LLMs in Information-Seeking Question Answering", "summary": "We introduce DiscoTrace, a method to identify the rhetorical strategies that answerers use when responding to information-seeking questions. DiscoTrace represents answers as a sequence of question-related discourse acts paired with interpretations of the original question, annotated on top of rhetorical structure theory parses. Applying DiscoTrace to answers from nine different human communities reveals that communities have diverse preferences for answer construction. In contrast, LLMs do not e", "link": "http://arxiv.org/abs/2604.15140v1", "published": "2026-04-16", "authors": ["Neha Srikanth", "Jordan Boyd-Graber", "Rachel Rudinger"], "type": "paper", "conference": "SIGIR 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.15124", "arxiv_id": "2604.15124", "title": "Blinded Multi-Rater Comparative Evaluation of a Large Language Model and Clinician-Authored Responses in CGM-Informed Diabetes Counseling", "summary": "Continuous glucose monitoring (CGM) is central to diabetes care, but explaining CGM patterns clearly and empathetically remains time-intensive. Evidence for retrieval-grounded large language model (LLM) systems in CGM-informed counseling remains limited. To evaluate whether a retrieval-grounded LLM-based conversational agent (CA) could support patient understanding of CGM data and preparation for routine diabetes consultations. We developed a retrieval-grounded LLM-based CA for CGM interpretatio", "link": "http://arxiv.org/abs/2604.15124v1", "published": "2026-04-16", "authors": ["Zhijun Guo", "Alvina Lai", "Emmanouil Korakas", "Aristeidis Vagenas", "Irshad Ahamed"], "type": "paper", "conference": "SIGIR 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.15121", "arxiv_id": "2604.15121", "title": "SRMU: Relevance-Gated Updates for Streaming Hyperdimensional Memories", "summary": "Sequential associative memories (SAMs) are difficult to build and maintain in real-world streaming environments, where observations arrive incrementally over time, have imbalanced sampling, and non-stationary temporal dynamics. Vector Symbolic Architectures (VSAs) provide a biologically-inspired framework for building SAMs. Entities and attributes are encoded as quasi-orthogonal hyperdimensional vectors and processed with well defined algebraic operations. Despite this rich framework, most VSA s", "link": "http://arxiv.org/abs/2604.15121v1", "published": "2026-04-16", "authors": ["Shay Snyder", "Andrew Capodieci", "David Gorsich", "Maryam Parsa"], "type": "paper", "conference": "SIGIR 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}];
         const categoryLabels = { rec: '推荐系统', agent: 'AI Agent', llm: 'LLM', industry: '工业应用' };
         const categoryEmoji = { rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭' };
         

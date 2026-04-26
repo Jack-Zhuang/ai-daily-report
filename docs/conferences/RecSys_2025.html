@@ -20,7 +20,6 @@
         html { font-size: 16px; scroll-behavior: smooth; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: var(--bg); color: var(--color-text-anchor); line-height: 1.6; -webkit-font-smoothing: antialiased; }
         
-        /* Header */
         .header {
             background: var(--gradient-primary); color: white;
             padding: 60px 16px 30px; padding-top: calc(60px + var(--safe-area-top));
@@ -34,7 +33,6 @@
         .header-meta { font-size: 13px; opacity: 0.9; display: flex; flex-wrap: wrap; gap: 12px; }
         .header-meta span { display: flex; align-items: center; gap: 4px; }
         
-        /* Stats Bar */
         .stats-bar {
             display: flex; gap: 16px; padding: 16px;
             background: white; margin: -20px 12px 0; border-radius: 14px;
@@ -44,17 +42,14 @@
         .stat-value { font-size: 20px; font-weight: 700; color: #667eea; }
         .stat-label { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
         
-        /* Main */
         .main { padding: 20px 12px 60px; padding-bottom: calc(60px + var(--safe-area-bottom)); }
         
-        /* Section */
         .section-title {
             font-size: 16px; font-weight: 700; margin-bottom: 12px;
             display: flex; align-items: center; gap: 8px;
         }
         .section-title i { color: #667eea; }
         
-        /* Paper Card */
         .paper-card {
             background: var(--color-card); border-radius: 16px;
             margin-bottom: 12px; overflow: hidden;
@@ -64,9 +59,7 @@
             background: var(--gradient-primary); color: white;
             padding: 16px; position: relative;
         }
-        .paper-tags {
-            display: flex; gap: 8px; margin-bottom: 10px;
-        }
+        .paper-tags { display: flex; gap: 8px; margin-bottom: 10px; }
         .paper-tag {
             background: rgba(255,255,255,0.2); padding: 3px 10px;
             border-radius: 6px; font-size: 10px; font-weight: 700;
@@ -83,7 +76,6 @@
         .paper-body { padding: 16px; }
         .paper-summary { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 16px; }
         
-        /* Scores */
         .scores-section { margin-bottom: 16px; }
         .scores-title { font-size: 12px; font-weight: 700; color: var(--color-text-anchor); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
         .scores-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -100,7 +92,6 @@
         .overall-label { font-size: 12px; }
         .overall-value { font-size: 20px; font-weight: 700; }
         
-        /* Experiment & Scenario */
         .exp-section { margin-bottom: 16px; }
         .exp-item {
             display: flex; align-items: flex-start; gap: 10px;
@@ -118,7 +109,6 @@
         .exp-label { font-size: 10px; color: var(--color-text-muted); margin-bottom: 2px; }
         .exp-value { font-size: 12px; font-weight: 600; }
         
-        /* Action Button */
         .paper-action {
             display: block; width: 100%; padding: 14px;
             background: var(--gradient-primary); color: white;
@@ -127,7 +117,6 @@
             text-decoration: none;
         }
         
-        /* Empty State */
         .empty-state {
             text-align: center; padding: 60px 20px;
             color: var(--color-text-muted);
@@ -145,21 +134,20 @@
         <div class="header-meta">
             <span><i class="fas fa-calendar"></i> 2025年9月</span>
             <span><i class="fas fa-map-marker-alt"></i> 捷克布拉格</span>
-            <span><i class="fas fa-percentage"></i> 录用率 18.8%</span>
         </div>
     </div>
     
     <div class="stats-bar">
         <div class="stat-item">
-            <div class="stat-value">49</div>
+            <div class="stat-value">10</div>
             <div class="stat-label">收录论文</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">2</div>
+            <div class="stat-value">10</div>
             <div class="stat-label">精选论文</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value">18.8%</div>
+            <div class="stat-value">-</div>
             <div class="stat-label">录用率</div>
         </div>
     </div>
@@ -172,7 +160,7 @@
     </div>
     
     <script>
-        const papers = [{"id": "recsys2025-2", "title": "LLM-based Conversational Recommendation with Multi-turn Dialogue", "authors": ["微软"], "link": "#", "category": "llm", "summary": "基于LLM的多轮对话推荐系统，通过对话理解用户意图并生成个性化推荐。", "scores": {"innovation": 4.5, "industry": 4.5, "experiment": 4.0}, "highlight": null, "online_exp": "对话完成率提升15%", "scenario": "Bing Chat推荐", "overall_score": 4.4}, {"id": "recsys2025-1", "title": "IP2: Entity-Guided Interest Probing for Personalized News Recommendation", "authors": ["大连理工大学"], "link": "#", "category": "rec", "summary": "实体导向兴趣探测用于个性化新闻推荐，通过知识图谱实体引导用户兴趣建模。", "scores": {"innovation": 4.5, "industry": 4.0, "experiment": 4.5}, "highlight": "最佳论文候选", "online_exp": "新闻点击率提升4.2%", "scenario": "新闻推荐系统", "overall_score": 4.3}];
+        const papers = [{"id": "2604.14972", "arxiv_id": "2604.14972", "title": "SAGER: Self-Evolving User Policy Skills for Recommendation Agent", "summary": "Large language model (LLM) based recommendation agents personalize what they know through evolving per-user semantic memory, yet how they reason remains a universal, static system prompt shared identically across all users. This asymmetry is a fundamental bottleneck: when a recommendation fails, the agent updates its memory of user preferences but never interrogates the decision logic that produced the failure, leaving its reasoning process structurally unchanged regardless of how many mistakes ", "link": "http://arxiv.org/abs/2604.14972v1", "published": "2026-04-16", "authors": ["Zhen Tao", "Riwei Lai", "Chenyun Yu", "Weixin Chen", "Li Chen"], "type": "paper", "conference": "RecSys 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.14961", "arxiv_id": "2604.14961", "title": "Calibration-Gated LLM Pseudo-Observations for Online Contextual Bandits", "summary": "Contextual bandit algorithms suffer from high regret during cold-start, when the learner has insufficient data to distinguish good arms from bad. We propose augmenting Disjoint LinUCB with LLM pseudo-observations: after each round, a large language model predicts counterfactual rewards for the unplayed arms, and these predictions are injected into the learner as weighted pseudo-observations. The injection weight is controlled by a calibration-gated decay schedule that tracks the LLM's prediction", "link": "http://arxiv.org/abs/2604.14961v1", "published": "2026-04-16", "authors": ["Maksim Pershin", "Ivan Golovanov", "Pavel Baltabaev", "Natalia Trankova"], "type": "paper", "conference": "RecSys 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.14878", "arxiv_id": "2604.14878", "title": "GenRec: A Preference-Oriented Generative Framework for Large-Scale Recommendation", "summary": "Generative Retrieval (GR) offers a promising paradigm for recommendation through next-token prediction (NTP). However, scaling it to large-scale industrial systems introduces three challenges: (i) within a single request, the identical model inputs may produce inconsistent outputs due to the pagination request mechanism; (ii) the prohibitive cost of encoding long user behavior sequences with multi-token item representations based on semantic IDs, and (iii) aligning the generative policy with nua", "link": "http://arxiv.org/abs/2604.14878v1", "published": "2026-04-16", "authors": ["Yanyan Zou", "Junbo Qi", "Lunsong Huang", "Yu Li", "Kewei Xu"], "type": "paper", "conference": "RecSys 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.14839", "arxiv_id": "2604.14839", "title": "Well Begun is Half Done: Training-Free and Model-Agnostic Semantically Guaranteed User Representation Initialization for Multimodal Recommendation", "summary": "Recent advancements in multimodal recommendations, which leverage diverse modality information to mitigate data sparsity and improve recommendation accuracy, have gained significant attention. However, existing multimodal recommendations overlook the critical role of user representation initialization. Unlike items, which are naturally associated with rich modality information, users lack such inherent information. Consequently, item representations initialized based on meaningful modality infor", "link": "http://arxiv.org/abs/2604.14839v1", "published": "2026-04-16", "authors": ["Jinfeng Xu", "Zheyu Chen", "Shuo Yang", "Jinze Li", "Hewei Wang"], "type": "paper", "conference": "RecSys 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.14833", "arxiv_id": "2604.14833", "title": "Federated User Behavior Modeling for Privacy-Preserving LLM Recommendation", "summary": "Large Language Models have shown great success in recommender systems. However, the limited and sparse nature of user data often restricts the LLM's ability to effectively model behavior patterns. To address this, existing studies have explored cross-domain solutions by conducting Cross-Domain Recommendation tasks. But previous methods typically assume domains are overlapped and can be accessed readily. None of the LLM methods address the privacy-preserving issues in the CDR settings, that is, P", "link": "http://arxiv.org/abs/2604.14833v1", "published": "2026-04-16", "authors": ["Lei Guo", "Hongyun Yang", "Pengjie Ren", "Tong Chen", "Hui Liu"], "type": "paper", "conference": "RecSys 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.14738", "arxiv_id": "2604.14738", "title": "Personalized and Context-Aware Transformer Models for Predicting Post-Intervention Physiological Responses from Wearable Sensor Data", "summary": "Consumer wearables enable continuous measurement of physiological data related to stress and recovery, but turning these streams into actionable, personalized stress-management recommendations remains a challenge. In practice, users often do not know how a given intervention, defined as an activity intended to reduce stress, will affect heart rate (HR), heart rate variability (HRV), or inter-beat intervals (BBI) over the next 15 to 120 minutes. We present a framework that predicts post-intervent", "link": "http://arxiv.org/abs/2604.14738v1", "published": "2026-04-16", "authors": ["Esther Brown", "Victoria Dean", "Finale Doshi-Velez"], "type": "paper", "conference": "RecSys 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.14705", "arxiv_id": "2604.14705", "title": "SynHAT: A Two-stage Coarse-to-Fine Diffusion Framework for Synthesizing Human Activity Traces", "summary": "Human activity traces (HATs) are critical for many applications, including human mobility modeling and point-of-interest (POI) recommendation. However, growing privacy concerns have severely limited access to authentic large-scale HAT datasets. Recent advances in generative AI provide new opportunities to synthesize realistic and privacy-preserving HATs for such applications. Yet two major challenges remain: (i) HATs are highly irregular and dynamic, with long and varying time intervals, making ", "link": "http://arxiv.org/abs/2604.14705v1", "published": "2026-04-16", "authors": ["Rongchao Xu", "Lin Jiang", "Dahai Yu", "Ximiao Li", "Guang Wang"], "type": "paper", "conference": "RecSys 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.14613", "arxiv_id": "2604.14613", "title": "Uncertainty-aware Generative Learning Path Recommendation with Cognition-Adaptive Diffusion", "summary": "Learning Path Recommendation (LPR) is critical for personalized education, yet current methods often fail to account for historical interaction uncertainty (e.g., lucky guesses or accidental slips) and lack adaptability to diverse learning goals. We propose U-GLAD (Uncertainty-aware Generative Learning Path Recommendation with Cognition-Adaptive Diffusion). To address representation bias, the framework models cognitive states as probability distributions, capturing the learner's underlying true ", "link": "http://arxiv.org/abs/2604.14613v1", "published": "2026-04-16", "authors": ["Xiangrui Xiong", "Hang Liang", "Baiyang Chen", "Zifei Pan", "Yanli Lee"], "type": "paper", "conference": "RecSys 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.14598", "arxiv_id": "2604.14598", "title": "Category-based and Popularity-guided Video Game Recommendation: A Balance-oriented Framework", "summary": "In recent years, the video game industry has experienced substantial growth, presenting players with a vast array of game choices. This surge in options has spurred the need for a specialized recommender system tailored for video games. However, current video game recommendation approaches tend to prioritize accuracy over diversity, potentially leading to unvaried game suggestions. In addition, the existing game recommendation methods commonly lack the ability to establish strict connections bet", "link": "http://arxiv.org/abs/2604.14598v1", "published": "2026-04-16", "authors": ["Xiping Li", "Jianghong Ma", "Kangzhe Liu", "Shanshan Feng", "Haijun Zhang"], "type": "paper", "conference": "RecSys 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}, {"id": "2604.14595", "arxiv_id": "2604.14595", "title": "NLP needs Diversity outside of 'Diversity'", "summary": "This position paper argues that recent progress with diversity in NLP is disproportionately concentrated on a small number of areas surrounding fairness. We further argue that this is the result of a number of incentives, biases, and barriers which come together to disenfranchise marginalized researchers in non-fairness fields, or to move them into fairness-related fields. We substantiate our claims with an investigation into the demographics of NLP researchers by subfield, using our research to", "link": "http://arxiv.org/abs/2604.14595v1", "published": "2026-04-16", "authors": ["Joshua Tint"], "type": "paper", "conference": "RecSys 2025", "scores": {"innovation": 4.0, "industry": 4.0, "experiment": 4.0}, "overall_score": 4.0, "category": "rec"}];
         const categoryLabels = { rec: '推荐系统', agent: 'AI Agent', llm: 'LLM', industry: '工业应用' };
         const categoryEmoji = { rec: '📊', agent: '🤖', llm: '🧠', industry: '🏭' };
         
