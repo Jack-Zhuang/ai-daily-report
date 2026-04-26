@@ -148,9 +148,9 @@ class PaperInsightV3:
             if str(scripts_dir) not in sys.path:
                 sys.path.insert(0, str(scripts_dir))
             
-            from figure_extractor_v3 import extract_figures as extract_figures_v3
+            from figure_extractor_v4 import extract_figures as extract_figures_v4
             
-            figures = extract_figures_v3(str(pdf_path), str(figures_dir), arxiv_id)
+            figures = extract_figures_v4(str(pdf_path), str(figures_dir), arxiv_id)
             
             if figures:
                 print(f"    提取了 {len(figures)} 张图表")
