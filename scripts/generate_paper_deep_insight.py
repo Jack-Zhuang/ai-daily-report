@@ -606,28 +606,28 @@ class PaperDeepInsightGenerator:
             'abstract': f"<p>{abstract}</p>",
             'key_points': ''.join(f'<li>{p}</li>' for p in key_points[:4]) if key_points else self._extract_key_points(raw_content),
             'background': f"<p>{background}</p>" if background else self._extract_background(raw_content),
-            'core_problem': '详见论文原文',
+            'core_problem': extracted.get('core_problem', '详见论文原文') if isinstance(extracted, dict) else '详见论文原文',
             'method_overview': f"<p>{method.get('text', '')}</p>" if isinstance(method, dict) else f"<p>{method}</p>",
             'innovations': self._render_innovations(innovations) if innovations else self._render_innovations_from_content(raw_content),
-            'architecture_diagram': self._generate_architecture_from_content(raw_content),
+            'architecture_diagram': '',  # 移除通用流程图
             'modules_description': self._render_modules(method.get('modules', [])) if isinstance(method, dict) else '',
-            'algorithm_flowchart': self._generate_default_flowchart(),
-            'pseudocode': '<span class="comment">// 详见论文原文</span>',
-            'formula': '',
+            'algorithm_flowchart': '',  # 移除通用流程图
+            'pseudocode': '',  # 移除通用伪代码
+            'formula': self._extract_formula_from_content(raw_content),
             'formula_vars': '',
-            'code_example': '# 详见论文原文',
+            'code_example': '',  # 移除通用代码示例
             'datasets': ', '.join(experiments.get('datasets', [])) if isinstance(experiments, dict) else '',
             'metrics': ', '.join(experiments.get('metrics', [])) if isinstance(experiments, dict) else '',
-            'baselines': '详见论文原文',
+            'baselines': ', '.join(experiments.get('baselines', [])) if isinstance(experiments, dict) and experiments.get('baselines') else '详见论文原文',
             'stats_cards': self._render_stats_from_experiments(experiments) if isinstance(experiments, dict) else self._render_stats_from_experiments({'improvements': []}),
             'comparison_headers': '<th>指标</th><th>数值</th>',
             'comparison_rows': self._render_comparison_from_experiments(experiments) if isinstance(experiments, dict) else '<tr><td>详见论文</td><td>-</td></tr>',
-            'ablation_results': '<tr><td>详见论文</td><td>-</td><td>-</td></tr>',
+            'ablation_results': self._extract_ablation_from_content(raw_content),
             'findings': self._render_findings_from_content(raw_content),
-            'limitations': '<li>详见论文原文</li>',
-            'future_work': '<li>详见论文原文</li>',
-            'applications': '<li>相关领域应用</li>',
-            'implementation_tips': '<li>参考论文原文实现</li>',
+            'limitations': self._extract_limitations_from_content(raw_content),
+            'future_work': self._extract_future_work_from_content(raw_content),
+            'applications': self._extract_applications_from_content(raw_content),
+            'implementation_tips': self._extract_tips_from_content(raw_content),
             'ratings': self._render_default_ratings(),
             'faq': self._generate_faq_from_content(raw_content),
             'tags': ''.join(f'<span class="tag">{t}</span>' for t in tags[:6]) if tags else '',
@@ -961,6 +961,109 @@ class PaperDeepInsightGenerator:
     <div class="step-desc">{f[:100]}</div>
 </div>''')
         return '\n'.join(html)
+    
+    def _extract_formula_from_content(self, content: str) -> str:
+        """从论文中提取核心公式"""
+        import re
+        # 查找 LaTeX 公式
+        formulas = re.findall(r'\$\$(.+?)\$\$', content, re.DOTALL)
+        if formulas:
+            return f'$${formulas[0]}$$'
+        
+        # 查找行内公式
+        inline_formulas = re.findall(r'\$([^$]+)\$', content)
+        if inline_formulas:
+            return f'${inline_formulas[0]}$'
+        
+        return ''
+    
+    def _extract_ablation_from_content(self, content: str) -> str:
+        """从论文中提取消融实验结果"""
+        import re
+        
+        # 查找消融实验相关的句子
+        ablation_patterns = [
+            r'(?:Ablation|消融).*?(?:show|indicate|demonstrate|表明|显示).*?([\d.]+%?)',
+            r'(?:without|w/o).*?(?:drop|decrease|降低).*?([\d.]+%?)',
+            r'(?:removing|remove).*?(?:performance|accuracy).*?([\d.]+%?)',
+        ]
+        
+        results = []
+        for pattern in ablation_patterns:
+            matches = re.findall(pattern, content, re.IGNORECASE)
+            results.extend(matches)
+        
+        if results:
+            rows = []
+            for i, r in enumerate(results[:3], 1):
+                rows.append(f'<tr><td>消融配置 {i}</td><td>{r}</td><td>-</td></tr>')
+            return '\n'.join(rows)
+        
+        return '<tr><td colspan="3" style="text-align:center;color:#888;">详见论文原文获取详细消融实验数据</td></tr>'
+    
+    def _extract_limitations_from_content(self, content: str) -> str:
+        """从论文中提取局限性"""
+        import re
+        
+        # 查找 Limitations 部分
+        patterns = [
+            r'(?:Limitations?|局限性)[：:\s]*(.*?)(?:\n\s*\n|Future|$)',
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, content, re.DOTALL | re.IGNORECASE)
+            if match:
+                text = match.group(1).strip()[:200]
+                return f'<li>{text}</li>'
+        
+        return '<li>详见论文原文</li>'
+    
+    def _extract_future_work_from_content(self, content: str) -> str:
+        """从论文中提取未来工作"""
+        import re
+        
+        patterns = [
+            r'(?:Future\s*Work|未来工作|future\s*directions?)[：:\s]*(.*?)(?:\n\s*\n|Conclusion|$)',
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, content, re.DOTALL | re.IGNORECASE)
+            if match:
+                text = match.group(1).strip()[:200]
+                return f'<li>{text}</li>'
+        
+        return '<li>详见论文原文</li>'
+    
+    def _extract_applications_from_content(self, content: str) -> str:
+        """从论文中提取应用场景"""
+        # 查找应用相关的关键词
+        app_keywords = ['application', 'apply', 'use case', '应用', '场景']
+        
+        for keyword in app_keywords:
+            if keyword.lower() in content.lower():
+                # 找到包含关键词的句子
+                import re
+                sentences = re.split(r'[.!?。！？]', content)
+                for s in sentences:
+                    if keyword.lower() in s.lower() and len(s) > 30:
+                        return f'<li>{s.strip()[:100]}</li>'
+        
+        return '<li>可应用于相关领域的推理任务优化</li>'
+    
+    def _extract_tips_from_content(self, content: str) -> str:
+        """从论文中提取实现建议"""
+        # 查找实现相关的关键词
+        impl_keywords = ['implementation', 'implement', 'hyperparameter', '实现', '参数']
+        
+        for keyword in impl_keywords:
+            if keyword.lower() in content.lower():
+                import re
+                sentences = re.split(r'[.!?。！？]', content)
+                for s in sentences:
+                    if keyword.lower() in s.lower() and len(s) > 30:
+                        return f'<li>{s.strip()[:100]}</li>'
+        
+        return '<li>参考论文原文的实验设置部分</li>'
     
     def _render_default_ratings(self) -> str:
         return '''<div class="rating-item">

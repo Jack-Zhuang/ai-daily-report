@@ -116,7 +116,7 @@
         
         /* 主内容 */
         .main {
-            padding: 20px 16px 120px;
+            padding: 20px 20px 120px;
             padding-bottom: calc(120px + var(--safe-area-bottom));
             max-width: 800px;
             margin: 0 auto;
@@ -672,12 +672,14 @@
                 <h2 class="section-title">架构设计</h2>
             </div>
             
+            {{#if architecture_diagram}}
             <div class="diagram-container">
                 <div class="diagram-title">图1: 整体架构流程图</div>
                 <div class="mermaid">
 {{architecture_diagram}}
                 </div>
             </div>
+            {{/if}}
             
             <div class="content">
                 <h3>模块说明</h3>
@@ -701,6 +703,7 @@
                 <h2 class="section-title">算法实现</h2>
             </div>
             
+            {{#if algorithm_flowchart}}
             <h3>核心算法流程</h3>
             <div class="diagram-container">
                 <div class="diagram-title">图2: 算法流程图</div>
@@ -708,12 +711,16 @@
 {{algorithm_flowchart}}
                 </div>
             </div>
+            {{/if}}
             
+            {{#if pseudocode}}
             <h3>伪代码</h3>
             <div class="pseudo-code">
 {{pseudocode}}
             </div>
+            {{/if}}
             
+            {{#if formula}}
             <h3>核心公式</h3>
             <div class="formula">
                 <div class="formula-title">目标函数</div>
@@ -722,7 +729,9 @@
                     <strong>变量说明：</strong>{{formula_vars}}
                 </div>
             </div>
+            {{/if}}
             
+            {{#if code_example}}
             <h3>代码示例</h3>
             <div class="code-block">
                 <div class="code-header">
@@ -731,6 +740,7 @@
                 </div>
                 <pre><code>{{code_example}}</code></pre>
             </div>
+            {{/if}}
         </div>
         
         <!-- 实验分析 -->
