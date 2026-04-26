@@ -69,11 +69,33 @@ class ReportGenerator:
         if len(daily_pick) != 5:
             print(f"⚠️ 每日精选数量错误: {len(daily_pick)}项，应为5项")
         
-        # 2. GitHub Trending必须是5项
+        # 2. GitHub Trending必须是5项，且排除近期已发布的
         github_projects = data.get('github_projects', data.get('github_trending', []))
+        
+        # 加载历史记录，排除近期已发布的项目
+        history_file = self.base_dir / "history" / "published.json"
+        published_github = set()
+        if history_file.exists():
+            try:
+                history = json.loads(history_file.read_text(encoding='utf-8'))
+                published_github = set(history.get('github_projects', {}).keys())
+                print(f"📚 已发布GitHub项目: {len(published_github)} 个")
+            except:
+                pass
+        
+        # 过滤已发布的项目
+        original_count = len(github_projects)
+        github_projects = [p for p in github_projects if str(p.get('id', p.get('name', ''))) not in published_github]
+        if len(github_projects) < original_count:
+            print(f"✅ 过滤已发布GitHub项目: {original_count} -> {len(github_projects)}")
+        
         if len(github_projects) > 5:
             github_projects = github_projects[:5]
             print(f"⚠️ GitHub项目截取为5项")
+        
+        # 记录今天发布的项目
+        if github_projects:
+            self._update_github_history(github_projects, history_file)
         
         # 3. arXiv论文必须是5项
         arxiv_papers = data.get('arxiv_papers', [])
@@ -2220,6 +2242,33 @@ class ReportGenerator:
         print(f"{'='*50}\n")
         
         return str(main_path)
+    
+    def _update_github_history(self, projects: list, history_file: Path):
+        """更新 GitHub 项目发布历史"""
+        history_file.parent.mkdir(exist_ok=True)
+        
+        try:
+            if history_file.exists():
+                history = json.loads(history_file.read_text(encoding='utf-8'))
+            else:
+                history = {'daily_pick': {}, 'hot_articles': {}, 'arxiv_papers': {}, 'github_projects': {}, 'conference_papers': {}}
+            
+            today = self.today
+            for p in projects:
+                project_id = str(p.get('id', p.get('name', '')))
+                history['github_projects'][project_id] = today
+            
+            # 只保留最近30天的记录
+            from datetime import datetime, timedelta
+            cutoff = (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
+            for key in list(history['github_projects'].keys()):
+                if history['github_projects'][key] < cutoff:
+                    del history['github_projects'][key]
+            
+            history_file.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding='utf-8')
+            print(f"📝 已记录 {len(projects)} 个GitHub项目到历史")
+        except Exception as e:
+            print(f"⚠️ 更新历史记录失败: {e}")
 
 
 if __name__ == "__main__":
