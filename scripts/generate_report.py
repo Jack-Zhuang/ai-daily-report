@@ -99,9 +99,21 @@ class ReportGenerator:
         
         # 3. arXiv论文必须是5项
         arxiv_papers = data.get('arxiv_papers', [])
+        
+        # 检查每篇论文是否有解读文件
+        insights_dir = self.base_dir / "docs" / "insights"
+        for paper in arxiv_papers:
+            paper_id = str(paper.get('id', paper.get('arxiv_id', ''))).replace('.', '_')
+            insight_file = insights_dir / f"{date}_{paper_id}.html"
+            paper['has_insight'] = insight_file.exists()
+        
         if len(arxiv_papers) > 5:
             arxiv_papers = arxiv_papers[:5]
             print(f"⚠️ arXiv论文截取为5项")
+        
+        # 统计有解读的论文数量
+        insight_count = sum(1 for p in arxiv_papers if p.get('has_insight'))
+        print(f"📖 arXiv论文解读: {insight_count}/{len(arxiv_papers)} 篇有解读")
         
         # 4. 热门文章去重（移除与每日精选重复的）
         pick_titles = set()
