@@ -1346,7 +1346,7 @@ class ReportGenerator:
                 }}
                 
                 // 添加"查看全部论文"按钮 - 跳转到会议页面
-                const confPageUrl = 'docs/conferences/' + confName.replace(/ /g, '_') + '.html';
+                const confPageUrl = 'conferences/' + confName.replace(/ /g, '_') + '.html';
                 html += `
                     <a href="${{confPageUrl}}" class="conf-view-all">
                         <span>查看全部论文</span>
