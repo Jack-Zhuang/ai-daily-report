@@ -317,8 +317,8 @@ class ReportGenerator:
             box-shadow: 0 2px 12px rgba(49,44,81,0.06);
         }}
         .module-nav-scroll {{
-            display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            padding-bottom: 4px;
+            display: flex; gap: 10px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+            padding-bottom: 6px;
         }}
         .module-nav-scroll::-webkit-scrollbar {{ display: none; }}
         .module-nav-item {{
@@ -447,11 +447,11 @@ class ReportGenerator:
         .stat-label {{ font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }}
         
         /* Main */
-        .main {{ position: relative; z-index: 1; padding: 0 12px 60px; padding-bottom: calc(60px + var(--safe-area-bottom)); }}
+        .main {{ position: relative; z-index: 1; padding: 16px 16px 80px; padding-bottom: calc(80px + var(--safe-area-bottom)); }}
         
         /* Section */
-        .section {{ margin-bottom: 32px; }}
-        .section-header {{ margin-bottom: 16px; scroll-margin-top: 112px; }}
+        .section {{ margin-bottom: 28px; }}
+        .section-header {{ margin-bottom: 14px; scroll-margin-top: 112px; }}
         .section-title {{ font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }}
         .section-title i {{ font-size: 16px; color: #667eea; }}
         .section-subtitle {{ font-size: 12px; color: var(--color-text-muted); margin-top: 4px; }}
@@ -516,8 +516,8 @@ class ReportGenerator:
             display: flex; align-items: center; gap: 4px;
         }}
         
-        .card-body {{ padding: 16px; }}
-        .card-header {{ display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }}
+        .card-body {{ padding: 14px 16px; }}
+        .card-header {{ display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }}
         .card-rank {{
             width: 32px; height: 32px; border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
