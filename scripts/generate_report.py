@@ -1234,7 +1234,6 @@ class ReportGenerator:
                 
                 // 论文点击直接跳转解读页
                 footerHtml = `<a href="${{insightUrl}}" class="detail-link"><i class="fas fa-book-reader"></i> 查看论文解读</a>`;
-                }}
             }} else if (pickType === 'github' || item.type === 'github') {{
                 footerHtml = `<a href="${{itemLink}}" target="_blank" class="detail-link"><i class="fas fa-external-link-alt"></i> 访问 GitHub</a>`;
             }} else {{
