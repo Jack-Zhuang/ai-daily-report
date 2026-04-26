@@ -281,8 +281,28 @@ if (pickType === 'paper') {
 
 1. ✅ 路径修复：`docs/insights/` → `insights/`
 2. ✅ 路径修复：`docs/conferences/` → `conferences/`
-3. ✅ 按钮文案逻辑：根据 `source` 判断是否是 arXiv
-4. ✅ arXiv 数据注入：`arxivPapers` 不能为空数组
+3. ✅ 路径修复：`conferences/xxx/index.html` → `conferences/xxx.html`
+4. ✅ 按钮文案逻辑：根据 `source` 判断是否是 arXiv
+5. ✅ arXiv 数据注入：`arxivPapers` 不能为空数组
+6. ✅ pickType 优先使用 item.type：`item.pick_type || item.type || 'paper'`
+7. ✅ JavaScript 初始化时机：使用 `document.readyState` 判断
+8. ✅ 热门文章点击：使用 `item.id` 而不是索引
+9. ✅ 论文ID替换：`replace(/[^\w\-]/g, '_')` 处理点号等特殊字符
+10. ✅ 顶会论文 has_insight 判断：决定跳转解读页还是原文
+
+### 11.4 已验证存在的优化（无需修复）
+
+以下优化已确认存在于当前代码中：
+
+| 优化项 | 状态 | 说明 |
+|--------|------|------|
+| JavaScript 初始化时机 | ✅ | `document.readyState` + `DOMContentLoaded` |
+| arXiv 论文点击事件 | ✅ | 使用 `addEventListener` DOM 方式绑定 |
+| 热门文章点击索引 | ✅ | 使用 `item.id` 查找而非数组索引 |
+| 论文ID点号替换 | ✅ | `replace(/[^\w\-]/g, '_')` |
+| 顶会论文 has_insight | ✅ | 根据 `has_insight` 决定跳转目标 |
+| 封面图支持 | ✅ | `cover_image` 字段和 CSS 背景 |
+| DOM 加载完成判断 | ✅ | `if (document.readyState === 'loading')` |
 
 ---
 
