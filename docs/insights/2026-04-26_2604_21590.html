@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models - 论文解读报告</title>
+    <title>AgenticQwen: Training Small Agentic Language Models with Dual Data Flywheels for Industrial-Scale Tool Use - 论文解读报告</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
@@ -560,7 +560,7 @@
             </a>
             <span class="nav-title">论文解读报告</span>
         </div>
-        <a href="http://arxiv.org/abs/2604.21896v1" target="_blank" class="nav-btn">
+        <a href="http://arxiv.org/abs/2604.21590v1" target="_blank" class="nav-btn">
             <i class="fas fa-file-pdf"></i> 原文 PDF
         </a>
     </nav>
@@ -569,10 +569,10 @@
     <div class="hero">
         <div class="hero-badge">
             <i class="fas fa-file-alt"></i>
-            <span>arXiv:2604.21896</span>
+            <span>arXiv:2604.21590</span>
         </div>
-        <h1 class="hero-title">Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models</h1>
-        <p class="hero-subtitle">本文提出了Nemobot Games，一个利用大语言模型(LLM)扩展Claude Shannon游戏机器分类法的AI游戏编程新范式。Nemobot是一个交互式智能体工程环境，使用户能够创建、定制和部...</p>
+        <h1 class="hero-title">AgenticQwen: Training Small Agentic Language Models with Dual Data Flywheels for Industrial-Scale Tool Use</h1>
+        <p class="hero-subtitle">Modern industrial applications increasingly demand language models that act as agents, capable of multi-step reasoning and tool use in real-world sett</p>
         <div class="hero-meta">
             <div class="hero-meta-item">
                 <i class="fas fa-users"></i>
@@ -615,11 +615,11 @@
                 <h2 class="section-title">摘要速览</h2>
             </div>
             <div class="content">
-                <p>本文提出了Nemobot Games，一个利用大语言模型(LLM)扩展Claude Shannon游戏机器分类法的AI游戏编程新范式。Nemobot是一个交互式智能体工程环境，使用户能够创建、定制和部署LLM驱动的游戏代理。系统针对四类游戏采用不同策略：字典类游戏将状态-动作映射压缩为高效泛化模型；数学可解游戏通过符号推理计算最优策略并生成可解释说明；启发式游戏结合经典minimax算法与众包数据进行策略综合；学习型游戏利用人类反馈强化学习和自我批判通过试错迭代优化策略。Nemobot通过可编程环境支持工具增强生成和策略游戏代理的微调，使用户能够从简单的字典类游戏逐步进阶到高级强化学习代理。该框架代表了向自编程AI目标迈出的重要一步，通过整合众包学习与人类创造力实现AI代理的自我逻辑优化。</p>
+                Modern industrial applications increasingly demand language models that act as agents, capable of multi-step reasoning and tool use in real-world settings. These tasks are typically performed under strict cost and latency constraints, making small agentic models highly desirable. In this paper, we introduce the AgenticQwen family of models, trained via multi-round reinforcement learning (RL) on synthetic data and a limited amount of open-source data. Our training framework combines reasoning RL 
             </div>
             <div class="highlight-box">
                 <ul>
-                    <li>将Shannon的游戏机器四类分类法（字典式、公式式、原则式、学习式）与现代LLM能力深度融合</li><li>Nemobot作为可编程智能体工程环境，支持创建、训练和测试LLM驱动的战略游戏代理</li><li>提出协同提示工程框架，通过众包方式聚合人类智慧优化游戏策略和LLM提示词</li><li>构建包含编码工作台、聊天 playgrounds 和分析门户的完整游戏开发工具链</li>
+                    <li>核心创新点待补充</li>
                 </ul>
             </div>
         </div>
@@ -631,10 +631,10 @@
                 <h2 class="section-title">研究背景与动机</h2>
             </div>
             <div class="content">
-                <p>Claude Shannon在其开创性工作中提出了一个发人深省的问题：能否让计算机程序中99%的指令由计算机自身编写？这一问题至今仍是AI研究的核心挑战。随着大语言模型的兴起，AI现在能够生成大量代码，驱动自进化AI系统和交互式应用如游戏。然而，直接提示LLM玩游戏存在非确定性、不可复现且不透明的局限性。本文认为需要一种结构化的编程范式来在可重现、可教育且可扩展的框架中利用LLM能力。Nemobot应运而生，它将LLM功能视为模块化、可检查的组件，类似于子程序，让用户可以设计、测试、改进和共享，而非简单包装LLM服务调用。</p>
+                研究背景待补充
             </div>
             <div class="info-box">
-                <p><strong>核心问题：</strong>详见论文原文</p>
+                <p><strong>核心问题：</strong>核心问题待补充</p>
             </div>
         </div>
         
@@ -645,7 +645,7 @@
                 <h2 class="section-title">方法详解</h2>
             </div>
             <div class="content">
-                <p>Nemobot采用模块化架构设计，包含三大核心组件：编码工作台(Coding Pad)用于编程游戏逻辑和AI推理启发式算法，支持NodeJS模板定义初始状态S0、转移函数f和终止状态Se；聊天 playgrounds(Chat Playground)实现实时交互测试，游戏数据可即时执行并部署为聊天机器人游戏；分析门户(Analysis Portal)提供性能可视化和策略改进洞察。系统集成LLM函数能力，允许用户通过自然语言描述指定高层逻辑，LLM自动生成相应代码。训练流程采用迭代式数据驱动学习：定义启发式H0→生成训练数据→与玩家交互→收集反馈Rk→更新启发式Hk+1。该框架支持从简单字典类游戏到复杂强化学习代理的渐进式学习路径。</p>
+                方法概述待补充
             </div>
             
             <h3>核心创新点</h3>
@@ -659,21 +659,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-    <td>LLM增强的Shannon分类法</td>
-    <td>将传统四类游戏机器分类与LLM能力对应映射：字典类用压缩映射表、公式类用符号推理、启发式类融合minimax与众包、学习类采用RLHF</td>
-    <td>Shannon的分类法产生于确定性算法时代，难以直接应用于现代非确定性LLM系统</td>
-</tr>
-<tr>
-    <td>神经化记忆化(Neuralized Memoization)</td>
-    <td>超越传统KV缓存，实现语义记忆化(按嵌入相似度缓存)、过程记忆化(缓存成功策略序列)、分布式记忆化(跨智能体共享知识)</td>
-    <td>传统记忆化无法处理LLM中语义等价的查询变体和复杂的多步推理过程</td>
-</tr>
-<tr>
-    <td>协同提示工程与众包学习</td>
-    <td>通过众包聚合全球玩家策略智慧，结合可编程提示模板和LLM函数生成优化策略，支持RLHF和自我批判机制</td>
-    <td>单一专家设计的提示词难以覆盖多样化游戏场景和玩家风格</td>
-</tr>
+                        <li>创新点待补充</li>
                     </tbody>
                 </table>
             </div>
@@ -689,23 +675,23 @@
             <div class="diagram-container">
                 <div class="diagram-title">图1: 整体架构流程图</div>
                 <div class="mermaid">
-graph TB
-    Input["📥 输入"] --> Embed["嵌入层"]
-    Embed --> Attn["注意力层"]
-    Attn --> FFN["前馈网络"]
-    FFN --> Output["📤 输出"]
-    
-    style Input fill:#e3f2fd,stroke:#1565c0
-    style Output fill:#e8f5e9,stroke:#2e7d32
+
                 </div>
             </div>
             
             <div class="content">
                 <h3>模块说明</h3>
-                <p><strong>编码工作台(Coding Pad)：</strong>用于编程游戏逻辑和AI启发式算法的开发环境，提供NodeJS模板支持自定义状态转移函数f(Si+1|Si,ai)，支持LLM函数集成和自然语言驱动代码生成</p><p><strong>聊天 playgrounds(Chat Playground)：</strong>实时交互测试平台，将编写的程序同步执行为聊天机器人游戏，支持人机对战和策略模拟，提供即时反馈和调试能力</p><p><strong>分析门户(Analysis Portal)：</strong>游戏性能可视化和策略评估模块，通过数据驱动方式识别AI弱点，支持启发式算法迭代优化和策略效果对比分析</p><p><strong>LLM函数模块(LLM Functions)：</strong>将LLM能力封装为可编程组件，支持链式思维推理、语义记忆化、过程记忆化和分布式记忆化，实现动态上下文感知的策略生成和自适应决策</p>
+                模块描述待补充
             </div>
             
-            
+            {{#if has_figure}}
+            <div class="figure">
+                <img src="" alt="架构图">
+                <div class="figure-caption">
+                    <span class="figure-number">Figure 1:</span> 
+                </div>
+            </div>
+            {{/if}}
         </div>
         
         <!-- 算法实现 -->
@@ -719,21 +705,13 @@ graph TB
             <div class="diagram-container">
                 <div class="diagram-title">图2: 算法流程图</div>
                 <div class="mermaid">
-flowchart TD
-    A[输入数据] --> B[预处理]
-    B --> C[特征提取]
-    C --> D[模型计算]
-    D --> E[后处理]
-    E --> F[输出结果]
-    
-    style A fill:#e3f2fd
-    style F fill:#e8f5e9
+
                 </div>
             </div>
             
             <h3>伪代码</h3>
             <div class="pseudo-code">
-<span class="comment">// 详见论文原文</span>
+
             </div>
             
             <h3>核心公式</h3>
@@ -751,7 +729,7 @@ flowchart TD
                     <span class="code-lang">Python</span>
                     <button class="code-copy" onclick="copyCode(this)">复制</button>
                 </div>
-                <pre><code># 详见论文原文</code></pre>
+                <pre><code></code></pre>
             </div>
         </div>
         
@@ -763,135 +741,18 @@ flowchart TD
             </div>
             
             <!-- 论文图表（放在实验部分开头） -->
-            
-<div class="figures-inline">
-<h3>📊 论文图表</h3>
-<p class="figures-note">以下图表来自论文原文，展示了方法架构和实验结果：</p>
-<div class="figures-scroll">
-
-            <div class="figure-card">
-                <img src="figures/2604_21896/fig_1.png" alt="Figure 1" loading="lazy" onclick="this.classList.toggle('zoom')">
-                <p class="figure-caption">图1: 方法架构或流程示意</p>
-            </div>
-
-            <div class="figure-card">
-                <img src="figures/2604_21896/fig_2.png" alt="Figure 2" loading="lazy" onclick="this.classList.toggle('zoom')">
-                <p class="figure-caption">图2: 方法架构或流程示意</p>
-            </div>
-
-            <div class="figure-card">
-                <img src="figures/2604_21896/fig_3.png" alt="Figure 3" loading="lazy" onclick="this.classList.toggle('zoom')">
-                <p class="figure-caption">图3: 实验结果对比</p>
-            </div>
-
-            <div class="figure-card">
-                <img src="figures/2604_21896/fig_4.png" alt="Figure 4" loading="lazy" onclick="this.classList.toggle('zoom')">
-                <p class="figure-caption">图4: 实验结果对比</p>
-            </div>
-
-            <div class="figure-card">
-                <img src="figures/2604_21896/fig_5.png" alt="Figure 5" loading="lazy" onclick="this.classList.toggle('zoom')">
-                <p class="figure-caption">图5: 实验结果对比</p>
-            </div>
-
-            <div class="figure-card">
-                <img src="figures/2604_21896/fig_6.png" alt="Figure 6" loading="lazy" onclick="this.classList.toggle('zoom')">
-                <p class="figure-caption">图6: 消融实验或案例分析</p>
-            </div>
-
-            <div class="figure-card">
-                <img src="figures/2604_21896/fig_7.png" alt="Figure 7" loading="lazy" onclick="this.classList.toggle('zoom')">
-                <p class="figure-caption">图7: 消融实验或案例分析</p>
-            </div>
-
-            <div class="figure-card">
-                <img src="figures/2604_21896/fig_8.png" alt="Figure 8" loading="lazy" onclick="this.classList.toggle('zoom')">
-                <p class="figure-caption">图8: 消融实验或案例分析</p>
-            </div>
-</div>
-</div>
-
-<style>
-.figures-inline {
-    margin: 1.5rem 0;
-    padding: 1rem;
-    background: #f8fafc;
-    border-radius: 8px;
-}
-.figures-inline h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1rem;
-    color: #334155;
-}
-.figures-note {
-    font-size: 0.85rem;
-    color: #64748b;
-    margin-bottom: 1rem;
-}
-.figures-scroll {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-    scroll-snap-type: x mandatory;
-}
-.figure-card {
-    flex: 0 0 280px;
-    background: white;
-    border-radius: 8px;
-    padding: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    scroll-snap-align: start;
-    cursor: zoom-in;
-}
-.figure-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-    transition: transform 0.2s;
-}
-.figure-card img.zoom {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(2);
-    z-index: 1000;
-    cursor: zoom-out;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-}
-.figure-caption {
-    margin: 0.5rem 0 0;
-    font-size: 0.8rem;
-    color: #64748b;
-    text-align: center;
-}
-</style>
+            {{figures}}
             
             <div class="content">
                 <h3>实验设置</h3>
-                <p><strong>数据集：</strong>Tic-Tac-Toe游戏状态数据集, Nim游戏数据集, Mancala游戏数据, The Game of Euclid游戏记录</p>
-                <p><strong>评价指标：</strong>策略胜率, 决策可解释性评分, 计算效率(响应时间), 用户学习成效指标</p>
-                <p><strong>基线方法：</strong>详见论文原文</p>
+                <p><strong>数据集：</strong>数据集待补充</p>
+                <p><strong>评价指标：</strong>评估指标待补充</p>
+                <p><strong>基线方法：</strong>基线方法待补充</p>
             </div>
             
             <h3>主要结果</h3>
             <div class="stats-grid">
-                <div class="stat-card">
-    <div class="stat-value">相比传统字典查找，存储效率提升</div>
-    <div class="stat-label">性能提升</div>
-</div>
-<div class="stat-card">
-    <div class="stat-value">数学可解游戏推理时间缩短</div>
-    <div class="stat-label">性能提升</div>
-</div>
-<div class="stat-card">
-    <div class="stat-value">启发式游戏策略质量改善</div>
-    <div class="stat-label">性能提升</div>
-</div>
-<div class="stat-card">
-    <div class="stat-value">学习曲线加快和用户体验提升</div>
-    <div class="stat-label">性能提升</div>
-</div>
+                
             </div>
             
             <h3>性能对比</h3>
@@ -900,13 +761,11 @@ flowchart TD
                     <thead>
                         <tr>
                             <th>方法</th>
-                            <th>指标</th><th>数值</th>
+                            {{comparison_headers}}
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>本文方法</td><td>策略胜率</td></tr>
-<tr><td>本文方法</td><td>决策可解释性评分</td></tr>
-<tr><td>本文方法</td><td>计算效率(响应时间)</td></tr>
+                        {{comparison_rows}}
                     </tbody>
                 </table>
             </div>
@@ -922,7 +781,7 @@ flowchart TD
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>详见论文</td><td>-</td><td>-</td></tr>
+                        {{ablation_results}}
                     </tbody>
                 </table>
             </div>
@@ -938,33 +797,17 @@ flowchart TD
             <div class="content">
                 <h3>主要发现</h3>
                 <div class="steps">
-                    <div class="step">
-    <div class="step-title">发现 1</div>
-    <div class="step-desc">In conclusion, this paper introduces a new approach to
-strategic AI game programming, inspired by Sh</div>
-</div>
-<div class="step">
-    <div class="step-title">发现 2</div>
-    <div class="step-desc">Central to this is
-Nemobot, an interactive platform that allows users to create
-and deploy game agen</div>
-</div>
-<div class="step">
-    <div class="step-title">发现 3</div>
-    <div class="step-desc">By integrating LLMs, Nemobot goes
-beyond static instructions, enabling AI agents to dynamically
-adap</div>
-</div>
+                    {{findings}}
                 </div>
                 
                 <h3>局限性</h3>
                 <ul>
-                    <li>详见论文原文</li>
+                    局限性待补充
                 </ul>
                 
                 <h3>未来方向</h3>
                 <ul>
-                    <li>详见论文原文</li>
+                    未来工作待补充
                 </ul>
             </div>
         </div>
@@ -979,13 +822,13 @@ adap</div>
             <div class="content">
                 <h3>工业应用价值</h3>
                 <ul>
-                    <li>相关领域应用</li>
+                    {{applications}}
                 </ul>
                 
                 <h3>实现建议</h3>
                 <div class="highlight-box">
                     <ul>
-                        <li>参考论文原文实现</li>
+                        {{implementation_tips}}
                     </ul>
                 </div>
             </div>
@@ -998,22 +841,7 @@ adap</div>
                 <h2 class="section-title">综合评价</h2>
             </div>
             <div class="rating-grid">
-                <div class="rating-item">
-    <span class="rating-label">创新性</span>
-    <span class="rating-stars">★★★★☆</span>
-</div>
-<div class="rating-item">
-    <span class="rating-label">工业价值</span>
-    <span class="rating-stars">★★★★☆</span>
-</div>
-<div class="rating-item">
-    <span class="rating-label">实验充分性</span>
-    <span class="rating-stars">★★★★☆</span>
-</div>
-<div class="rating-item">
-    <span class="rating-label">可复现性</span>
-    <span class="rating-stars">★★★☆☆</span>
-</div>
+                {{ratings}}
             </div>
         </div>
         
@@ -1023,25 +851,18 @@ adap</div>
                 <div class="section-icon blue">❓</div>
                 <h2 class="section-title">常见问题</h2>
             </div>
-            <div class="faq-item">
-    <div class="faq-q">该方法的主要贡献是什么？</div>
-    <div class="faq-a">请参考论文原文的摘要和结论部分。</div>
-</div>
-<div class="faq-item">
-    <div class="faq-q">如何复现该方法？</div>
-    <div class="faq-a">请参考论文的方法部分和实验设置，或查看作者提供的代码仓库。</div>
-</div>
+            {{faq}}
         </div>
         
         <!-- 标签 -->
         <div class="tags">
-            <span class="tag">大语言模型</span><span class="tag">AI游戏编程</span><span class="tag">自编程AI</span><span class="tag">协同提示工程</span><span class="tag">强化学习</span><span class="tag">战略游戏AI</span>
+            {{tags}}
         </div>
     </main>
     
     <!-- 底部操作栏 -->
     <div class="bottom-bar">
-        <a href="http://arxiv.org/abs/2604.21896v1" target="_blank" class="btn btn-primary">
+        <a href="http://arxiv.org/abs/2604.21590v1" target="_blank" class="btn btn-primary">
             <i class="fas fa-file-pdf"></i> 阅读原论文
         </a>
         <button class="btn btn-secondary" onclick="sharePaper()">
@@ -1053,8 +874,8 @@ adap</div>
         function sharePaper() {
             if (navigator.share) {
                 navigator.share({
-                    title: 'Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models',
-                    text: '本文提出了Nemobot Games，一个利用大语言模型(LLM)扩展Claude Shannon游戏机器分类法的AI游戏编程新范式。Nemobot是一个交互式智能体工程环境，使用户能够创建、定制和部...',
+                    title: 'AgenticQwen: Training Small Agentic Language Models with Dual Data Flywheels for Industrial-Scale Tool Use',
+                    text: 'Modern industrial applications increasingly demand language models that act as agents, capable of multi-step reasoning and tool use in real-world sett',
                     url: window.location.href
                 });
             } else {
