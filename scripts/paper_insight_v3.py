@@ -133,7 +133,7 @@ class PaperInsightV3:
             return ""
     
     def _extract_figures(self, pdf_path: Path, arxiv_id: str) -> List[Dict]:
-        """提取图表 - 使用嵌入的高分辨率图片"""
+        """提取图表 - 使用混合方案"""
         if not pdf_path or not pdf_path.exists():
             return []
         
@@ -148,9 +148,9 @@ class PaperInsightV3:
             if str(scripts_dir) not in sys.path:
                 sys.path.insert(0, str(scripts_dir))
             
-            from figure_extractor_v2 import extract_figures as extract_figures_v2
+            from figure_extractor_v3 import extract_figures as extract_figures_v3
             
-            figures = extract_figures_v2(str(pdf_path), str(figures_dir), arxiv_id)
+            figures = extract_figures_v3(str(pdf_path), str(figures_dir), arxiv_id)
             
             if figures:
                 print(f"    提取了 {len(figures)} 张图表")
