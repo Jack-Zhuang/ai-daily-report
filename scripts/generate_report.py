@@ -1184,7 +1184,7 @@ class ReportGenerator:
                     </div>
                     <div class="detail-section">
                         <div class="detail-label">描述</div>
-                        <div class="detail-value">${{item.description || '暂无描述'}}</div>
+                        <div class="detail-value">${{item.cn_description || item.description || '暂无描述'}}</div>
                     </div>
                 `;
             }} else {{
