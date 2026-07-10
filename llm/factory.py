@@ -54,10 +54,20 @@ class DeepSeekProvider(OpenAIProvider):
         super().__init__(config)
 
 
+class MiniMaxProvider(OpenAIProvider):
+    def __init__(self, config: Dict[str, Any]):
+        config.setdefault('base_url', 'https://api.minimaxi.com/v1')
+        config.setdefault('model', 'MiniMax-M2.7')
+        if not config.get('api_key'):
+            config['api_key'] = os.environ.get('MINIMAX_API_KEY', os.environ.get('LLM_API_KEY', ''))
+        super().__init__(config)
+
+
 class ModelFactory:
     PROVIDERS = {
         'openai': OpenAIProvider,
         'deepseek': DeepSeekProvider,
+        'minimax': MiniMaxProvider,
     }
 
     @classmethod

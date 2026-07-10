@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
 """
-Mock LLM Summarizer — 离线占位摘要生成
-无需 API key，用预设模板填充中文摘要
+LLM Summary Generator — use MiniMax (or other providers) for real Chinese summaries.
+Falls back to mock placeholder summaries when no API key is available.
 """
 
 import json
+import os
 import random
 from pathlib import Path
+from typing import Optional
 
 random.seed(42)
 
-# ── 预设摘要模板 ──────────────────────────────────────────────
+# ── Import LLM factory ───────────────────────────────────────
+from llm.factory import ModelFactory
+
+# ── Mock templates (fallback) ────────────────────────────────
 
 PAPER_TEMPLATES = [
     "本文提出了一种创新的{field}方法，结合了注意力机制和对比学习，在{dataset}上取得了state-of-the-art结果。该方法解决了{problem}这一长期难题，具有重要的理论和实践价值。",
@@ -87,49 +92,151 @@ def _gen_mock_github_summary(proj):
                            tech=tech, stars=stars, task=_pick(["训练", "推理", "部署"]))
     return text[:200]
 
-# ── 公开接口 ──────────────────────────────────────────────────
+
+# ── LLM provider singleton ──────────────────────────────────
+
+_llm_provider = None
+
+def _get_llm_provider() -> Optional:
+    """Get a configured LLM provider (MiniMax preferred)."""
+    global _llm_provider
+    if _llm_provider is not None:
+        return _llm_provider
+
+    api_key = os.environ.get('MINIMAX_API_KEY') or os.environ.get('LLM_API_KEY') or ''
+    if not api_key:
+        print("  \u2139\ufe0f  No LLM API key found, using mock summaries")
+        return None
+
+    try:
+        config = {
+            'provider': os.environ.get('LLM_PROVIDER', 'minimax'),
+            'model': os.environ.get('LLM_MODEL', 'MiniMax-M2.7'),
+            'api_key': api_key,
+            'base_url': os.environ.get('LLM_BASE_URL', 'https://api.minimaxi.com/v1'),
+        }
+        _llm_provider = ModelFactory.create(config)
+        print(f"  \U0001f916 LLM provider: {config['provider']}/{config['model']}")
+        return _llm_provider
+    except Exception as e:
+        print(f"  \u26a0\ufe0f  LLM provider init failed: {e}")
+        return None
+
+
+def _llm_summarize(text: str, title: str = "", max_len: int = 200) -> str:
+    """Use LLM to generate a Chinese summary."""
+    provider = _get_llm_provider()
+    if provider is None:
+        return ""
+
+    prompt = (
+        f"\u8bf7\u7528\u4e2d\u6587\u4e3a\u4ee5\u4e0b\u5185\u5bb9\u5199\u4e00\u6bb5{max_len}\u5b57\u4ee5\u5185\u7684\u6458\u8981\uff0c\u8981\u6c42\u7b80\u6d01\u51c6\u786e\u3001\u4fdd\u7559\u5173\u952e\u4fe1\u606f\u3002\n\n"
+        f"\u6807\u9898\uff1a{title}\n\u5185\u5bb9\uff1a{text[:3000]}"
+    )
+    try:
+        result = provider.chat([
+            {"role": "system", "content": f"\u4f60\u662f\u4e00\u4e2aAI\u79d1\u6280\u8d44\u8baf\u6458\u8981\u52a9\u624b\u3002\u8bf7\u7528\u4e2d\u6587\u5c06\u4ee5\u4e0b\u5185\u5bb9\u6982\u62ec\u4e3a{max_len}\u5b57\u4ee5\u5185\u7684\u6458\u8981\uff0c\u4fdd\u7559\u6838\u5fc3\u6280\u672f\u70b9\u548c\u4ef7\u503c\u3002\u4e0d\u8981\u7528<think>\u6807\u7b7e\u3002"},
+            {"role": "user", "content": prompt}
+        ], max_tokens=max_len, temperature=0.3)
+        if result and len(result) > 20:
+            cleaned = result.replace("<think>", "").replace("</think>", "").strip()
+            return cleaned[:max_len]
+    except Exception as e:
+        print(f"    \u26a0\ufe0f LLM summarize failed: {e}")
+    return ""
+
+
+# ── Public API ──────────────────────────────────────────────
 
 def needs_llm_summary(cn_summary: str, original_summary: str) -> bool:
     if cn_summary and len(cn_summary) > 30:
         return False
     return True
 
+
 def generate_all_summaries(data_file: Path, force: bool = False):
-    """为 data_file 中的所有条目生成占位摘要"""
+    """Generate Chinese summaries for all items in data_file.
+    Uses LLM if available, falls back to mock placeholders.
+    """
     with open(data_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
     changed = False
 
-    for paper in data.get('arxiv_papers', []):
-        if force or needs_llm_summary(paper.get('cn_summary', ''), paper.get('summary', '')):
-            paper['cn_summary'] = _gen_mock_paper_summary(paper)
-            changed = True
+    papers = data.get('arxiv_papers', [])
+    articles = data.get('articles', data.get('hot_articles', []))
+    github = data.get('github_projects', data.get('github_trending', []))
 
-    for article in data.get('articles', data.get('hot_articles', [])):
-        if force or needs_llm_summary(article.get('cn_summary', ''), article.get('summary', '')):
-            article['cn_summary'] = _gen_mock_article_summary(article)
-            changed = True
+    total = len(papers) + len(articles) + len(github)
+    if total == 0:
+        print(f"  \u2139\ufe0f  No items to summarize")
+        return
 
-    for proj in data.get('github_projects', data.get('github_trending', [])):
-        if force or needs_llm_summary(proj.get('cn_description', ''), proj.get('description', '')):
-            proj['cn_description'] = _gen_mock_github_summary(proj)
-            changed = True
+    provider = _get_llm_provider()
+    if provider:
+        print(f"  \U0001f916  Generating summaries with LLM ({total} items)...")
+    else:
+        print(f"  \U0001f3b2  Generating mock placeholder summaries ({total} items)...")
 
-    # 同步 cn_summary 到 daily_pick
+    # Papers
+    for paper in papers:
+        if not (force or needs_llm_summary(paper.get('cn_summary', ''), paper.get('summary', ''))):
+            continue
+        text = paper.get('summary', '')
+        title = paper.get('title', '')
+        if provider and text:
+            result = _llm_summarize(str(text), str(title))
+            if result:
+                paper['cn_summary'] = result
+                changed = True
+                continue
+        paper['cn_summary'] = _gen_mock_paper_summary(paper)
+        changed = True
+
+    # Articles
+    for article in articles:
+        if not (force or needs_llm_summary(article.get('cn_summary', ''), article.get('summary', ''))):
+            continue
+        text = article.get('summary', article.get('content', ''))
+        title = article.get('title', article.get('cn_title', ''))
+        if provider and text:
+            result = _llm_summarize(str(text), str(title))
+            if result:
+                article['cn_summary'] = result
+                changed = True
+                continue
+        article['cn_summary'] = _gen_mock_article_summary(article)
+        changed = True
+
+    # GitHub
+    for proj in github:
+        if not (force or needs_llm_summary(proj.get('cn_description', ''), proj.get('description', ''))):
+            continue
+        text = proj.get('description', '')
+        title = proj.get('name', '')
+        if provider and text:
+            result = _llm_summarize(str(text), str(title))
+            if result:
+                proj['cn_description'] = result
+                changed = True
+                continue
+        proj['cn_description'] = _gen_mock_github_summary(proj)
+        changed = True
+
+    # Sync to daily_pick
     sync_daily_pick_summaries(data)
 
     if changed:
         with open(data_file, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        print(f"  ✅ 摘要已更新")
+        print(f"  \u2705  \u6458\u8981\u5df2\u66f4\u65b0\u5e76\u4fdd\u5b58")
     else:
-        print(f"  ℹ️  所有条目已有摘要，无需更新")
+        print(f"  \u2139\ufe0f  \u6240\u6709\u6761\u76ee\u5df2\u6709\u6458\u8981\uff0c\u65e0\u9700\u66f4\u65b0")
+
 
 def sync_daily_pick_summaries(data: dict):
-    """把完整条目的摘要同步到 daily_pick 中的对应项"""
+    """Sync summaries from full items into daily_pick entries."""
     pick_map = {}
-    # 构建索引
     for paper in data.get('arxiv_papers', []):
         pid = paper.get('arxiv_id', paper.get('id', ''))
         pick_map[pid] = paper.get('cn_summary', '')
@@ -141,7 +248,6 @@ def sync_daily_pick_summaries(data: dict):
         pick_map[pid] = proj.get('cn_description', '')
 
     for item in data.get('daily_pick', []):
-        # 尝试所有可能的键
         keys = [
             item.get('arxiv_id', ''),
             item.get('id', ''),

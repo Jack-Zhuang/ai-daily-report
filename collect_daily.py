@@ -16,7 +16,7 @@ import xml.etree.ElementTree as ET
 class ArxivCollector:
     def __init__(self, base_dir: str = None):
         if base_dir is None:
-            base_dir = Path(__file__).parent.parent
+            base_dir = Path(__file__).parent
         self.base_dir = Path(base_dir)
         self.cache_dir = self.base_dir / "cache"
         self.cache_dir.mkdir(exist_ok=True)
