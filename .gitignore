@@ -26,3 +26,7 @@ docs/covers/
 cache/
 covers/*.jpg
 *.zip
+
+# Generated daily data (regenerated on each run)
+daily_data/
+history/

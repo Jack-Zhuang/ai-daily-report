@@ -5,6 +5,7 @@ AI推荐日报 - 日报生成脚本
 """
 
 import json
+import os
 import shutil
 import subprocess
 from datetime import datetime
@@ -15,13 +16,13 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 class ReportGenerator:
     def __init__(self, base_dir: str = None):
         if base_dir is None:
-            base_dir = Path(__file__).parent.parent
+            base_dir = os.environ.get("BASE_DIR", str(Path(__file__).parent))
         self.base_dir = Path(base_dir)
         self.data_dir = self.base_dir / "daily_data"
         self.archive_dir = self.base_dir / "archive"
         self.archive_dir.mkdir(exist_ok=True)
         
-        self.today = datetime.now().strftime("%Y-%m-%d")
+        self.today = os.environ.get("REPORT_DATE", datetime.now().strftime("%Y-%m-%d"))
         
         # 检查今日数据是否存在，如果不存在则使用昨天的
         data_file = self.data_dir / f"{self.today}.json"
@@ -36,6 +37,7 @@ class ReportGenerator:
     def load_today_data(self) -> dict:
         """加载今日数据"""
         file_path = self.data_dir / f"{self.today}.json"
+        print(f"📂 加载数据: {file_path}")
         if not file_path.exists():
             print(f"❌ 未找到今日数据: {file_path}")
             return None
