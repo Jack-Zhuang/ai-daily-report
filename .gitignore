@@ -21,6 +21,7 @@ Thumbs.db
 
 # Large generated files (committed separately)
 archive/
+!docs/archive/
 docs/insights/
 docs/covers/
 cache/
