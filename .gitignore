@@ -33,3 +33,10 @@ covers/*.jpg
 # Generated daily data (regenerated on each run)
 daily_data/
 history/
+
+# ÁÙÊ±½Å±¾£¨½ûÖ¹Èë¿â£©
+_test_*.py
+_run_*.py
+_check_*.py
+logs/
+run_today_logged.py
