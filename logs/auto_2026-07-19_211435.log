@@ -1,0 +1,35 @@
+Daily Auto Run: 2026-07-19
+==================================================
+
+[1/4] Collecting arXiv papers...
+ 篇
+  🔍 查询: 机器学习... ✅ 新增 10 篇
+
+✅ 共采集 50 篇论文（去重后）
+✅ 已保存到: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\daily_data\2026-07-19.json
+
+📊 论文价值最高的论文:
+  1. [价值:2.72 | 工业:4⭐] SMC-ES: Automated synthesis of formally ...
+  2. [价值:2.51 | 工业:5⭐] Long-History User Transformers for Real-...
+  3. [价值:2.42 | 工业:4⭐] LongStraw: Long-Context RL Beyond 2M Tok...
+  4. [价值:2.37 | 工业:2⭐] The Energy Society: A Simulation Environ...
+  5. [价值:2.11 | 工业:2⭐] Can We Steer the Black-Box? Towards Cont...
+
+✅ arXiv 论文采集完成
+
+
+[2/4] Generating LLM summaries...
+  Summarized: 50/50
+
+[3/4] Generating HTML report...
+  Report: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\index.html (111699 bytes)
+
+[4/4] Pushing to GitHub...
+[main 4382f91] chore: auto daily report 2026-07-19
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+  PUSH OK
+
+==================================================
+DONE: 2026-07-19
+Log: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\logs\auto_2026-07-19_211435.log

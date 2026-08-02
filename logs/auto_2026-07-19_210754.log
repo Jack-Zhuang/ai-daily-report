@@ -1,0 +1,73 @@
+Daily Auto Run: 2026-07-19
+==================================================
+
+[1/4] Collecting arXiv papers...
+No output
+Collect stderr: 
+WARN: collect_daily.py had issues, continuing...
+
+[2/4] Generating LLM summaries...
+  ERR [1/50]: Connection error.
+  ERR [2/50]: Connection error.
+  ERR [3/50]: Connection error.
+  ERR [4/50]: Connection error.
+  ERR [5/50]: Connection error.
+  ERR [6/50]: Connection error.
+  ERR [7/50]: Connection error.
+  ERR [8/50]: Connection error.
+  ERR [9/50]: Connection error.
+  ERR [10/50]: Connection error.
+  ERR [11/50]: Connection error.
+  ERR [12/50]: Connection error.
+  ERR [13/50]: Connection error.
+  ERR [14/50]: Connection error.
+  ERR [15/50]: Connection error.
+  ERR [16/50]: Connection error.
+  ERR [17/50]: Connection error.
+  ERR [18/50]: Connection error.
+  ERR [19/50]: Connection error.
+  ERR [20/50]: Connection error.
+  ERR [21/50]: Connection error.
+  ERR [22/50]: Connection error.
+  ERR [23/50]: Connection error.
+  ERR [24/50]: Connection error.
+  ERR [25/50]: Connection error.
+  ERR [26/50]: Connection error.
+  ERR [27/50]: Connection error.
+  ERR [28/50]: Connection error.
+  ERR [29/50]: Connection error.
+  ERR [30/50]: Connection error.
+  ERR [31/50]: Connection error.
+  ERR [32/50]: Connection error.
+  ERR [33/50]: Connection error.
+  ERR [34/50]: Connection error.
+  ERR [35/50]: Connection error.
+  ERR [36/50]: Connection error.
+  ERR [37/50]: Connection error.
+  ERR [38/50]: Connection error.
+  ERR [39/50]: Connection error.
+  ERR [40/50]: Connection error.
+  ERR [41/50]: Connection error.
+  ERR [42/50]: Connection error.
+  ERR [43/50]: Connection error.
+  ERR [44/50]: Connection error.
+  ERR [45/50]: Connection error.
+  ERR [46/50]: Connection error.
+  ERR [47/50]: Connection error.
+  ERR [48/50]: Connection error.
+  ERR [49/50]: Connection error.
+  ERR [50/50]: Connection error.
+  Summarized: 0/50
+
+[3/4] Generating HTML report...
+  Report: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\index.html (109605 bytes)
+
+[4/4] Pushing to GitHub...
+[main 56bfc7b] chore: auto daily report 2026-07-19
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+  PUSH OK
+
+==================================================
+DONE: 2026-07-19
+Log: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\logs\auto_2026-07-19_210754.log

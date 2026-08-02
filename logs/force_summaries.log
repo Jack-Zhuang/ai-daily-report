@@ -1,0 +1,44 @@
+==================================================
+Force-regenerate summaries with MiniMax
+==================================================
+LLM Provider: minimax/MiniMax-M2.7
+
+Papers: 26
+  [1/26] OK CommuniWave:A Machine Learning Model for
+  [2/26] OK Different Teachers, Different Capabiliti
+  [3/26] OK Structural Bottlenecks on Frequency Repr
+  [4/26] OK When and How to Ask: Dynamic Preference 
+  [5/26] OK Curated retrieval versus open web search
+  [6/26] OK AUTOPILOT VQA: Benchmarking Vision-Langu
+  [7/26] OK Validity of LLMs as data annotators: AMA
+  [8/26] OK Remember When It Matters: Proactive Memo
+  [9/26] OK A Practical Investigation of Training-fr
+  [10/26] OK The complexities of patient-centred conv
+  [11/26] OK SHAP-Weighted Cross-Modal Expert Fusion 
+  [12/26] OK When the Judge Changes, So Does the Meas
+  [13/26] OK Two Axes of LLM Abstention: Answer Corre
+  [14/26] OK Prompt Compression via Activation Aggreg
+  [15/26] OK Super Weights in LLMs and the Failure of
+  [16/26] OK InductWave: Inductive Multi-Hop Logical 
+  [17/26] OK Quantifying and Expanding the Theoretica
+  [18/26] OK InfluMatch: Frontier-Quality KOL Search 
+  [19/26] OK Retrieving a Set, Not Independent Passag
+  [20/26] OK OpenCoF: Learning to Reason Through Vide
+  [21/26] OK AI-guided stimuli discovery and generati
+  [22/26] OK Cross-seed explainability using Procrust
+  [23/26] OK Steering Neural Network Training through
+  [24/26] OK Spectral Stability of Pseudoinverse-Base
+  [25/26] OK Stop Guessing When to Stop Testing: Effi
+  [26/26] OK Prompting Beats Fine-Tuning: Generative 
+
+Successfully summarized: 26/26
+Data saved with MiniMax summaries
+
+==================================================
+STEP 2: Generate HTML report
+==================================================
+
+Report: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\index.html
+Size: 111891 bytes
+
+DONE

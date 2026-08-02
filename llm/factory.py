@@ -7,6 +7,14 @@ from typing import Optional, Dict, Any
 import os
 from pathlib import Path
 
+# Bypass any proxy settings (Windows system proxy can break API calls)
+os.environ.pop('HTTP_PROXY', None)
+os.environ.pop('HTTPS_PROXY', None)
+os.environ.pop('http_proxy', None)
+os.environ.pop('https_proxy', None)
+os.environ['NO_PROXY'] = '*'
+os.environ['no_proxy'] = '*'
+
 
 class LLMProvider:
     def __init__(self, config: Dict[str, Any]):
@@ -30,8 +38,11 @@ class OpenAIProvider(LLMProvider):
 
     def chat(self, messages: list, **kwargs) -> str:
         try:
+            import httpx
             from openai import OpenAI
-            client = OpenAI(api_key=self.api_key, base_url=self.base_url)
+            # trust_env=False: ignore any system/registry proxy for API calls
+            http_client = httpx.Client(trust_env=False, verify=True)
+            client = OpenAI(api_key=self.api_key, base_url=self.base_url, http_client=http_client)
             response = client.chat.completions.create(
                 model=self.model, messages=messages, **kwargs
             )
