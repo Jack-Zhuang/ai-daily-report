@@ -144,6 +144,9 @@ class TestProviderDefaults:
         assert p.api_key == "minimax-env-key"
 
     def test_minimax_fallback_to_llm_api_key_env(self, monkeypatch):
+        # 非封闭测试修复：必须清掉 MINIMAX_API_KEY，否则本机/CI 配置了真实 key 时
+        # 会优先命中 MINIMAX_API_KEY 导致断言失败（环境依赖）
+        monkeypatch.delenv("MINIMAX_API_KEY", raising=False)
         monkeypatch.setenv("LLM_API_KEY", "fallback-key")
         p = MiniMaxProvider({})
         assert p.api_key == "fallback-key"
