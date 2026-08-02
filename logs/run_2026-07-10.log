@@ -1,0 +1,17 @@
+==================================================
+STEP 1: Generate LLM summaries for arXiv papers
+==================================================
+LLM Provider: minimax/MiniMax-M2.7
+
+Papers to summarize: 26
+
+Summarized: 0/26
+Data saved with summaries
+
+==================================================
+STEP 2: Generate HTML report
+==================================================
+
+Report generated: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\index.html
+
+DONE

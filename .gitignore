@@ -8,6 +8,8 @@ build/
 # Environment
 .env
 .env.local
+_key.txt
+*.key
 
 # IDE
 .idea/

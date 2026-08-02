@@ -1,0 +1,21 @@
+Daily Auto Run: 2026-07-19
+==================================================
+
+[1/4] Collecting arXiv papers...
+No output
+
+[2/4] Generating LLM summaries...
+  Summarized: 14/14
+
+[3/4] Generating HTML report...
+  Report: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\index.html (112009 bytes)
+
+[4/4] Pushing to GitHub...
+[main f0c7516] chore: auto daily report 2026-07-19
+ 2 files changed, 10 insertions(+), 10 deletions(-)
+
+  PUSH OK
+
+==================================================
+DONE: 2026-07-19
+Log: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\logs\auto_2026-07-19_212219.log

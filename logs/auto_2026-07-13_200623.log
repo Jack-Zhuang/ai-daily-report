@@ -1,0 +1,35 @@
+Daily Auto Run: 2026-07-13
+==================================================
+
+[1/4] Collecting arXiv papers...
+ 篇
+  🔍 查询: 机器学习... ✅ 新增 14 篇
+
+✅ 共采集 50 篇论文（去重后）
+✅ 已保存到: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\daily_data\2026-07-13.json
+
+📊 论文价值最高的论文:
+  1. [价值:2.82 | 工业:4⭐] VEXAIoT: Autonomous IoT Vulnerability EX...
+  2. [价值:2.72 | 工业:3⭐] AgentKGV: Agentic LLM-RAG Framework with...
+  3. [价值:2.67 | 工业:4⭐] Toward Real-Time Sentence-Level Sign Lan...
+  4. [价值:2.52 | 工业:3⭐] MedRealMM: A Real-World Multimodal Bench...
+  5. [价值:2.52 | 工业:3⭐] Action-Factored Multi-Agent Reinforcemen...
+
+✅ arXiv 论文采集完成
+
+
+[2/4] Generating LLM summaries...
+  No API key, skipping LLM summarization
+
+[3/4] Generating HTML report...
+  Report: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\index.html (109628 bytes)
+
+[4/4] Pushing to GitHub...
+[main 8f1f1ec] chore: auto daily report 2026-07-13
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+  PUSH OK
+
+==================================================
+DONE: 2026-07-13
+Log: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\logs\auto_2026-07-13_200623.log

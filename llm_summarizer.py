@@ -105,13 +105,18 @@ def _get_llm_provider() -> Optional:
 
     api_key = os.environ.get('MINIMAX_API_KEY') or os.environ.get('LLM_API_KEY') or ''
     if not api_key:
+        # Fallback: read from _key.txt
+        key_file = Path(__file__).parent / '_key.txt'
+        if key_file.exists():
+            api_key = key_file.read_text(encoding='utf-8').strip()
+    if not api_key:
         print("  \u2139\ufe0f  No LLM API key found, using mock summaries")
         return None
 
     try:
         config = {
             'provider': os.environ.get('LLM_PROVIDER', 'minimax'),
-            'model': os.environ.get('LLM_MODEL', 'MiniMax-M2.7'),
+            'model': os.environ.get('LLM_MODEL', 'MiniMax-M3'),
             'api_key': api_key,
             'base_url': os.environ.get('LLM_BASE_URL', 'https://api.minimaxi.com/v1'),
         }
@@ -137,13 +142,27 @@ def _llm_summarize(text: str, title: str = "", max_len: int = 200) -> str:
         result = provider.chat([
             {"role": "system", "content": f"\u4f60\u662f\u4e00\u4e2aAI\u79d1\u6280\u8d44\u8baf\u6458\u8981\u52a9\u624b\u3002\u8bf7\u7528\u4e2d\u6587\u5c06\u4ee5\u4e0b\u5185\u5bb9\u6982\u62ec\u4e3a{max_len}\u5b57\u4ee5\u5185\u7684\u6458\u8981\uff0c\u4fdd\u7559\u6838\u5fc3\u6280\u672f\u70b9\u548c\u4ef7\u503c\u3002\u4e0d\u8981\u7528<think>\u6807\u7b7e\u3002"},
             {"role": "user", "content": prompt}
-        ], max_tokens=max_len, temperature=0.3)
+        ], max_tokens=max_len * 3, temperature=0.3)
         if result and len(result) > 20:
-            cleaned = result.replace("<think>", "").replace("</think>", "").strip()
-            return cleaned[:max_len]
+            cleaned = clean_llm_response(result)
+            if cleaned:
+                return cleaned[:max_len]
     except Exception as e:
         print(f"    \u26a0\ufe0f LLM summarize failed: {e}")
     return ""
+
+
+def clean_llm_response(resp: str) -> str:
+    """Remove MiniMax-M3 thinking preamble, keep the final Chinese summary."""
+    import re
+    resp = re.sub(r'</?think(ing)?>', '', resp or '')
+    resp = resp.strip()
+    paras = [p.strip() for p in re.split(r'\n\s*\n', resp) if p.strip()]
+    cn_paras = [p for p in paras if re.search(r'[\u4e00-\u9fff]', p)]
+    if cn_paras:
+        # Last Chinese paragraph is the final summary
+        return cn_paras[-1]
+    return resp
 
 
 # ── Public API ──────────────────────────────────────────────

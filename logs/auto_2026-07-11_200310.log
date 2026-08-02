@@ -1,0 +1,25 @@
+Daily Auto Run: 2026-07-11
+==================================================
+
+[1/4] Collecting arXiv papers...
+No output
+
+[2/4] Generating LLM summaries...
+  No API key, skipping LLM summarization
+
+[3/4] Generating HTML report...
+  Report: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\index.html (109608 bytes)
+
+[4/4] Pushing to GitHub...
+[main ef4d1f9] chore: auto daily report 2026-07-11
+ 2 files changed, 1922 insertions(+), 294 deletions(-)
+
+  PUSH FAILED: itory pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+
+==================================================
+DONE: 2026-07-11
+Log: C:\Users\HUAWEI\.openclaw\workspace\ai-daily-report\logs\auto_2026-07-11_200310.log
